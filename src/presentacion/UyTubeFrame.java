@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package uytube;
+package presentacion;
 
 import java.awt.Dimension;
 import javax.swing.JOptionPane;
-import logica.Fabrica;
-import logica.IControladorUsuario;
+import logica.controladores.Fabrica;
+import logica.controladores.IControladorUsuario;
 
 /**
  *
