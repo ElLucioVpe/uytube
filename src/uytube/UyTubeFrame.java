@@ -6,6 +6,7 @@
 package uytube;
 
 import java.awt.Dimension;
+import java.beans.PropertyVetoException;
 import javax.swing.JOptionPane;
 import logica.Fabrica;
 import logica.IControladorUsuario;
@@ -22,7 +23,8 @@ public class UyTubeFrame extends javax.swing.JFrame {
     public UyTubeFrame() {
         initComponents();
     }
-
+ private  registroVideo registroVidWin;
+ private registroUser registroUserWin;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -92,6 +94,11 @@ public class UyTubeFrame extends javax.swing.JFrame {
         );
 
         jMenu1.setText("Inicio");
+        jMenu1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu1ActionPerformed(evt);
+            }
+        });
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Registro");
@@ -105,6 +112,11 @@ public class UyTubeFrame extends javax.swing.JFrame {
         jMenu2.add(RegistrarUsuario);
 
         RegistrarVideo.setText("Registrar Video");
+        RegistrarVideo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RegistrarVideoActionPerformed(evt);
+            }
+        });
         jMenu2.add(RegistrarVideo);
 
         jMenuBar1.add(jMenu2);
@@ -163,6 +175,68 @@ public class UyTubeFrame extends javax.swing.JFrame {
         */
    
     }//GEN-LAST:event_RegistrarUsuarioActionPerformed
+
+    private void RegistrarVideoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarVideoActionPerformed
+        // TODO add your handling code here:
+          String registroVideoX = registroVideo.VideoRegister;
+        
+        if(registroVideoX==null){
+        try{
+            
+             registroVideo registroVidWin = new registroVideo();
+             Escritorio.add(registroVidWin);
+             Escritorio.moveToFront(registroVidWin);
+             registroVidWin.setSize(Escritorio.getWidth(),Escritorio.getHeight());
+             registroVidWin.setLocation(0,0);
+        
+        
+        }catch(Exception ex){
+        ex.printStackTrace();
+        }
+        }else{
+        JOptionPane.showMessageDialog(null,"Ya tiene una venta de usuarios abierta");
+        }
+    }//GEN-LAST:event_RegistrarVideoActionPerformed
+
+    private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
+        // TODO add your handling code here:
+        
+        String registroVideoX = registroVideo.VideoRegister;
+        String x = registroUser.x;
+        
+        
+        
+        try{
+             welcome welcomeUser = new welcome();
+             Escritorio.add(welcomeUser);
+             Escritorio.moveToFront(welcomeUser);
+             registroVidWin.setSize(Escritorio.getWidth(),Escritorio.getHeight());
+             registroVidWin.setLocation(0,0);
+        
+        
+        }catch(Exception ex){
+        ex.printStackTrace();
+        }
+        
+          /*
+        if(registroVideoX!=null){
+          try {
+                registroVidWin.setClosed(true);
+              } catch (PropertyVetoException ex) {
+                  System.err.println("Closing Exception");
+              }
+        }
+        
+        if(x!=null){
+            try {
+                registroUserWin.setClosed(true);
+              } catch (PropertyVetoException ex) {
+                  System.err.println("Closing Exception");
+              }
+        }
+        
+        */
+    }//GEN-LAST:event_jMenu1ActionPerformed
 
     /**
      * @param args the command line arguments

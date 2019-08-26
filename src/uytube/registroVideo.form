@@ -6,7 +6,6 @@
   </SyntheticProperties>
   <Events>
     <EventHandler event="internalFrameClosing" listener="javax.swing.event.InternalFrameListener" parameters="javax.swing.event.InternalFrameEvent" handler="formInternalFrameClosing"/>
-    <EventHandler event="componentResized" listener="java.awt.event.ComponentListener" parameters="java.awt.event.ComponentEvent" handler="formComponentResized"/>
   </Events>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
@@ -26,45 +25,31 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Component id="label6" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="textField6" min="-2" pref="77" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <Component id="label1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jButton1" max="32767" attributes="0"/>
-                          <Component id="textField1" max="32767" attributes="0"/>
+                          <Component id="jButton1" alignment="0" max="32767" attributes="0"/>
+                          <Component id="textField1" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="label2" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="label3" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="label4" min="-2" max="-2" attributes="0"/>
+                          <Component id="label4" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="label5" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="textField3" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="textField2" max="32767" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="textField5" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="textField4" max="32767" attributes="0"/>
-                              </Group>
-                          </Group>
+                      <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="textField5" alignment="1" pref="81" max="32767" attributes="0"/>
+                          <Component id="textField3" alignment="1" max="32767" attributes="0"/>
+                          <Component id="textField2" max="32767" attributes="0"/>
+                          <Component id="textField4" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace pref="148" max="32767" attributes="0"/>
+              <EmptySpace pref="144" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -73,8 +58,8 @@
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="textField1" min="-2" max="-2" attributes="0"/>
-                  <Component id="label1" min="-2" max="-2" attributes="0"/>
+                  <Component id="textField1" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="label1" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
@@ -96,12 +81,7 @@
                   <Component id="textField5" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="label5" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="textField6" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="label6" alignment="0" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace pref="51" max="32767" attributes="0"/>
+              <EmptySpace pref="81" max="32767" attributes="0"/>
               <Component id="jButton1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -109,6 +89,20 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
+    <Component class="java.awt.TextField" name="textField4">
+    </Component>
+    <Component class="java.awt.Label" name="label4">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Descripcion"/>
+      </Properties>
+    </Component>
+    <Component class="java.awt.Label" name="label5">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Fecha Publicacion"/>
+      </Properties>
+    </Component>
+    <Component class="java.awt.TextField" name="textField5">
+    </Component>
     <Component class="javax.swing.JButton" name="jButton1">
       <Properties>
         <Property name="text" type="java.lang.String" value="Registrar"/>
@@ -121,50 +115,20 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Nombre"/>
       </Properties>
-      <AccessibilityProperties>
-        <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="Nombre"/>
-      </AccessibilityProperties>
     </Component>
     <Component class="java.awt.TextField" name="textField2">
     </Component>
     <Component class="java.awt.Label" name="label2">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Apellido"/>
+        <Property name="text" type="java.lang.String" value="Duracion"/>
       </Properties>
-      <AccessibilityProperties>
-        <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="Nombre2"/>
-      </AccessibilityProperties>
     </Component>
     <Component class="java.awt.Label" name="label3">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Nickname"/>
+        <Property name="text" type="java.lang.String" value="UrlAsociada"/>
       </Properties>
     </Component>
     <Component class="java.awt.TextField" name="textField3">
-    </Component>
-    <Component class="java.awt.TextField" name="textField4">
-    </Component>
-    <Component class="java.awt.Label" name="label4">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Email"/>
-      </Properties>
-    </Component>
-    <Component class="java.awt.Label" name="label5">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="FechaNacimiento"/>
-      </Properties>
-      <AccessibilityProperties>
-        <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="FechaNacimiento"/>
-      </AccessibilityProperties>
-    </Component>
-    <Component class="java.awt.TextField" name="textField5">
-    </Component>
-    <Component class="java.awt.TextField" name="textField6">
-    </Component>
-    <Component class="java.awt.Label" name="label6">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Imagen"/>
-      </Properties>
     </Component>
   </SubComponents>
 </Form>
