@@ -10,6 +10,7 @@ import java.beans.PropertyVetoException;
 import javax.swing.JOptionPane;
 import logica.controladores.Fabrica;
 import logica.controladores.IControladorUsuario;
+import logica.controladores.IControladorVideo;
 
 /**
  *
@@ -20,6 +21,10 @@ public class UyTubeFrame extends javax.swing.JFrame {
     /**
      * Creates new form FramePrincipal
      */
+    Fabrica f = Fabrica.getInstance();
+    IControladorUsuario user = f.getIControladorUsuario();
+    IControladorVideo vid = f.getIControladorVideo();
+    
     public UyTubeFrame() {
         initComponents();
     }
@@ -154,7 +159,7 @@ public class UyTubeFrame extends javax.swing.JFrame {
         if(x==null){
         try{
             
-             registroUser registroUserWin = new registroUser();
+             registroUser registroUserWin = new registroUser(user);
              Escritorio.add(registroUserWin);
              Escritorio.moveToFront(registroUserWin);
              registroUserWin.setSize(Escritorio.getWidth(),Escritorio.getHeight());
