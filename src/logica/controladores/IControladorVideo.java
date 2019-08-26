@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package logica;
+package logica.controladores;
 
 /**
  *
  * @author Esteban
  */
-public interface IControladorUsuario {
+public interface IControladorVideo {
     
-    public abstract void AltaUsuario();
+    public abstract void AltaVideo();
 }

@@ -3,7 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package logica;
+package logica.controladores;
+import logica.controladores.ControladorUsuario;
+import logica.controladores.ControladorVideo;
 
 /**
  *
@@ -24,5 +26,9 @@ public class Fabrica {
 
     public IControladorUsuario getIControladorUsuario() {
         return new ControladorUsuario();
+    }
+    
+    public ControladorVideo getIControladorVideo() {
+        return new ControladorVideo();
     }
 }

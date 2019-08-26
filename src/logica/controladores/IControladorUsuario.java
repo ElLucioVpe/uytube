@@ -3,18 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package logica;
+package logica.controladores;
+import java.util.Date;
 
 /**
  *
  * @author Esteban
  */
-
-public class ControladorVideo implements IControladorVideo {
-
-    public ControladorVideo() {
-    }
+public interface IControladorUsuario {
     
-    public void AltaVideo(){
-    }
+    public abstract void AltaUsuario(String nick, String nom, String apell, Date fnac);
 }
