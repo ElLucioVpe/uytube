@@ -5,6 +5,8 @@
  */
 package uytube;
 
+import java.awt.Dimension;
+import javax.swing.JOptionPane;
 import logica.Fabrica;
 import logica.IControladorUsuario;
 
@@ -33,6 +35,7 @@ public class UyTubeFrame extends javax.swing.JFrame {
         jFrame1 = new javax.swing.JFrame();
         jFrame2 = new javax.swing.JFrame();
         jFrame3 = new javax.swing.JFrame();
+        Escritorio = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -77,6 +80,17 @@ public class UyTubeFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        javax.swing.GroupLayout EscritorioLayout = new javax.swing.GroupLayout(Escritorio);
+        Escritorio.setLayout(EscritorioLayout);
+        EscritorioLayout.setHorizontalGroup(
+            EscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 429, Short.MAX_VALUE)
+        );
+        EscritorioLayout.setVerticalGroup(
+            EscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 349, Short.MAX_VALUE)
+        );
+
         jMenu1.setText("Inicio");
         jMenuBar1.add(jMenu1);
 
@@ -110,11 +124,11 @@ public class UyTubeFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 429, Short.MAX_VALUE)
+            .addComponent(Escritorio)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 341, Short.MAX_VALUE)
+            .addComponent(Escritorio)
         );
 
         pack();
@@ -123,6 +137,31 @@ public class UyTubeFrame extends javax.swing.JFrame {
     private void RegistrarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarUsuarioActionPerformed
         // TODO add your handling code here:
         //Agregar Frame para esta funcion
+        String x = registroUser.x;
+        
+        if(x==null){
+        try{
+            
+             registroUser registroUserWin = new registroUser();
+             Escritorio.add(registroUserWin);
+             Escritorio.moveToFront(registroUserWin);
+             registroUserWin.setSize(Escritorio.getWidth(),Escritorio.getHeight());
+             registroUserWin.setLocation(0,0);
+        
+        
+        }catch(Exception ex){
+        ex.printStackTrace();
+        }
+        }else{
+        JOptionPane.showMessageDialog(null,"Ya tiene una venta de usuarios abierta");
+        }
+       /*
+        Dimension desktopSize = Escritorio.getSize();
+        Dimension FrameSize = registroUserWin.getSize();
+        registroUserWin.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);
+        registroUserWin.show();
+        */
+   
     }//GEN-LAST:event_RegistrarUsuarioActionPerformed
 
     /**
@@ -162,6 +201,7 @@ public class UyTubeFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JDesktopPane Escritorio;
     private javax.swing.JMenuItem RegistrarUsuario;
     private javax.swing.JMenuItem RegistrarVideo;
     private javax.swing.JFrame jFrame1;
