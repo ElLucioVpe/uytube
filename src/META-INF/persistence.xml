@@ -5,6 +5,9 @@
     <!-- Entity classes -->
     <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
     <class>logica.Usuario</class>
+    <class>logica.Video</class>
+    <class>logica.Categoria</class>
+    <class>logica.Canal</class>
     <properties>
       <!-- The JDBC driver of your database -->
       <!-- The JDBC URL to the database instance -->

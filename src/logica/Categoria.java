@@ -20,29 +20,23 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Esteban
  */
 @Entity
-@Table(name = "CANAL")
+@Table(name = "CATEGORIA")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Canal.findAll", query = "SELECT c FROM Canal c")
-    , @NamedQuery(name = "Canal.findByNombre", query = "SELECT c FROM Canal c WHERE c.nombre = :nombre")
-    , @NamedQuery(name = "Canal.findByDescripcion", query = "SELECT c FROM Canal c WHERE c.descripcion = :descripcion")
-    , @NamedQuery(name = "Canal.findByAcceso", query = "SELECT c FROM Canal c WHERE c.acceso = :acceso")})
-public class Canal implements Serializable {
+    @NamedQuery(name = "Categoria.findAll", query = "SELECT c FROM Categoria c")
+    , @NamedQuery(name = "Categoria.findByNombre", query = "SELECT c FROM Categoria c WHERE c.nombre = :nombre")})
+public class Categoria implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @Column(name = "NOMBRE")
     private String nombre;
-    @Column(name = "DESCRIPCION")
-    private String descripcion;
-    @Column(name = "ACCESO")
-    private Boolean acceso;
 
-    public Canal() {
+    public Categoria() {
     }
 
-    public Canal(String nombre) {
+    public Categoria(String nombre) {
         this.nombre = nombre;
     }
 
@@ -52,22 +46,6 @@ public class Canal implements Serializable {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    public Boolean getAcceso() {
-        return acceso;
-    }
-
-    public void setAcceso(Boolean acceso) {
-        this.acceso = acceso;
     }
 
     @Override
@@ -80,10 +58,10 @@ public class Canal implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Canal)) {
+        if (!(object instanceof Categoria)) {
             return false;
         }
-        Canal other = (Canal) object;
+        Categoria other = (Categoria) object;
         if ((this.nombre == null && other.nombre != null) || (this.nombre != null && !this.nombre.equals(other.nombre))) {
             return false;
         }
@@ -92,7 +70,7 @@ public class Canal implements Serializable {
 
     @Override
     public String toString() {
-        return "logica.Canal[ nombre=" + nombre + " ]";
+        return "logica.Categoria[ nombre=" + nombre + " ]";
     }
     
 }
