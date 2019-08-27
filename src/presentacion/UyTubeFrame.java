@@ -130,9 +130,24 @@ public class UyTubeFrame extends javax.swing.JFrame {
         jMenuBar1.add(jMenu3);
 
         jMenu4.setText("Listas");
+        jMenu4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu4ActionPerformed(evt);
+            }
+        });
         jMenuBar1.add(jMenu4);
 
         jMenu5.setText("Categoria");
+        jMenu5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu5MouseClicked(evt);
+            }
+        });
+        jMenu5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu5ActionPerformed(evt);
+            }
+        });
         jMenuBar1.add(jMenu5);
 
         setJMenuBar(jMenuBar1);
@@ -242,6 +257,44 @@ public class UyTubeFrame extends javax.swing.JFrame {
         
         */
     }//GEN-LAST:event_jMenu1ActionPerformed
+
+    private void jMenu4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu4ActionPerformed
+        // TODO add your handling code here:
+        try{
+            
+             listaReproduccionFrame listaRep = new listaReproduccionFrame();
+             Escritorio.add(listaRep);
+             Escritorio.moveToFront(listaRep);
+             listaRep.setSize(Escritorio.getWidth(),Escritorio.getHeight());
+             listaRep.setLocation(0,0);
+        
+        
+        }catch(Exception ex){
+        ex.printStackTrace();
+        }
+        
+    }//GEN-LAST:event_jMenu4ActionPerformed
+
+    private void jMenu5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu5ActionPerformed
+
+   try{
+            
+             categoriaRegistro categoriaRegistro = new categoriaRegistro();
+             Escritorio.add(categoriaRegistro);
+             Escritorio.moveToFront(categoriaRegistro);
+             categoriaRegistro.setSize(Escritorio.getWidth(),Escritorio.getHeight());
+             categoriaRegistro.setLocation(0,0);
+        
+        
+        }catch(Exception ex){
+        ex.printStackTrace();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenu5ActionPerformed
+
+    private void jMenu5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu5MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenu5MouseClicked
 
     /**
      * @param args the command line arguments
