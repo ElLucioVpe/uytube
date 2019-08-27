@@ -77,6 +77,12 @@ static String VideoRegister;
         jButton1.setText("Registrar");
         jButton1.setToolTipText("");
 
+        textField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textField1ActionPerformed(evt);
+            }
+        });
+
         label1.setText("Nombre");
 
         label2.setText("Duracion");
@@ -145,6 +151,10 @@ static String VideoRegister;
         // TODO add your handling code here:
         VideoRegister=null;
     }//GEN-LAST:event_formInternalFrameClosing
+
+    private void textField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textField1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
