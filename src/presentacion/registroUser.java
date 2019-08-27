@@ -7,6 +7,7 @@ package presentacion;
 
 
 import java.awt.event.MouseListener;
+import java.util.Date;
 import javax.swing.JInternalFrame;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import logica.controladores.IControladorUsuario;
@@ -82,6 +83,11 @@ IControladorUsuario u;
 
         jButton1.setText("Registrar");
         jButton1.setToolTipText("");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         label1.setText("Nombre");
 
@@ -176,6 +182,18 @@ IControladorUsuario u;
         // TODO add your handling code here:
         x=null;
     }//GEN-LAST:event_formInternalFrameClosing
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // Registrar
+        u.AltaUsuario(
+                textField3.getText(), 
+                textField1.getText(), 
+                textField2.getText(), 
+                textField4.getText(),
+                new Date(textField5.getText()), 
+                textField5.getText()
+        );
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

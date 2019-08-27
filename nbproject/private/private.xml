@@ -3,11 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Esteban/Documents/NetBeansProjects/UyTube/src/logica/controladores/ControladorUsuario.java</file>
-            <file>file:/C:/Users/Esteban/Documents/NetBeansProjects/UyTube/src/logica/controladores/IControladorUsuario.java</file>
-            <file>file:/C:/Users/Esteban/Documents/NetBeansProjects/UyTube/src/logica/controladores/ControladorVideo.java</file>
-            <file>file:/C:/Users/Esteban/Documents/NetBeansProjects/UyTube/src/logica/Canal.java</file>
-            <file>file:/C:/Users/Esteban/Documents/NetBeansProjects/UyTube/src/logica/controladores/IControladorVideo.java</file>
+            <file>file:/C:/Users/Esteban/Documents/NetBeansProjects/UyTube%20(NB11)/src/logica/controladores/ControladorUsuario.java</file>
+            <file>file:/C:/Users/Esteban/Documents/NetBeansProjects/UyTube%20(NB11)/src/logica/controladores/IControladorUsuario.java</file>
+            <file>file:/C:/Users/Esteban/Documents/NetBeansProjects/UyTube%20(NB11)/src/logica/Canal.java</file>
+            <file>file:/C:/Users/Esteban/Documents/NetBeansProjects/UyTube%20(NB11)/src/presentacion/categoriaRegistro.java</file>
+            <file>file:/C:/Users/Esteban/Documents/NetBeansProjects/UyTube%20(NB11)/src/presentacion/UyTubeFrame.java</file>
+            <file>file:/C:/Users/Esteban/Documents/NetBeansProjects/UyTube%20(NB11)/src/META-INF/persistence.xml</file>
+            <file>file:/C:/Users/Esteban/Documents/NetBeansProjects/UyTube%20(NB11)/src/presentacion/registroUser.java</file>
         </group>
     </open-files>
 </project-private>

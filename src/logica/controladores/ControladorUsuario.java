@@ -22,14 +22,15 @@ public class ControladorUsuario implements IControladorUsuario {
     }
     
     @Override
-    public void AltaUsuario(String nick, String nom, String apell, Date fnac) {
+    public void AltaUsuario(String nick, String nom, String apell, String mail, Date fnac, String img) {
         Connection con = null;
         try {
-            con = DriverManager.getConnection("jdbc:derby:uyTubeDerby;create=true");
+            con = DriverManager.getConnection("jdbc:derby:uyTubeDerby");
             Statement st = con.createStatement();
 
             st.execute("INSERT INTO USUARIO VALUES ('"
-                + nick + "','" + nom + "','" + apell + "','" + fnac + "','Not Found')"); //la imagen la debo
+                + nick + "','" + nom + "','" + apell + "','" + mail + "','"+ fnac + "','" + img + "')"); 
+            //la imagen asi nomas por ahora
 
             st.close();
             con.close();        
