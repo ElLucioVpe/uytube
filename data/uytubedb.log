@@ -1,0 +1,6 @@
+/*C3*/SET SCHEMA PUBLIC
+DELETE FROM USUARIO WHERE NICKNAME='2'
+COMMIT
+create table Canal (Nombre varchar(30) primary key, Descripcion varchar(500), Acceso boolean)
+create table Video (Id integer primary key, Nombre varchar(30) not null, Duracion integer not null, Url varchar(100) not null, Descripcion varchar(500), Fecha_Pub date not null)
+create table Categoria (Nombre varchar(25) primary key)
