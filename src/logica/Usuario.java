@@ -5,8 +5,6 @@
  */
 package logica;
 
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -18,7 +16,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -30,32 +27,32 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u")
-    , @NamedQuery(name = "Usuario.findByNickname", query = "SELECT u FROM Usuario u WHERE u.nickname = :nickname")
     , @NamedQuery(name = "Usuario.findByNombre", query = "SELECT u FROM Usuario u WHERE u.nombre = :nombre")
     , @NamedQuery(name = "Usuario.findByApellido", query = "SELECT u FROM Usuario u WHERE u.apellido = :apellido")
+    , @NamedQuery(name = "Usuario.findByNickname", query = "SELECT u FROM Usuario u WHERE u.nickname = :nickname")
     , @NamedQuery(name = "Usuario.findByMail", query = "SELECT u FROM Usuario u WHERE u.mail = :mail")
     , @NamedQuery(name = "Usuario.findByFechanac", query = "SELECT u FROM Usuario u WHERE u.fechanac = :fechanac")
     , @NamedQuery(name = "Usuario.findByImagen", query = "SELECT u FROM Usuario u WHERE u.imagen = :imagen")})
 public class Usuario implements Serializable {
 
-    @Transient
-    private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
-
     private static final long serialVersionUID = 1L;
+    @Basic(optional = false)
+    @Column(name = "NOMBRE")
+    private String nombre;
+    @Basic(optional = false)
+    @Column(name = "APELLIDO")
+    private String apellido;
     @Id
     @Basic(optional = false)
     @Column(name = "NICKNAME")
     private String nickname;
-    @Column(name = "NOMBRE")
-    private String nombre;
-    @Column(name = "APELLIDO")
-    private String apellido;
+    @Basic(optional = false)
     @Column(name = "MAIL")
     private String mail;
+    @Basic(optional = false)
     @Column(name = "FECHANAC")
     @Temporal(TemporalType.DATE)
     private Date fechanac;
-    @Basic(optional = false)
     @Column(name = "IMAGEN")
     private String imagen;
 
@@ -66,19 +63,12 @@ public class Usuario implements Serializable {
         this.nickname = nickname;
     }
 
-    public Usuario(String nickname, String imagen) {
+    public Usuario(String nickname, String nombre, String apellido, String mail, Date fechanac) {
         this.nickname = nickname;
-        this.imagen = imagen;
-    }
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        String oldNickname = this.nickname;
-        this.nickname = nickname;
-        changeSupport.firePropertyChange("nickname", oldNickname, nickname);
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.mail = mail;
+        this.fechanac = fechanac;
     }
 
     public String getNombre() {
@@ -86,9 +76,7 @@ public class Usuario implements Serializable {
     }
 
     public void setNombre(String nombre) {
-        String oldNombre = this.nombre;
         this.nombre = nombre;
-        changeSupport.firePropertyChange("nombre", oldNombre, nombre);
     }
 
     public String getApellido() {
@@ -96,9 +84,15 @@ public class Usuario implements Serializable {
     }
 
     public void setApellido(String apellido) {
-        String oldApellido = this.apellido;
         this.apellido = apellido;
-        changeSupport.firePropertyChange("apellido", oldApellido, apellido);
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public String getMail() {
@@ -106,9 +100,7 @@ public class Usuario implements Serializable {
     }
 
     public void setMail(String mail) {
-        String oldMail = this.mail;
         this.mail = mail;
-        changeSupport.firePropertyChange("mail", oldMail, mail);
     }
 
     public Date getFechanac() {
@@ -116,9 +108,7 @@ public class Usuario implements Serializable {
     }
 
     public void setFechanac(Date fechanac) {
-        Date oldFechanac = this.fechanac;
         this.fechanac = fechanac;
-        changeSupport.firePropertyChange("fechanac", oldFechanac, fechanac);
     }
 
     public String getImagen() {
@@ -126,9 +116,7 @@ public class Usuario implements Serializable {
     }
 
     public void setImagen(String imagen) {
-        String oldImagen = this.imagen;
         this.imagen = imagen;
-        changeSupport.firePropertyChange("imagen", oldImagen, imagen);
     }
 
     @Override
@@ -154,14 +142,6 @@ public class Usuario implements Serializable {
     @Override
     public String toString() {
         return "logica.Usuario[ nickname=" + nickname + " ]";
-    }
-
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
-        changeSupport.addPropertyChangeListener(listener);
-    }
-
-    public void removePropertyChangeListener(PropertyChangeListener listener) {
-        changeSupport.removePropertyChangeListener(listener);
     }
     
 }
