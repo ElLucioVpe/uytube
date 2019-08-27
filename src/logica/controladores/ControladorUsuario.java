@@ -21,21 +21,33 @@ public class ControladorUsuario implements IControladorUsuario {
     public ControladorUsuario() {
     }
     
-    @Override
-    public void AltaUsuario(String nick, String nom, String apell, String mail, Date fnac, String img) {
+    public Connection conectar() {
         Connection con = null;
         try {
-            con = DriverManager.getConnection("jdbc:derby:uyTubeDerby");
+            Class.forName("org.hsqldb.jdbcDriver");
+            con = DriverManager.getConnection("jdbc:hsqldb:file:data/uytubedb;hsqldb.lock_file=false", "root", "root");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error de Conexion: "+e.getMessage());
+        }
+        return con;
+    }
+    
+    @Override
+    public void AltaUsuario(String nick, String nom, String apell, String mail, String fnac, String img) {
+        try {
+            Connection con = conectar();
             Statement st = con.createStatement();
-
+                
             st.execute("INSERT INTO USUARIO VALUES ('"
-                + nick + "','" + nom + "','" + apell + "','" + mail + "','"+ fnac + "','" + img + "')"); 
+                + nick + "','" + nom + "','" + apell + "','" + mail + "','"+fnac+"','" + img + "')"); 
             //la imagen asi nomas por ahora
 
+            JOptionPane.showMessageDialog(null,"El usuario se ha registrado con exito");
             st.close();
-            con.close();        
+            con.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Exception: "+e.getMessage());
         }
+        
     }
 }

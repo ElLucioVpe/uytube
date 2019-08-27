@@ -12,5 +12,5 @@ import java.util.Date;
  */
 public interface IControladorUsuario {
     
-    public abstract void AltaUsuario(String nick, String nom, String apell, String mail, Date fnac, String img);
+    public abstract void AltaUsuario(String nick, String nom, String apell, String mail, String fnac, String img);
 }

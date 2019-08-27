@@ -181,17 +181,19 @@ IControladorUsuario u;
     private void formInternalFrameClosing(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosing
         // TODO add your handling code here:
         x=null;
+        u=null;
     }//GEN-LAST:event_formInternalFrameClosing
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+
         // Registrar
         u.AltaUsuario(
-                textField3.getText(), 
-                textField1.getText(), 
+                textField3.getText(),
+                textField1.getText(),
                 textField2.getText(), 
                 textField4.getText(),
-                new Date(textField5.getText()), 
-                textField5.getText()
+                textField5.getText(),
+                textField6.getText()
         );
     }//GEN-LAST:event_jButton1ActionPerformed
 
