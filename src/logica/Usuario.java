@@ -8,11 +8,15 @@ package logica;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -27,6 +31,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u"),
+    @NamedQuery(name = "Usuario.findById", query = "SELECT u FROM Usuario u WHERE u.id = :id"),
     @NamedQuery(name = "Usuario.findByNombre", query = "SELECT u FROM Usuario u WHERE u.nombre = :nombre"),
     @NamedQuery(name = "Usuario.findByApellido", query = "SELECT u FROM Usuario u WHERE u.apellido = :apellido"),
     @NamedQuery(name = "Usuario.findByNickname", query = "SELECT u FROM Usuario u WHERE u.nickname = :nickname"),
@@ -36,39 +41,59 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Usuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @Column(name = "ID")
+    private Integer id;
+    
     @Column(name = "NOMBRE")
     private String nombre;
-    @Basic(optional = false)
+    
     @Column(name = "APELLIDO")
     private String apellido;
-    @Id
+    
     @Basic(optional = false)
     @Column(name = "NICKNAME")
     private String nickname;
+    
     @Basic(optional = false)
     @Column(name = "MAIL")
     private String mail;
+    
     @Basic(optional = false)
     @Column(name = "FECHANAC")
     @Temporal(TemporalType.DATE)
     private Date fechanac;
+    
     @Column(name = "IMAGEN")
     private String imagen;
+    
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "usuario")
+    private Canal canal;
 
     public Usuario() {
     }
 
-    public Usuario(String nickname) {
-        this.nickname = nickname;
+    public Usuario(Integer id) {
+        this.id = id;
     }
 
     public Usuario(String nickname, String nombre, String apellido, String mail, Date fechanac) {
+        //this.id = id;
         this.nickname = nickname;
         this.nombre = nombre;
         this.apellido = apellido;
         this.mail = mail;
         this.fechanac = fechanac;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getNombre() {
@@ -119,10 +144,18 @@ public class Usuario implements Serializable {
         this.imagen = imagen;
     }
 
+    public Canal getCanal() {
+        return canal;
+    }
+
+    public void setCanal(Canal canal) {
+        this.canal = canal;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (nickname != null ? nickname.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
@@ -133,7 +166,7 @@ public class Usuario implements Serializable {
             return false;
         }
         Usuario other = (Usuario) object;
-        if ((this.nickname == null && other.nickname != null) || (this.nickname != null && !this.nickname.equals(other.nickname))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -141,7 +174,7 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "logica.Usuario[ nickname=" + nickname + " ]";
+        return "logica.Usuario[ id=" + id + " ]";
     }
     
 }
