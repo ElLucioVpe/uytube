@@ -26,7 +26,10 @@ public class registroCanal extends javax.swing.JInternalFrame {
     }
     
     public registroCanal(IControladorUsuario userC, String nick) {
+        setVisible(true);
         initComponents();
+        setTitle("Registrar Canal");
+        setClosable(true);
         u = userC;
         user_nick = nick;
     }
