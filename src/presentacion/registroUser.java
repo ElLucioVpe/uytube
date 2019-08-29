@@ -14,6 +14,7 @@ import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import logica.controladores.IControladorUsuario;
+import org.apache.commons.io.FileUtils;
 /**
  *
  * @author pagol
@@ -51,7 +52,7 @@ JFileChooser fc;
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButtonRegistrar = new javax.swing.JButton();
+        jButtonCancelar = new javax.swing.JButton();
         textField1 = new java.awt.TextField();
         label1 = new java.awt.Label();
         textField2 = new java.awt.TextField();
@@ -90,11 +91,11 @@ JFileChooser fc;
             }
         });
 
-        jButtonRegistrar.setText("Registrar");
-        jButtonRegistrar.setToolTipText("");
-        jButtonRegistrar.addActionListener(new java.awt.event.ActionListener() {
+        jButtonCancelar.setText("Cancelar");
+        jButtonCancelar.setToolTipText("");
+        jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonRegistrarActionPerformed(evt);
+                jButtonCancelarActionPerformed(evt);
             }
         });
 
@@ -160,7 +161,7 @@ JFileChooser fc;
                                             .addComponent(textField4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(66, 66, 66)
-                        .addComponent(jButtonRegistrar)))
+                        .addComponent(jButtonCancelar)))
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButtonSubir)
@@ -197,7 +198,7 @@ JFileChooser fc;
                     .addComponent(label6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonRegistrar)
+                    .addComponent(jButtonCancelar)
                     .addComponent(jButtonSiguiente))
                 .addContainerGap())
         );
@@ -217,44 +218,12 @@ JFileChooser fc;
         u=null;
     }//GEN-LAST:event_formInternalFrameClosing
 
-    private void jButtonRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegistrarActionPerformed
-
-        try {
-            // Me aseguro de que la imagen es correcta y la guardo
-            File f = fc.getSelectedFile();
-            String imagen = "";
-            if(f != null){
-                String fpath = f.getPath();
-                String extension = "";
-                int i = fpath.lastIndexOf('.');
-                if (i > 0) extension = fpath.substring(i+1);
-
-                if (!extension.equals("jpg") && !extension.equals("png"))
-                    throw new Exception(extension+" Imagen con extension invalida, por favor suba una imagen .jpg o .png");
-
-                imagen = textField3.getText() + "." + extension;
-                String fnewpath = "data/imagenes/" + imagen;
-                //Copio el archivo al directorio de imagenes
-                if(!fpath.equals(fnewpath)) f.renameTo(new File(fnewpath));
-            }
-            
-            //Creo el usuario
-            u.AltaUsuario(
-                    textField3.getText(),
-                    textField1.getText(),
-                    textField2.getText(), 
-                    textField4.getText(),
-                    textField5.getText(),
-                    imagen
-            );
-            
-            //Registrar canal
-            //Creacion de listas por defecto (favoritos, ver mas tarde, etc)
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
-        }
-        
-    }//GEN-LAST:event_jButtonRegistrarActionPerformed
+    private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
+        JOptionPane.showMessageDialog(null,"El registro ha sido cancelado");
+        x=null;
+        u=null;
+        this.dispose();
+    }//GEN-LAST:event_jButtonCancelarActionPerformed
 
     private void jButtonSubirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSubirActionPerformed
         /*JFileChooser fc = new JFileChooser();
@@ -268,12 +237,51 @@ JFileChooser fc;
 
     private void jButtonSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSiguienteActionPerformed
         //Mover a registrarCanal
-             
+        try {
+            // Me aseguro de que la imagen es correcta y la guardo
+            File f = fc.getSelectedFile();
+            String imagen = "";
+            String fpath = "";
+            String fnewpath = "";
+            if(f != null){
+                fpath = f.getPath();
+                String extension = "";
+                int i = fpath.lastIndexOf('.');
+                if (i > 0) extension = fpath.substring(i+1);
+
+                if (!extension.equals("jpg") && !extension.equals("png"))
+                    throw new Exception(extension+" Imagen con extension invalida, por favor suba una imagen .jpg o .png");
+
+                imagen = textField3.getText() + "." + extension;
+                fnewpath = "data/imagenes/" + imagen;
+            }
+            
+            //Creo el usuario
+            u.AltaUsuario(
+                    textField3.getText(),
+                    textField1.getText(),
+                    textField2.getText(), 
+                    textField4.getText(),
+                    textField5.getText(),
+                    imagen
+            );
+            
+            //Copio el archivo al directorio de imagenes, lo hago luego por si el nick ya existe
+            if(!fpath.equals(fnewpath) && !fnewpath.isEmpty()) FileUtils.copyFile(f, new File(fnewpath));
+            
+            //Creacion de listas por defecto (favoritos, ver mas tarde, etc)
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+        }
+        
+        registrarCanal canalWin = new registrarCanal(u, textField3.getText());
+        canalWin.setVisible(true);
+        
     }//GEN-LAST:event_jButtonSiguienteActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonRegistrar;
+    private javax.swing.JButton jButtonCancelar;
     private javax.swing.JButton jButtonSiguiente;
     private javax.swing.JButton jButtonSubir;
     private java.awt.Label label1;

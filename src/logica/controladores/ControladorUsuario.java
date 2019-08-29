@@ -14,6 +14,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.swing.JOptionPane;
+import logica.Canal;
 import logica.Usuario;
 import logica.controladores.IControladorUsuario;
 
@@ -36,10 +37,10 @@ public class ControladorUsuario implements IControladorUsuario {
             EntityManager em = emFactory.createEntityManager();
             em.getTransaction().begin();
             
-            if(em.find(Usuario.class, nick) != null) 
+            if(em.createNamedQuery("Usuario.findByNickname", Usuario.class).setParameter("nickname", nick).getResultList().size() > 0) 
                 throw new Exception("El nickname ya existe");
-            //if(em.createQuery("select count(*) from Usuario where Mail = :m").setParameter("m",mail).getResultList().size() == 1) 
-            //    throw new Exception("El mail ya esta registrado");
+            if(em.createNamedQuery("Usuario.findByMail", Usuario.class).setParameter("mail",mail).getResultList().size() > 0) 
+                throw new Exception("El mail ya esta registrado");
             
             Usuario u = new Usuario(nick, nom, apell, mail, new SimpleDateFormat("dd/MM/yyyy").parse(fnac));
             if(!img.isEmpty()) u.setImagen(img);
@@ -47,10 +48,60 @@ public class ControladorUsuario implements IControladorUsuario {
             em.getTransaction().commit();
             em.close();
             
-            JOptionPane.showMessageDialog(null,"El usuario se registro con exito");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
         }
         
+    }
+    
+    @Override
+    public void AltaCanal(String nombre, boolean privado, int user_id) {
+        try {
+            
+            EntityManager em = emFactory.createEntityManager();
+            em.getTransaction().begin();
+            
+            if(em.createNamedQuery("Canal.findByNombre", Canal.class).setParameter("nombre", nombre).getResultList().size() > 0)
+                throw new Exception("El nombre del canal ya existe");
+            
+            Usuario u = em.find(Usuario.class, user_id);
+            if(nombre.isBlank()) nombre = u.getNickname();
+            
+            Canal c = new Canal(user_id, nombre, privado);
+            u.setCanal(c);
+            em.persist(c);
+            em.merge(u);
+            em.getTransaction().commit();
+            em.close();
+            
+            JOptionPane.showMessageDialog(null,"El usuario se registro con exito");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+        }
+    }
+    
+    @Override
+    public int obtenerIdUsuario(String nick) {
+        int id = -1;
+        try {
+            
+            EntityManager em = emFactory.createEntityManager();
+            em.getTransaction().begin();
+            
+            Usuario u = em.createNamedQuery("Usuario.findByNickname", Usuario.class).setParameter("nickname", nick).getSingleResult();
+            id = u.getId();
+            
+            em.getTransaction().commit();
+            em.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+        }
+        return id;
+    }
+    
+    @Override
+    public void EliminarUsuario(int id) {
+        //eliminacion re loca
+        //estilo lo de ingresar pero em.remove(u)
     }
 }

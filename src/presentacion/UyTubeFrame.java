@@ -182,10 +182,10 @@ public class UyTubeFrame extends javax.swing.JFrame {
         
         
         }catch(Exception ex){
-        ex.printStackTrace();
+            ex.printStackTrace();
         }
         }else{
-        JOptionPane.showMessageDialog(null,"Ya tiene una venta de usuarios abierta");
+            JOptionPane.showMessageDialog(null,"Ya tiene una venta de usuarios abierta");
         }
        /*
         Dimension desktopSize = Escritorio.getSize();
