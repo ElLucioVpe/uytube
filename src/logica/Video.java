@@ -73,11 +73,12 @@ public class Video implements Serializable {
         this.id = id;
     }
 
-    public Video(Integer id, String nombre, int duracion, String url, Date fechaPublicacion, Boolean privacidad) {
+    public Video(Integer id, String nombre, int duracion, String url,String Desc, Date fechaPublicacion, Boolean privacidad, String user) {
         this.id = id;
         this.nombre = nombre;
         this.duracion = duracion;
         this.url = url;
+        this.descripcion=Desc;
         this.fechaPublicacion = fechaPublicacion;
         this.privacidad = privacidad;
     }

@@ -11,5 +11,5 @@ package logica.controladores;
  */
 public interface IControladorVideo {
     
-    public abstract void AltaVideo();
+    public abstract void AltaVideo(String nombre, String duracion, String url, String desc, String fpub,String user);
 }

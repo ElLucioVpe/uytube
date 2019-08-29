@@ -203,7 +203,7 @@ public class UyTubeFrame extends javax.swing.JFrame {
         if(registroVideoX==null){
         try{
             
-             registroVideo registroVidWin = new registroVideo();
+             registroVideo registroVidWin = new registroVideo(vid);
              Escritorio.add(registroVidWin);
              Escritorio.moveToFront(registroVidWin);
              registroVidWin.setSize(Escritorio.getWidth(),Escritorio.getHeight());
