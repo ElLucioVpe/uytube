@@ -28,7 +28,7 @@ public class UyTubeFrame extends javax.swing.JFrame {
     public UyTubeFrame() {
         initComponents();
     }
-    private  registroVideo registroVidWin;
+    private registroVideo registroVidWin;
     private registroUser registroUserWin;
     /**
      * This method is called from within the constructor to initialize the form.
@@ -174,7 +174,7 @@ public class UyTubeFrame extends javax.swing.JFrame {
         if(x==null){
         try{
             
-             registroUser registroUserWin = new registroUser(user);
+             registroUserWin = new registroUser(user, this);
              Escritorio.add(registroUserWin);
              Escritorio.moveToFront(registroUserWin);
              registroUserWin.setSize(Escritorio.getWidth(),Escritorio.getHeight());
@@ -196,6 +196,21 @@ public class UyTubeFrame extends javax.swing.JFrame {
    
     }//GEN-LAST:event_RegistrarUsuarioActionPerformed
 
+    protected void RegistrarCanal(String n) {                                               
+        try{
+            
+            registroCanal canalWin = new registroCanal(user, n);
+            Escritorio.add(canalWin);
+            Escritorio.moveToFront(canalWin);
+            canalWin.setSize(Escritorio.getWidth(),Escritorio.getHeight());
+            canalWin.setLocation(0,0);
+            canalWin.setVisible(true);
+        
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+    }  
+   
     private void RegistrarVideoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarVideoActionPerformed
         // TODO add your handling code here:
           String registroVideoX = registroVideo.VideoRegister;

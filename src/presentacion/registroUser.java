@@ -9,6 +9,7 @@ package presentacion;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.util.Date;
+import javax.swing.JDesktopPane;
 import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
@@ -21,19 +22,21 @@ import org.apache.commons.io.FileUtils;
  */
 public class registroUser extends javax.swing.JInternalFrame {
 static String x;
+UyTubeFrame p;
 IControladorUsuario u;
-private registrarCanal canalWin;
+private registroCanal canalWin;
 JFileChooser fc;
     /**
      * Creates new form registroUser
      */
-    public registroUser(IControladorUsuario user) {
+    public registroUser(IControladorUsuario user, UyTubeFrame padre) {
         setVisible(true);
         initComponents();
         setTitle("Usuarios");
         setClosable(true);
         x="opened";
         u=user;
+        p=padre;
         fc = new JFileChooser();
         fc.setVisible(false);
         
@@ -272,11 +275,8 @@ JFileChooser fc;
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
         }
         
-        canalWin = new registrarCanal(u, textField3.getText());
-        canalWin.setSize(this.getWidth(), this.getHeight());
-        canalWin.setLocation(0,0);
-        canalWin.setVisible(true);
-        
+        p.RegistrarCanal(textField3.getText());
+        this.dispose();
     }//GEN-LAST:event_jButtonSiguienteActionPerformed
 
 
