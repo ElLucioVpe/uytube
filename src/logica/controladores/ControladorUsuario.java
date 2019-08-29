@@ -82,13 +82,7 @@ public class ControladorUsuario implements IControladorUsuario {
     }
     
     @Override
-    public void EliminarUsuario(int id) {
-        //eliminacion re loca
-        //estilo lo de ingresar pero em.remove(u)
-    }
-    
-    @Override
-    public void ModificarUsuario(int id, String nuevonom, String nuevoapell, Date nuevafechaNac, String nuevonomC, String nuevadesC, boolean nuevaprivC){
+    public void ModificarUsuario(int id, String nuevonom, String nuevoapell, String nuevafechaNac, String nuevonomC, String nuevadesC, boolean nuevaprivC){
         //en su respectivo frame deberan antes ser utilizados 
         //ListarUsuarios() y ConsultarUsuario(id)
         //los atributos que no se deseen modificar llegaran en blanco o null
@@ -100,7 +94,7 @@ public class ControladorUsuario implements IControladorUsuario {
             Usuario u = em.find(Usuario.class, id);
             if(!nuevonom.isBlank()) u.setNombre(nuevonom);
             if(!nuevoapell.isBlank()) u.setApellido(nuevoapell);
-            if(nuevafechaNac != null) u.setFechanac(nuevafechaNac);
+            if(nuevafechaNac != null) u.setFechanac(new SimpleDateFormat("dd/MM/yyyy").parse(nuevafechaNac));
             
             Canal c = em.find(Canal.class, u.getId()); //Por las dudas lo busco con find
             if(!nuevonomC.isBlank()) c.setNombre(nuevonomC);
@@ -154,5 +148,22 @@ public class ControladorUsuario implements IControladorUsuario {
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
         }
         return id;
+    }
+    
+    @Override
+    public void EliminarUsuario(int id) {
+        try {
+            
+            EntityManager em = emFactory.createEntityManager();
+            em.getTransaction().begin();
+            
+            Usuario u = em.find(Usuario.class, id);
+            em.remove(u);
+            em.getTransaction().commit();
+            em.close();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+        }
     }
 }
