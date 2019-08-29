@@ -55,7 +55,7 @@ public class ControladorUsuario implements IControladorUsuario {
     }
     
     @Override
-    public void AltaCanal(String nombre, boolean privado, int user_id) {
+    public void AltaCanal(String nombre, boolean privado, int user_id, String descripcion) {
         try {
             
             EntityManager em = emFactory.createEntityManager();
@@ -68,14 +68,15 @@ public class ControladorUsuario implements IControladorUsuario {
             if(nombre.isBlank()) nombre = u.getNickname();
             
             Canal c = new Canal(user_id, nombre, privado);
+            if(!descripcion.isEmpty()) c.setDescripcion(descripcion);
+            c.setUsuario(u);
             u.setCanal(c);
             em.persist(c);
             em.merge(u);
             em.getTransaction().commit();
             em.close();
-            
-            JOptionPane.showMessageDialog(null,"El usuario se registro con exito");
         } catch (Exception e) {
+            EliminarUsuario(user_id); //Elimino ya que no se completo correctamente todo el proceso
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
         }
     }

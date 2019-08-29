@@ -226,8 +226,6 @@ JFileChooser fc;
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
     private void jButtonSubirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSubirActionPerformed
-        /*JFileChooser fc = new JFileChooser();
-        fc.showOpenDialog(null);*/
         fc.setVisible(true);
         fc.showOpenDialog(null);
         File f = fc.getSelectedFile();
@@ -258,12 +256,12 @@ JFileChooser fc;
             
             //Creo el usuario
             u.AltaUsuario(
-                    textField3.getText(),
-                    textField1.getText(),
-                    textField2.getText(), 
-                    textField4.getText(),
-                    textField5.getText(),
-                    imagen
+                textField3.getText(),
+                textField1.getText(),
+                textField2.getText(), 
+                textField4.getText(),
+                textField5.getText(),
+                imagen
             );
             
             //Copio el archivo al directorio de imagenes, lo hago luego por si el nick ya existe
@@ -274,7 +272,9 @@ JFileChooser fc;
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
         }
         
-        registrarCanal canalWin = new registrarCanal(u, textField3.getText());
+        canalWin = new registrarCanal(u, textField3.getText());
+        canalWin.setSize(this.getWidth(), this.getHeight());
+        canalWin.setLocation(0,0);
         canalWin.setVisible(true);
         
     }//GEN-LAST:event_jButtonSiguienteActionPerformed

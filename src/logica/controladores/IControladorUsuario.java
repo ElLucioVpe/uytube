@@ -13,7 +13,7 @@ import java.util.Date;
 public interface IControladorUsuario {
     
     public abstract void AltaUsuario(String nick, String nom, String apell, String mail, String fnac, String img);
-    public abstract void AltaCanal(String nombre, boolean privado, int user_id);
+    public abstract void AltaCanal(String nombre, boolean privado, int user_id, String descripcion);
     public abstract int obtenerIdUsuario(String nick);
     public abstract void EliminarUsuario(int id);
 }
