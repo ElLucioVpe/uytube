@@ -9,15 +9,10 @@
     <class>logica.Categoria</class>
     <class>logica.Canal</class>
     <properties>
-      <!-- The JDBC driver of your database -->
-      <!-- The JDBC URL to the database instance -->
-      <!-- The database username -->
-      <!-- The database password -->
-      <property name="javax.persistence.jdbc.url" value="jdbc:hsqldb:file:data/uytubedb"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:hsqldb:file:data\uytubedb;hsqldb.lock_file=false"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
       <property name="javax.persistence.jdbc.driver" value="org.hsqldb.jdbcDriver"/>
       <property name="javax.persistence.jdbc.password" value="root"/>
-      <property name="javax.persistence.schema-generation.database.action" value="create"/>
     </properties>
   </persistence-unit>
 </persistence>

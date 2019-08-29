@@ -9,6 +9,8 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -23,27 +25,47 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "CANAL")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Canal.findAll", query = "SELECT c FROM Canal c")
-    , @NamedQuery(name = "Canal.findByNombre", query = "SELECT c FROM Canal c WHERE c.nombre = :nombre")
-    , @NamedQuery(name = "Canal.findByDescripcion", query = "SELECT c FROM Canal c WHERE c.descripcion = :descripcion")
-    , @NamedQuery(name = "Canal.findByAcceso", query = "SELECT c FROM Canal c WHERE c.acceso = :acceso")})
+    @NamedQuery(name = "Canal.findAll", query = "SELECT c FROM Canal c"),
+    @NamedQuery(name = "Canal.findById", query = "SELECT c FROM Canal c WHERE c.id = :id"),
+    @NamedQuery(name = "Canal.findByNombre", query = "SELECT c FROM Canal c WHERE c.nombre = :nombre"),
+    @NamedQuery(name = "Canal.findByDescripcion", query = "SELECT c FROM Canal c WHERE c.descripcion = :descripcion"),
+    @NamedQuery(name = "Canal.findByPrivacidad", query = "SELECT c FROM Canal c WHERE c.privacidad = :privacidad")})
 public class Canal implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @Column(name = "ID")
+    private Integer id;
     @Column(name = "NOMBRE")
     private String nombre;
+    @Basic(optional = false)
     @Column(name = "DESCRIPCION")
     private String descripcion;
-    @Column(name = "ACCESO")
-    private Boolean acceso;
+    @Basic(optional = false)
+    @Column(name = "PRIVACIDAD")
+    private Boolean privacidad;
 
     public Canal() {
     }
 
-    public Canal(String nombre) {
-        this.nombre = nombre;
+    public Canal(Integer id) {
+        this.id = id;
+    }
+
+    public Canal(Integer id, String descripcion, Boolean privacidad) {
+        this.id = id;
+        this.descripcion = descripcion;
+        this.privacidad = privacidad;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getNombre() {
@@ -62,18 +84,18 @@ public class Canal implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public Boolean getAcceso() {
-        return acceso;
+    public Boolean getPrivacidad() {
+        return privacidad;
     }
 
-    public void setAcceso(Boolean acceso) {
-        this.acceso = acceso;
+    public void setPrivacidad(Boolean privacidad) {
+        this.privacidad = privacidad;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (nombre != null ? nombre.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
@@ -84,7 +106,7 @@ public class Canal implements Serializable {
             return false;
         }
         Canal other = (Canal) object;
-        if ((this.nombre == null && other.nombre != null) || (this.nombre != null && !this.nombre.equals(other.nombre))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -92,7 +114,7 @@ public class Canal implements Serializable {
 
     @Override
     public String toString() {
-        return "logica.Canal[ nombre=" + nombre + " ]";
+        return "logica.Canal[ id=" + id + " ]";
     }
     
 }

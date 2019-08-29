@@ -28,8 +28,8 @@ public class UyTubeFrame extends javax.swing.JFrame {
     public UyTubeFrame() {
         initComponents();
     }
- private  registroVideo registroVidWin;
- private registroUser registroUserWin;
+    private  registroVideo registroVidWin;
+    private registroUser registroUserWin;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

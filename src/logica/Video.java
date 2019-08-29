@@ -10,6 +10,8 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -26,17 +28,20 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "VIDEO")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Video.findAll", query = "SELECT v FROM Video v")
-    , @NamedQuery(name = "Video.findById", query = "SELECT v FROM Video v WHERE v.id = :id")
-    , @NamedQuery(name = "Video.findByNombre", query = "SELECT v FROM Video v WHERE v.nombre = :nombre")
-    , @NamedQuery(name = "Video.findByDuracion", query = "SELECT v FROM Video v WHERE v.duracion = :duracion")
-    , @NamedQuery(name = "Video.findByUrl", query = "SELECT v FROM Video v WHERE v.url = :url")
-    , @NamedQuery(name = "Video.findByDescripcion", query = "SELECT v FROM Video v WHERE v.descripcion = :descripcion")
-    , @NamedQuery(name = "Video.findByFechaPub", query = "SELECT v FROM Video v WHERE v.fechaPub = :fechaPub")})
+    @NamedQuery(name = "Video.findAll", query = "SELECT v FROM Video v"),
+    @NamedQuery(name = "Video.findById", query = "SELECT v FROM Video v WHERE v.id = :id"),
+    @NamedQuery(name = "Video.findByNombre", query = "SELECT v FROM Video v WHERE v.nombre = :nombre"),
+    @NamedQuery(name = "Video.findByDuracion", query = "SELECT v FROM Video v WHERE v.duracion = :duracion"),
+    @NamedQuery(name = "Video.findByUrl", query = "SELECT v FROM Video v WHERE v.url = :url"),
+    @NamedQuery(name = "Video.findByDescripcion", query = "SELECT v FROM Video v WHERE v.descripcion = :descripcion"),
+    @NamedQuery(name = "Video.findByFechaPublicacion", query = "SELECT v FROM Video v WHERE v.fechaPublicacion = :fechaPublicacion"),
+    @NamedQuery(name = "Video.findByCategoria", query = "SELECT v FROM Video v WHERE v.categoria = :categoria"),
+    @NamedQuery(name = "Video.findByPrivacidad", query = "SELECT v FROM Video v WHERE v.privacidad = :privacidad")})
 public class Video implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "ID")
     private Integer id;
@@ -52,9 +57,14 @@ public class Video implements Serializable {
     @Column(name = "DESCRIPCION")
     private String descripcion;
     @Basic(optional = false)
-    @Column(name = "FECHA_PUB")
+    @Column(name = "FECHA_PUBLICACION")
     @Temporal(TemporalType.DATE)
-    private Date fechaPub;
+    private Date fechaPublicacion;
+    @Column(name = "CATEGORIA")
+    private String categoria;
+    @Basic(optional = false)
+    @Column(name = "PRIVACIDAD")
+    private Boolean privacidad;
 
     public Video() {
     }
@@ -63,12 +73,13 @@ public class Video implements Serializable {
         this.id = id;
     }
 
-    public Video(Integer id, String nombre, int duracion, String url, Date fechaPub) {
+    public Video(Integer id, String nombre, int duracion, String url, Date fechaPublicacion, Boolean privacidad) {
         this.id = id;
         this.nombre = nombre;
         this.duracion = duracion;
         this.url = url;
-        this.fechaPub = fechaPub;
+        this.fechaPublicacion = fechaPublicacion;
+        this.privacidad = privacidad;
     }
 
     public Integer getId() {
@@ -111,12 +122,28 @@ public class Video implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public Date getFechaPub() {
-        return fechaPub;
+    public Date getFechaPublicacion() {
+        return fechaPublicacion;
     }
 
-    public void setFechaPub(Date fechaPub) {
-        this.fechaPub = fechaPub;
+    public void setFechaPublicacion(Date fechaPublicacion) {
+        this.fechaPublicacion = fechaPublicacion;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
+    public Boolean getPrivacidad() {
+        return privacidad;
+    }
+
+    public void setPrivacidad(Boolean privacidad) {
+        this.privacidad = privacidad;
     }
 
     @Override
