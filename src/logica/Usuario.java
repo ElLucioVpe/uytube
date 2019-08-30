@@ -89,7 +89,6 @@ public class Usuario implements Serializable {
     }
 
     public Usuario(String nickname, String nombre, String apellido, String mail, Date fechanac) {
-        //this.id = id;
         this.nickname = nickname;
         this.nombre = nombre;
         this.apellido = apellido;

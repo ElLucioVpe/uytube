@@ -50,9 +50,13 @@ public class ListaDeReproduccion implements Serializable {
     @OneToMany(cascade = CascadeType.ALL)
     private Collection<Video> videos;
     
-    public ListaDeReproduccion(String nombre, Usuario u) {
+    public ListaDeReproduccion(){
+    }
+    
+    public ListaDeReproduccion(String nombre, Usuario u, boolean privada) {
         this.nombre = nombre;
         this.usuario = u;
+        this.privada = privada;
     }
 
     public Integer getId() {

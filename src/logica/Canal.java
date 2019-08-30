@@ -56,8 +56,11 @@ public class Canal implements Serializable {
     @OneToOne(optional = false)
     private Usuario usuario;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "USER_ID")
+    @OneToMany(cascade = CascadeType.ALL)
     private Collection<Video> videoColletcion;
+    
+    @OneToMany(cascade = CascadeType.ALL)
+    private Collection<Usuario> seguidores;
 
     public Canal() {
     }

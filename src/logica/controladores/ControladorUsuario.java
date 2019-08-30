@@ -4,12 +4,7 @@
  * and open the template in the editor.
  */
 package logica.controladores;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.Statement;
 import java.text.SimpleDateFormat;
-import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -19,7 +14,7 @@ import logica.Canal;
 import logica.Categoria;
 import logica.ListaDeReproduccion;
 import logica.Usuario;
-import logica.controladores.IControladorUsuario;
+//import logica.controladores.IControladorUsuario;
 
 /**
  *
@@ -27,7 +22,7 @@ import logica.controladores.IControladorUsuario;
  */
 public class ControladorUsuario implements IControladorUsuario {
     
-    private EntityManagerFactory emFactory;
+    private final EntityManagerFactory emFactory;
     
     public ControladorUsuario() {
         emFactory = Persistence.createEntityManagerFactory("UyTubePU");
@@ -142,10 +137,10 @@ public class ControladorUsuario implements IControladorUsuario {
             //for o lo que sea para ir por todos los usuarios
             //tal vez sea necesaria una tabla solo para almacenar cuales listas son por defecto
             //para luego ingresarlas en los nuevos usuarios
-            List<Usuario> users = em.createQuery("SELECT u FROM Usuario u").getResultList();
+            List users = em.createQuery("SELECT u FROM Usuario u").getResultList();
             for (int i = 0; i < users.size(); i++) {
-                ListaDeReproduccion l = new ListaDeReproduccion(nombre, users.get(i));
-                l.setPrivada(true);
+                Usuario u = (Usuario) users.get(i);
+                ListaDeReproduccion l = new ListaDeReproduccion(nombre, u, true);
                 em.persist(l);
             }
             //
@@ -166,8 +161,7 @@ public class ControladorUsuario implements IControladorUsuario {
             em.getTransaction().begin();
             
             Usuario propietario = em.find(Usuario.class, id_propietario);
-            ListaDeReproduccion l = new ListaDeReproduccion(nombre, propietario);
-            l.setPrivada(privacidad);
+            ListaDeReproduccion l = new ListaDeReproduccion(nombre, propietario, privacidad);
             //Dependiendo de como se seleccione tal vez se deba comprobar su existencia
             l.setCategoria(em.find(Categoria.class, categoria));
             em.persist(l);

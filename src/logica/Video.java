@@ -76,7 +76,7 @@ public class Video implements Serializable {
     private Boolean privacidad;
     
     @Column(name = "CANAL_USER_ID")
-    private Integer userId;
+    private Integer canal_user_id;
     
     @ManyToOne(optional = false)
     @JoinColumn(name = "CANAL_USER_ID", referencedColumnName = "USER_ID", insertable = false, updatable = false)
@@ -97,7 +97,7 @@ public class Video implements Serializable {
         this.descripcion=Desc;
         this.fechaPublicacion = fechaPublicacion;
         this.privacidad = privacidad;
-        this.userId=user;
+        this.canal_user_id=user;
     }
 
     public Integer getId() {
