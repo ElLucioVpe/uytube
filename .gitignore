@@ -48,3 +48,6 @@ data\uytubedb.script
 derby.log
 LICENSE
 manifest.mf
+build/built-jar.properties
+dist/UyTube.jar
+nbproject/private/private.xml
