@@ -36,7 +36,6 @@ public class ListaDeReproduccion implements Serializable {
     @Column(name = "NOMBRE")
     private String nombre;
     
-<<<<<<< HEAD
     @Column(name = "PRIVADA")
     private boolean privada;
     
@@ -44,8 +43,6 @@ public class ListaDeReproduccion implements Serializable {
     @ManyToOne
     private Categoria categoria;
     
-=======
->>>>>>> master
     @JoinColumn(name = "ID_PROPIETARIO", referencedColumnName = "ID", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Usuario usuario;
@@ -53,14 +50,11 @@ public class ListaDeReproduccion implements Serializable {
     @OneToMany(cascade = CascadeType.ALL)
     private Collection<Video> videos;
     
-<<<<<<< HEAD
     public ListaDeReproduccion(String nombre, Usuario u) {
         this.nombre = nombre;
         this.usuario = u;
     }
-    
-=======
->>>>>>> master
+
     public Integer getId() {
         return id;
     }
@@ -77,7 +71,6 @@ public class ListaDeReproduccion implements Serializable {
         this.nombre = nombre;
     }
     
-<<<<<<< HEAD
     public boolean getPrivada() {
         return privada;
     }
@@ -97,13 +90,7 @@ public class ListaDeReproduccion implements Serializable {
     public Usuario getUsuario() {
         return usuario;
     }
-    
-=======
-    public Usuario getUsuario() {
-        return usuario;
-    }
 
->>>>>>> master
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }

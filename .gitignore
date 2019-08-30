@@ -1,10 +1,11 @@
+*.xml
 build/
+nbproject/private/private.xml
 nbbuild/
 dist/
 nbdist/
 .nb-gradle/
 /build
-/data\*
 /dist
 /hsqldb
 /lib
@@ -12,12 +13,9 @@ nbdist/
 /src
 /test
 build.xml
-data\uytubedb
-data\uytubedb.properties
-data\uytubedb.script
 derby.log
 LICENSE
 manifest.mf
 build/built-jar.properties
 dist/UyTube.jar
-nbproject/private/private.xml
+*.xml
