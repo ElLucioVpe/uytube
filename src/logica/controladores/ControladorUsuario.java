@@ -16,6 +16,8 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.swing.JOptionPane;
 import logica.Canal;
+import logica.Categoria;
+import logica.ListaDeReproduccion;
 import logica.Usuario;
 import logica.controladores.IControladorUsuario;
 
@@ -101,7 +103,6 @@ public class ControladorUsuario implements IControladorUsuario {
             if(!nuevadesC.isBlank()) c.setDescripcion(nuevadesC);
             c.setPrivacidad(nuevaprivC); //al no poder comparar a null si no hay nueva damos la misma
             
-            u.setCanal(c);
             em.merge(c);
             em.merge(u);
             em.getTransaction().commit();
@@ -128,6 +129,54 @@ public class ControladorUsuario implements IControladorUsuario {
     public void ConsultarUsuario(int id){
         //devuelve un DataType o algo por el estilo con la informacion del usuario y su canal
         //esa informacion luego es mostrada en su respectivo frame
+    }
+    
+    //Listas de Reproduccion
+    @Override
+    public void AltaListaDeReproduccionPorDefecto(String nombre) {
+        try {
+            
+            EntityManager em = emFactory.createEntityManager();
+            em.getTransaction().begin();
+            
+            //for o lo que sea para ir por todos los usuarios
+            //tal vez sea necesaria una tabla solo para almacenar cuales listas son por defecto
+            //para luego ingresarlas en los nuevos usuarios
+            List<Usuario> users = em.createQuery("SELECT u FROM Usuario u").getResultList();
+            for (int i = 0; i < users.size(); i++) {
+                ListaDeReproduccion l = new ListaDeReproduccion(nombre, users.get(i));
+                l.setPrivada(true);
+                em.persist(l);
+            }
+            //
+                    
+            em.getTransaction().commit();
+            em.close();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+        }
+    }
+    
+    @Override
+    public void AltaListaDeReproduccionParticular(String nombre, int id_propietario, boolean privacidad, String categoria) {
+        try {
+            
+            EntityManager em = emFactory.createEntityManager();
+            em.getTransaction().begin();
+            
+            Usuario propietario = em.find(Usuario.class, id_propietario);
+            ListaDeReproduccion l = new ListaDeReproduccion(nombre, propietario);
+            l.setPrivada(privacidad);
+            //Dependiendo de como se seleccione tal vez se deba comprobar su existencia
+            l.setCategoria(em.find(Categoria.class, categoria));
+            em.persist(l);
+            em.getTransaction().commit();
+            em.close();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+        }
     }
     
     //Auxiliares

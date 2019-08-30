@@ -78,6 +78,9 @@ public class Usuario implements Serializable {
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "usuario")
     private Canal canal;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    private Collection<ListaDeReproduccion> listas;
+    
     public Usuario() {
     }
 
@@ -156,6 +159,14 @@ public class Usuario implements Serializable {
 
     public void setCanal(Canal canal) {
         this.canal = canal;
+    }
+    
+    public Collection<ListaDeReproduccion> getListas() {
+        return listas;
+    }
+
+    public void setListas(Collection<ListaDeReproduccion> listas) {
+        this.listas = listas;
     }
 
     @Override

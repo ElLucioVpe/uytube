@@ -36,6 +36,16 @@ public class ListaDeReproduccion implements Serializable {
     @Column(name = "NOMBRE")
     private String nombre;
     
+<<<<<<< HEAD
+    @Column(name = "PRIVADA")
+    private boolean privada;
+    
+    @JoinColumn(name = "CATEGORIA", referencedColumnName = "NOMBRE")
+    @ManyToOne
+    private Categoria categoria;
+    
+=======
+>>>>>>> master
     @JoinColumn(name = "ID_PROPIETARIO", referencedColumnName = "ID", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Usuario usuario;
@@ -43,6 +53,14 @@ public class ListaDeReproduccion implements Serializable {
     @OneToMany(cascade = CascadeType.ALL)
     private Collection<Video> videos;
     
+<<<<<<< HEAD
+    public ListaDeReproduccion(String nombre, Usuario u) {
+        this.nombre = nombre;
+        this.usuario = u;
+    }
+    
+=======
+>>>>>>> master
     public Integer getId() {
         return id;
     }
@@ -59,10 +77,33 @@ public class ListaDeReproduccion implements Serializable {
         this.nombre = nombre;
     }
     
+<<<<<<< HEAD
+    public boolean getPrivada() {
+        return privada;
+    }
+
+    public void setPrivada(boolean privada) {
+        this.privada = privada;
+    }
+    
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+    
+    public Usuario getUsuario() {
+        return usuario;
+    }
+    
+=======
     public Usuario getUsuario() {
         return usuario;
     }
 
+>>>>>>> master
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }

@@ -19,6 +19,10 @@ public interface IControladorUsuario {
     public abstract List<String> ListarUsuarios();
     public abstract void ConsultarUsuario(int id);
     
+    //Listas de Reproduccion
+    public abstract void AltaListaDeReproduccionPorDefecto(String nombre);
+    public abstract void AltaListaDeReproduccionParticular(String nombre, int id_propietario, boolean privacidad, String categoria);
+    
     //Auxiliares
     public abstract int obtenerIdUsuario(String nick);
     public abstract void EliminarUsuario(int id);
