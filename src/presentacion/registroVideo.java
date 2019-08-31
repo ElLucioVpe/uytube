@@ -177,7 +177,7 @@ IControladorVideo v;
                     textField2.getText(), 
                     textField4.getText(),
                     textField5.getText(),
-                    Integer.parseInt(textField6.getText())
+                    textField6.getText()
             );
             
             //Registrar canal
