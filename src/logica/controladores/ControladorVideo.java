@@ -27,20 +27,16 @@ public class ControladorVideo implements IControladorVideo {
         
     }
     
-    public void AltaVideo(String nombre, String duracion, String url, String desc, String fpub, int user){
+    public void AltaVideo(String nombre, String duracion, String url, String desc, String fpub, String user){
           try {
             
             EntityManager em = emFactory.createEntityManager();
             em.getTransaction().begin();
             
-            if(em.createQuery("select count(*) from Video where CANAL_USER_ID = :us AND NOMBRE =: nom ").setParameter("us",user)
-                    .setParameter("nom",nombre)
-                    .getResultList().size() == 1) 
-                
-                
-                throw new Exception("El video ya esta registrado en ese user");
+            //if(em.createQuery("select count(*) from Usuario INNER JOIN Canal ON  Video ON where Mail = :m").setParameter("m",mail).getResultList().size() == 1) 
+               // throw new Exception("El video ya esta registrado en ese user");
             
-            Video v = new Video(nombre, Integer.parseInt(duracion), url, desc, new SimpleDateFormat("dd/MM/yyyy").parse(fpub),true,user);
+            Video v = new Video(0,nombre, Integer.parseInt(duracion), url, desc, new SimpleDateFormat("dd/MM/yyyy").parse(fpub),false,user);
             em.persist(v);
             em.getTransaction().commit();
             em.close();
