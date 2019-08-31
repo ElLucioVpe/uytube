@@ -75,12 +75,18 @@ public class Usuario implements Serializable {
     @Column(name = "IMAGEN")
     private String imagen;
     
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "usuario")
+  @ManyToMany(cascade=CascadeType.ALL)
+  @JoinTable(name="Canal_Usuario",  joinColumns={@JoinColumn(referencedColumnName="ID")}
+                                        , inverseJoinColumns={@JoinColumn(referencedColumnName="ID")}) 
+    
+  private Set<Canal> canales;
+ 
+     
+   // @OneToOne(cascade = CascadeType.ALL, mappedBy = "usuario")
+    
+    
     private Canal canal;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private Collection<ListaDeReproduccion> listas;
-    
     public Usuario() {
     }
 

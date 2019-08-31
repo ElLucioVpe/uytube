@@ -28,8 +28,9 @@ public class UyTubeFrame extends javax.swing.JFrame {
     public UyTubeFrame() {
         initComponents();
     }
-    private registroVideo registroVidWin;
+    private  registroVideo registroVidWin;
     private registroUser registroUserWin;
+    private seguirUsuario seguirUsuarioWin;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -48,6 +49,7 @@ public class UyTubeFrame extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         RegistrarUsuario = new javax.swing.JMenuItem();
         RegistrarVideo = new javax.swing.JMenuItem();
+        registrarSeguidor = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
@@ -124,6 +126,14 @@ public class UyTubeFrame extends javax.swing.JFrame {
         });
         jMenu2.add(RegistrarVideo);
 
+        registrarSeguidor.setText("Registrar Seguidor");
+        registrarSeguidor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                registrarSeguidorActionPerformed(evt);
+            }
+        });
+        jMenu2.add(registrarSeguidor);
+
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Consultas");
@@ -174,7 +184,7 @@ public class UyTubeFrame extends javax.swing.JFrame {
         if(x==null){
         try{
             
-             registroUserWin = new registroUser(user, this);
+             registroUser registroUserWin = new registroUser(user);
              Escritorio.add(registroUserWin);
              Escritorio.moveToFront(registroUserWin);
              registroUserWin.setSize(Escritorio.getWidth(),Escritorio.getHeight());
@@ -196,21 +206,6 @@ public class UyTubeFrame extends javax.swing.JFrame {
    
     }//GEN-LAST:event_RegistrarUsuarioActionPerformed
 
-    protected void RegistrarCanal(String n) {                                               
-        try{
-            
-            registroCanal canalWin = new registroCanal(user, n);
-            Escritorio.add(canalWin);
-            Escritorio.moveToFront(canalWin);
-            canalWin.setSize(Escritorio.getWidth(),Escritorio.getHeight());
-            canalWin.setLocation(0,0);
-            canalWin.setVisible(true);
-        
-        }catch(Exception ex){
-            ex.printStackTrace();
-        }
-    }  
-   
     private void RegistrarVideoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarVideoActionPerformed
         // TODO add your handling code here:
           String registroVideoX = registroVideo.VideoRegister;
@@ -275,9 +270,10 @@ public class UyTubeFrame extends javax.swing.JFrame {
 
     private void jMenu4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu4ActionPerformed
         // TODO add your handling code here:
+        
         try{
             
-             listaReproduccion listaRep = new listaReproduccion();
+             listaReproduccionFrame listaRep = new listaReproduccionFrame();
              Escritorio.add(listaRep);
              Escritorio.moveToFront(listaRep);
              listaRep.setSize(Escritorio.getWidth(),Escritorio.getHeight());
@@ -310,6 +306,24 @@ public class UyTubeFrame extends javax.swing.JFrame {
     private void jMenu5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu5MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenu5MouseClicked
+
+    private void registrarSeguidorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarSeguidorActionPerformed
+   
+      //  String registrarSeguidor = registrarSeguidor.UserRegister;
+       // String x = registroUser.x;       
+        try{
+            
+             seguirUsuario seguirU = new seguirUsuario();
+             Escritorio.add(seguirU);
+             Escritorio.moveToFront(seguirU);
+             seguirU.setSize(Escritorio.getWidth(),Escritorio.getHeight());
+             seguirU.setLocation(0,0);
+        
+        
+        }catch(Exception ex){
+        ex.printStackTrace();
+        }
+    }//GEN-LAST:event_registrarSeguidorActionPerformed
 
     /**
      * @param args the command line arguments
@@ -360,5 +374,6 @@ public class UyTubeFrame extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem registrarSeguidor;
     // End of variables declaration//GEN-END:variables
 }
