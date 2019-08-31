@@ -5,16 +5,12 @@
  */
 package logica.controladores;
 import java.text.SimpleDateFormat;
-import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.swing.JOptionPane;
 import logica.Canal;
-import logica.Categoria;
-import logica.ListaDeReproduccion;
 import logica.Usuario;
-//import logica.controladores.IControladorUsuario;
 
 /**
  *
@@ -22,7 +18,7 @@ import logica.Usuario;
  */
 public class ControladorUsuario implements IControladorUsuario {
     
-    private final EntityManagerFactory emFactory;
+    private EntityManagerFactory emFactory;
     
     public ControladorUsuario() {
         emFactory = Persistence.createEntityManagerFactory("UyTubePU");
@@ -49,6 +45,7 @@ public class ControladorUsuario implements IControladorUsuario {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
         }
+        
     }
     
     @Override
@@ -79,109 +76,13 @@ public class ControladorUsuario implements IControladorUsuario {
     }
     
     @Override
-    public void ModificarUsuario(int id, String nuevonom, String nuevoapell, String nuevafechaNac, String nuevonomC, String nuevadesC, boolean nuevaprivC){
-        //en su respectivo frame deberan antes ser utilizados 
-        //ListarUsuarios() y ConsultarUsuario(id)
-        //los atributos que no se deseen modificar llegaran en blanco o null
-        try {
-            
-            EntityManager em = emFactory.createEntityManager();
-            em.getTransaction().begin();
-            
-            Usuario u = em.find(Usuario.class, id);
-            if(!nuevonom.isBlank()) u.setNombre(nuevonom);
-            if(!nuevoapell.isBlank()) u.setApellido(nuevoapell);
-            if(nuevafechaNac != null) u.setFechanac(new SimpleDateFormat("dd/MM/yyyy").parse(nuevafechaNac));
-            
-            Canal c = em.find(Canal.class, u.getId()); //Por las dudas lo busco con find
-            if(!nuevonomC.isBlank()) c.setNombre(nuevonomC);
-            if(!nuevadesC.isBlank()) c.setDescripcion(nuevadesC);
-            c.setPrivacidad(nuevaprivC); //al no poder comparar a null si no hay nueva damos la misma
-            
-            em.merge(c);
-            em.merge(u);
-            em.getTransaction().commit();
-            em.close();
-            
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
-        }
-        //Posteriormente en su respectivo frame se podra seleccionar para editar datos
-        //de los videos o listas de reproduccion del usuario
-        //ademas la imagen al llamarse igual ya que su nombre es el nick del usuario
-        //simplemente sera reemplazada luego de finalizada la modificacion en caso de ser necesario
-    }
-    
-    @Override
-    public List<String> ListarUsuarios(){
-        List<String> list = null;
-        //probablemente devuelve una lista de los nicks de los usuarios existentes
-        //esa lista luego es mostrada en su respectivo frame
-        return list;
-    }
-    
-    @Override
-    public void ConsultarUsuario(int id){
-        //devuelve un DataType o algo por el estilo con la informacion del usuario y su canal
-        //esa informacion luego es mostrada en su respectivo frame
-    }
-    
-    //Listas de Reproduccion
-    @Override
-    public void AltaListaDeReproduccionPorDefecto(String nombre) {
-        try {
-            
-            EntityManager em = emFactory.createEntityManager();
-            em.getTransaction().begin();
-            
-            //for o lo que sea para ir por todos los usuarios
-            //tal vez sea necesaria una tabla solo para almacenar cuales listas son por defecto
-            //para luego ingresarlas en los nuevos usuarios
-            List users = em.createQuery("SELECT u FROM Usuario u").getResultList();
-            for (int i = 0; i < users.size(); i++) {
-                Usuario u = (Usuario) users.get(i);
-                ListaDeReproduccion l = new ListaDeReproduccion(nombre, u, true);
-                em.persist(l);
-            }
-            //
-                    
-            em.getTransaction().commit();
-            em.close();
-            
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
-        }
-    }
-    
-    @Override
-    public void AltaListaDeReproduccionParticular(String nombre, int id_propietario, boolean privacidad, String categoria) {
-        try {
-            
-            EntityManager em = emFactory.createEntityManager();
-            em.getTransaction().begin();
-            
-            Usuario propietario = em.find(Usuario.class, id_propietario);
-            ListaDeReproduccion l = new ListaDeReproduccion(nombre, propietario, privacidad);
-            //Dependiendo de como se seleccione tal vez se deba comprobar su existencia
-            l.setCategoria(em.find(Categoria.class, categoria));
-            em.persist(l);
-            em.getTransaction().commit();
-            em.close();
-            
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
-        }
-    }
-    
-    //Auxiliares
-    @Override
     public int obtenerIdUsuario(String nick) {
         int id = -1;
         try {
             
             EntityManager em = emFactory.createEntityManager();
             em.getTransaction().begin();
-            
+           
             Usuario u = em.createNamedQuery("Usuario.findByNickname", Usuario.class).setParameter("nickname", nick).getSingleResult();
             id = u.getId();
             
@@ -195,18 +96,24 @@ public class ControladorUsuario implements IControladorUsuario {
     
     @Override
     public void EliminarUsuario(int id) {
-        try {
-            
+        //eliminacion re loca
+        //estilo lo de ingresar pero em.remove(u)
+    }
+    @Override
+    public void seguirUsuario(String seguidor, String seguido){
+          try {
             EntityManager em = emFactory.createEntityManager();
             em.getTransaction().begin();
-            
-            Usuario u = em.find(Usuario.class, id);
-            em.remove(u);
-            em.getTransaction().commit();
-            em.close();
-            
+            if(em.createNamedQuery("Canal.findByUserId", Canal.class).setParameter("USER_ID", obtenerIdUsuario(seguido)).getResultList().size() == 0)
+                throw new Exception("Ese usuario no existe o no tiene canal");
+        Canal c = em.find(Canal.class, obtenerIdUsuario(seguido));
+        Usuario u = em.createNamedQuery("Usuario.findByNickname", Usuario.class).setParameter("nickname", seguidor).getSingleResult();
+        c.setUsuario(u);
+        em.merge(c);      
+        
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
         }
+            
     }
 }
