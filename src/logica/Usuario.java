@@ -6,8 +6,8 @@
 package logica;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
-import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -15,18 +15,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
-
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -45,6 +42,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Usuario.findByFechanac", query = "SELECT u FROM Usuario u WHERE u.fechanac = :fechanac"),
     @NamedQuery(name = "Usuario.findByImagen", query = "SELECT u FROM Usuario u WHERE u.imagen = :imagen")})
 public class Usuario implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
+    private Collection<Valoracion> valoracionCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -89,7 +89,6 @@ public class Usuario implements Serializable {
     }
 
     public Usuario(String nickname, String nombre, String apellido, String mail, Date fechanac) {
-        //this.id = id;
         this.nickname = nickname;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -153,12 +152,20 @@ public class Usuario implements Serializable {
         this.imagen = imagen;
     }
 
-    public Set<Canal> getCanal() {
-        return canales;
+    public Canal getCanal() {
+        return canal;
     }
 
     public void setCanal(Canal canal) {
-        canales.add(canal);
+        this.canal = canal;
+    }
+    
+    public Collection<ListaDeReproduccion> getListas() {
+        return listas;
+    }
+
+    public void setListas(Collection<ListaDeReproduccion> listas) {
+        this.listas = listas;
     }
 
     @Override
@@ -184,6 +191,15 @@ public class Usuario implements Serializable {
     @Override
     public String toString() {
         return "logica.Usuario[ id=" + id + " ]";
+    }
+
+    @XmlTransient
+    public Collection<Valoracion> getValoracionCollection() {
+        return valoracionCollection;
+    }
+
+    public void setValoracionCollection(Collection<Valoracion> valoracionCollection) {
+        this.valoracionCollection = valoracionCollection;
     }
     
 }
