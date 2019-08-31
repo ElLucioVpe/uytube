@@ -6,15 +6,18 @@
 package logica;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -30,10 +33,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Canal.findByUserId", query = "SELECT c FROM Canal c WHERE c.userId = :userId"),
     @NamedQuery(name = "Canal.findByNombre", query = "SELECT c FROM Canal c WHERE c.nombre = :nombre"),
     @NamedQuery(name = "Canal.findByDescripcion", query = "SELECT c FROM Canal c WHERE c.descripcion = :descripcion"),
-    @NamedQuery(name = "Canal.findByPrivacidad", query = "SELECT c FROM Canal c WHERE c.privacidad = :privacidad"),
-    @NamedQuery(name = "Canal.findByPrivacidad", query = "SELECT c FROM Canal c WHERE c.privacidad = :privacidad"),
-})
-
+    @NamedQuery(name = "Canal.findByPrivacidad", query = "SELECT c FROM Canal c WHERE c.privacidad = :privacidad")})
 public class Canal implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -52,11 +52,16 @@ public class Canal implements Serializable {
     @Column(name = "PRIVACIDAD")
     private Boolean privacidad;
     
-   // @JoinColumn(name = "USER_ID", referencedColumnName = "ID", insertable = false, updatable = false)
-   // @OneToOne(optional = false)
-   // private Usuario usuario;
-@ManyToMany(mappedBy="Canales")
- private Set<Usuario> usuarios;
+    @JoinColumn(name = "USER_ID", referencedColumnName = "ID", insertable = false, updatable = false)
+    @OneToOne(optional = false)
+    private Usuario usuario;
+    
+    @OneToMany(cascade = CascadeType.ALL)
+    private Collection<Video> videoColletcion;
+    
+    @OneToMany(cascade = CascadeType.ALL)
+    private Collection<Usuario> seguidores;
+
     public Canal() {
     }
 
@@ -102,13 +107,12 @@ public class Canal implements Serializable {
         this.privacidad = privacidad;
     }
 
-    public Set<Usuario> getUsuario() {
-        return usuarios;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
     public void setUsuario(Usuario usuario) {
-     // if (this.usuarios == null)  {Set<Usuario> usr = new HashSet<Usuario>();}
-        usuarios.add(usuario);
+        this.usuario = usuario;
     }
 
     @Override
