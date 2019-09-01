@@ -6,9 +6,10 @@
 package logica;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-//import java.util.Set;
+import java.util.Iterator;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -56,47 +57,50 @@ public class Usuario implements Serializable {
     @Basic(optional = false)
     @Column(name = "ID")
     private Integer id;
-    
+
     @Column(name = "NOMBRE")
     private String nombre;
-    
+
     @Column(name = "APELLIDO")
     private String apellido;
-    
+
     @Basic(optional = false)
     @Column(name = "NICKNAME")
     private String nickname;
-    
+
     @Basic(optional = false)
     @Column(name = "MAIL")
     private String mail;
-    
+
     @Basic(optional = false)
     @Column(name = "FECHANAC")
     @Temporal(TemporalType.DATE)
     private Date fechanac;
-    
+
     @Column(name = "IMAGEN")
     private String imagen;
-    
+
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "usuario")
     private Canal canal;
 
     @OneToMany(cascade = CascadeType.ALL)
     private Collection<ListaDeReproduccion> listas;
-   
+
     @ManyToMany(cascade=CascadeType.ALL)
   @JoinTable(name="Canal_Usuario",  joinColumns={@JoinColumn(referencedColumnName="ID")}
-                                        , inverseJoinColumns={@JoinColumn(referencedColumnName="ID")}) 
-    
+                                        , inverseJoinColumns={@JoinColumn(referencedColumnName="ID")})
+
   private Collection<Canal> canales;
- 
-     
+
+
    // @OneToOne(cascade = CascadeType.ALL, mappedBy = "usuario")
-    
-    
+
+
    // private Canal canal;
-    
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private Collection<Valoracion> valoraciones;
+
     public Usuario() {
     }
 
@@ -110,6 +114,8 @@ public class Usuario implements Serializable {
         this.apellido = apellido;
         this.mail = mail;
         this.fechanac = fechanac;
+        this.listas = new ArrayList<>();
+        this.valoraciones = new ArrayList<>();
     }
 
     public Integer getId() {
@@ -175,7 +181,7 @@ public class Usuario implements Serializable {
     public void setCanal(Canal canal) {
         this.canal = canal;
     }
-    
+
     public Collection<ListaDeReproduccion> getListas() {
         return listas;
     }
@@ -183,12 +189,20 @@ public class Usuario implements Serializable {
     public void setListas(Collection<ListaDeReproduccion> listas) {
         this.listas = listas;
     }
-     public Collection<Canal> getCanalesSeguidos() {
-        return canales;
+
+    public void addLista(ListaDeReproduccion nuevalista) {
+        this.listas.add(nuevalista);
     }
 
-    public void setCanalSeguido(Canal canal) {
-        canales.add(canal);
+    public boolean existeLista(String nom_lista) {
+        boolean existe = false;
+        Iterator<ListaDeReproduccion> it = listas.iterator();
+
+        while(it.hasNext()){
+            if(it.next().getNombre().equals(nom_lista)) existe = true;
+        }
+
+        return existe;
     }
 
     @Override
@@ -224,5 +238,5 @@ public class Usuario implements Serializable {
     public void setValoracionCollection(Collection<Valoracion> valoracionCollection) {
         this.valoracionCollection = valoracionCollection;
     }
-    
+
 }

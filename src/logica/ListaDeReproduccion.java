@@ -43,7 +43,7 @@ public class ListaDeReproduccion implements Serializable {
     @ManyToOne
     private Categoria categoria;
     
-    @JoinColumn(name = "ID_PROPIETARIO", referencedColumnName = "ID", insertable = false, updatable = false)
+    @JoinColumn(name = "ID_PROPIETARIO", referencedColumnName = "ID", updatable = false)
     @ManyToOne(optional = false)
     private Usuario usuario;
     

@@ -44,25 +44,25 @@ public class Canal implements Serializable {
     @Basic(optional = false)
     @Column(name = "USER_ID")
     private Integer userId;
-    
+
     @Column(name = "NOMBRE")
     private String nombre;
-    
+
     @Column(name = "DESCRIPCION")
     private String descripcion;
-    
+
     @Basic(optional = false)
     @Column(name = "PRIVACIDAD")
     private Boolean privacidad;
-    
+
     @JoinColumn(name = "USER_ID", referencedColumnName = "ID", insertable = false, updatable = false)
     @OneToOne(optional = false)
     private Usuario usuario;
-    
+
     @OneToMany(cascade = CascadeType.ALL)
-    private Collection<Video> videoColletcion;
-    
-   // @OneToMany(cascade = CascadeType.ALL)
+    private Collection<Video> videoCollection;
+
+  // @ManyToMany(cascade = CascadeType.ALL)
     @ManyToMany(mappedBy="canales")
     private Collection<Usuario> seguidores;
 
@@ -150,5 +150,5 @@ public class Canal implements Serializable {
     public String toString() {
         return "logica.Canal[ userId=" + userId + " ]";
     }
-    
+
 }

@@ -8,6 +8,7 @@ package logica;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -81,6 +82,9 @@ public class Video implements Serializable {
     @ManyToOne(optional = false)
     @JoinColumn(name = "CANAL_USER_ID", referencedColumnName = "USER_ID", insertable = false, updatable = false)
     private Canal canal;
+    
+    @OneToMany(cascade = CascadeType.ALL)
+    private Collection<Valoracion> valoraciones;
 
     public Video() {
     }
@@ -163,7 +167,27 @@ public class Video implements Serializable {
     public void setPrivacidad(Boolean privacidad) {
         this.privacidad = privacidad;
     }
+    
+    public int getLikes() {
+        int likes = 0;
+        Iterator<Valoracion> it = valoraciones.iterator();
+        
+        while(it.hasNext()) {
+            if(it.next().getGustar()) likes++;
+        }
+        return likes;
+    }
 
+    public int getDislikes() {
+        int dislikes = 0;
+        Iterator<Valoracion> it = valoraciones.iterator();
+        
+        while(it.hasNext()) {
+            if(!it.next().getGustar()) dislikes++;
+        }
+        return dislikes;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

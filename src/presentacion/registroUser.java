@@ -276,6 +276,8 @@ JFileChooser fc;
         }
         
         p.RegistrarCanal(textField3.getText());
+        x=null;
+        u=null;
         this.dispose();
     }//GEN-LAST:event_jButtonSiguienteActionPerformed
 
