@@ -35,7 +35,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Canal.findByNombre", query = "SELECT c FROM Canal c WHERE c.nombre = :nombre"),
     @NamedQuery(name = "Canal.findByDescripcion", query = "SELECT c FROM Canal c WHERE c.descripcion = :descripcion"),
     @NamedQuery(name = "Canal.findByPrivacidad", query = "SELECT c FROM Canal c WHERE c.privacidad = :privacidad"),
-    //@NamedQuery(name = "Canal.findByPrivacidad", query = "SELECT c FROM Canal c WHERE c.seguidores = :seguidores")
 })
 public class Canal implements Serializable {
 
@@ -62,8 +61,7 @@ public class Canal implements Serializable {
     @OneToMany(cascade = CascadeType.ALL)
     private Collection<Video> videoCollection;
 
-  // @ManyToMany(cascade = CascadeType.ALL)
-    @ManyToMany(mappedBy="canales")
+    @ManyToMany(mappedBy="suscripciones")
     private Collection<Usuario> seguidores;
 
     public Canal() {
@@ -121,11 +119,15 @@ public class Canal implements Serializable {
     public Collection<Usuario> getSeguidores(){
         return seguidores;
     }
-    public void setSeguidores(Usuario usuario) {
-     // if (this.usuarios == null)  {Set<Usuario> usr = new HashSet<Usuario>();}
-        seguidores.add(usuario);
+    
+    public void agregarSeguidor(Usuario u) {
+        this.seguidores.add(u);
     }
-
+    
+    public void eliminarSeguidor(Usuario u) {
+        this.seguidores.remove(u);
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;
