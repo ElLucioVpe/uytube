@@ -3,11 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Esteban/Documents/NetBeansProjects/uytube-master/src/logica/ListaDeReproduccion.java</file>
-            <file>file:/C:/Users/Esteban/Documents/NetBeansProjects/uytube-master/src/logica/controladores/IControladorUsuario.java</file>
-            <file>file:/C:/Users/Esteban/Documents/NetBeansProjects/uytube-master/src/META-INF/persistence.xml</file>
-            <file>file:/C:/Users/Esteban/Documents/NetBeansProjects/uytube-master/src/logica/Usuario.java</file>
-            <file>file:/C:/Users/Esteban/Documents/NetBeansProjects/uytube-master/src/logica/controladores/ControladorUsuario.java</file>
+            <file>file:/C:/Users/antus/Desktop/uytube/src/presentacion/modificarUsuario.java</file>
+            <file>file:/C:/Users/antus/Desktop/uytube/src/logica/Usuario.java</file>
+            <file>file:/C:/Users/antus/Desktop/uytube/src/presentacion/seguirUsuario.java</file>
+            <file>file:/C:/Users/antus/Desktop/uytube/src/logica/controladores/ControladorUsuario.java</file>
+            <file>file:/C:/Users/antus/Desktop/uytube/src/presentacion/UyTubeFrame.java</file>
+            <file>file:/C:/Users/antus/Desktop/uytube/src/logica/Canal.java</file>
         </group>
     </open-files>
 </project-private>
