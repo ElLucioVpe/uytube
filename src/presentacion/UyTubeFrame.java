@@ -51,11 +51,7 @@ public class UyTubeFrame extends javax.swing.JFrame {
         seguirUsuarioButton = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
-<<<<<<< Updated upstream
         CrearLista = new javax.swing.JMenuItem();
-=======
-        ListarCategoria = new javax.swing.JMenuItem();
->>>>>>> Stashed changes
         jMenu5 = new javax.swing.JMenu();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
@@ -150,7 +146,6 @@ public class UyTubeFrame extends javax.swing.JFrame {
             }
         });
 
-<<<<<<< Updated upstream
         CrearLista.setText("Crear Lista de Reproduccion");
         CrearLista.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -158,15 +153,6 @@ public class UyTubeFrame extends javax.swing.JFrame {
             }
         });
         jMenu4.add(CrearLista);
-=======
-        ListarCategoria.setText("Listar Categorías");
-        ListarCategoria.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ListarCategoriaActionPerformed(evt);
-            }
-        });
-        jMenu4.add(ListarCategoria);
->>>>>>> Stashed changes
 
         jMenuBar1.add(jMenu4);
 
@@ -332,7 +318,6 @@ public class UyTubeFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenu5MouseClicked
 
-<<<<<<< Updated upstream
     private void CrearListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CrearListaActionPerformed
         // TODO add your handling code here:
         try{
@@ -343,22 +328,10 @@ public class UyTubeFrame extends javax.swing.JFrame {
              listaRep.setSize(Escritorio.getWidth(),Escritorio.getHeight());
              listaRep.setLocation(0,0);
 
-=======
-    private void ListarCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ListarCategoriaActionPerformed
-    try{
-            
-             listarCategorias ListarCategoria = new listarCategorias();
-             Escritorio.add(ListarCategoria);
-             Escritorio.moveToFront(ListarCategoria);
-             ListarCategoria.setSize(Escritorio.getWidth(),Escritorio.getHeight());
-             ListarCategoria.setLocation(0,0);
-        
->>>>>>> Stashed changes
         
         }catch(Exception ex){
         ex.printStackTrace();
         }
-<<<<<<< Updated upstream
     }//GEN-LAST:event_CrearListaActionPerformed
 
     
@@ -371,10 +344,6 @@ public class UyTubeFrame extends javax.swing.JFrame {
              seguirU.setLocation(0,0);
     }//GEN-LAST:event_seguirUsuarioButtonActionPerformed
     
-=======
-    }//GEN-LAST:event_ListarCategoriaActionPerformed
-
->>>>>>> Stashed changes
     /**
      * @param args the command line arguments
      */
@@ -414,7 +383,6 @@ public class UyTubeFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem CrearLista;
     private javax.swing.JDesktopPane Escritorio;
-    private javax.swing.JMenuItem ListarCategoria;
     private javax.swing.JMenuItem RegistrarUsuario;
     private javax.swing.JMenuItem RegistrarVideo;
     private javax.swing.JFrame jFrame1;

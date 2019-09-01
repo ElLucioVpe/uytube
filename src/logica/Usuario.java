@@ -206,7 +206,17 @@ public class Usuario implements Serializable {
     public void eliminarSuscripcion(Canal c) {
         this.suscripciones.remove(c);
     }
-
+    
+    public void agregarValoracion(Valoracion v) {
+        this.valoraciones.add(v);
+    }
+    
+    public void eliminarValoracion(Valoracion v) {
+        this.valoraciones.remove(v);
+    }
+    
+    //public void modificarValoracion(Valoracion v)
+    
     @Override
     public int hashCode() {
         int hash = 0;

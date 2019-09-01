@@ -101,21 +101,12 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenu4ActionPerformed"/>
           </Events>
           <SubComponents>
-<<<<<<< Updated upstream
             <MenuItem class="javax.swing.JMenuItem" name="CrearLista">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Crear Lista de Reproduccion"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CrearListaActionPerformed"/>
-=======
-            <MenuItem class="javax.swing.JMenuItem" name="ListarCategoria">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Listar Categor&#xed;as"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ListarCategoriaActionPerformed"/>
->>>>>>> Stashed changes
               </Events>
             </MenuItem>
           </SubComponents>
