@@ -6,6 +6,7 @@
 package logica;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
@@ -98,6 +99,8 @@ public class Usuario implements Serializable {
         this.apellido = apellido;
         this.mail = mail;
         this.fechanac = fechanac;
+        this.listas = new ArrayList<>();
+        this.valoraciones = new ArrayList<>();
     }
 
     public Integer getId() {

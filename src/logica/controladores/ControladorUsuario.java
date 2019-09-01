@@ -51,12 +51,11 @@ public class ControladorUsuario implements IControladorUsuario {
             List listasD = em.createQuery("select l from ListaDeReproduccion_PorDefecto l").getResultList();
             if (!listasD.isEmpty()) {
                 Iterator it = listasD.iterator();
-                
                 while(it.hasNext()) {
                     ListaDeReproduccion_PorDefecto ld = (ListaDeReproduccion_PorDefecto) it.next();
                     ListaDeReproduccion l = new ListaDeReproduccion(ld.getNombre(), u, true);
+                    em.persist(l);
                     u.addLista(l);
-                    em.persist(l); //creo esto solo genera datos repetidos en diferentes tablas, pero por las dudas
                 }
                 em.merge(u);
             }
