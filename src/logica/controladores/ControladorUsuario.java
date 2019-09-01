@@ -252,7 +252,6 @@ public class ControladorUsuario implements IControladorUsuario {
     }
 
     @Override
-    
     public void EliminarUsuario(int id) {
         try {
 
@@ -296,7 +295,7 @@ public class ControladorUsuario implements IControladorUsuario {
             Canal c = em.find(Canal.class, obtenerIdUsuario(seguido));
             Usuario u = em.createNamedQuery("Usuario.findByNickname", Usuario.class).setParameter("nickname", seguidor).getSingleResult();
             c.setUsuario(u);
-            em.merge(c);      
+            em.merge(c);
         
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());

@@ -11,7 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import logica.Categoria;
-import net.proteanit.sql.DbUtils;
+//import net.proteanit.sql.DbUtils;
 import java.awt.Toolkit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
