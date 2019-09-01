@@ -6,6 +6,7 @@
 package logica.controladores;
 
 import java.util.List;
+import logica.dt.UsuarioDt;
 
 /**
  *
@@ -17,7 +18,7 @@ public interface IControladorUsuario {
     public abstract void AltaCanal(String nombre, boolean privado, int user_id, String descripcion);
     public abstract void ModificarUsuario(int id, String nuevonom, String nuevoapell, String nuevafechaNac, String nuevonomC, String nuevadesC, boolean nuevaprivC);
     public abstract List<String> ListarUsuarios();
-    public abstract void ConsultarUsuario(int id);
+    public abstract UsuarioDt ConsultarUsuario(int id);
 
     //Listas de Reproduccion
     public abstract void AltaListaDeReproduccionPorDefecto(String nombre);

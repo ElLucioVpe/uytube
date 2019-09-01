@@ -11,12 +11,14 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 import javax.swing.JOptionPane;
 import logica.Canal;
 import logica.Categoria;
 import logica.ListaDeReproduccion;
 import logica.ListaDeReproduccion_PorDefecto;
 import logica.Usuario;
+import logica.dt.UsuarioDt;
 //import logica.controladores.IControladorUsuario;
 
 /**
@@ -132,15 +134,42 @@ public class ControladorUsuario implements IControladorUsuario {
     @Override
     public List<String> ListarUsuarios(){
         List<String> list = null;
-        //probablemente devuelve una lista de los nicks de los usuarios existentes
-        //esa lista luego es mostrada en su respectivo frame
+        try {
+            //probablemente devuelve una lista de los nicks de los usuarios existentes
+            //esa lista luego es mostrada en su respectivo frame
+            EntityManager em = emFactory.createEntityManager();
+            List users = em.createQuery("SELECT nick FROM Usuario u").getResultList();
+            Iterator it = users.iterator();
+            while(it.hasNext()) {
+                Usuario u = (Usuario) it.next();
+                list.add(u.getNickname());
+            }
+            em.getTransaction().commit();
+            em.close();
+
+            JOptionPane.showMessageDialog(null,"La lista de reproduccion se creo con exito");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+        }
         return list;
+
     }
 
     @Override
-    public void ConsultarUsuario(int id){
+    public UsuarioDT ConsultarUsuario(int id){
         //devuelve un DataType o algo por el estilo con la informacion del usuario y su canal
         //esa informacion luego es mostrada en su respectivo frame
+        UsuarioDT dt = null;
+        try {
+            EntityManager em = emFactory.createEntityManager();
+            //List users = em.createQuery("SELECT nick FROM Usuario u WHERE id = :id").getResultList();
+            TypedQuery<Usuario> query = em.createQuery("SELECT * FROM Usuario u WHERE u.id = :id", Usuario.class);
+            Usuario u = query.setParameter("id", id).getSingleResult();
+            dt = new UsuarioDT(u);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+        }
+        return dt;
     }
 
     //Listas de Reproduccion
@@ -225,7 +254,6 @@ public class ControladorUsuario implements IControladorUsuario {
     @Override
     
     public void EliminarUsuario(int id) {
-<<<<<<< Updated upstream
         try {
 
             EntityManager em = emFactory.createEntityManager();
@@ -239,9 +267,6 @@ public class ControladorUsuario implements IControladorUsuario {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
         }
-=======
- 
->>>>>>> Stashed changes
     }
 
     @Override
