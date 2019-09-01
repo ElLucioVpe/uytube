@@ -5,6 +5,8 @@
  */
 package logica.controladores;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -13,6 +15,7 @@ import javax.swing.JOptionPane;
 import logica.Canal;
 import logica.Categoria;
 import logica.ListaDeReproduccion;
+import logica.ListaDeReproduccion_PorDefecto;
 import logica.Usuario;
 //import logica.controladores.IControladorUsuario;
 
@@ -42,7 +45,22 @@ public class ControladorUsuario implements IControladorUsuario {
             
             Usuario u = new Usuario(nick, nom, apell, mail, new SimpleDateFormat("dd/MM/yyyy").parse(fnac));
             if(!img.isEmpty()) u.setImagen(img);
+            
             em.persist(u);
+            //Creacion de listas de reproduccion por defecto existentes
+            List listasD = em.createQuery("select l from ListaDeReproduccion_PorDefecto l").getResultList();
+            if (!listasD.isEmpty()) {
+                Iterator it = listasD.iterator();
+                
+                while(it.hasNext()) {
+                    ListaDeReproduccion_PorDefecto ld = (ListaDeReproduccion_PorDefecto) it.next();
+                    ListaDeReproduccion l = new ListaDeReproduccion(ld.getNombre(), u, true);
+                    u.addLista(l);
+                    em.persist(l); //creo esto solo genera datos repetidos en diferentes tablas, pero por las dudas
+                }
+                em.merge(u);
+            }
+            //
             em.getTransaction().commit();
             em.close();
             
@@ -134,20 +152,24 @@ public class ControladorUsuario implements IControladorUsuario {
             EntityManager em = emFactory.createEntityManager();
             em.getTransaction().begin();
             
-            //for o lo que sea para ir por todos los usuarios
-            //tal vez sea necesaria una tabla solo para almacenar cuales listas son por defecto
-            //para luego ingresarlas en los nuevos usuarios
+            if(em.find(ListaDeReproduccion_PorDefecto.class, nombre) != null)
+                throw new Exception("El nombre de la lista ya existe");
+            
+            em.persist(new ListaDeReproduccion_PorDefecto(nombre));
             List users = em.createQuery("SELECT u FROM Usuario u").getResultList();
-            for (int i = 0; i < users.size(); i++) {
-                Usuario u = (Usuario) users.get(i);
+            
+            Iterator it = users.iterator();
+            while(it.hasNext()) {
+                Usuario u = (Usuario) it.next();
                 ListaDeReproduccion l = new ListaDeReproduccion(nombre, u, true);
                 em.persist(l);
-            }
-            //
-                    
+                u.addLista(l);
+                em.merge(u);
+            }    
             em.getTransaction().commit();
             em.close();
             
+            JOptionPane.showMessageDialog(null,"La lista de reproduccion se creo con exito");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
         }
@@ -161,13 +183,20 @@ public class ControladorUsuario implements IControladorUsuario {
             em.getTransaction().begin();
             
             Usuario propietario = em.find(Usuario.class, id_propietario);
+            
+            if(propietario == null) throw new Exception("El usuario ingresado no existe");
+            if(propietario.existeLista(nombre)) throw new Exception("El nombre de la lista ya existe");
+            
             ListaDeReproduccion l = new ListaDeReproduccion(nombre, propietario, privacidad);
-            //Dependiendo de como se seleccione tal vez se deba comprobar su existencia
-            l.setCategoria(em.find(Categoria.class, categoria));
+            if(!categoria.equals("Ninguna")) l.setCategoria(em.find(Categoria.class, categoria));
+            
             em.persist(l);
+            propietario.addLista(l);
+            em.merge(propietario);
             em.getTransaction().commit();
             em.close();
             
+            JOptionPane.showMessageDialog(null,"La lista de reproduccion se creo con exito");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
         }
@@ -183,8 +212,9 @@ public class ControladorUsuario implements IControladorUsuario {
             em.getTransaction().begin();
             
             Usuario u = em.createNamedQuery("Usuario.findByNickname", Usuario.class).setParameter("nickname", nick).getSingleResult();
+            if(u == null) throw new Exception("El usuario no existe");
+                
             id = u.getId();
-            
             em.getTransaction().commit();
             em.close();
         } catch (Exception e) {
@@ -208,5 +238,22 @@ public class ControladorUsuario implements IControladorUsuario {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
         }
+    }
+    
+    @Override
+    public List obtenerCategorias() {
+        List l = new ArrayList<String>();
+        try {
+            EntityManager em = emFactory.createEntityManager();
+            em.getTransaction().begin();
+            
+            l = em.createQuery("select c.nombre from Categoria c").getResultList();
+                    
+            em.getTransaction().commit();
+            em.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+        }
+        return l;
     }
 }

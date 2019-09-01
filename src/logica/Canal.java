@@ -14,6 +14,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -57,9 +58,9 @@ public class Canal implements Serializable {
     private Usuario usuario;
     
     @OneToMany(cascade = CascadeType.ALL)
-    private Collection<Video> videoColletcion;
+    private Collection<Video> videoCollection;
     
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
     private Collection<Usuario> seguidores;
 
     public Canal() {

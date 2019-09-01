@@ -8,6 +8,7 @@ package logica;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -80,6 +81,9 @@ public class Usuario implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL)
     private Collection<ListaDeReproduccion> listas;
+    
+    @OneToMany(cascade = CascadeType.ALL)
+    private Collection<Valoracion> valoraciones;
     
     public Usuario() {
     }
@@ -167,7 +171,22 @@ public class Usuario implements Serializable {
     public void setListas(Collection<ListaDeReproduccion> listas) {
         this.listas = listas;
     }
+    
+    public void addLista(ListaDeReproduccion nuevalista) {
+        this.listas.add(nuevalista);
+    }
 
+    public boolean existeLista(String nom_lista) {
+        boolean existe = false;
+        Iterator<ListaDeReproduccion> it = listas.iterator();
+        
+        while(it.hasNext()){
+            if(it.next().getNombre().equals(nom_lista)) existe = true;
+        }
+        
+        return existe;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

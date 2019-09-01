@@ -26,4 +26,5 @@ public interface IControladorUsuario {
     //Auxiliares
     public abstract int obtenerIdUsuario(String nick);
     public abstract void EliminarUsuario(int id);
+    public abstract List obtenerCategorias();
 }

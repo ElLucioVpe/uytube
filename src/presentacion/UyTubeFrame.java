@@ -50,6 +50,7 @@ public class UyTubeFrame extends javax.swing.JFrame {
         RegistrarVideo = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
+        CrearLista = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
@@ -135,6 +136,15 @@ public class UyTubeFrame extends javax.swing.JFrame {
                 jMenu4ActionPerformed(evt);
             }
         });
+
+        CrearLista.setText("Crear Lista de Reproduccion");
+        CrearLista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CrearListaActionPerformed(evt);
+            }
+        });
+        jMenu4.add(CrearLista);
+
         jMenuBar1.add(jMenu4);
 
         jMenu5.setText("Categoria");
@@ -274,19 +284,7 @@ public class UyTubeFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenu1ActionPerformed
 
     private void jMenu4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu4ActionPerformed
-        // TODO add your handling code here:
-        try{
-            
-             listaReproduccion listaRep = new listaReproduccion();
-             Escritorio.add(listaRep);
-             Escritorio.moveToFront(listaRep);
-             listaRep.setSize(Escritorio.getWidth(),Escritorio.getHeight());
-             listaRep.setLocation(0,0);
         
-        
-        }catch(Exception ex){
-        ex.printStackTrace();
-        }
         
     }//GEN-LAST:event_jMenu4ActionPerformed
 
@@ -310,6 +308,22 @@ public class UyTubeFrame extends javax.swing.JFrame {
     private void jMenu5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu5MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenu5MouseClicked
+
+    private void CrearListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CrearListaActionPerformed
+        // TODO add your handling code here:
+        try{
+            
+             listaReproduccion listaRep = new listaReproduccion(user);
+             Escritorio.add(listaRep);
+             Escritorio.moveToFront(listaRep);
+             listaRep.setSize(Escritorio.getWidth(),Escritorio.getHeight());
+             listaRep.setLocation(0,0);
+             
+        
+        }catch(Exception ex){
+        ex.printStackTrace();
+        }
+    }//GEN-LAST:event_CrearListaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -348,6 +362,7 @@ public class UyTubeFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem CrearLista;
     private javax.swing.JDesktopPane Escritorio;
     private javax.swing.JMenuItem RegistrarUsuario;
     private javax.swing.JMenuItem RegistrarVideo;
