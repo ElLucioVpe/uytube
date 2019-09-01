@@ -223,7 +223,9 @@ public class ControladorUsuario implements IControladorUsuario {
     }
 
     @Override
+    
     public void EliminarUsuario(int id) {
+<<<<<<< Updated upstream
         try {
 
             EntityManager em = emFactory.createEntityManager();
@@ -237,6 +239,9 @@ public class ControladorUsuario implements IControladorUsuario {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
         }
+=======
+ 
+>>>>>>> Stashed changes
     }
 
     @Override
