@@ -334,6 +334,16 @@ public class UyTubeFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_CrearListaActionPerformed
 
+    
+        private void seguirUsuarioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seguirUsuarioButtonActionPerformed
+        // TODO add your handling code here:
+           seguirUsuario seguirU = new seguirUsuario();
+             Escritorio.add(seguirU);
+             Escritorio.moveToFront(seguirU);
+             seguirU.setSize(Escritorio.getWidth(),Escritorio.getHeight());
+             seguirU.setLocation(0,0);
+    }//GEN-LAST:event_seguirUsuarioButtonActionPerformed
+    
     /**
      * @param args the command line arguments
      */

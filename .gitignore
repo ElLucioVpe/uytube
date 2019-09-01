@@ -1,5 +1,6 @@
 *.xml
 build/
+build\
 nbproject/private/private.xml
 nbbuild/
 dist/
