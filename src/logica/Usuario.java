@@ -8,6 +8,7 @@ package logica;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+//import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -15,6 +16,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -80,6 +84,18 @@ public class Usuario implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL)
     private Collection<ListaDeReproduccion> listas;
+   
+    @ManyToMany(cascade=CascadeType.ALL)
+  @JoinTable(name="Canal_Usuario",  joinColumns={@JoinColumn(referencedColumnName="ID")}
+                                        , inverseJoinColumns={@JoinColumn(referencedColumnName="ID")}) 
+    
+  private Collection<Canal> canales;
+ 
+     
+   // @OneToOne(cascade = CascadeType.ALL, mappedBy = "usuario")
+    
+    
+   // private Canal canal;
     
     public Usuario() {
     }
@@ -166,6 +182,13 @@ public class Usuario implements Serializable {
 
     public void setListas(Collection<ListaDeReproduccion> listas) {
         this.listas = listas;
+    }
+     public Collection<Canal> getCanalesSeguidos() {
+        return canales;
+    }
+
+    public void setCanalSeguido(Canal canal) {
+        canales.add(canal);
     }
 
     @Override

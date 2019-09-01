@@ -14,6 +14,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -33,7 +34,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Canal.findByUserId", query = "SELECT c FROM Canal c WHERE c.userId = :userId"),
     @NamedQuery(name = "Canal.findByNombre", query = "SELECT c FROM Canal c WHERE c.nombre = :nombre"),
     @NamedQuery(name = "Canal.findByDescripcion", query = "SELECT c FROM Canal c WHERE c.descripcion = :descripcion"),
-    @NamedQuery(name = "Canal.findByPrivacidad", query = "SELECT c FROM Canal c WHERE c.privacidad = :privacidad")})
+    @NamedQuery(name = "Canal.findByPrivacidad", query = "SELECT c FROM Canal c WHERE c.privacidad = :privacidad"),
+    //@NamedQuery(name = "Canal.findByPrivacidad", query = "SELECT c FROM Canal c WHERE c.seguidores = :seguidores")
+})
 public class Canal implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -59,7 +62,8 @@ public class Canal implements Serializable {
     @OneToMany(cascade = CascadeType.ALL)
     private Collection<Video> videoColletcion;
     
-    @OneToMany(cascade = CascadeType.ALL)
+   // @OneToMany(cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy="canales")
     private Collection<Usuario> seguidores;
 
     public Canal() {
@@ -113,6 +117,13 @@ public class Canal implements Serializable {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+    public Collection<Usuario> getSeguidores(){
+        return seguidores;
+    }
+    public void setSeguidores(Usuario usuario) {
+     // if (this.usuarios == null)  {Set<Usuario> usr = new HashSet<Usuario>();}
+        seguidores.add(usuario);
     }
 
     @Override

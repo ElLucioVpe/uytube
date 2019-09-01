@@ -48,6 +48,7 @@ public class UyTubeFrame extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         RegistrarUsuario = new javax.swing.JMenuItem();
         RegistrarVideo = new javax.swing.JMenuItem();
+        seguirUsuarioButton = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
@@ -123,6 +124,14 @@ public class UyTubeFrame extends javax.swing.JFrame {
             }
         });
         jMenu2.add(RegistrarVideo);
+
+        seguirUsuarioButton.setText("Registro Seguidor");
+        seguirUsuarioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                seguirUsuarioButtonActionPerformed(evt);
+            }
+        });
+        jMenu2.add(seguirUsuarioButton);
 
         jMenuBar1.add(jMenu2);
 
@@ -311,6 +320,15 @@ public class UyTubeFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenu5MouseClicked
 
+    private void seguirUsuarioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seguirUsuarioButtonActionPerformed
+        // TODO add your handling code here:
+           seguirUsuario seguirU = new seguirUsuario();
+             Escritorio.add(seguirU);
+             Escritorio.moveToFront(seguirU);
+             seguirU.setSize(Escritorio.getWidth(),Escritorio.getHeight());
+             seguirU.setLocation(0,0);
+    }//GEN-LAST:event_seguirUsuarioButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -360,5 +378,6 @@ public class UyTubeFrame extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem seguirUsuarioButton;
     // End of variables declaration//GEN-END:variables
 }
