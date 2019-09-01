@@ -22,13 +22,12 @@ public interface IControladorUsuario {
     //Listas de Reproduccion
     public abstract void AltaListaDeReproduccionPorDefecto(String nombre);
     public abstract void AltaListaDeReproduccionParticular(String nombre, int id_propietario, boolean privacidad, String categoria);
-
+    
+    //SeguirUsuario
+    public abstract void seguirUsuario(String seguidor, String seguido);
+    
     //Auxiliares
     public abstract int obtenerIdUsuario(String nick);
     public abstract void EliminarUsuario(int id);
     public abstract List obtenerCategorias();
-    
-    //SeguirUsuario
-    
-  public abstract void seguirUsuario(String seguidor, String seguido);
 }

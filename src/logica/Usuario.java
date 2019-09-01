@@ -87,16 +87,9 @@ public class Usuario implements Serializable {
     private Collection<ListaDeReproduccion> listas;
 
     @ManyToMany(cascade=CascadeType.ALL)
-  @JoinTable(name="Canal_Usuario",  joinColumns={@JoinColumn(referencedColumnName="ID")}
-                                        , inverseJoinColumns={@JoinColumn(referencedColumnName="ID")})
-
-  private Collection<Canal> canales;
-
-
-   // @OneToOne(cascade = CascadeType.ALL, mappedBy = "usuario")
-
-
-   // private Canal canal;
+    @JoinTable(name="Canal_Usuario",  joinColumns={@JoinColumn(referencedColumnName="ID")}
+    , inverseJoinColumns={@JoinColumn(referencedColumnName="USER_ID")})
+    private Collection<Canal> suscripciones;
 
     @OneToMany(cascade = CascadeType.ALL)
     private Collection<Valoracion> valoraciones;
@@ -116,6 +109,7 @@ public class Usuario implements Serializable {
         this.fechanac = fechanac;
         this.listas = new ArrayList<>();
         this.valoraciones = new ArrayList<>();
+        this.suscripciones = new ArrayList<>();
     }
 
     public Integer getId() {
@@ -203,6 +197,14 @@ public class Usuario implements Serializable {
         }
 
         return existe;
+    }
+    
+    public void agregarSuscripcion(Canal c) {
+        this.suscripciones.add(c);
+    }
+    
+    public void eliminarSuscripcion(Canal c) {
+        this.suscripciones.remove(c);
     }
 
     @Override
