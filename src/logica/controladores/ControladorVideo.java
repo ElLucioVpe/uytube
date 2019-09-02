@@ -20,7 +20,6 @@ import logica.Video;
 
 public class ControladorVideo implements IControladorVideo {
     
-    private Collection videos;
     private EntityManagerFactory emFactory;
       
     public ControladorVideo() {
@@ -36,8 +35,6 @@ public class ControladorVideo implements IControladorVideo {
             if(em.createQuery("select count(*) from Video where CANAL_USER_ID = :us AND NOMBRE =: nom ").setParameter("us",user)
                     .setParameter("nom",nombre)
                     .getResultList().size() == 1) 
-                
-                
                 throw new Exception("El video ya esta registrado en ese user");
             
             Video v = new Video(nombre, Integer.parseInt(duracion), url, desc, new SimpleDateFormat("dd/MM/yyyy").parse(fpub),true,user);

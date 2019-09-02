@@ -11,8 +11,8 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.TypedQuery;
 import javax.swing.JOptionPane;
+import javax.persistence.TypedQuery; 
 import logica.Canal;
 import logica.Categoria;
 import logica.ListaDeReproduccion;
@@ -152,20 +152,17 @@ public class ControladorUsuario implements IControladorUsuario {
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
         }
         return list;
-
     }
 
     @Override
-    public UsuarioDT ConsultarUsuario(int id){
-        //devuelve un DataType o algo por el estilo con la informacion del usuario y su canal
-        //esa informacion luego es mostrada en su respectivo frame
-        UsuarioDT dt = null;
+    public UsuarioDt ConsultarUsuario(int id){
+        UsuarioDt dt = null;
         try {
             EntityManager em = emFactory.createEntityManager();
             //List users = em.createQuery("SELECT nick FROM Usuario u WHERE id = :id").getResultList();
             TypedQuery<Usuario> query = em.createQuery("SELECT * FROM Usuario u WHERE u.id = :id", Usuario.class);
             Usuario u = query.setParameter("id", id).getSingleResult();
-            dt = new UsuarioDT(u);
+            dt = new UsuarioDt(u);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
         }
@@ -204,6 +201,16 @@ public class ControladorUsuario implements IControladorUsuario {
     }
 
     @Override
+    public void AgregarVideoListaDeReproduccion(String usuarioVideo, String usuarioLista, String video, String lista) {
+    
+    }
+    
+    @Override
+    public void QuitarVideoListaDeReproduccion(String lista, String video) {
+    
+    }
+    
+    @Override
     public void AltaListaDeReproduccionParticular(String nombre, int id_propietario, boolean privacidad, String categoria) {
         try {
 
@@ -230,6 +237,31 @@ public class ControladorUsuario implements IControladorUsuario {
         }
     }
 
+    //Seguir Usuario y eso
+    @Override
+    public void seguirUsuario(String seguidor, String seguido){
+        try {
+            EntityManager em = emFactory.createEntityManager();
+            em.getTransaction().begin();
+            
+            if(em.find(Canal.class, obtenerIdUsuario(seguido)) == null)
+                throw new Exception("Ese usuario a seguir no existe o no tiene canal");
+            if(em.find(Usuario.class, obtenerIdUsuario(seguidor)) == null) 
+                throw new Exception("Ese usuario seguidor no existe");
+            
+            Canal c = em.find(Canal.class, obtenerIdUsuario(seguido));
+            Usuario u = em.createNamedQuery("Usuario.findByNickname", Usuario.class).setParameter("nickname", seguidor).getSingleResult();
+            
+            u.agregarSuscripcion(c);
+            c.agregarSeguidor(u);
+            em.merge(c);
+        
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+        }
+           
+    }
+    
     //Auxiliares
     @Override
     public int obtenerIdUsuario(String nick) {
@@ -283,27 +315,7 @@ public class ControladorUsuario implements IControladorUsuario {
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
         }
         return l;
-    }
-    
-    @Override
-    public void seguirUsuario(String seguidor, String seguido){
-        try {
-            EntityManager em = emFactory.createEntityManager();
-            em.getTransaction().begin();
-            if(em.createNamedQuery("Canal.findByUserId", Canal.class).setParameter("userId", obtenerIdUsuario(seguido)).getResultList().size() == 0)
-                throw new Exception("Ese usuario no existe o no tiene canal");
-            Canal c = em.find(Canal.class, obtenerIdUsuario(seguido));
-            Usuario u = em.createNamedQuery("Usuario.findByNickname", Usuario.class).setParameter("nickname", seguidor).getSingleResult();
-            c.setUsuario(u);
-            em.merge(c);
-        
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
-        }
-           
-    }
-    
-           
+    }      
 }
     
  
