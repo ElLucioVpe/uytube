@@ -387,31 +387,31 @@ public class ControladorUsuario implements IControladorUsuario {
         return l;
     }
 
-    @Override
-    public void seguirUsuario(String seguidor, String seguido){
-        try {
-            EntityManager em = emFactory.createEntityManager();
-            em.getTransaction().begin();
-            if(em.createNamedQuery("Canal.findByUserId", Canal.class).setParameter("userId", obtenerIdUsuario(seguido)).getResultList().size() == 0)
-                throw new Exception("Ese usuario al que quiere seguir no existe o no tiene canal");
+    //@Override
+    //public void seguirUsuario(String seguidor, String seguido){
+       // try {
+         //   EntityManager em = emFactory.createEntityManager();
+           // em.getTransaction().begin();
+            //if(em.createNamedQuery("Canal.findByUserId", Canal.class).setParameter("userId", obtenerIdUsuario(seguido)).getResultList().size() == 0)
+               // throw new Exception("Ese usuario al que quiere seguir no existe o no tiene canal");
             //Usuario u = em.createNamedQuery("Usuario.findByNickname", Usuario.class).setParameter("nickname", seguidor).getSingleResult();
            //if(em.createNamedQuery("Usuario.findByUserId", Usuario.class).setParameter("userId", obtenerIdUsuario(seguidor)).getResultList().size() == 0)
              //   throw new Exception("El usuario seguidor no existe");
 
-            Canal c = em.find(Canal.class, obtenerIdUsuario(seguido));
-            Usuario uSeguidor = em.find(Usuario.class, obtenerIdUsuario(seguidor));
-            c.agregarSeguidor(uSeguidor);
-            em.merge(c);
-            uSeguidor.agregarSuscripcion(c);
-            em.getTransaction().commit();
-            em.merge(uSeguidor);
-            em.getTransaction().commit();
-            em.close();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
-        }
+//            Canal c = em.find(Canal.class, obtenerIdUsuario(seguido));
+  //          Usuario uSeguidor = em.find(Usuario.class, obtenerIdUsuario(seguidor));
+    //        c.agregarSeguidor(uSeguidor);
+      //      em.merge(c);
+        //    uSeguidor.agregarSuscripcion(c);
+         //   em.getTransaction().commit();
+            //em.merge(uSeguidor);
+            //em.getTransaction().commit();
+ //           em.close();
+   //     } catch (Exception e) {
+      //      JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+        //}
 
-    }
+    //}
 
 
 }
