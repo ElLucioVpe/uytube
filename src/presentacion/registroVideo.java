@@ -10,6 +10,7 @@ import java.io.File;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
+import logica.controladores.IControladorUsuario;
 import logica.controladores.IControladorVideo;
 
 /**
@@ -20,17 +21,18 @@ public class registroVideo extends javax.swing.JInternalFrame {
 static String VideoRegister;
 static String x;
 IControladorVideo v;
+IControladorUsuario u;
     /**
      * Creates new form registroVideo
      */
-    public registroVideo(IControladorVideo Video) {
+    public registroVideo(IControladorVideo Video, IControladorUsuario usuario) {
         initComponents();
         setVisible(true);
         setTitle("Videos");
         setClosable(true);
         VideoRegister="opened";
         v=Video;
-        
+        u=usuario;
         BasicInternalFrameUI basicInternalFrameUi = ((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI());
         for(MouseListener listener:basicInternalFrameUi.getNorthPane().getMouseListeners()){
         basicInternalFrameUi.getNorthPane().removeMouseListener(listener);
@@ -169,19 +171,17 @@ IControladorVideo v;
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-            try {       
+        try {       
             //Creo el video
             v.AltaVideo(
-                    textField3.getText(),
                     textField1.getText(),
-                    textField2.getText(), 
+                    textField2.getText(),
+                    textField3.getText(), 
                     textField4.getText(),
                     textField5.getText(),
-                    Integer.parseInt(textField6.getText())
+                    u.obtenerIdUsuario(textField6.getText())
             );
             
-            //Registrar canal
-            //Creacion de listas por defecto (favoritos, ver mas tarde, etc)
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
         }

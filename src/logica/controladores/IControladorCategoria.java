@@ -14,5 +14,5 @@ import logica.Categoria;
  * @author Xavel
  */
 public interface IControladorCategoria {
-    public void ListarPersona(JTable tabla);
+    public void ListarCategoria();
 }

@@ -88,7 +88,7 @@ public class Usuario implements Serializable {
     , inverseJoinColumns={@JoinColumn(referencedColumnName="USER_ID")})
     private Collection<Canal> suscripciones;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "USER_ID")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
     private Collection<Valoracion> valoraciones;
 
     public Usuario() {

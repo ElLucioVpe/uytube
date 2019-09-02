@@ -237,7 +237,7 @@ public class UyTubeFrame extends javax.swing.JFrame {
         if(registroVideoX==null){
         try{
 
-             registroVideo registroVidWin = new registroVideo(vid);
+             registroVidWin = new registroVideo(vid, user);
              Escritorio.add(registroVidWin);
              Escritorio.moveToFront(registroVidWin);
              registroVidWin.setSize(Escritorio.getWidth(),Escritorio.getHeight());
@@ -245,10 +245,10 @@ public class UyTubeFrame extends javax.swing.JFrame {
 
 
         }catch(Exception ex){
-        ex.printStackTrace();
+            ex.printStackTrace();
         }
         }else{
-        JOptionPane.showMessageDialog(null,"Ya tiene una venta de usuarios abierta");
+            JOptionPane.showMessageDialog(null,"Ya tiene una venta de usuarios abierta");
         }
     }//GEN-LAST:event_RegistrarVideoActionPerformed
 
@@ -269,7 +269,7 @@ public class UyTubeFrame extends javax.swing.JFrame {
 
 
         }catch(Exception ex){
-        ex.printStackTrace();
+            ex.printStackTrace();
         }
 
           /*
@@ -299,7 +299,7 @@ public class UyTubeFrame extends javax.swing.JFrame {
 
     private void jMenu5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu5ActionPerformed
 
-   try{
+        try{
 
              categoriaRegistro categoriaRegistro = new categoriaRegistro();
              Escritorio.add(categoriaRegistro);

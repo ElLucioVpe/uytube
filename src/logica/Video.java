@@ -46,9 +46,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Video.findByPrivacidad", query = "SELECT v FROM Video v WHERE v.privacidad = :privacidad")})
 public class Video implements Serializable {
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "video")
-    private Collection<Valoracion> valoracionCollection;
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -83,7 +80,7 @@ public class Video implements Serializable {
     @JoinColumn(name = "CANAL_USER_ID", referencedColumnName = "USER_ID", insertable = false, updatable = false)
     private Canal canal;
     
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "video")
     private Collection<Valoracion> valoraciones;
 
     public Video() {
@@ -214,12 +211,12 @@ public class Video implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Valoracion> getValoracionCollection() {
-        return valoracionCollection;
+    public Collection<Valoracion> getValoraciones() {
+        return valoraciones;
     }
 
-    public void setValoracionCollection(Collection<Valoracion> valoracionCollection) {
-        this.valoracionCollection = valoracionCollection;
+    public void setValoraciones(Collection<Valoracion> valoracionCollection) {
+        this.valoraciones = valoracionCollection;
     }
     
 }

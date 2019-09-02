@@ -18,7 +18,7 @@ import logica.controladores.IControladorCategoria;
  */
 public class ControladorCategoria implements IControladorCategoria {
      private EntityManagerFactory emFactory;
-     private ControladorCategoria cs = new ControladorCategoria();
+     //private ControladorCategoria cs = new ControladorCategoria();
      public ControladorCategoria() {
         emFactory = Persistence.createEntityManagerFactory("UyTubePU");
     }
@@ -35,12 +35,12 @@ public class ControladorCategoria implements IControladorCategoria {
          return findCategoriaEntities(all, -1, -1);
      }
      
-     public void ListarPersona(JTable tabla){
+     public void ListarCategoria(){
          DefaultTableModel model;
          String [] titulo = {"Nombre"};
          model = new DefaultTableModel(null, titulo);
          
-         List<Categoria> datos = cs.findCategoriaEntities();
+         List<Categoria> datos = this.findCategoriaEntities();
          
          String [] datosCategoria = new String[0];
          for (Categoria cat : datos){

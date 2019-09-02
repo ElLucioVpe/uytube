@@ -132,6 +132,10 @@ public class Canal implements Serializable {
         this.seguidores.remove(u);
     }
     
+    public void agregarVideo(Video v) {
+        this.videos.add(v);
+    }
+    
     public Video obtenerVideo(String nombre) {
         Video v = null;
         
