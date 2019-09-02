@@ -23,8 +23,9 @@ public interface IControladorUsuario {
     //Listas de Reproduccion
     public abstract void AltaListaDeReproduccionPorDefecto(String nombre);
     public abstract void AltaListaDeReproduccionParticular(String nombre, int id_propietario, boolean privacidad, String categoria);
-    public abstract void AgregarVideoListaDeReproduccion(String usuarioVideo, String usuarioLista, String video, String lista);
-    public abstract void QuitarVideoListaDeReproduccion(String lista, String video);
+    public abstract void ModificarListaDeReproduccion(int usuario, String lista, String nuevaCat, boolean nuevaPri);
+    public abstract void AgregarVideoListaDeReproduccion(int usuarioVideo, int usuarioLista, String video, String lista);
+    public abstract void QuitarVideoListaDeReproduccion(int usuarioLista, String lista, int video);
     
     //SeguirUsuario
     public abstract void seguirUsuario(String seguidor, String seguido);

@@ -57,7 +57,7 @@ public class UsuarioDt {
         this.mail = u.getMail();
         this.fechanac = u.getFechanac();
         this.listas = u.getListas();
-        this.valoraciones = u.getValoracionCollection();
+        this.valoraciones = u.getValoraciones();
         this.suscripciones = new ArrayList<>();
     }
 

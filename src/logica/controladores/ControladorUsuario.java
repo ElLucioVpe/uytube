@@ -18,6 +18,7 @@ import logica.Categoria;
 import logica.ListaDeReproduccion;
 import logica.ListaDeReproduccion_PorDefecto;
 import logica.Usuario;
+import logica.Video;
 import logica.dt.UsuarioDt;
 //import logica.controladores.IControladorUsuario;
 
@@ -200,15 +201,6 @@ public class ControladorUsuario implements IControladorUsuario {
         }
     }
 
-    @Override
-    public void AgregarVideoListaDeReproduccion(String usuarioVideo, String usuarioLista, String video, String lista) {
-    
-    }
-    
-    @Override
-    public void QuitarVideoListaDeReproduccion(String lista, String video) {
-    
-    }
     
     @Override
     public void AltaListaDeReproduccionParticular(String nombre, int id_propietario, boolean privacidad, String categoria) {
@@ -236,7 +228,85 @@ public class ControladorUsuario implements IControladorUsuario {
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
         }
     }
+    
+    @Override
+    public void ModificarListaDeReproduccion(int usuario, String lista, String nuevaCat, boolean nuevaPri) {
+        try {
 
+            EntityManager em = emFactory.createEntityManager();
+            em.getTransaction().begin();
+
+            Usuario propietario = em.find(Usuario.class, usuario);
+
+            if(propietario == null) throw new Exception("El usuario ingresado no existe");
+            if(!propietario.existeLista(lista)) throw new Exception("La lista no existe");
+
+            ListaDeReproduccion l = propietario.getLista(lista);
+            if(!nuevaCat.equals("Ninguna")) l.setCategoria(em.find(Categoria.class, nuevaCat));
+            l.setPrivada(nuevaPri); //Se supone que si no se va a cambiar nuevaPri tiene el valor anterior
+            
+            em.merge(l);
+            //propietario.modificarLista(l); //no deberia ser necesario
+            em.merge(propietario);
+            em.getTransaction().commit();
+            em.close();
+
+            JOptionPane.showMessageDialog(null,"La lista de reproduccion se modifico con exito");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+        }
+    }
+    
+    @Override
+    public void AgregarVideoListaDeReproduccion(int usuarioVideo, int usuarioLista, String video, String lista) {
+        try {
+
+            EntityManager em = emFactory.createEntityManager();
+            em.getTransaction().begin();
+            
+            Usuario user_video = em.find(Usuario.class, usuarioVideo);
+            Usuario user_lista = em.find(Usuario.class, usuarioLista);
+            if(user_video == null) throw new Exception("El usuario propietario del video no existe");
+            if(user_lista == null) throw new Exception("El usuario propietario de la lista no existe");
+            
+            Canal canal_video = user_video.getCanal();
+            Video v = canal_video.obtenerVideo(video);
+            if(v == null) throw new Exception("El video no existe");
+            
+            user_lista.agregarVideoLista(v, lista);
+            
+            em.merge(user_lista);
+            em.getTransaction().commit();
+            em.close();
+
+            JOptionPane.showMessageDialog(null,"El video fue agregado con exito");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+        }
+    }
+    
+    @Override
+    public void QuitarVideoListaDeReproduccion(int usuariolista, String lista, int video) {
+        try {
+
+            EntityManager em = emFactory.createEntityManager();
+            em.getTransaction().begin();
+            
+            Usuario user_lista = em.find(Usuario.class, usuariolista);
+            if(user_lista == null) throw new Exception("El usuario propietario de la lista no existe");
+            
+            user_lista.quitarVideoLista(video, lista);
+            
+            em.merge(user_lista);
+            em.getTransaction().commit();
+            em.close();
+
+            JOptionPane.showMessageDialog(null,"El video fue agregado con exito");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+        }
+    }
+    
     //Seguir Usuario y eso
     @Override
     public void seguirUsuario(String seguidor, String seguido){
@@ -282,7 +352,7 @@ public class ControladorUsuario implements IControladorUsuario {
         }
         return id;
     }
-
+    
     @Override
     public void EliminarUsuario(int id) {
         try {

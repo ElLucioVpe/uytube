@@ -7,6 +7,7 @@ package logica;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Iterator;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -104,6 +105,23 @@ public class ListaDeReproduccion implements Serializable {
 
     public void setVideos(Collection<Video> videos) {
         this.videos = videos;
+    }
+    
+    public void agregarVideo(Video v) {
+        this.videos.add(v);
+    }
+    
+    public void quitarVideo(int id_v) {
+        Iterator it = videos.iterator();
+        boolean seguir = true;
+        
+        while(it.hasNext() && seguir) {
+            Video v = (Video) it.next();
+            if(v.getId() == id_v) { 
+                videos.remove(v);
+                seguir = false;
+            }
+        }
     }
     
     @Override

@@ -47,10 +47,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Usuario.findByFechanac", query = "SELECT u FROM Usuario u WHERE u.fechanac = :fechanac"),
     @NamedQuery(name = "Usuario.findByImagen", query = "SELECT u FROM Usuario u WHERE u.imagen = :imagen")})
 public class Usuario implements Serializable {
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
-    private Collection<Valoracion> valoracionCollection;
-
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -91,7 +88,7 @@ public class Usuario implements Serializable {
     , inverseJoinColumns={@JoinColumn(referencedColumnName="USER_ID")})
     private Collection<Canal> suscripciones;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "USER_ID")
     private Collection<Valoracion> valoraciones;
 
     public Usuario() {
@@ -208,15 +205,58 @@ public class Usuario implements Serializable {
     }
     
     public void agregarValoracion(Valoracion v) {
-        this.valoraciones.add(v);
+        Valoracion opuesta =  new Valoracion(v.getUsuario().getId(), v.getVideo().getId(), !v.getGustar());
+        if(valoraciones.contains(opuesta)) eliminarValoracion(opuesta);
+        
+        if(!valoraciones.contains(v)) valoraciones.add(v);
     }
     
     public void eliminarValoracion(Valoracion v) {
         this.valoraciones.remove(v);
     }
     
-    //public void modificarValoracion(Valoracion v)
+    public void agregarVideoLista(Video v, String nomlista) {
+        Iterator it = listas.iterator();
+        boolean seguir = true;
+        
+        while(it.hasNext() && seguir) {
+            ListaDeReproduccion l = (ListaDeReproduccion) it.next();
+            if(l.getNombre().equals(nomlista)) {
+                l.agregarVideo(v);
+                seguir = false;
+            }
+        }
+    }
     
+    public void quitarVideoLista(int video, String nomlista) {
+        Iterator it = listas.iterator();
+        boolean seguir = true;
+        
+        while(it.hasNext() && seguir) {
+            ListaDeReproduccion l = (ListaDeReproduccion) it.next();
+            if(l.getNombre().equals(nomlista)) {
+                l.quitarVideo(video);
+                seguir = false;
+            } 
+        }
+    }
+    
+    public ListaDeReproduccion getLista(String nom) {
+        Iterator it = listas.iterator();
+        boolean seguir = true;
+        ListaDeReproduccion retorno = null;
+        
+        while(it.hasNext() && seguir) {
+            ListaDeReproduccion l = (ListaDeReproduccion) it.next();
+            if(l.getNombre().equals(nom)) {
+                retorno = l;
+                seguir = false;
+            } 
+        }
+        return retorno;
+    }
+    
+    ////
     @Override
     public int hashCode() {
         int hash = 0;
@@ -243,12 +283,11 @@ public class Usuario implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Valoracion> getValoracionCollection() {
-        return valoracionCollection;
+    public Collection<Valoracion> getValoraciones() {
+        return valoraciones;
     }
 
-    public void setValoracionCollection(Collection<Valoracion> valoracionCollection) {
-        this.valoracionCollection = valoracionCollection;
+    public void setValoraciones(Collection<Valoracion> valoracionCollection) {
+        this.valoraciones = valoracionCollection;
     }
-
 }
