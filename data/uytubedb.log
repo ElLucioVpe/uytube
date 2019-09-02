@@ -1,0 +1,9 @@
+/*C8*/SET SCHEMA PUBLIC
+INSERT INTO USUARIO VALUES(4,'Antu','1999-07-01','bobo.jpg','antu@gmail','bobo','Sosa')
+COMMIT
+INSERT INTO CANAL VALUES(4,'dfsfsdf','bobos',FALSE)
+COMMIT
+INSERT INTO USUARIO VALUES(5,'morales','1999-07-01','bobalicon.jpg','bobo@toto','bobalicon','sosa')
+COMMIT
+INSERT INTO CANAL VALUES(5,'fdfsdfs','caca',FALSE)
+COMMIT

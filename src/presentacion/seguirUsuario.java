@@ -37,6 +37,8 @@ IControladorUsuario u;
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
+        setClosable(true);
+
         jButton1.setText("Confirmar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -89,7 +91,7 @@ IControladorUsuario u;
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        //u.seguirUsuario(jTextField1.getText(),jTextField2.getText());
+        u.seguirUsuario(jTextField1.getText(),jTextField2.getText());
       
         
            

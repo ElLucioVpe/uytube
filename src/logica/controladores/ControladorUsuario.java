@@ -262,12 +262,20 @@ public class ControladorUsuario implements IControladorUsuario {
             EntityManager em = emFactory.createEntityManager();
             em.getTransaction().begin();
             if(em.createNamedQuery("Canal.findByUserId", Canal.class).setParameter("userId", obtenerIdUsuario(seguido)).getResultList().size() == 0)
-                throw new Exception("Ese usuario no existe o no tiene canal");
+                throw new Exception("Ese usuario al que quiere seguir no existe o no tiene canal");
+            //Usuario u = em.createNamedQuery("Usuario.findByNickname", Usuario.class).setParameter("nickname", seguidor).getSingleResult();
+           //if(em.createNamedQuery("Usuario.findByUserId", Usuario.class).setParameter("userId", obtenerIdUsuario(seguidor)).getResultList().size() == 0)
+             //   throw new Exception("El usuario seguidor no existe");
+            
             Canal c = em.find(Canal.class, obtenerIdUsuario(seguido));
-            Usuario u = em.createNamedQuery("Usuario.findByNickname", Usuario.class).setParameter("nickname", seguidor).getSingleResult();
-            c.setUsuario(u);
+            Usuario uSeguidor = em.find(Usuario.class, obtenerIdUsuario(seguidor));           
+            c.agregarSeguidor(uSeguidor);
             em.merge(c);
-        
+            uSeguidor.agregarSuscripcion(c);
+            em.getTransaction().commit();
+            em.merge(uSeguidor);
+            em.getTransaction().commit();
+            em.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
         }

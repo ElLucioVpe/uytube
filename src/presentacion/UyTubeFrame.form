@@ -78,12 +78,12 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="RegistrarVideoActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="seguirUsuarioButton">
+            <MenuItem class="javax.swing.JMenuItem" name="seguirUsuario">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Registro Seguidor"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="seguirUsuarioButtonActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="seguirUsuarioActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>

@@ -86,7 +86,7 @@ public class Usuario implements Serializable {
     @OneToMany(cascade = CascadeType.ALL)
     private Collection<ListaDeReproduccion> listas;
 
-    @ManyToMany(cascade=CascadeType.ALL)
+    @ManyToMany(cascade=CascadeType.PERSIST)
     @JoinTable(name="Canal_Usuario",  joinColumns={@JoinColumn(referencedColumnName="ID")}
     , inverseJoinColumns={@JoinColumn(referencedColumnName="USER_ID")})
     private Collection<Canal> suscripciones;
