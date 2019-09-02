@@ -8,6 +8,7 @@ package logica;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -129,6 +130,22 @@ public class Canal implements Serializable {
     
     public void eliminarSeguidor(Usuario u) {
         this.seguidores.remove(u);
+    }
+    
+    public Video obtenerVideo(String nombre) {
+        Video v = null;
+        
+        Iterator it = videos.iterator();
+        boolean seguir = true;
+        
+        while(it.hasNext() && seguir) {
+            Video auxv = (Video) it.next();
+            if(auxv.getNombre().equals(nombre)) {
+                v = auxv;
+                seguir = false;
+            }
+        }
+        return v;
     }
     
     @Override

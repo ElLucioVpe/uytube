@@ -12,11 +12,14 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.swing.JOptionPane;
+import javax.persistence.TypedQuery;
 import logica.Canal;
 import logica.Categoria;
 import logica.ListaDeReproduccion;
 import logica.ListaDeReproduccion_PorDefecto;
 import logica.Usuario;
+import logica.Video;
+import logica.dt.UsuarioDt;
 //import logica.controladores.IControladorUsuario;
 
 /**
@@ -132,15 +135,39 @@ public class ControladorUsuario implements IControladorUsuario {
     @Override
     public List<String> ListarUsuarios(){
         List<String> list = null;
-        //probablemente devuelve una lista de los nicks de los usuarios existentes
-        //esa lista luego es mostrada en su respectivo frame
+        try {
+            //probablemente devuelve una lista de los nicks de los usuarios existentes
+            //esa lista luego es mostrada en su respectivo frame
+            EntityManager em = emFactory.createEntityManager();
+            List users = em.createQuery("SELECT nick FROM Usuario u").getResultList();
+            Iterator it = users.iterator();
+            while(it.hasNext()) {
+                Usuario u = (Usuario) it.next();
+                list.add(u.getNickname());
+            }
+            em.getTransaction().commit();
+            em.close();
+
+            JOptionPane.showMessageDialog(null,"La lista de reproduccion se creo con exito");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+        }
         return list;
     }
 
     @Override
-    public void ConsultarUsuario(int id){
-        //devuelve un DataType o algo por el estilo con la informacion del usuario y su canal
-        //esa informacion luego es mostrada en su respectivo frame
+    public UsuarioDt ConsultarUsuario(int id){
+        UsuarioDt dt = null;
+        try {
+            EntityManager em = emFactory.createEntityManager();
+            //List users = em.createQuery("SELECT nick FROM Usuario u WHERE id = :id").getResultList();
+            TypedQuery<Usuario> query = em.createQuery("SELECT * FROM Usuario u WHERE u.id = :id", Usuario.class);
+            Usuario u = query.setParameter("id", id).getSingleResult();
+            dt = new UsuarioDt(u);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+        }
+        return dt;
     }
 
     //Listas de Reproduccion
@@ -174,6 +201,7 @@ public class ControladorUsuario implements IControladorUsuario {
         }
     }
 
+
     @Override
     public void AltaListaDeReproduccionParticular(String nombre, int id_propietario, boolean privacidad, String categoria) {
         try {
@@ -199,6 +227,109 @@ public class ControladorUsuario implements IControladorUsuario {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
         }
+    }
+
+    @Override
+    public void ModificarListaDeReproduccion(int usuario, String lista, String nuevaCat, boolean nuevaPri) {
+        try {
+
+            EntityManager em = emFactory.createEntityManager();
+            em.getTransaction().begin();
+
+            Usuario propietario = em.find(Usuario.class, usuario);
+
+            if(propietario == null) throw new Exception("El usuario ingresado no existe");
+            if(!propietario.existeLista(lista)) throw new Exception("La lista no existe");
+
+            ListaDeReproduccion l = propietario.getLista(lista);
+            if(!nuevaCat.equals("Ninguna")) l.setCategoria(em.find(Categoria.class, nuevaCat));
+            l.setPrivada(nuevaPri); //Se supone que si no se va a cambiar nuevaPri tiene el valor anterior
+
+            em.merge(l);
+            //propietario.modificarLista(l); //no deberia ser necesario
+            em.merge(propietario);
+            em.getTransaction().commit();
+            em.close();
+
+            JOptionPane.showMessageDialog(null,"La lista de reproduccion se modifico con exito");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+        }
+    }
+
+    @Override
+    public void AgregarVideoListaDeReproduccion(int usuarioVideo, int usuarioLista, String video, String lista) {
+        try {
+
+            EntityManager em = emFactory.createEntityManager();
+            em.getTransaction().begin();
+
+            Usuario user_video = em.find(Usuario.class, usuarioVideo);
+            Usuario user_lista = em.find(Usuario.class, usuarioLista);
+            if(user_video == null) throw new Exception("El usuario propietario del video no existe");
+            if(user_lista == null) throw new Exception("El usuario propietario de la lista no existe");
+
+            Canal canal_video = user_video.getCanal();
+            Video v = canal_video.obtenerVideo(video);
+            if(v == null) throw new Exception("El video no existe");
+
+            user_lista.agregarVideoLista(v, lista);
+
+            em.merge(user_lista);
+            em.getTransaction().commit();
+            em.close();
+
+            JOptionPane.showMessageDialog(null,"El video fue agregado con exito");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+        }
+    }
+
+    @Override
+    public void QuitarVideoListaDeReproduccion(int usuariolista, String lista, int video) {
+        try {
+
+            EntityManager em = emFactory.createEntityManager();
+            em.getTransaction().begin();
+
+            Usuario user_lista = em.find(Usuario.class, usuariolista);
+            if(user_lista == null) throw new Exception("El usuario propietario de la lista no existe");
+
+            user_lista.quitarVideoLista(video, lista);
+
+            em.merge(user_lista);
+            em.getTransaction().commit();
+            em.close();
+
+            JOptionPane.showMessageDialog(null,"El video fue agregado con exito");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+        }
+    }
+
+    //Seguir Usuario y eso
+    @Override
+    public void seguirUsuario(String seguidor, String seguido){
+        try {
+            EntityManager em = emFactory.createEntityManager();
+            em.getTransaction().begin();
+
+            if(em.find(Canal.class, obtenerIdUsuario(seguido)) == null)
+                throw new Exception("Ese usuario a seguir no existe o no tiene canal");
+            if(em.find(Usuario.class, obtenerIdUsuario(seguidor)) == null)
+                throw new Exception("Ese usuario seguidor no existe");
+
+            Canal c = em.find(Canal.class, obtenerIdUsuario(seguido));
+            Usuario u = em.createNamedQuery("Usuario.findByNickname", Usuario.class).setParameter("nickname", seguidor).getSingleResult();
+
+            u.agregarSuscripcion(c);
+            c.agregarSeguidor(u);
+            em.merge(c);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+        }
+
     }
 
     //Auxiliares
@@ -255,7 +386,7 @@ public class ControladorUsuario implements IControladorUsuario {
         }
         return l;
     }
-    
+
     @Override
     public void seguirUsuario(String seguidor, String seguido){
         try {
@@ -266,9 +397,9 @@ public class ControladorUsuario implements IControladorUsuario {
             //Usuario u = em.createNamedQuery("Usuario.findByNickname", Usuario.class).setParameter("nickname", seguidor).getSingleResult();
            //if(em.createNamedQuery("Usuario.findByUserId", Usuario.class).setParameter("userId", obtenerIdUsuario(seguidor)).getResultList().size() == 0)
              //   throw new Exception("El usuario seguidor no existe");
-            
+
             Canal c = em.find(Canal.class, obtenerIdUsuario(seguido));
-            Usuario uSeguidor = em.find(Usuario.class, obtenerIdUsuario(seguidor));           
+            Usuario uSeguidor = em.find(Usuario.class, obtenerIdUsuario(seguidor));
             c.agregarSeguidor(uSeguidor);
             em.merge(c);
             uSeguidor.agregarSuscripcion(c);
@@ -279,10 +410,8 @@ public class ControladorUsuario implements IControladorUsuario {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
         }
-           
+
     }
-    
-           
+
+
 }
-    
- 

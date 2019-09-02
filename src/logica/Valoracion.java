@@ -49,8 +49,9 @@ public class Valoracion implements Serializable {
         this.valoracionPK = valoracionPK;
     }
 
-    public Valoracion(int userId, int videoId) {
+    public Valoracion(int userId, int videoId, boolean gustar) {
         this.valoracionPK = new ValoracionPK(userId, videoId);
+        this.gustar = gustar;
     }
 
     public ValoracionPK getValoracionPK() {

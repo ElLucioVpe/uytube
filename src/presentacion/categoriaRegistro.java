@@ -16,6 +16,7 @@ public class categoriaRegistro extends javax.swing.JInternalFrame {
      */
     public categoriaRegistro() {
         initComponents();
+        setVisible(true);
     }
 
     /**
