@@ -18,9 +18,10 @@ IControladorUsuario u;
     /**
      * Creates new form seguirUsuario
      */
-    public seguirUsuario() {
+    public seguirUsuario(IControladorUsuario user) {
         initComponents();
         setVisible(true);
+        u=user;
     }
 
     /**
@@ -97,9 +98,6 @@ IControladorUsuario u;
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         u.seguirUsuario(jTextField1.getText(),jTextField2.getText());
-      
-        
-           
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed

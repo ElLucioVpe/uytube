@@ -124,6 +124,10 @@ public class Canal implements Serializable {
         return seguidores;
     }
     
+    public void setSeguidores(Collection<Usuario> s){
+        seguidores = s;
+    }
+    
     public void agregarSeguidor(Usuario u) {
         this.seguidores.add(u);
     }

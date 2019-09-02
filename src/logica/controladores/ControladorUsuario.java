@@ -6,6 +6,7 @@
 package logica.controladores;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -308,7 +309,7 @@ public class ControladorUsuario implements IControladorUsuario {
     }
 
     //Seguir Usuario y eso
-    @Override
+    /*@Override
     public void seguirUsuario(String seguidor, String seguido){
         try {
             EntityManager em = emFactory.createEntityManager();
@@ -329,6 +330,35 @@ public class ControladorUsuario implements IControladorUsuario {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
         }
+
+    }*/
+    
+    @Override
+    public void seguirUsuario(String seguidor, String seguido){
+        System.out.println("jilou");
+        try {
+            System.out.println("jilou1");
+            EntityManager em = emFactory.createEntityManager();
+            em.getTransaction().begin();
+            
+            Canal c = em.find(Canal.class, obtenerIdUsuario(seguido));
+            if(c == null)
+                throw new Exception("Ese usuario al que quiere seguir no existe o no tiene canal");
+            Usuario uSeguidor = em.find(Usuario.class, obtenerIdUsuario(seguidor));
+            if(uSeguidor == null)
+                throw new Exception("El usuario seguidor no existe");
+            
+            c.agregarSeguidor(uSeguidor);
+            uSeguidor.agregarSuscripcion(c);
+            em.merge(c);
+            em.merge(uSeguidor);
+            em.getTransaction().commit();
+            em.close();
+            
+            JOptionPane.showMessageDialog(null,"La suscripcion se realizo con exito");
+       } catch (Exception e) {
+           JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+       }
 
     }
 
@@ -386,32 +416,4 @@ public class ControladorUsuario implements IControladorUsuario {
         }
         return l;
     }
-
-    //@Override
-    //public void seguirUsuario(String seguidor, String seguido){
-       // try {
-         //   EntityManager em = emFactory.createEntityManager();
-           // em.getTransaction().begin();
-            //if(em.createNamedQuery("Canal.findByUserId", Canal.class).setParameter("userId", obtenerIdUsuario(seguido)).getResultList().size() == 0)
-               // throw new Exception("Ese usuario al que quiere seguir no existe o no tiene canal");
-            //Usuario u = em.createNamedQuery("Usuario.findByNickname", Usuario.class).setParameter("nickname", seguidor).getSingleResult();
-           //if(em.createNamedQuery("Usuario.findByUserId", Usuario.class).setParameter("userId", obtenerIdUsuario(seguidor)).getResultList().size() == 0)
-             //   throw new Exception("El usuario seguidor no existe");
-
-//            Canal c = em.find(Canal.class, obtenerIdUsuario(seguido));
-  //          Usuario uSeguidor = em.find(Usuario.class, obtenerIdUsuario(seguidor));
-    //        c.agregarSeguidor(uSeguidor);
-      //      em.merge(c);
-        //    uSeguidor.agregarSuscripcion(c);
-         //   em.getTransaction().commit();
-            //em.merge(uSeguidor);
-            //em.getTransaction().commit();
- //           em.close();
-   //     } catch (Exception e) {
-      //      JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
-        //}
-
-    //}
-
-
 }

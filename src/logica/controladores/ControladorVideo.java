@@ -51,7 +51,5 @@ public class ControladorVideo implements IControladorVideo {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
         }
-        
-        
     }
 }

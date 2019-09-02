@@ -336,7 +336,7 @@ public class UyTubeFrame extends javax.swing.JFrame {
     
         private void seguirUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seguirUsuarioActionPerformed
         // TODO add your handling code here:
-           seguirUsuario seguirU = new seguirUsuario();
+           seguirUsuario seguirU = new seguirUsuario(user);
              Escritorio.add(seguirU);
              Escritorio.moveToFront(seguirU);
              seguirU.setSize(Escritorio.getWidth(),Escritorio.getHeight());
