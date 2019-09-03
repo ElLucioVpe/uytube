@@ -29,7 +29,7 @@ public interface IControladorUsuario {
     
     //SeguirUsuario
     public abstract void seguirUsuario(String seguidor, String seguido);
-    //public abstract void dejardeseguirUsuario(String seguidor, String seguido);
+    public void dejarDeSeguirUsuario(String seguidor, String seguido);
     
     //Auxiliares
     public abstract int obtenerIdUsuario(String nick);

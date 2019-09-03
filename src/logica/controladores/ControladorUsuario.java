@@ -335,9 +335,7 @@ public class ControladorUsuario implements IControladorUsuario {
     
     @Override
     public void seguirUsuario(String seguidor, String seguido){
-        System.out.println("jilou");
         try {
-            System.out.println("jilou1");
             EntityManager em = emFactory.createEntityManager();
             em.getTransaction().begin();
             
@@ -361,7 +359,30 @@ public class ControladorUsuario implements IControladorUsuario {
        }
 
     }
-
+    @Override
+    public void dejarDeSeguirUsuario(String seguidor, String seguido){ 
+      try {
+            EntityManager em = emFactory.createEntityManager();
+            em.getTransaction().begin();   
+            Canal c = em.find(Canal.class, obtenerIdUsuario(seguido));
+            if(c == null)
+                throw new Exception("Ese usuario al que quiere seguir no existe o no tiene canal");
+            Usuario uSeguidor = em.find(Usuario.class, obtenerIdUsuario(seguidor));
+            if(uSeguidor == null)
+                throw new Exception("El usuario seguidor no existe");
+            //aca hacen falta chequeos para saber si el uSeguidor efectivamente sigue a ese usuario o no y viceversa;
+            c.eliminarSeguidor(uSeguidor);
+            uSeguidor.eliminarSuscripcion(c);    
+            em.merge(c);
+            em.merge(uSeguidor);
+            em.getTransaction().commit();
+            em.close();
+            
+            JOptionPane.showMessageDialog(null,"La suscripcion se eliminó con exito");
+       } catch (Exception e) {
+           JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+       }
+    }
     //Auxiliares
     @Override
     public int obtenerIdUsuario(String nick) {

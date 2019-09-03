@@ -49,6 +49,7 @@ public class UyTubeFrame extends javax.swing.JFrame {
         RegistrarUsuario = new javax.swing.JMenuItem();
         RegistrarVideo = new javax.swing.JMenuItem();
         seguirUsuario = new javax.swing.JMenuItem();
+        bajaSeguidorMenuItem = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
         CrearLista = new javax.swing.JMenuItem();
@@ -133,6 +134,14 @@ public class UyTubeFrame extends javax.swing.JFrame {
             }
         });
         jMenu2.add(seguirUsuario);
+
+        bajaSeguidorMenuItem.setText("Baja Seguidor");
+        bajaSeguidorMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bajaSeguidorMenuItemActionPerformed(evt);
+            }
+        });
+        jMenu2.add(bajaSeguidorMenuItem);
 
         jMenuBar1.add(jMenu2);
 
@@ -336,7 +345,7 @@ public class UyTubeFrame extends javax.swing.JFrame {
     
         private void seguirUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seguirUsuarioActionPerformed
         // TODO add your handling code here:
-           seguirUsuario seguirU = new seguirUsuario(user);
+             seguirUsuario seguirU = new seguirUsuario(user);
              Escritorio.add(seguirU);
              Escritorio.moveToFront(seguirU);
              seguirU.setSize(Escritorio.getWidth(),Escritorio.getHeight());
@@ -344,6 +353,16 @@ public class UyTubeFrame extends javax.swing.JFrame {
              seguirU.setVisible(true);
 
     }//GEN-LAST:event_seguirUsuarioActionPerformed
+
+    private void bajaSeguidorMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bajaSeguidorMenuItemActionPerformed
+        // TODO add your handling code here:
+        dejarDeSeguirUsuario dejarU = new  dejarDeSeguirUsuario(user);
+         Escritorio.add(dejarU);
+         Escritorio.moveToFront(dejarU);
+         dejarU.setSize(Escritorio.getWidth(),Escritorio.getHeight());
+         dejarU.setLocation(0,0);
+         dejarU.setVisible(true);
+    }//GEN-LAST:event_bajaSeguidorMenuItemActionPerformed
     
     /**
      * @param args the command line arguments
@@ -386,6 +405,7 @@ public class UyTubeFrame extends javax.swing.JFrame {
     private javax.swing.JDesktopPane Escritorio;
     private javax.swing.JMenuItem RegistrarUsuario;
     private javax.swing.JMenuItem RegistrarVideo;
+    private javax.swing.JMenuItem bajaSeguidorMenuItem;
     private javax.swing.JFrame jFrame1;
     private javax.swing.JFrame jFrame2;
     private javax.swing.JFrame jFrame3;
