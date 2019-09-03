@@ -14,5 +14,8 @@ import logica.Categoria;
  * @author Xavel
  */
 public interface IControladorCategoria {
-    public void ListarCategoria();
+    
+    public void AltaCategoria(String nombre);
+    public List<String> ListarCategorias();
+    public Categoria ConsultarCategorias(String c);
 }

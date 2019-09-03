@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import logica.controladores.Fabrica;
 import logica.controladores.IControladorUsuario;
 import logica.controladores.IControladorVideo;
+import logica.controladores.IControladorCategoria;
 
 /**
  *
@@ -24,6 +25,7 @@ public class UyTubeFrame extends javax.swing.JFrame {
     Fabrica f = Fabrica.getInstance();
     IControladorUsuario user = f.getIControladorUsuario();
     IControladorVideo vid = f.getIControladorVideo();
+    IControladorCategoria cate = f.getIControladorCategoria();
 
     public UyTubeFrame() {
         initComponents();
@@ -44,13 +46,15 @@ public class UyTubeFrame extends javax.swing.JFrame {
         jFrame3 = new javax.swing.JFrame();
         Escritorio = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
         RegistrarUsuario = new javax.swing.JMenuItem();
         RegistrarVideo = new javax.swing.JMenuItem();
         seguirUsuario = new javax.swing.JMenuItem();
         bajaSeguidorMenuItem = new javax.swing.JMenuItem();
+        RegistroCategoria = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
+        listarCategorias = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         CrearLista = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
@@ -101,14 +105,6 @@ public class UyTubeFrame extends javax.swing.JFrame {
             .addGap(0, 349, Short.MAX_VALUE)
         );
 
-        jMenu1.setText("Inicio");
-        jMenu1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenu1ActionPerformed(evt);
-            }
-        });
-        jMenuBar1.add(jMenu1);
-
         jMenu2.setText("Registro");
 
         RegistrarUsuario.setText("Registrar Usuario");
@@ -143,9 +139,34 @@ public class UyTubeFrame extends javax.swing.JFrame {
         });
         jMenu2.add(bajaSeguidorMenuItem);
 
+        RegistroCategoria.setText("Registrar Categoría");
+        RegistroCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RegistroCategoriaActionPerformed(evt);
+            }
+        });
+        jMenu2.add(RegistroCategoria);
+
+        jMenu1.setText("Inicio");
+        jMenu1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu1ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenu1);
+
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Consultas");
+
+        listarCategorias.setText("Lista de Categorías");
+        listarCategorias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                listarCategoriasActionPerformed(evt);
+            }
+        });
+        jMenu3.add(listarCategorias);
+
         jMenuBar1.add(jMenu3);
 
         jMenu4.setText("Listas");
@@ -308,18 +329,7 @@ public class UyTubeFrame extends javax.swing.JFrame {
 
     private void jMenu5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu5ActionPerformed
 
-        try{
-
-             categoriaRegistro categoriaRegistro = new categoriaRegistro();
-             Escritorio.add(categoriaRegistro);
-             Escritorio.moveToFront(categoriaRegistro);
-             categoriaRegistro.setSize(Escritorio.getWidth(),Escritorio.getHeight());
-             categoriaRegistro.setLocation(0,0);
-            categoriaRegistro.setVisible(true);
-        }catch(Exception ex){
-        ex.printStackTrace();
-        }
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_jMenu5ActionPerformed
 
     private void jMenu5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu5MouseClicked
@@ -363,7 +373,28 @@ public class UyTubeFrame extends javax.swing.JFrame {
          dejarU.setLocation(0,0);
          dejarU.setVisible(true);
     }//GEN-LAST:event_bajaSeguidorMenuItemActionPerformed
+
+    private void RegistroCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistroCategoriaActionPerformed
+             registroCategorias registroC = new registroCategorias(cate);
+             Escritorio.add(registroC);
+             Escritorio.moveToFront(registroC);
+             registroC.setSize(Escritorio.getWidth(),Escritorio.getHeight());
+             registroC.setLocation(0,0);
+             registroC.setVisible(true);
+    }//GEN-LAST:event_RegistroCategoriaActionPerformed
+
+    private void listarCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listarCategoriasActionPerformed
+        listarCategorias listaC = new listarCategorias();
+             Escritorio.add(listaC);
+             Escritorio.moveToFront(listaC);
+             listaC.setSize(Escritorio.getWidth(),Escritorio.getHeight());
+             listaC.setLocation(0,0);
+             listaC.setVisible(true);
+    }//GEN-LAST:event_listarCategoriasActionPerformed
     
+                                              
+
+                                        
     /**
      * @param args the command line arguments
      */
@@ -405,6 +436,7 @@ public class UyTubeFrame extends javax.swing.JFrame {
     private javax.swing.JDesktopPane Escritorio;
     private javax.swing.JMenuItem RegistrarUsuario;
     private javax.swing.JMenuItem RegistrarVideo;
+    private javax.swing.JMenuItem RegistroCategoria;
     private javax.swing.JMenuItem bajaSeguidorMenuItem;
     private javax.swing.JFrame jFrame1;
     private javax.swing.JFrame jFrame2;
@@ -415,6 +447,7 @@ public class UyTubeFrame extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem listarCategorias;
     private javax.swing.JMenuItem seguirUsuario;
     // End of variables declaration//GEN-END:variables
 }

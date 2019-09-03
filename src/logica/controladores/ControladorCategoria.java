@@ -5,13 +5,19 @@
  */
 package logica.controladores;
 
+import java.text.SimpleDateFormat;
+import java.util.Iterator;
 import java.util.List;
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import logica.Categoria;
 import logica.controladores.IControladorCategoria;
+
 /**
  *
  * @author Xavel
@@ -35,19 +41,60 @@ public class ControladorCategoria implements IControladorCategoria {
          return findCategoriaEntities(all, -1, -1);
      }
      
-     public void ListarCategoria(){
-         DefaultTableModel model;
-         String [] titulo = {"Nombre"};
-         model = new DefaultTableModel(null, titulo);
-         
-         List<Categoria> datos = this.findCategoriaEntities();
-         
-         String [] datosCategoria = new String[0];
-         for (Categoria cat : datos){
-             datosCategoria[0] = cat.getNombre();
-             model.addRow(datosCategoria);
-         
+     public void AltaCategoria(String nombre){
+          try {
+            
+            EntityManager em = emFactory.createEntityManager();
+            em.getTransaction().begin();
+
+            Categoria c = new Categoria(nombre);
+            em.persist(c);
+            em.merge(c);
+            em.getTransaction().commit();
+            em.close();
+            
+            JOptionPane.showMessageDialog(null,"La categoría se registro con exito");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+        }
+    }
+     
+     
+     @Override
+     public List<String> ListarCategorias(){
+         List<String> list = null;
+        try {
+          
+            EntityManager em = emFactory.createEntityManager();
+            List categorias = em.createQuery("SELECT Nombre FROM Categorias c").getResultList();
+            Iterator it = categorias.iterator();
+            while(it.hasNext()) {
+                Categoria c = (Categoria) it.next();
+                list.add(c.getNombre());
+            }
+            em.getTransaction().commit();
+            em.close();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+        }
+        return list;
 }
+     
+     
+     @Override
+     public Categoria ConsultarCategorias(String c){
+         Categoria dt = null;
+        try {
+            EntityManager em = emFactory.createEntityManager();
+            TypedQuery<Categoria> query = em.createQuery("SELECT * FROM Categoria c WHERE c.Nombre = :c", Categoria.class);
+            Categoria u = query.setParameter("Nombre", c).getSingleResult();
+            dt = new Categoria(c);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+        }
+        return dt;
+         
      }
 }
 

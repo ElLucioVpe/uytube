@@ -31,4 +31,8 @@ public class Fabrica {
     public ControladorVideo getIControladorVideo() {
         return new ControladorVideo();
     }
+    
+        public IControladorCategoria getIControladorCategoria() {
+        return new ControladorCategoria();
+    }
 }
