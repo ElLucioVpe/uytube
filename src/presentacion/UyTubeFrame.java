@@ -1,4 +1,4 @@
-dss/*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -269,7 +269,7 @@ public class UyTubeFrame extends javax.swing.JFrame {
             ex.printStackTrace();
         }
         }else{
-            JOptionPane.showMessageDialog(null,"Ya tiene una venta de usuarios abierta");
+            JOptionPane.showMessageDialog(null,"Ya tiene una ventana de usuarios abierta");
         }
        /*
         Dimension desktopSize = Escritorio.getSize();
@@ -299,7 +299,7 @@ public class UyTubeFrame extends javax.swing.JFrame {
             ex.printStackTrace();
         }
         }else{
-            JOptionPane.showMessageDialog(null,"Ya tiene una venta de usuarios abierta");
+            JOptionPane.showMessageDialog(null,"Ya tiene una ventana de videos abierta");
         }
     }//GEN-LAST:event_RegistrarVideoActionPerformed
 
