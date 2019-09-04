@@ -17,7 +17,7 @@ public interface IControladorUsuario {
     public abstract void AltaUsuario(String nick, String nom, String apell, String mail, String fnac, String img);
     public abstract void AltaCanal(String nombre, boolean privado, int user_id, String descripcion);
     public abstract void ModificarUsuario(int id, String nuevonom, String nuevoapell, String nuevafechaNac, String nuevonomC, String nuevadesC, boolean nuevaprivC);
-    public abstract List<String> ListarUsuarios();
+    public abstract List<UsuarioDt> ListarUsuarios();
     public abstract UsuarioDt ConsultarUsuario(int id);
 
     //Listas de Reproduccion

@@ -134,22 +134,18 @@ public class ControladorUsuario implements IControladorUsuario {
     }
 
     @Override
-    public List<String> ListarUsuarios(){
-        List<String> list = null;
+    public List<UsuarioDt> ListarUsuarios(){
+        List<UsuarioDt> list = new ArrayList<UsuarioDt>();
         try {
             //probablemente devuelve una lista de los nicks de los usuarios existentes
             //esa lista luego es mostrada en su respectivo frame
             EntityManager em = emFactory.createEntityManager();
-            List users = em.createQuery("SELECT nick FROM Usuario u").getResultList();
-            Iterator it = users.iterator();
-            while(it.hasNext()) {
-                Usuario u = (Usuario) it.next();
-                list.add(u.getNickname());
+            List<Usuario> users = em.createQuery("SELECT u FROM Usuario u", Usuario.class).getResultList();
+            for(int i=0;i < users.size(); i++) {
+                list.add(new UsuarioDt(users.get(i)));
             }
-            em.getTransaction().commit();
             em.close();
 
-            JOptionPane.showMessageDialog(null,"La lista de reproduccion se creo con exito");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
         }

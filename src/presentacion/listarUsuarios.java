@@ -22,16 +22,13 @@ public class listarUsuarios extends javax.swing.JInternalFrame {
      */
     IControladorUsuario u;
 
-    public listarUsuarios() {
+    public listarUsuarios(IControladorUsuario user) {
         initComponents();
-        List<String> list = u.ListarUsuarios();
-        UsuarioDt usuario;
-        int id = 0;
+        u = user;
+        List<UsuarioDt> list = u.ListarUsuarios();
         for(int i = 0; i < list.size(); i++) {
-            id = u.obtenerIdUsuario(list.get(i));
-            usuario = u.ConsultarUsuario(id);
             DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
-            model.addRow(new Object[]{usuario.getNickname(), usuario.getNombre(), usuario.getApellido(), usuario.getMail()});
+            model.addRow(new Object[]{list.get(i).getNickname(), list.get(i).getNombre(), list.get(i).getApellido(), list.get(i).getFechanac(), list.get(i).getImagen(), list.get(i).getMail()});
         }
     }
 
@@ -81,13 +78,10 @@ public class listarUsuarios extends javax.swing.JInternalFrame {
 
         jTable3.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Nickname", "Nombre", "Apellido", "Fecha Nac.", "Imagen", "Mail"
             }
         ));
         jScrollPane3.setViewportView(jTable3);

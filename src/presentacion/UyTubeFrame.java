@@ -55,6 +55,8 @@ public class UyTubeFrame extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
         listarCategorias = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         CrearLista = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
@@ -166,6 +168,17 @@ public class UyTubeFrame extends javax.swing.JFrame {
             }
         });
         jMenu3.add(listarCategorias);
+
+        jMenuItem1.setText("Lista de Usuarios");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem1);
+
+        jMenuItem2.setText("Lista de Videos");
+        jMenu3.add(jMenuItem2);
 
         jMenuBar1.add(jMenu3);
 
@@ -391,6 +404,17 @@ public class UyTubeFrame extends javax.swing.JFrame {
              listaC.setLocation(0,0);
              listaC.setVisible(true);
     }//GEN-LAST:event_listarCategoriasActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+            listarUsuarios frmListarUsuarios = new listarUsuarios(user);
+             Escritorio.add(frmListarUsuarios);
+             Escritorio.moveToFront(frmListarUsuarios);
+             frmListarUsuarios.setSize(Escritorio.getWidth(),Escritorio.getHeight());
+             frmListarUsuarios.setLocation(0,0);
+             frmListarUsuarios.setVisible(true);
+             frmListarUsuarios.show();
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
     
                                               
 
@@ -447,6 +471,8 @@ public class UyTubeFrame extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem listarCategorias;
     private javax.swing.JMenuItem seguirUsuario;
     // End of variables declaration//GEN-END:variables
