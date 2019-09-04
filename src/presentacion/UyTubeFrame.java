@@ -348,7 +348,7 @@ public class UyTubeFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         try{
 
-             listaReproduccion listaRep = new listaReproduccion(user);
+             crearlistaReproduccion listaRep = new crearlistaReproduccion(user);
              Escritorio.add(listaRep);
              Escritorio.moveToFront(listaRep);
              listaRep.setSize(Escritorio.getWidth(),Escritorio.getHeight());

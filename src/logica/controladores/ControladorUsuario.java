@@ -392,7 +392,7 @@ public class ControladorUsuario implements IControladorUsuario {
 
             EntityManager em = emFactory.createEntityManager();
             em.getTransaction().begin();
-
+            
             Usuario u = em.createNamedQuery("Usuario.findByNickname", Usuario.class).setParameter("nickname", nick).getSingleResult();
             if(u == null) throw new Exception("El usuario no existe");
 
@@ -440,13 +440,14 @@ public class ControladorUsuario implements IControladorUsuario {
     }
     
     @Override
-    public List obtenerListasUsuario(int id) {
-        List l = new ArrayList<String>();
+    public List<String> obtenerListasUsuario(int id) {
+        List<String> l = new ArrayList<>();
         try {
             EntityManager em = emFactory.createEntityManager();
             em.getTransaction().begin();
 
             Usuario u = em.find(Usuario.class, id);
+            if(u == null) throw new Exception("El usuario no existe");
             Collection<ListaDeReproduccion> aux = u.getListas();
             
             Iterator<ListaDeReproduccion> it = aux.iterator();
@@ -463,13 +464,14 @@ public class ControladorUsuario implements IControladorUsuario {
     }
     
     @Override
-    public List obtenerVideosLista(int id, String lista) {
-        List l = new ArrayList<VideoListaDt>();
+    public List<VideoListaDt> obtenerVideosLista(int id, String lista) {
+        List<VideoListaDt> l = new ArrayList<>();
         try {
             EntityManager em = emFactory.createEntityManager();
             em.getTransaction().begin();
 
             Usuario u = em.find(Usuario.class, id);
+            if(u == null) throw new Exception("El usuario no existe");
             Collection<Video> lvideo = u.getLista(lista).getVideos();
             
             Iterator it = lvideo.iterator();
