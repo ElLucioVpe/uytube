@@ -52,4 +52,29 @@ public class ControladorVideo implements IControladorVideo {
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
         }
     }
+    
+        public void ModificarVideo(int id, String nuevoNom, String nuevaDur, String nuevaUrl, String nuevaDesc, String nuevaFpub, boolean nuevaPriv){
+        try {
+
+            EntityManager em = emFactory.createEntityManager();
+            em.getTransaction().begin();
+
+            Video v = em.find(Video.class, id);
+            if(!nuevoNom.isBlank()) v.setNombre(nuevoNom);
+            if(!nuevaDur.isBlank()) v.setDuracion( Integer.parseInt(nuevaDur));
+            if(!nuevaUrl.isBlank()) v.setUrl(nuevaUrl);
+            if(!nuevaDesc.isBlank()) v.setUrl(nuevaDesc);
+            if(nuevaFpub != null) v.setFechaPublicacion(new SimpleDateFormat("dd/MM/yyyy").parse(nuevaFpub));
+            //Priv cambiar chanc
+            v.setPrivacidad(nuevaPriv);
+
+            em.merge(v);
+            em.getTransaction().commit();
+            em.close();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+        }
+        }
+
 }

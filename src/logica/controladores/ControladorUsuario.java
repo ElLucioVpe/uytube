@@ -21,6 +21,7 @@ import logica.ListaDeReproduccion_PorDefecto;
 import logica.Usuario;
 import logica.Video;
 import logica.dt.UsuarioDt;
+import logica.dt.VideoListaDt;
 //import logica.controladores.IControladorUsuario;
 
 /**
@@ -387,7 +388,7 @@ public class ControladorUsuario implements IControladorUsuario {
 
             EntityManager em = emFactory.createEntityManager();
             em.getTransaction().begin();
-
+            
             Usuario u = em.createNamedQuery("Usuario.findByNickname", Usuario.class).setParameter("nickname", nick).getSingleResult();
             if(u == null) throw new Exception("El usuario no existe");
 
@@ -416,7 +417,7 @@ public class ControladorUsuario implements IControladorUsuario {
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
         }
     }
-
+    
     @Override
     public List obtenerCategorias() {
         List l = new ArrayList<String>();
@@ -425,6 +426,55 @@ public class ControladorUsuario implements IControladorUsuario {
             em.getTransaction().begin();
 
             l = em.createQuery("select c.nombre from Categoria c").getResultList();
+
+            em.getTransaction().commit();
+            em.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+        }
+        return l;
+    }
+    
+    @Override
+    public List<String> obtenerListasUsuario(int id) {
+        List<String> l = new ArrayList<>();
+        try {
+            EntityManager em = emFactory.createEntityManager();
+            em.getTransaction().begin();
+
+            Usuario u = em.find(Usuario.class, id);
+            if(u == null) throw new Exception("El usuario no existe");
+            Collection<ListaDeReproduccion> aux = u.getListas();
+            
+            Iterator<ListaDeReproduccion> it = aux.iterator();
+            while(it.hasNext()) {
+                l.add(it.next().getNombre());
+            }
+
+            em.getTransaction().commit();
+            em.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+        }
+        return l;
+    }
+    
+    @Override
+    public List<VideoListaDt> obtenerVideosLista(int id, String lista) {
+        List<VideoListaDt> l = new ArrayList<>();
+        try {
+            EntityManager em = emFactory.createEntityManager();
+            em.getTransaction().begin();
+
+            Usuario u = em.find(Usuario.class, id);
+            if(u == null) throw new Exception("El usuario no existe");
+            Collection<Video> lvideo = u.getLista(lista).getVideos();
+            
+            Iterator it = lvideo.iterator();
+            while(it.hasNext()) {
+                Video v = (Video) it.next();
+                l.add(new VideoListaDt(v.getId(), v.getNombre()));
+            }
 
             em.getTransaction().commit();
             em.close();

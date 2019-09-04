@@ -13,7 +13,7 @@ import logica.controladores.IControladorUsuario;
  *
  * @author pagol
  */
-public class listaReproduccion extends javax.swing.JInternalFrame {
+public class crearlistaReproduccion extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form listaReproduccionFrame
@@ -21,7 +21,7 @@ public class listaReproduccion extends javax.swing.JInternalFrame {
     IControladorUsuario u;
     boolean esParticular;
     
-    public listaReproduccion(IControladorUsuario userC) {
+    public crearlistaReproduccion(IControladorUsuario userC) {
         initComponents();
         u = userC;
         esParticular = false;

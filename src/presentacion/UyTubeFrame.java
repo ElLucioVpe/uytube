@@ -1,4 +1,4 @@
-/*
+dss/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -7,6 +7,7 @@ package presentacion;
 
 import java.awt.Dimension;
 import java.beans.PropertyVetoException;
+import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import logica.controladores.Fabrica;
 import logica.controladores.IControladorUsuario;
@@ -59,6 +60,7 @@ public class UyTubeFrame extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         CrearLista = new javax.swing.JMenuItem();
+        ModificarLista = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
@@ -197,6 +199,14 @@ public class UyTubeFrame extends javax.swing.JFrame {
         });
         jMenu4.add(CrearLista);
 
+        ModificarLista.setText("Modificar Lista de Reproduccion");
+        ModificarLista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ModificarListaActionPerformed(evt);
+            }
+        });
+        jMenu4.add(ModificarLista);
+
         jMenuBar1.add(jMenu4);
 
         jMenu5.setText("Categoria");
@@ -228,6 +238,18 @@ public class UyTubeFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    protected void AgregarInternalFrame(JInternalFrame f) {                                               
+        try{
+            Escritorio.add(f);
+            Escritorio.moveToFront(f);
+            f.setSize(Escritorio.getWidth(),Escritorio.getHeight());
+            f.setLocation(0,0);
+            
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+    }
+    
     private void RegistrarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarUsuarioActionPerformed
         // TODO add your handling code here:
         //Agregar Frame para esta funcion
@@ -258,20 +280,6 @@ public class UyTubeFrame extends javax.swing.JFrame {
 
     }//GEN-LAST:event_RegistrarUsuarioActionPerformed
 
-    protected void RegistrarCanal(String n) {
-        try{
-
-            registroCanal canalWin = new registroCanal(user, n);
-            Escritorio.add(canalWin);
-            Escritorio.moveToFront(canalWin);
-            canalWin.setSize(Escritorio.getWidth(),Escritorio.getHeight());
-            canalWin.setLocation(0,0);
-            canalWin.setVisible(true);
-
-        }catch(Exception ex){
-            ex.printStackTrace();
-        }
-    }
 
     private void RegistrarVideoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarVideoActionPerformed
         // TODO add your handling code here:
@@ -353,7 +361,7 @@ public class UyTubeFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         try{
 
-             listaReproduccion listaRep = new listaReproduccion(user);
+             crearlistaReproduccion listaRep = new crearlistaReproduccion(user);
              Escritorio.add(listaRep);
              Escritorio.moveToFront(listaRep);
              listaRep.setSize(Escritorio.getWidth(),Escritorio.getHeight());
@@ -415,6 +423,19 @@ public class UyTubeFrame extends javax.swing.JFrame {
              frmListarUsuarios.setVisible(true);
              frmListarUsuarios.show();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+    private void ModificarListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ModificarListaActionPerformed
+        try{
+
+            listaDeReproduccionFrame listaRep = new listaDeReproduccionFrame(user, this);
+            Escritorio.add(listaRep);
+            Escritorio.moveToFront(listaRep);
+            listaRep.setSize(Escritorio.getWidth(),Escritorio.getHeight());
+            listaRep.setLocation(0,0);
+
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_ModificarListaActionPerformed
     
                                               
 
@@ -458,6 +479,7 @@ public class UyTubeFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem CrearLista;
     private javax.swing.JDesktopPane Escritorio;
+    private javax.swing.JMenuItem ModificarLista;
     private javax.swing.JMenuItem RegistrarUsuario;
     private javax.swing.JMenuItem RegistrarVideo;
     private javax.swing.JMenuItem RegistroCategoria;
