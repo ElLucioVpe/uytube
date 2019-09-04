@@ -21,6 +21,7 @@ import logica.ListaDeReproduccion_PorDefecto;
 import logica.Usuario;
 import logica.Video;
 import logica.dt.UsuarioDt;
+import logica.dt.VideoListaDt;
 //import logica.controladores.IControladorUsuario;
 
 /**
@@ -420,7 +421,7 @@ public class ControladorUsuario implements IControladorUsuario {
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
         }
     }
-
+    
     @Override
     public List obtenerCategorias() {
         List l = new ArrayList<String>();
@@ -429,6 +430,53 @@ public class ControladorUsuario implements IControladorUsuario {
             em.getTransaction().begin();
 
             l = em.createQuery("select c.nombre from Categoria c").getResultList();
+
+            em.getTransaction().commit();
+            em.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+        }
+        return l;
+    }
+    
+    @Override
+    public List obtenerListasUsuario(int id) {
+        List l = new ArrayList<String>();
+        try {
+            EntityManager em = emFactory.createEntityManager();
+            em.getTransaction().begin();
+
+            Usuario u = em.find(Usuario.class, id);
+            Collection<ListaDeReproduccion> aux = u.getListas();
+            
+            Iterator<ListaDeReproduccion> it = aux.iterator();
+            while(it.hasNext()) {
+                l.add(it.next().getNombre());
+            }
+
+            em.getTransaction().commit();
+            em.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+        }
+        return l;
+    }
+    
+    @Override
+    public List obtenerVideosLista(int id, String lista) {
+        List l = new ArrayList<VideoListaDt>();
+        try {
+            EntityManager em = emFactory.createEntityManager();
+            em.getTransaction().begin();
+
+            Usuario u = em.find(Usuario.class, id);
+            Collection<Video> lvideo = u.getLista(lista).getVideos();
+            
+            Iterator it = lvideo.iterator();
+            while(it.hasNext()) {
+                Video v = (Video) it.next();
+                l.add(new VideoListaDt(v.getId(), v.getNombre()));
+            }
 
             em.getTransaction().commit();
             em.close();

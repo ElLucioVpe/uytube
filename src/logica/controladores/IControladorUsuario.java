@@ -35,4 +35,6 @@ public interface IControladorUsuario {
     public abstract int obtenerIdUsuario(String nick);
     public abstract void EliminarUsuario(int id);
     public abstract List obtenerCategorias();
+    public abstract List obtenerListasUsuario(int id);
+    public abstract List obtenerVideosLista(int id, String lista);
 }

@@ -24,7 +24,6 @@ public class registroUser extends javax.swing.JInternalFrame {
 static String x;
 UyTubeFrame p;
 IControladorUsuario u;
-private registroCanal canalWin;
 JFileChooser fc;
     /**
      * Creates new form registroUser
@@ -275,7 +274,7 @@ JFileChooser fc;
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
         }
         
-        p.RegistrarCanal(textField3.getText());
+        p.AgregarInternalFrame(new registroCanal(u, textField3.getText()));
         x=null;
         u=null;
         this.dispose();
