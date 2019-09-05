@@ -185,6 +185,17 @@ public class Video implements Serializable {
         return dislikes;
     }
     
+    public void agregarValoracion(Valoracion v) {
+        Valoracion opuesta =  new Valoracion(v.getUsuario().getId(), v.getVideo().getId(), !v.getGustar());
+        if(valoraciones.contains(opuesta)) eliminarValoracion(opuesta);
+        
+        if(!valoraciones.contains(v)) valoraciones.add(v);
+    }
+    
+    public void eliminarValoracion(Valoracion v) {
+        this.valoraciones.remove(v);
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

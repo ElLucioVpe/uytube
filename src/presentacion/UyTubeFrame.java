@@ -405,12 +405,13 @@ public class UyTubeFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_RegistroCategoriaActionPerformed
 
     private void listarCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listarCategoriasActionPerformed
-        listarCategorias listaC = new listarCategorias();
+        listarCategorias listaC = new listarCategorias(cate);
              Escritorio.add(listaC);
              Escritorio.moveToFront(listaC);
              listaC.setSize(Escritorio.getWidth(),Escritorio.getHeight());
              listaC.setLocation(0,0);
              listaC.setVisible(true);
+             
     }//GEN-LAST:event_listarCategoriasActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed

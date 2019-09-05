@@ -8,6 +8,7 @@ package logica.controladores;
 import java.util.List;
 import javax.swing.JTable;
 import logica.Categoria;
+import logica.dt.CategoriaDt;
 
 /**
  *
@@ -16,6 +17,6 @@ import logica.Categoria;
 public interface IControladorCategoria {
     
     public void AltaCategoria(String nombre);
-    public List<String> ListarCategorias();
-    public Categoria ConsultarCategorias(String c);
+    public List<CategoriaDt> ListarCategorias();
+    public CategoriaDt ConsultarCategorias(String c);
 }

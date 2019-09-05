@@ -15,6 +15,7 @@ import javax.persistence.Persistence;
 import javax.swing.JOptionPane;
 import logica.Canal;
 import logica.Usuario;
+import logica.Valoracion;
 import logica.Video;
 
 /**
@@ -84,6 +85,30 @@ public class ControladorVideo implements IControladorVideo {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
         }
+        }
+        
+        @Override
+        public void ValorarVideo(int user_valoracion, int id_video, boolean gusta) {
+            try {
+
+            EntityManager em = emFactory.createEntityManager();
+            em.getTransaction().begin();
+
+            Valoracion v = new Valoracion(user_valoracion, id_video, gusta);
+            Video video = em.find(Video.class, id_video);
+            Usuario user = em.find(Usuario.class, user_valoracion);
+            
+            user.agregarValoracion(v);
+            video.agregarValoracion(v);
+            em.merge(v);
+            em.merge(user);
+            em.merge(video);
+            em.getTransaction().commit();
+            em.close();
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+            }
         }
 
 }
