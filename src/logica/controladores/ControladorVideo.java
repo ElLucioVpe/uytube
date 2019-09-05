@@ -4,9 +4,11 @@
  * and open the template in the editor.
  */
 package logica.controladores;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import logica.controladores.IControladorVideo;
 import java.util.Collection;
+import java.util.Date;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -29,7 +31,7 @@ public class ControladorVideo implements IControladorVideo {
     }
     
     @Override
-    public void AltaVideo(String nombre, String duracion, String url, String desc, String fpub, int user){
+    public void AltaVideo(String nombre, String duracion, String url, String desc, int user){
           try {
             
             EntityManager em = emFactory.createEntityManager();
@@ -39,8 +41,11 @@ public class ControladorVideo implements IControladorVideo {
             if(u == null) throw new Exception("El usuario no existe");
             Canal c =  u.getCanal();
             if(c.obtenerVideo(nombre) != null) throw new Exception("El video ya esta registrado en ese user");
-            
-            Video v = new Video(nombre, Integer.parseInt(duracion), url, desc, new SimpleDateFormat("dd/MM/yyyy").parse(fpub),true,user);
+            java.util.Date fecha = new Date();
+            //DateFormat dtf = new SimpleDateFormat("yyyy/MM/dd");
+            //System.out.println(dtf.format(fecha));
+            //new SimpleDateFormat("dd/MM/yyyy").parse(dtf.format(fecha))
+            Video v = new Video(nombre, Integer.parseInt(duracion), url, desc, fecha,true,user);
             c.agregarVideo(v);
             em.persist(v);
             em.merge(c);
@@ -53,18 +58,22 @@ public class ControladorVideo implements IControladorVideo {
         }
     }
     
-        public void ModificarVideo(int id, String nuevoNom, String nuevaDur, String nuevaUrl, String nuevaDesc, String nuevaFpub, boolean nuevaPriv){
+        public void ModificarVideo(int id, String nuevoNom, String nuevaDur, String nuevaUrl, String nuevaDesc, Date nuevaFpub, boolean nuevaPriv){
         try {
 
             EntityManager em = emFactory.createEntityManager();
             em.getTransaction().begin();
+            java.util.Date fecha = new Date();
 
             Video v = em.find(Video.class, id);
             if(!nuevoNom.isBlank()) v.setNombre(nuevoNom);
             if(!nuevaDur.isBlank()) v.setDuracion( Integer.parseInt(nuevaDur));
             if(!nuevaUrl.isBlank()) v.setUrl(nuevaUrl);
             if(!nuevaDesc.isBlank()) v.setUrl(nuevaDesc);
-            if(nuevaFpub != null) v.setFechaPublicacion(new SimpleDateFormat("dd/MM/yyyy").parse(nuevaFpub));
+            if(nuevaFpub.after(fecha)){
+                throw new Exception("Fecha Imposible aun no estamos en esa fecha");
+            }
+            if(nuevaFpub != null) v.setFechaPublicacion(nuevaFpub);
             //Priv cambiar chanc
             v.setPrivacidad(nuevaPriv);
 

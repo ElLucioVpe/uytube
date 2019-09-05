@@ -5,13 +5,15 @@
  */
 package logica.controladores;
 
+import java.util.Date;
+
 /**
  *
  * @author Esteban
  */
 public interface IControladorVideo {
     
-    public abstract void AltaVideo(String nombre, String duracion, String url, String desc, String fpub,int user);
-    public abstract void ModificarVideo(int id, String nuevoNom, String nuevaDur, String nuevaUrl, String nuevaDesc, String nuevaFpub, boolean nuevaPriv);
+    public abstract void AltaVideo(String nombre, String duracion, String url, String desc,int user);
+    public abstract void ModificarVideo(int id, String nuevoNom, String nuevaDur, String nuevaUrl, String nuevaDesc, Date nuevaFpub, boolean nuevaPriv);
 
 }
