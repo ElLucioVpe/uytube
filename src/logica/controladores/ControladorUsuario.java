@@ -7,6 +7,7 @@ package logica.controladores;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -37,7 +38,7 @@ public class ControladorUsuario implements IControladorUsuario {
     }
 
     @Override
-    public void AltaUsuario(String nick, String nom, String apell, String mail, String fnac, String img) {
+    public void AltaUsuario(String nick, String nom, String apell, String mail, Date fnac, String img) {
         try {
 
             EntityManager em = emFactory.createEntityManager();
@@ -48,7 +49,7 @@ public class ControladorUsuario implements IControladorUsuario {
             if(em.createNamedQuery("Usuario.findByMail", Usuario.class).setParameter("mail",mail).getResultList().size() > 0)
                 throw new Exception("El mail ya esta registrado");
 
-            Usuario u = new Usuario(nick, nom, apell, mail, new SimpleDateFormat("dd/MM/yyyy").parse(fnac));
+            Usuario u = new Usuario(nick, nom, apell, mail, fnac);
             if(!img.isEmpty()) u.setImagen(img);
 
             em.persist(u);
@@ -289,7 +290,7 @@ public class ControladorUsuario implements IControladorUsuario {
 
             EntityManager em = emFactory.createEntityManager();
             em.getTransaction().begin();
-
+            
             Usuario user_lista = em.find(Usuario.class, usuariolista);
             if(user_lista == null) throw new Exception("El usuario propietario de la lista no existe");
 
@@ -389,8 +390,9 @@ public class ControladorUsuario implements IControladorUsuario {
             EntityManager em = emFactory.createEntityManager();
             em.getTransaction().begin();
             
-            Usuario u = em.createNamedQuery("Usuario.findByNickname", Usuario.class).setParameter("nickname", nick).getSingleResult();
-            if(u == null) throw new Exception("El usuario no existe");
+            TypedQuery<Usuario> q = em.createNamedQuery("Usuario.findByNickname", Usuario.class).setParameter("nickname", nick);
+            if (q.getResultList().isEmpty()) throw new Exception("El usuario no existe");
+            Usuario u = q.getSingleResult();
 
             id = u.getId();
             em.getTransaction().commit();

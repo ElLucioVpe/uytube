@@ -166,7 +166,7 @@ public class agregarVideoListaDR extends javax.swing.JInternalFrame {
 
     private void SearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchButtonActionPerformed
         id_videouser = u.obtenerIdUsuario(jTextField1.getText());
-        obtenerVideos(id_videouser);
+        if(id_videouser != -1) obtenerVideos(id_videouser);
     }//GEN-LAST:event_SearchButtonActionPerformed
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed

@@ -26,10 +26,11 @@ public class listaDeReproduccionFrame extends javax.swing.JInternalFrame {
     public listaDeReproduccionFrame(IControladorUsuario user, UyTubeFrame padre) {
         initComponents();
         this.setVisible(true);
+        this.setResizable(false);
         u = user;
         p = padre;
         ListasLabel.setVisible(false);
-        jList1.setVisible(false);
+        jScrollPane1.setVisible(false);
         this.MostrarSeleccion(false);
     }
 
@@ -51,10 +52,11 @@ public class listaDeReproduccionFrame extends javax.swing.JInternalFrame {
         UpdateButton = new javax.swing.JButton();
         AddButton = new javax.swing.JButton();
         RemoveButton = new javax.swing.JButton();
-        SelectLabel = new javax.swing.JLabel();
         SearchButton = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         OkButton = new javax.swing.JButton();
+
+        setClosable(true);
 
         jLabel1.setText("Usuario:");
 
@@ -95,8 +97,6 @@ public class listaDeReproduccionFrame extends javax.swing.JInternalFrame {
             }
         });
 
-        SelectLabel.setText("Seleccione una accion:");
-
         SearchButton.setText("Buscar");
         SearchButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -121,66 +121,62 @@ public class listaDeReproduccionFrame extends javax.swing.JInternalFrame {
                 .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ListasLabel)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(13, 13, 13)
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(SearchButton)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(OkButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(CancelButton))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(ListasLabel)
-                                .addGap(112, 112, 112))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(OkButton)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(UpdateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(AddButton)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(28, 28, 28)
+                                        .addComponent(CancelButton)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(RemoveButton))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel3)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addComponent(AddButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(UpdateButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(RemoveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addComponent(SelectLabel, javax.swing.GroupLayout.Alignment.TRAILING))
-                                        .addGap(4, 4, 4)))))
-                        .addGap(40, 40, 40))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(13, 13, 13)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(SearchButton)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addComponent(jLabel3))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addGap(40, 40, 40))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(SearchButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(ListasLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(SelectLabel)
-                        .addGap(16, 16, 16)
-                        .addComponent(UpdateButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(AddButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(RemoveButton)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addComponent(ListasLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(CancelButton)
-                    .addComponent(OkButton))
+                    .addComponent(UpdateButton)
+                    .addComponent(AddButton)
+                    .addComponent(RemoveButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(OkButton)
+                    .addComponent(CancelButton))
                 .addContainerGap())
         );
 
@@ -191,30 +187,9 @@ public class listaDeReproduccionFrame extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_CancelButtonActionPerformed
 
-    private void UpdateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateButtonActionPerformed
-        String lista = jList1.getSelectedValue();
-        
-        p.AgregarInternalFrame(new modificarListaDR(u, lista, u.obtenerIdUsuario(jTextField1.getText())));
-        this.dispose();
-    }//GEN-LAST:event_UpdateButtonActionPerformed
-
-    private void AddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddButtonActionPerformed
-        String lista = jList1.getSelectedValue();
-        
-        p.AgregarInternalFrame(new agregarVideoListaDR(u, lista, u.obtenerIdUsuario(jTextField1.getText())));
-        this.dispose();
-    }//GEN-LAST:event_AddButtonActionPerformed
-
-    private void RemoveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RemoveButtonActionPerformed
-        String lista = jList1.getSelectedValue();
-        
-        p.AgregarInternalFrame(new quitarVideoListaDR(u, lista, id_user));
-        this.dispose();
-    }//GEN-LAST:event_RemoveButtonActionPerformed
-
     private void SearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchButtonActionPerformed
         id_user = u.obtenerIdUsuario(jTextField1.getText());
-        this.obtenerListas(id_user);
+        if(id_user != -1) this.obtenerListas(id_user);
     }//GEN-LAST:event_SearchButtonActionPerformed
 
     private void OkButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OkButtonActionPerformed
@@ -224,10 +199,30 @@ public class listaDeReproduccionFrame extends javax.swing.JInternalFrame {
     private void jList1ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jList1ValueChanged
         this.MostrarSeleccion(true);
     }//GEN-LAST:event_jList1ValueChanged
+
+    private void RemoveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RemoveButtonActionPerformed
+        String lista = jList1.getSelectedValue();
+
+        p.AgregarInternalFrame(new quitarVideoListaDR(u, lista, id_user));
+        this.dispose();
+    }//GEN-LAST:event_RemoveButtonActionPerformed
+
+    private void AddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddButtonActionPerformed
+        String lista = jList1.getSelectedValue();
+
+        p.AgregarInternalFrame(new agregarVideoListaDR(u, lista, u.obtenerIdUsuario(jTextField1.getText())));
+        this.dispose();
+    }//GEN-LAST:event_AddButtonActionPerformed
+
+    private void UpdateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateButtonActionPerformed
+        String lista = jList1.getSelectedValue();
+
+        p.AgregarInternalFrame(new modificarListaDR(u, lista, u.obtenerIdUsuario(jTextField1.getText())));
+        this.dispose();
+    }//GEN-LAST:event_UpdateButtonActionPerformed
     
     //Auxiliares
     private void MostrarSeleccion(boolean x) {
-        SelectLabel.setVisible(x);
         UpdateButton.setVisible(x);
         AddButton.setVisible(x);
         RemoveButton.setVisible(x);
@@ -244,7 +239,7 @@ public class listaDeReproduccionFrame extends javax.swing.JInternalFrame {
         
         jList1.setModel(model);
         ListasLabel.setVisible(true);
-        jList1.setVisible(true);
+        jScrollPane1.setVisible(true);
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -254,7 +249,6 @@ public class listaDeReproduccionFrame extends javax.swing.JInternalFrame {
     private javax.swing.JButton OkButton;
     private javax.swing.JButton RemoveButton;
     private javax.swing.JButton SearchButton;
-    private javax.swing.JLabel SelectLabel;
     private javax.swing.JButton UpdateButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;

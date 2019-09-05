@@ -25,3 +25,11 @@ build/built-jar.properties
 nbproject/private/private.properties
 nbproject/project.properties
 *.properties
+build/built-jar.properties
+data/uytubedb.lck
+nbproject/build-impl.xml
+nbproject/genfiles.properties
+nbproject/private/private.properties
+nbproject/private/private.xml
+nbproject/project.properties
+nbproject/project.xml
