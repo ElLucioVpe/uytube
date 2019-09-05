@@ -13,5 +13,5 @@ public interface IControladorVideo {
     
     public abstract void AltaVideo(String nombre, String duracion, String url, String desc, String fpub,int user);
     public abstract void ModificarVideo(int id, String nuevoNom, String nuevaDur, String nuevaUrl, String nuevaDesc, String nuevaFpub, boolean nuevaPriv);
-
+    public abstract void ValorarVideo(int user_valoracion, int id_video, boolean gusta);
 }
