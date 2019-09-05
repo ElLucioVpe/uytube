@@ -6,6 +6,7 @@
 package logica.controladores;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -16,7 +17,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import logica.Categoria;
+import logica.dt.CategoriaDt;
 import logica.controladores.IControladorCategoria;
+
 
 /**
  *
@@ -41,6 +44,7 @@ public class ControladorCategoria implements IControladorCategoria {
          return findCategoriaEntities(all, -1, -1);
      }
      
+     @Override
      public void AltaCategoria(String nombre){
           try {
             
@@ -59,20 +63,17 @@ public class ControladorCategoria implements IControladorCategoria {
         }
     }
      
-     
+    
      @Override
-     public List<String> ListarCategorias(){
-         List<String> list = null;
+     public List<CategoriaDt> ListarCategorias(){
+         List<CategoriaDt> list = new ArrayList<CategoriaDt>();
         try {
           
             EntityManager em = emFactory.createEntityManager();
-            List categorias = em.createQuery("SELECT Nombre FROM Categorias c").getResultList();
-            Iterator it = categorias.iterator();
-            while(it.hasNext()) {
-                Categoria c = (Categoria) it.next();
-                list.add(c.getNombre());
+            List<Categoria> categorias = em.createQuery("SELECT c FROM Categoria c", Categoria.class).getResultList();
+            for(int i=0;i < categorias.size(); i++) {
+                list.add(new CategoriaDt(categorias.get(i)));
             }
-            em.getTransaction().commit();
             em.close();
 
         } catch (Exception e) {
@@ -83,13 +84,13 @@ public class ControladorCategoria implements IControladorCategoria {
      
      
      @Override
-     public Categoria ConsultarCategorias(String c){
-         Categoria dt = null;
+     public CategoriaDt ConsultarCategorias(String Nombre){
+         CategoriaDt dt = null;
         try {
             EntityManager em = emFactory.createEntityManager();
-            TypedQuery<Categoria> query = em.createQuery("SELECT * FROM Categoria c WHERE c.Nombre = :c", Categoria.class);
-            Categoria u = query.setParameter("Nombre", c).getSingleResult();
-            dt = new Categoria(c);
+            TypedQuery<Categoria> query = em.createQuery("SELECT * FROM Categoria c WHERE c.nombre = :nombre", Categoria.class);
+            Categoria c = query.setParameter("Nombre", Nombre).getSingleResult();
+            dt = new CategoriaDt(c);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
         }

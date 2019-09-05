@@ -2,6 +2,7 @@
 package presentacion;
 
 import java.awt.event.MouseListener;
+import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import logica.controladores.IControladorCategoria;
 
@@ -70,6 +71,16 @@ IControladorCategoria c;
     }// </editor-fold>//GEN-END:initComponents
 
     private void registroBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registroBotonActionPerformed
+        try {       
+
+            c.AltaCategoria(
+                    registroTexto.getText()
+
+            );
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+        }
 
     }//GEN-LAST:event_registroBotonActionPerformed
 
