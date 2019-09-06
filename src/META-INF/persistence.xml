@@ -11,6 +11,7 @@
     <class>logica.Valoracion</class>
     <class>logica.ListaDeReproduccion</class>
     <class>logica.ListaDeReproduccion_PorDefecto</class>
+    <class>logica.Comentario</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:hsqldb:file:data\uytubedb"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

@@ -82,6 +82,9 @@ public class Video implements Serializable {
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "video")
     private Collection<Valoracion> valoraciones;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "video")
+    private Collection<Comentario> comentarios;
 
     public Video() {
     }
@@ -194,6 +197,10 @@ public class Video implements Serializable {
     
     public void eliminarValoracion(Valoracion v) {
         this.valoraciones.remove(v);
+    }
+    
+    public void agregarComentario(Comentario c) {
+        this.comentarios.add(c);
     }
     
     @Override

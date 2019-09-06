@@ -4,10 +4,6 @@
  * and open the template in the editor.
  */
 package logica.controladores;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import logica.controladores.IControladorVideo;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -18,6 +14,7 @@ import logica.Usuario;
 import logica.Valoracion;
 import logica.ValoracionPK;
 import logica.Video;
+import logica.Comentario;
 
 /**
  *
@@ -92,33 +89,64 @@ public class ControladorVideo implements IControladorVideo {
         public void ValorarVideo(int user_valoracion, int id_video, boolean gusta) {
             try {
 
-            EntityManager em = emFactory.createEntityManager();
-            em.getTransaction().begin();
+                EntityManager em = emFactory.createEntityManager();
+                em.getTransaction().begin();
 
-            Video video = em.find(Video.class, id_video);
-			if(video == null) throw new Exception("El video no existe");
-            Usuario user = em.find(Usuario.class, user_valoracion);
-            if(user == null) throw new Exception("El usuario no existe");
-			
-            Valoracion v = em.find(Valoracion.class, new ValoracionPK(user_valoracion, id_video));
-            if(v == null){ 
-                v = new Valoracion(user_valoracion, id_video, gusta);
-				em.persist(v);
-            } else {
-				v.setGustar(gusta);
-				em.merge(v);
-            }
-			
-            user.agregarValoracion(v);
-            video.agregarValoracion(v);
-            em.merge(user);
-            em.merge(video);
-            em.getTransaction().commit();
-            em.close();
+                Video video = em.find(Video.class, id_video);
+                            if(video == null) throw new Exception("El video no existe");
+                Usuario user = em.find(Usuario.class, user_valoracion);
+                if(user == null) throw new Exception("El usuario no existe");
+
+                Valoracion v = em.find(Valoracion.class, new ValoracionPK(user_valoracion, id_video));
+                if(v == null){ 
+                    v = new Valoracion(user_valoracion, id_video, gusta);
+                                    em.persist(v);
+                } else {
+                                    v.setGustar(gusta);
+                                    em.merge(v);
+                }
+
+                user.agregarValoracion(v);
+                video.agregarValoracion(v);
+                em.merge(user);
+                em.merge(video);
+                em.getTransaction().commit();
+                em.close();
 
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
             }
         }
+        
+        @Override
+        public void ComentarVideo(int user_id, int video_id, long id_padre, String texto) {
+            try {
 
+                EntityManager em = emFactory.createEntityManager();
+                em.getTransaction().begin();
+
+                Video video = em.find(Video.class, video_id);
+                if(video == null) throw new Exception("El video no existe");
+                Usuario user = em.find(Usuario.class, user_id);
+                if(user == null) throw new Exception("El usuario no existe");
+
+                Comentario c = new Comentario(user, video, texto);
+                if (id_padre >= 0) {
+                    Comentario cp = em.find(Comentario.class, id_padre);
+                    if(cp == null) throw new Exception("El comentario padre no existe");
+                    c.setPadre(cp);
+                    cp.agregarHijo(c);
+                    em.merge(cp);
+                }
+
+                video.agregarComentario(c);
+                em.persist(c);
+                em.merge(video);
+                em.getTransaction().commit();
+                em.close();
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+            }
+        }
 }
