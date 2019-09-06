@@ -119,7 +119,7 @@ public class ControladorVideo implements IControladorVideo {
         }
         
         @Override
-        public void ComentarVideo(int user_id, int video_id, long id_padre, String texto) {
+        public void ComentarVideo(int user_id, int video_id, long id_padre, String texto, Date fecha) {
             try {
 
                 EntityManager em = emFactory.createEntityManager();
@@ -130,17 +130,18 @@ public class ControladorVideo implements IControladorVideo {
                 Usuario user = em.find(Usuario.class, user_id);
                 if(user == null) throw new Exception("El usuario no existe");
 
-                Comentario c = new Comentario(user, video, texto);
+                Comentario c = new Comentario(user_id, video_id, texto, fecha);
+                em.persist(c);
+                
                 if (id_padre >= 0) {
                     Comentario cp = em.find(Comentario.class, id_padre);
                     if(cp == null) throw new Exception("El comentario padre no existe");
                     c.setPadre(cp);
                     cp.agregarHijo(c);
                     em.merge(cp);
+                    em.merge(c);
                 }
-
                 video.agregarComentario(c);
-                em.persist(c);
                 em.merge(video);
                 em.getTransaction().commit();
                 em.close();

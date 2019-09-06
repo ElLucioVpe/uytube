@@ -8,6 +8,7 @@ package logica;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,6 +33,15 @@ public class Comentario implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
+    @Column(name = "USER_ID")
+    private Integer user_id;
+    
+    @Column(name = "VIDEO_ID")
+    private Integer video_id;
+    
+    @Column(name = "FECHA")
+    private Date fecha;
+    
     @Column(name = "CONTENIDO")
     private String contenido;
     
@@ -53,10 +63,11 @@ public class Comentario implements Serializable {
     public Comentario() {
     }
     
-    public Comentario(Usuario u, Video v, String contenido) {
-        this.usuario = u;
-        this.video = v;
+    public Comentario(int user_id, int video_id, String contenido, Date fecha) {
+        this.user_id = user_id;
+        this.video_id = video_id;
         this.contenido = contenido;
+        this.fecha = fecha;
         this.hijos = new ArrayList<>();
         this.padre = null;
     }
@@ -77,6 +88,14 @@ public class Comentario implements Serializable {
         this.contenido = contenido;
     }
     
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+    
     public Comentario getPadre() {
         return padre;
     }
@@ -85,13 +104,13 @@ public class Comentario implements Serializable {
         this.padre = padre;
     }
     
-    public Usuario getUsuario() {
+    /*public Usuario getUsuario() {
         return usuario;
     }
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
-    }
+    }*/
     
     public Video getVideo() {
         return video;
