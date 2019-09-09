@@ -6,6 +6,7 @@
 package logica.controladores;
 
 import java.util.Date;
+import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
  *
@@ -17,4 +18,7 @@ public interface IControladorVideo {
     public abstract void ModificarVideo(int id, String nuevoNom, String nuevaDur, String nuevaUrl, String nuevaDesc, Date nuevaFpub, boolean nuevaPriv);
     public abstract void ValorarVideo(int user_valoracion, int id_video, boolean gusta);
     public abstract void ComentarVideo(int user_id, int video_id, long id_padre, String texto, Date fecha);
+    
+    //Auxiliares
+    public abstract DefaultMutableTreeNode obtenerComentariosVideo(int video_id);
 }

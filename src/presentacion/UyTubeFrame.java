@@ -7,6 +7,7 @@ package presentacion;
 
 import java.awt.Dimension;
 import java.beans.PropertyVetoException;
+import java.util.Date;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import logica.controladores.Fabrica;
@@ -58,6 +59,7 @@ public class UyTubeFrame extends javax.swing.JFrame {
         listarCategorias = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         CrearLista = new javax.swing.JMenuItem();
         ModificarLista = new javax.swing.JMenuItem();
@@ -187,6 +189,14 @@ public class UyTubeFrame extends javax.swing.JFrame {
         });
         jMenu3.add(jMenuItem2);
 
+        jMenuItem3.setText("Comentarios Test");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem3);
+
         jMenuBar1.add(jMenu3);
 
         jMenu4.setText("Listas");
@@ -243,18 +253,18 @@ public class UyTubeFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    protected void AgregarInternalFrame(JInternalFrame f) {                                               
+    protected void AgregarInternalFrame(JInternalFrame f) {
         try{
             Escritorio.add(f);
             Escritorio.moveToFront(f);
             f.setSize(Escritorio.getWidth(),Escritorio.getHeight());
             f.setLocation(0,0);
-            
+
         }catch(Exception ex){
             ex.printStackTrace();
         }
     }
-    
+
     private void RegistrarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarUsuarioActionPerformed
         // TODO add your handling code here:
         //Agregar Frame para esta funcion
@@ -355,7 +365,7 @@ public class UyTubeFrame extends javax.swing.JFrame {
 
     private void jMenu5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu5ActionPerformed
 
-        
+
     }//GEN-LAST:event_jMenu5ActionPerformed
 
     private void jMenu5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu5MouseClicked
@@ -372,13 +382,13 @@ public class UyTubeFrame extends javax.swing.JFrame {
              listaRep.setSize(Escritorio.getWidth(),Escritorio.getHeight());
              listaRep.setLocation(0,0);
 
-        
+
         }catch(Exception ex){
         ex.printStackTrace();
         }
     }//GEN-LAST:event_CrearListaActionPerformed
 
-    
+
         private void seguirUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seguirUsuarioActionPerformed
         // TODO add your handling code here:
              seguirUsuario seguirU = new seguirUsuario(user);
@@ -416,7 +426,7 @@ public class UyTubeFrame extends javax.swing.JFrame {
              listaC.setSize(Escritorio.getWidth(),Escritorio.getHeight());
              listaC.setLocation(0,0);
              listaC.setVisible(true);
-             
+
     }//GEN-LAST:event_listarCategoriasActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -453,10 +463,10 @@ public class UyTubeFrame extends javax.swing.JFrame {
         frmListarVideos.setVisible(true);
         frmListarVideos.show();
     }//GEN-LAST:event_jMenuItem2ActionPerformed
-    
-                                              
 
-                                        
+
+
+
     /**
      * @param args the command line arguments
      */
@@ -512,6 +522,7 @@ public class UyTubeFrame extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem listarCategorias;
     private javax.swing.JMenuItem seguirUsuario;
     // End of variables declaration//GEN-END:variables

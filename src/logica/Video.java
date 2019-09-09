@@ -205,6 +205,10 @@ public class Video implements Serializable {
         this.comentarios.add(c);
     }
     
+    public Collection<Comentario> getComentarios() {
+        return comentarios;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;
