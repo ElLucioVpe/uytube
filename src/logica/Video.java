@@ -43,7 +43,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Video.findByDescripcion", query = "SELECT v FROM Video v WHERE v.descripcion = :descripcion"),
     @NamedQuery(name = "Video.findByFechaPublicacion", query = "SELECT v FROM Video v WHERE v.fechaPublicacion = :fechaPublicacion"),
     @NamedQuery(name = "Video.findByCategoria", query = "SELECT v FROM Video v WHERE v.categoria = :categoria"),
-    @NamedQuery(name = "Video.findByPrivacidad", query = "SELECT v FROM Video v WHERE v.privacidad = :privacidad")})
+    @NamedQuery(name = "Video.findByPrivacidad", query = "SELECT v FROM Video v WHERE v.privacidad = :privacidad"),
+    @NamedQuery(name = "Video.findByUserId", query = "SELECT v FROM Video v WHERE v.canal_user_id = :canal_user_id")})
+
 public class Video implements Serializable {
 
     private static final long serialVersionUID = 1L;

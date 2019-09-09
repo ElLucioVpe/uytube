@@ -180,6 +180,11 @@ public class UyTubeFrame extends javax.swing.JFrame {
         jMenu3.add(jMenuItem1);
 
         jMenuItem2.setText("Lista de Videos");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem2);
 
         jMenuBar1.add(jMenu3);
@@ -437,6 +442,17 @@ public class UyTubeFrame extends javax.swing.JFrame {
             ex.printStackTrace();
         }
     }//GEN-LAST:event_ModificarListaActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        listarVideos frmListarVideos = new listarVideos(user);
+        Escritorio.add(frmListarVideos);
+        Escritorio.moveToFront(frmListarVideos);
+        frmListarVideos.setSize(Escritorio.getWidth(),Escritorio.getHeight());
+        frmListarVideos.setLocation(0,0);
+        frmListarVideos.setVisible(true);
+        frmListarVideos.show();
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
     
                                               
 

@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package logica.controladores;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -22,6 +21,7 @@ import logica.ListaDeReproduccion_PorDefecto;
 import logica.Usuario;
 import logica.Video;
 import logica.dt.UsuarioDt;
+import logica.dt.VideoDt;
     import logica.dt.VideoListaDt;
 //import logica.controladores.IControladorUsuario;
 
@@ -134,13 +134,48 @@ public class ControladorUsuario implements IControladorUsuario {
         //ademas la imagen al llamarse igual ya que su nombre es el nick del usuario
         //simplemente sera reemplazada luego de finalizada la modificacion en caso de ser necesario
     }
-
+@Override
+public List<VideoDt> listarVideosDeUsuario(String usernick){
+      List<VideoDt> list = new ArrayList<VideoDt>();
+        try {
+            int idUser= obtenerIdUsuario(usernick);
+             EntityManager em = emFactory.createEntityManager();
+           TypedQuery<Video> query1 = em.createQuery("SELECT v FROM Video v where v.canal_user_id= :idUser", Video.class);
+           List<Video> vid = query1.setParameter("idUser", idUser).getResultList();
+          
+           
+           for(int i=0;i < vid.size(); i++) {
+                list.add(new VideoDt(vid.get(i)));
+            }
+            em.close();
+        }catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+        }
+        return list;
+        
+}
+public List<VideoDt> listarVideo(String nombrevideo, usernick){
+      List<VideoDt> list = new ArrayList<VideoDt>();
+        try {
+            int idUser= obtenerIdUsuario(usernick);
+             EntityManager em = emFactory.createEntityManager();
+            TypedQuery<Video> vid = em.createQuery("Video.findByNombre", Video.class).setParameter("nombre", nombrevideo);
+            
+           //query1.setParameter("nombrevideo", nombrevideo);
+           // vidID = query1.setParameter("idUser", idUser).getResultList();
+         //  vid
+        }catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+        }
+        return list;
+        
+}
     @Override
     public List<UsuarioDt> ListarUsuarios(){
         List<UsuarioDt> list = new ArrayList<UsuarioDt>();
         try {
             //probablemente devuelve una lista de los nicks de los usuarios existentes
-            //esa lista luego es mostrada en su respectivo frame
+            //esa lista luego es mostrada en su respectivo frameS
             EntityManager em = emFactory.createEntityManager();
             List<Usuario> users = em.createQuery("SELECT u FROM Usuario u", Usuario.class).getResultList();
             for(int i=0;i < users.size(); i++) {
