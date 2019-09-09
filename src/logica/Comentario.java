@@ -104,13 +104,13 @@ public class Comentario implements Serializable {
         this.padre = padre;
     }
     
-    /*public Usuario getUsuario() {
+    public Usuario getUsuario() {
         return usuario;
     }
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
-    }*/
+    }
     
     public Video getVideo() {
         return video;

@@ -4,11 +4,15 @@
  * and open the template in the editor.
  */
 package logica.controladores;
+import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.swing.JOptionPane;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.MutableTreeNode;
 import logica.Canal;
 import logica.Usuario;
 import logica.Valoracion;
@@ -93,17 +97,17 @@ public class ControladorVideo implements IControladorVideo {
                 em.getTransaction().begin();
 
                 Video video = em.find(Video.class, id_video);
-                            if(video == null) throw new Exception("El video no existe");
+                if(video == null) throw new Exception("El video no existe");
                 Usuario user = em.find(Usuario.class, user_valoracion);
                 if(user == null) throw new Exception("El usuario no existe");
 
                 Valoracion v = em.find(Valoracion.class, new ValoracionPK(user_valoracion, id_video));
                 if(v == null){ 
                     v = new Valoracion(user_valoracion, id_video, gusta);
-                                    em.persist(v);
+                    em.persist(v);
                 } else {
-                                    v.setGustar(gusta);
-                                    em.merge(v);
+                    v.setGustar(gusta);
+                    em.merge(v);
                 }
 
                 user.agregarValoracion(v);
@@ -141,13 +145,61 @@ public class ControladorVideo implements IControladorVideo {
                     em.merge(cp);
                     em.merge(c);
                 }
-                video.agregarComentario(c);
-                em.merge(video);
+                else {
+                    //lo agrego al video solo si no tiene padre, para facilitar su uso en funciones recursivas
+                    //si tiene padre el padre ya estara en la coleccion del video
+                    video.agregarComentario(c); 
+                    em.merge(video);
+                }
                 em.getTransaction().commit();
                 em.close();
 
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+            }
+        }
+        
+        //Auxiliares
+        @Override
+        public DefaultMutableTreeNode obtenerComentariosVideo(int video_id) {
+            DefaultMutableTreeNode root = null;
+            try {
+                EntityManager em = emFactory.createEntityManager();
+                em.getTransaction().begin();
+
+                Video video = em.find(Video.class, video_id);
+                if(video == null) throw new Exception("El video no existe");
+                
+                Collection<Comentario> cs = video.getComentarios();
+                Iterator<Comentario> it = cs.iterator();
+                
+                root = new DefaultMutableTreeNode(video.getNombre() + " :: Comentarios");
+                while(it.hasNext()) {
+                    Comentario c = it.next();
+                    if(c.getPadre() == null) obtenerHijosRecursivo(root, c);
+                }
+                
+                em.getTransaction().commit();
+                em.close();
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+            }
+            return root;
+        }
+        
+        protected void obtenerHijosRecursivo(DefaultMutableTreeNode nodo, Comentario c) {
+            if(nodo != null){
+                DefaultMutableTreeNode nuevoNodo= new DefaultMutableTreeNode("(" + c.getUsuario().getNickname() + ") " + c.getContenido());
+                nodo.add(nuevoNodo);
+                
+                Collection<Comentario> hijos = c.getHijos();
+                Iterator<Comentario> it = hijos.iterator();
+                
+                while(it.hasNext()) {
+                    Comentario hijo = it.next();
+                    obtenerHijosRecursivo(nuevoNodo, hijo);
+                }
             }
         }
 }
