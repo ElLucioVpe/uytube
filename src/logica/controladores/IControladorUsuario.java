@@ -5,7 +5,6 @@
  */
 package logica.controladores;
 
-import java.util.Date;
 import java.util.List;
 import logica.dt.UsuarioDt;
 import logica.dt.VideoListaDt;
@@ -16,9 +15,9 @@ import logica.dt.VideoListaDt;
  */
 public interface IControladorUsuario {
 
-    public abstract void AltaUsuario(String nick, String nom, String apell, String mail, Date fnac, String img);
+    public abstract void AltaUsuario(String nick, String nom, String apell, String mail, String fnac, String img);
     public abstract void AltaCanal(String nombre, boolean privado, int user_id, String descripcion);
-    public abstract void ModificarUsuario(int id, String nuevonom, String nuevoapell, Date nuevafechaNac, String nuevonomC, String nuevadesC, boolean nuevaprivC);
+    public abstract void ModificarUsuario(int id, String nuevonom, String nuevoapell, String nuevafechaNac, String nuevonomC, String nuevadesC, boolean nuevaprivC);
     public abstract List<UsuarioDt> ListarUsuarios();
     public abstract UsuarioDt ConsultarUsuario(int id);
 
@@ -31,7 +30,7 @@ public interface IControladorUsuario {
     
     //SeguirUsuario
     public abstract void seguirUsuario(String seguidor, String seguido);
-    public abstract void dejarDeSeguirUsuario(String seguidor, String seguido);
+    public void dejarDeSeguirUsuario(String seguidor, String seguido);
     
     //Auxiliares
     public abstract int obtenerIdUsuario(String nick);
@@ -39,4 +38,9 @@ public interface IControladorUsuario {
     public abstract List obtenerCategorias();
     public abstract List<String> obtenerListasUsuario(int id);
     public abstract List<VideoListaDt> obtenerVideosLista(int id, String lista);
+    
+    //TO-DO
+    public abstract List<String> ListarSeguidores(int userId);
+    public abstract List<String> ListarSiguiendo(int userId);
+    public abstract List<String> ListarVideos(int userId);
 }

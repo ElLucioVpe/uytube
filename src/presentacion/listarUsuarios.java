@@ -6,8 +6,8 @@
 package presentacion;
 
 import java.util.List;
-import javax.swing.table.DefaultTableModel;
-import logica.Usuario;
+import javax.swing.DefaultListModel;
+import javax.swing.JDesktopPane;
 import logica.controladores.IControladorUsuario;
 import logica.dt.UsuarioDt;
 
@@ -21,15 +21,21 @@ public class listarUsuarios extends javax.swing.JInternalFrame {
      * Creates new form listarUsuarios
      */
     IControladorUsuario u;
+    UyTubeFrame p;
+    JDesktopPane escritorio;
 
-    public listarUsuarios(IControladorUsuario user) {
+    public listarUsuarios(IControladorUsuario user, UyTubeFrame padre, JDesktopPane desktop) {
         initComponents();
         u = user;
+        p = padre;
+        DefaultListModel<String> model = new DefaultListModel<>();
+
         List<UsuarioDt> list = u.ListarUsuarios();
         for(int i = 0; i < list.size(); i++) {
-            DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
-            model.addRow(new Object[]{list.get(i).getNickname(), list.get(i).getNombre(), list.get(i).getApellido(), list.get(i).getFechanac(), list.get(i).getImagen(), list.get(i).getMail()});
+            model.addElement((String)list.get(i).getNickname());
+            //model.addRow(new Object[]{list.get(i).getNickname(), list.get(i).getNombre(), list.get(i).getApellido(), list.get(i).getFechanac(), list.get(i).getImagen(), list.get(i).getMail()});
         }
+        listUsuarios.setModel(model);
     }
 
     /**
@@ -45,8 +51,9 @@ public class listarUsuarios extends javax.swing.JInternalFrame {
         jTable1 = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        listUsuarios = new javax.swing.JList<>();
+        btnListar = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -74,39 +81,76 @@ public class listarUsuarios extends javax.swing.JInternalFrame {
         ));
         jScrollPane2.setViewportView(jTable2);
 
+        setClosable(true);
+        setMaximizable(true);
+        setResizable(true);
         setTitle("Listar Usuarios");
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Nickname", "Nombre", "Apellido", "Fecha Nac.", "Imagen", "Mail"
+        listUsuarios.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                listUsuariosValueChanged(evt);
             }
-        ));
-        jScrollPane3.setViewportView(jTable3);
+        });
+        jScrollPane4.setViewportView(listUsuarios);
+
+        btnListar.setText("Consultar");
+        btnListar.setEnabled(false);
+        btnListar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnListarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 575, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnListar, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 449, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnListar)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 11, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void listUsuariosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listUsuariosValueChanged
+        // TODO add your handling code here:
+        this.MostrarSeleccion(true);
+    }//GEN-LAST:event_listUsuariosValueChanged
+
+    private void btnListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarActionPerformed
+        // TODO add your handling code here:
+        String lista = listUsuarios.getSelectedValue();
+        p.AgregarInternalFrame(new listarUsuario(u, lista));
+
+        this.dispose();
+
+    }//GEN-LAST:event_btnListarActionPerformed
+
+    private void MostrarSeleccion(boolean x) {
+        btnListar.setEnabled(x);
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnListar;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable3;
+    private javax.swing.JList<String> listUsuarios;
     // End of variables declaration//GEN-END:variables
 }

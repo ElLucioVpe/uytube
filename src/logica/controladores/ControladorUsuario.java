@@ -7,7 +7,6 @@ package logica.controladores;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -22,7 +21,7 @@ import logica.ListaDeReproduccion_PorDefecto;
 import logica.Usuario;
 import logica.Video;
 import logica.dt.UsuarioDt;
-    import logica.dt.VideoListaDt;
+import logica.dt.VideoListaDt;
 //import logica.controladores.IControladorUsuario;
 
 /**
@@ -38,7 +37,7 @@ public class ControladorUsuario implements IControladorUsuario {
     }
 
     @Override
-    public void AltaUsuario(String nick, String nom, String apell, String mail, Date fnac, String img) {
+    public void AltaUsuario(String nick, String nom, String apell, String mail, String fnac, String img) {
         try {
 
             EntityManager em = emFactory.createEntityManager();
@@ -49,7 +48,7 @@ public class ControladorUsuario implements IControladorUsuario {
             if(em.createNamedQuery("Usuario.findByMail", Usuario.class).setParameter("mail",mail).getResultList().size() > 0)
                 throw new Exception("El mail ya esta registrado");
 
-            Usuario u = new Usuario(nick, nom, apell, mail, fnac);
+            Usuario u = new Usuario(nick, nom, apell, mail, new SimpleDateFormat("dd/MM/yyyy").parse(fnac));
             if(!img.isEmpty()) u.setImagen(img);
 
             em.persist(u);
@@ -102,7 +101,7 @@ public class ControladorUsuario implements IControladorUsuario {
     }
 
     @Override
-    public void ModificarUsuario(int id, String nuevonom, String nuevoapell, Date nuevafechaNac, String nuevonomC, String nuevadesC, boolean nuevaprivC){
+    public void ModificarUsuario(int id, String nuevonom, String nuevoapell, String nuevafechaNac, String nuevonomC, String nuevadesC, boolean nuevaprivC){
         //en su respectivo frame deberan antes ser utilizados
         //ListarUsuarios() y ConsultarUsuario(id)
         //los atributos que no se deseen modificar llegaran en blanco o null
@@ -114,7 +113,7 @@ public class ControladorUsuario implements IControladorUsuario {
             Usuario u = em.find(Usuario.class, id);
             if(!nuevonom.isBlank()) u.setNombre(nuevonom);
             if(!nuevoapell.isBlank()) u.setApellido(nuevoapell);
-            if(nuevafechaNac != null) u.setFechanac(nuevafechaNac);
+            if(nuevafechaNac != null) u.setFechanac(new SimpleDateFormat("dd/MM/yyyy").parse(nuevafechaNac));
 
             Canal c = em.find(Canal.class, u.getId()); //Por las dudas lo busco con find
             if(!nuevonomC.isBlank()) c.setNombre(nuevonomC);
@@ -160,8 +159,9 @@ public class ControladorUsuario implements IControladorUsuario {
         try {
             EntityManager em = emFactory.createEntityManager();
             //List users = em.createQuery("SELECT nick FROM Usuario u WHERE id = :id").getResultList();
-            TypedQuery<Usuario> query = em.createQuery("SELECT * FROM Usuario u WHERE u.id = :id", Usuario.class);
-            Usuario u = query.setParameter("id", id).getSingleResult();
+            //TypedQuery<Usuario> query = em.createQuery("SELECT * FROM Usuario u WHERE u.id = :id", Usuario.class);
+            //Usuario u = query.setParameter("id", id).getSingleResult();
+            Usuario u = em.find(Usuario.class, id);
             dt = new UsuarioDt(u);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
@@ -290,7 +290,7 @@ public class ControladorUsuario implements IControladorUsuario {
 
             EntityManager em = emFactory.createEntityManager();
             em.getTransaction().begin();
-            
+
             Usuario user_lista = em.find(Usuario.class, usuariolista);
             if(user_lista == null) throw new Exception("El usuario propietario de la lista no existe");
 
@@ -357,6 +357,43 @@ public class ControladorUsuario implements IControladorUsuario {
        }
 
     }
+    
+    @Override
+    public List<String> ListarSeguidores(int userId){
+        List<String> seguidores = null;
+        /*
+        try {
+            EntityManager em = emFactory.createEntityManager();
+            //List users = em.createQuery("SELECT nick FROM Usuario u WHERE id = :id").getResultList();
+            TypedQuery<Usuario> query = em.createQuery("SELECT * FROM Usuario u WHERE u.id = :id", Usuario.class);
+            Usuario u = query.setParameter("id", id).getSingleResult();
+            dt = new UsuarioDt(u);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+        }
+*/
+        seguidores.add("prueba");
+        return seguidores;
+    }
+    
+        @Override
+    public List<String> ListarSiguiendo(int userId){
+        List<String> seguidores = null;
+        /*
+        try {
+            EntityManager em = emFactory.createEntityManager();
+            //List users = em.createQuery("SELECT nick FROM Usuario u WHERE id = :id").getResultList();
+            TypedQuery<Usuario> query = em.createQuery("SELECT * FROM Usuario u WHERE u.id = :id", Usuario.class);
+            Usuario u = query.setParameter("id", id).getSingleResult();
+            dt = new UsuarioDt(u);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+        }
+*/
+        seguidores.add("prueba");
+        return seguidores;
+    }
+    
     @Override
     public void dejarDeSeguirUsuario(String seguidor, String seguido){ 
       try {
@@ -390,9 +427,8 @@ public class ControladorUsuario implements IControladorUsuario {
             EntityManager em = emFactory.createEntityManager();
             em.getTransaction().begin();
             
-            TypedQuery<Usuario> q = em.createNamedQuery("Usuario.findByNickname", Usuario.class).setParameter("nickname", nick);
-            if (q.getResultList().isEmpty()) throw new Exception("El usuario no existe");
-            Usuario u = q.getSingleResult();
+            Usuario u = em.createNamedQuery("Usuario.findByNickname", Usuario.class).setParameter("nickname", nick).getSingleResult();
+            if(u == null) throw new Exception("El usuario no existe");
 
             id = u.getId();
             em.getTransaction().commit();
@@ -484,5 +520,22 @@ public class ControladorUsuario implements IControladorUsuario {
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
         }
         return l;
+    }
+    
+    @Override
+    public List<String> ListarVideos(int userId) {
+        List<String> lista = null;
+        /*
+        try {
+            EntityManager em = emFactory.createEntityManager();
+            //List users = em.createQuery("SELECT nick FROM Usuario u WHERE id = :id").getResultList();
+            TypedQuery<Video> query = em.createQuery("SELECT nombre FROM Video v WHERE v.CANAL_USER_ID = :id", Video.class);
+            Video u = query.setParameter("id", userId).getSingleResult();
+            //dt = new VideoDt(u);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+        }
+    */
+        return lista;
     }
 }
