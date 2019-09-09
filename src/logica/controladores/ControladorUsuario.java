@@ -6,7 +6,6 @@
 package logica.controladores;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -38,7 +37,7 @@ public class ControladorUsuario implements IControladorUsuario {
     }
 
     @Override
-    public void AltaUsuario(String nick, String nom, String apell, String mail, Date fnac, String img) {
+    public void AltaUsuario(String nick, String nom, String apell, String mail, String fnac, String img) {
         try {
 
             EntityManager em = emFactory.createEntityManager();
@@ -49,7 +48,7 @@ public class ControladorUsuario implements IControladorUsuario {
             if(em.createNamedQuery("Usuario.findByMail", Usuario.class).setParameter("mail",mail).getResultList().size() > 0)
                 throw new Exception("El mail ya esta registrado");
 
-            Usuario u = new Usuario(nick, nom, apell, mail, fnac);
+            Usuario u = new Usuario(nick, nom, apell, mail, new SimpleDateFormat("dd/MM/yyyy").parse(fnac));
             if(!img.isEmpty()) u.setImagen(img);
 
             em.persist(u);
@@ -102,7 +101,7 @@ public class ControladorUsuario implements IControladorUsuario {
     }
 
     @Override
-    public void ModificarUsuario(int id, String nuevonom, String nuevoapell, Date nuevafechaNac, String nuevonomC, String nuevadesC, boolean nuevaprivC){
+    public void ModificarUsuario(int id, String nuevonom, String nuevoapell, String nuevafechaNac, String nuevonomC, String nuevadesC, boolean nuevaprivC){
         //en su respectivo frame deberan antes ser utilizados
         //ListarUsuarios() y ConsultarUsuario(id)
         //los atributos que no se deseen modificar llegaran en blanco o null
@@ -114,7 +113,7 @@ public class ControladorUsuario implements IControladorUsuario {
             Usuario u = em.find(Usuario.class, id);
             if(!nuevonom.isBlank()) u.setNombre(nuevonom);
             if(!nuevoapell.isBlank()) u.setApellido(nuevoapell);
-            if(nuevafechaNac != null) u.setFechanac(nuevafechaNac);
+            if(nuevafechaNac != null) u.setFechanac(new SimpleDateFormat("dd/MM/yyyy").parse(nuevafechaNac));
 
             Canal c = em.find(Canal.class, u.getId()); //Por las dudas lo busco con find
             if(!nuevonomC.isBlank()) c.setNombre(nuevonomC);
@@ -142,8 +141,8 @@ public List<VideoDt> listarVideosDeUsuario(String usernick){
              EntityManager em = emFactory.createEntityManager();
            TypedQuery<Video> query1 = em.createQuery("SELECT v FROM Video v where v.canal_user_id= :idUser", Video.class);
            List<Video> vid = query1.setParameter("idUser", idUser).getResultList();
-          
-           
+
+
            for(int i=0;i < vid.size(); i++) {
                 list.add(new VideoDt(vid.get(i)));
             }
@@ -152,7 +151,7 @@ public List<VideoDt> listarVideosDeUsuario(String usernick){
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
         }
         return list;
-        
+
 }
 public List<VideoDt> listarVideo(String nombrevideo, usernick){
       List<VideoDt> list = new ArrayList<VideoDt>();
@@ -160,7 +159,7 @@ public List<VideoDt> listarVideo(String nombrevideo, usernick){
             int idUser= obtenerIdUsuario(usernick);
              EntityManager em = emFactory.createEntityManager();
             TypedQuery<Video> vid = em.createQuery("Video.findByNombre", Video.class).setParameter("nombre", nombrevideo);
-            
+
            //query1.setParameter("nombrevideo", nombrevideo);
            // vidID = query1.setParameter("idUser", idUser).getResultList();
          //  vid
@@ -168,7 +167,7 @@ public List<VideoDt> listarVideo(String nombrevideo, usernick){
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
         }
         return list;
-        
+
 }
     @Override
     public List<UsuarioDt> ListarUsuarios(){
@@ -195,8 +194,9 @@ public List<VideoDt> listarVideo(String nombrevideo, usernick){
         try {
             EntityManager em = emFactory.createEntityManager();
             //List users = em.createQuery("SELECT nick FROM Usuario u WHERE id = :id").getResultList();
-            TypedQuery<Usuario> query = em.createQuery("SELECT * FROM Usuario u WHERE u.id = :id", Usuario.class);
-            Usuario u = query.setParameter("id", id).getSingleResult();
+            //TypedQuery<Usuario> query = em.createQuery("SELECT * FROM Usuario u WHERE u.id = :id", Usuario.class);
+            //Usuario u = query.setParameter("id", id).getSingleResult();
+            Usuario u = em.find(Usuario.class, id);
             dt = new UsuarioDt(u);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
@@ -325,7 +325,7 @@ public List<VideoDt> listarVideo(String nombrevideo, usernick){
 
             EntityManager em = emFactory.createEntityManager();
             em.getTransaction().begin();
-            
+
             Usuario user_lista = em.find(Usuario.class, usuariolista);
             if(user_lista == null) throw new Exception("El usuario propietario de la lista no existe");
 
@@ -365,38 +365,75 @@ public List<VideoDt> listarVideo(String nombrevideo, usernick){
         }
 
     }*/
-    
+
     @Override
     public void seguirUsuario(String seguidor, String seguido){
         try {
             EntityManager em = emFactory.createEntityManager();
             em.getTransaction().begin();
-            
+
             Canal c = em.find(Canal.class, obtenerIdUsuario(seguido));
             if(c == null)
                 throw new Exception("Ese usuario al que quiere seguir no existe o no tiene canal");
             Usuario uSeguidor = em.find(Usuario.class, obtenerIdUsuario(seguidor));
             if(uSeguidor == null)
                 throw new Exception("El usuario seguidor no existe");
-            
+
             c.agregarSeguidor(uSeguidor);
             uSeguidor.agregarSuscripcion(c);
             em.merge(c);
             em.merge(uSeguidor);
             em.getTransaction().commit();
             em.close();
-            
+
             JOptionPane.showMessageDialog(null,"La suscripcion se realizo con exito");
        } catch (Exception e) {
            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
        }
 
     }
+
     @Override
-    public void dejarDeSeguirUsuario(String seguidor, String seguido){ 
+    public List<String> ListarSeguidores(int userId){
+        List<String> seguidores = null;
+        /*
+        try {
+            EntityManager em = emFactory.createEntityManager();
+            //List users = em.createQuery("SELECT nick FROM Usuario u WHERE id = :id").getResultList();
+            TypedQuery<Usuario> query = em.createQuery("SELECT * FROM Usuario u WHERE u.id = :id", Usuario.class);
+            Usuario u = query.setParameter("id", id).getSingleResult();
+            dt = new UsuarioDt(u);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+        }
+*/
+        seguidores.add("prueba");
+        return seguidores;
+    }
+
+        @Override
+    public List<String> ListarSiguiendo(int userId){
+        List<String> seguidores = null;
+        /*
+        try {
+            EntityManager em = emFactory.createEntityManager();
+            //List users = em.createQuery("SELECT nick FROM Usuario u WHERE id = :id").getResultList();
+            TypedQuery<Usuario> query = em.createQuery("SELECT * FROM Usuario u WHERE u.id = :id", Usuario.class);
+            Usuario u = query.setParameter("id", id).getSingleResult();
+            dt = new UsuarioDt(u);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+        }
+*/
+        seguidores.add("prueba");
+        return seguidores;
+    }
+
+    @Override
+    public void dejarDeSeguirUsuario(String seguidor, String seguido){
       try {
             EntityManager em = emFactory.createEntityManager();
-            em.getTransaction().begin();   
+            em.getTransaction().begin();
             Canal c = em.find(Canal.class, obtenerIdUsuario(seguido));
             if(c == null)
                 throw new Exception("Ese usuario al que quiere seguir no existe o no tiene canal");
@@ -405,12 +442,12 @@ public List<VideoDt> listarVideo(String nombrevideo, usernick){
                 throw new Exception("El usuario seguidor no existe");
             //aca hacen falta chequeos para saber si el uSeguidor efectivamente sigue a ese usuario o no y viceversa;
             c.eliminarSeguidor(uSeguidor);
-            uSeguidor.eliminarSuscripcion(c);    
+            uSeguidor.eliminarSuscripcion(c);
             em.merge(c);
             em.merge(uSeguidor);
             em.getTransaction().commit();
             em.close();
-            
+
             JOptionPane.showMessageDialog(null,"La suscripcion se eliminó con exito");
        } catch (Exception e) {
            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
@@ -424,10 +461,9 @@ public List<VideoDt> listarVideo(String nombrevideo, usernick){
 
             EntityManager em = emFactory.createEntityManager();
             em.getTransaction().begin();
-            
-            TypedQuery<Usuario> q = em.createNamedQuery("Usuario.findByNickname", Usuario.class).setParameter("nickname", nick);
-            if (q.getResultList().isEmpty()) throw new Exception("El usuario no existe");
-            Usuario u = q.getSingleResult();
+
+            Usuario u = em.createNamedQuery("Usuario.findByNickname", Usuario.class).setParameter("nickname", nick).getSingleResult();
+            if(u == null) throw new Exception("El usuario no existe");
 
             id = u.getId();
             em.getTransaction().commit();
@@ -454,7 +490,7 @@ public List<VideoDt> listarVideo(String nombrevideo, usernick){
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
         }
     }
-    
+
     @Override
     public List obtenerCategorias() {
         List l = new ArrayList<String>();
@@ -471,7 +507,7 @@ public List<VideoDt> listarVideo(String nombrevideo, usernick){
         }
         return l;
     }
-    
+
     @Override
     public List<String> obtenerListasUsuario(int id) {
         List<String> l = new ArrayList<>();
@@ -482,7 +518,7 @@ public List<VideoDt> listarVideo(String nombrevideo, usernick){
             Usuario u = em.find(Usuario.class, id);
             if(u == null) throw new Exception("El usuario no existe");
             Collection<ListaDeReproduccion> aux = u.getListas();
-            
+
             Iterator<ListaDeReproduccion> it = aux.iterator();
             while(it.hasNext()) {
                 l.add(it.next().getNombre());
@@ -495,7 +531,7 @@ public List<VideoDt> listarVideo(String nombrevideo, usernick){
         }
         return l;
     }
-    
+
     @Override
     public List<VideoListaDt> obtenerVideosLista(int id, String lista) {
         List<VideoListaDt> l = new ArrayList<>();
@@ -506,7 +542,7 @@ public List<VideoDt> listarVideo(String nombrevideo, usernick){
             Usuario u = em.find(Usuario.class, id);
             if(u == null) throw new Exception("El usuario no existe");
             Collection<Video> lvideo = u.getLista(lista).getVideos();
-            
+
             Iterator it = lvideo.iterator();
             while(it.hasNext()) {
                 Video v = (Video) it.next();
@@ -519,5 +555,22 @@ public List<VideoDt> listarVideo(String nombrevideo, usernick){
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
         }
         return l;
+    }
+
+    @Override
+    public List<String> ListarVideos(int userId) {
+        List<String> lista = null;
+        /*
+        try {
+            EntityManager em = emFactory.createEntityManager();
+            //List users = em.createQuery("SELECT nick FROM Usuario u WHERE id = :id").getResultList();
+            TypedQuery<Video> query = em.createQuery("SELECT nombre FROM Video v WHERE v.CANAL_USER_ID = :id", Video.class);
+            Video u = query.setParameter("id", userId).getSingleResult();
+            //dt = new VideoDt(u);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+        }
+    */
+        return lista;
     }
 }
