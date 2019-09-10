@@ -7,18 +7,23 @@ package logica.controladores;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NamedQuery;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import logica.Categoria;
+import logica.ListaDeReproduccion;
+import logica.Usuario;
 import logica.dt.CategoriaDt;
 import logica.controladores.IControladorCategoria;
+import logica.dt.VideoDt;
 
 
 /**
@@ -95,6 +100,30 @@ public class ControladorCategoria implements IControladorCategoria {
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
         }
         return dt;
+         
+     }
+     @Override
+     
+     public List<ListaDeReproduccion> obtenerListasCategoria(String nom){
+  
+         List<ListaDeReproduccion> query = null;
+        try {
+            EntityManager em = emFactory.createEntityManager();
+            em.getTransaction().begin();
+            
+           
+            Categoria c = em.find(Categoria.class, nom);
+           
+            
+           query = em.createNamedQuery("Listadereproduccion.findByCategoria",ListaDeReproduccion.class).setParameter("categoria", c).getResultList();
+      
+           
+            
+            em.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+        }
+        return query;
          
      }
 }
