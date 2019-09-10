@@ -6,9 +6,11 @@
 package presentacion;
 
 import java.util.List;
+import javax.swing.JDesktopPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import logica.controladores.IControladorUsuario;
+import logica.controladores.IControladorVideo;
 import logica.dt.VideoDt;
 
 /**
@@ -21,9 +23,13 @@ public class listarVideos extends javax.swing.JInternalFrame {
      * Creates new form listarVideos
      */
     IControladorUsuario u;
-    public listarVideos(IControladorUsuario user) {
+     IControladorVideo v;
+     JDesktopPane Escritorio;
+    public listarVideos(IControladorUsuario user, IControladorVideo video, JDesktopPane Esc ) {
         initComponents();
         u = user;
+        v = video;
+        Escritorio = Esc;
     }
 
     /**
@@ -120,7 +126,13 @@ public class listarVideos extends javax.swing.JInternalFrame {
         //DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         int i = table.getSelectedRow();
         Object videoName = table.getModel().getValueAt(i, 1);
-        u.listarVideo(videoName,jTextField1.getText());
+        comentariosTest frmListarVideo = new comentariosTest (v,u,jTextField1.getText());
+        Escritorio.add(frmListarVideo);
+        Escritorio.moveToFront(frmListarVideo);
+        frmListarVideo.setSize(Escritorio.getWidth(),Escritorio.getHeight());
+        frmListarVideo.setLocation(0,0);
+        frmListarVideo.setVisible(true);
+        frmListarVideo.show();
         
         
         
