@@ -206,11 +206,13 @@ public class ControladorVideo implements IControladorVideo {
             }
         }
         
-        public List<valoracionDt>  obtenerValoracionVideo(int video_id){
+        public List<valoracionDt>  obtenerValoracionVideo(String nomvideo){
+              EntityManager em = emFactory.createEntityManager();
+           TypedQuery<Video> vid = em.createNamedQuery("Video.findByNombre",Video.class).setParameter("nombre", nomvideo);
+           Video video = vid.getSingleResult();
         List<valoracionDt> list = new ArrayList<valoracionDt>();
         try {
-            EntityManager em = emFactory.createEntityManager();
-            List<Valoracion> vals = em.createQuery("SELECT v FROM Valoracion V where VIDEO_ID = idVideo", Valoracion.class).setParameter("idVideo", video_id).getResultList();
+            List<Valoracion> vals = em.createQuery("SELECT v FROM Valoracion V where VIDEO_ID = idVideo", Valoracion.class).setParameter("idVideo", video.getId()).getResultList();
             for(int i=0;i < vals.size(); i++) {
                 list.add(new valoracionDt(vals.get(i)));
             }

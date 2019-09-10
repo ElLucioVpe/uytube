@@ -5,10 +5,13 @@
  */
 package presentacion;
 
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import logica.controladores.IControladorUsuario;
 import logica.controladores.IControladorVideo;
+import logica.dt.valoracionDt;
 
 /**
  *
@@ -29,7 +32,11 @@ public class comentariosTest extends javax.swing.JInternalFrame {
         cu= u;
         DefaultMutableTreeNode root = cv.obtenerComentariosVideo(nomVideo);
         if(root != null) jTree1.setModel(new DefaultTreeModel(root));
-        
+         List<valoracionDt> list = cv.obtenerValoracionVideo(jTextField1.getText());
+         for(int i = 0; i < list.size(); i++) {
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            model.addRow(new Object[]{list.get(i).getUser(),list.get(i).getGusto()});
+        } 
         
     }
 
