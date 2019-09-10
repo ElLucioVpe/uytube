@@ -9,6 +9,7 @@ import java.util.List;
 import javax.swing.JTable;
 import logica.Categoria;
 import logica.ListaDeReproduccion;
+import logica.Video;
 import logica.dt.CategoriaDt;
 
 /**
@@ -21,6 +22,7 @@ public interface IControladorCategoria {
     public List<CategoriaDt> ListarCategorias();
     public CategoriaDt ConsultarCategorias(String c);
     public List<ListaDeReproduccion> obtenerListasCategoria(String nom);
+    public List<Video> obtenerVideosCategoria(String nom);
     
     
 }

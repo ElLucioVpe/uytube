@@ -61,6 +61,7 @@ public class UyTubeFrame extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         ModificarLista = new javax.swing.JMenuItem();
+        ConsultoCategoriass = new javax.swing.JMenuItem();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -196,6 +197,14 @@ public class UyTubeFrame extends javax.swing.JFrame {
             }
         });
         jMenu3.add(ModificarLista);
+
+        ConsultoCategoriass.setText("Consultar Categorías");
+        ConsultoCategoriass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ConsultoCategoriassActionPerformed(evt);
+            }
+        });
+        jMenu3.add(ConsultoCategoriass);
 
         jMenuBar1.add(jMenu3);
 
@@ -414,14 +423,18 @@ public class UyTubeFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
     
 
-    private void ConsultoCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultoCategoriasActionPerformed
-        consultarCategorias consultaC = new consultarCategorias(cate,user);
+    private void ConsultoCategoriassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultoCategoriassActionPerformed
+       consultarCategorias consultaC = new consultarCategorias(cate,user);
              Escritorio.add(consultaC);
              Escritorio.moveToFront(consultaC);
              //consultaC.setSize(Escritorio.getWidth(),Escritorio.getHeight());
              consultaC.setLocation(0,0);
              consultaC.setVisible(true);
-    }//GEN-LAST:event_ConsultoCategoriasActionPerformed
+    }//GEN-LAST:event_ConsultoCategoriassActionPerformed
+
+    private void ConsultoCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+       
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
     
                                               
 
@@ -463,6 +476,7 @@ public class UyTubeFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem ConsultoCategoriass;
     private javax.swing.JMenuItem CrearLista;
     private javax.swing.JDesktopPane Escritorio;
     private javax.swing.JMenuItem ModificarLista;

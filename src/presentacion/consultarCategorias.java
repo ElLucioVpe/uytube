@@ -9,6 +9,7 @@ import logica.ListaDeReproduccion;
 import logica.controladores.IControladorCategoria;
 import logica.dt.CategoriaDt;
 import logica.Usuario;
+import logica.Video;
 import logica.dt.UsuarioDt;
 import logica.controladores.IControladorUsuario;
 
@@ -18,11 +19,10 @@ public class consultarCategorias extends javax.swing.JInternalFrame {
     List<String> listas;
     List<String> videos;
     IControladorCategoria c;
+    IControladorUsuario u;
     
     public consultarCategorias(IControladorCategoria cate, IControladorUsuario usu) {
-        IControladorCategoria c;
-        IControladorUsuario u;
-        initComponents();
+   initComponents();
         c = cate;
         List<CategoriaDt> list = c.ListarCategorias();
         for(int i = 0; i < list.size(); i++) {
@@ -136,12 +136,18 @@ public class consultarCategorias extends javax.swing.JInternalFrame {
             int row = jTable1.getSelectedRow();
             String value = jTable1.getModel().getValueAt(row, column).toString();
             
-            List<ListaDeReproduccion> list = this.c.obtenerListasCategoria(value);
+            List<ListaDeReproduccion> list = c.obtenerListasCategoria(value);
+            List<Video> lista = c.obtenerVideosCategoria(value);
             
             for(int i = 0; i < list.size(); i++) {
             DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
             model.addRow(new Object[]{list.get(i).getUsuario().getNickname(),list.get(i).getNombre()});
         }
+           for(int i = 0; i < lista.size(); i++){
+            DefaultTableModel modelo = (DefaultTableModel) jTable2.getModel();
+            modelo.addRow(new Object[]{list.get(i).getUsuario().getNickname(),list.get(i).getNombre()});
+           } 
+            
     }//GEN-LAST:event_jButton1ActionPerformed
 
 

@@ -16,6 +16,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -25,6 +27,8 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "ListaDeReproduccion")
+@NamedQueries({
+    @NamedQuery(name = "ListaDeReproduccion.findByCategoria", query = "SELECT l FROM ListaDeReproduccion l where l.categoria = :categoria")})
 public class ListaDeReproduccion implements Serializable {
 
     private static final long serialVersionUID = 1L;
