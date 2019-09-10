@@ -20,5 +20,5 @@ public interface IControladorVideo {
     public abstract void ComentarVideo(int user_id, int video_id, long id_padre, String texto, Date fecha);
     
     //Auxiliares
-    public abstract DefaultMutableTreeNode obtenerComentariosVideo(int video_id);
+    public abstract DefaultMutableTreeNode obtenerComentariosVideo(String videoNombre);
 }

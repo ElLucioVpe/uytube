@@ -10,9 +10,9 @@ import java.util.Iterator;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.MutableTreeNode;
 import logica.Canal;
 import logica.Usuario;
 import logica.Valoracion;
@@ -161,18 +161,18 @@ public class ControladorVideo implements IControladorVideo {
         
         //Auxiliares
         @Override
-        public DefaultMutableTreeNode obtenerComentariosVideo(int video_id) {
+        public DefaultMutableTreeNode obtenerComentariosVideo(String videoNombre) {
             DefaultMutableTreeNode root = null;
             try {
                 EntityManager em = emFactory.createEntityManager();
                 em.getTransaction().begin();
+    //TypedQuery<Video> vid = em.createQuery("Video.findByNombre", Video.class).setParameter("nombre", nombrevideo);
 
-                Video video = em.find(Video.class, video_id);
+                TypedQuery<Video> vid = em.createNamedQuery("Video.findByNombre",Video.class).setParameter("nombre", videoNombre);
+                Video video = vid.getSingleResult();
                 if(video == null) throw new Exception("El video no existe");
-                
                 Collection<Comentario> cs = video.getComentarios();
                 Iterator<Comentario> it = cs.iterator();
-                
                 root = new DefaultMutableTreeNode(video.getNombre() + " :: Comentarios");
                 while(it.hasNext()) {
                     Comentario c = it.next();
