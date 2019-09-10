@@ -60,6 +60,13 @@ public class UyTubeFrame extends javax.swing.JFrame {
         listarCategorias = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
+<<<<<<< Updated upstream
+=======
+        jMenuItem3 = new javax.swing.JMenuItem();
+        ConsultoCategorias = new javax.swing.JMenuItem();
+        jMenu4 = new javax.swing.JMenu();
+        CrearLista = new javax.swing.JMenuItem();
+>>>>>>> Stashed changes
         ModificarLista = new javax.swing.JMenuItem();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
@@ -194,7 +201,44 @@ public class UyTubeFrame extends javax.swing.JFrame {
         });
         jMenu3.add(jMenuItem2);
 
+<<<<<<< Updated upstream
         ModificarLista.setText("Listado de Listas de Reproduccion");
+=======
+        jMenuItem3.setText("Comentarios Test");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem3);
+
+        ConsultoCategorias.setText("Consultar Categorías");
+        ConsultoCategorias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ConsultoCategoriasActionPerformed(evt);
+            }
+        });
+        jMenu3.add(ConsultoCategorias);
+
+        jMenuBar1.add(jMenu3);
+
+        jMenu4.setText("Listas");
+        jMenu4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu4ActionPerformed(evt);
+            }
+        });
+
+        CrearLista.setText("Crear Lista de Reproduccion");
+        CrearLista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CrearListaActionPerformed(evt);
+            }
+        });
+        jMenu4.add(CrearLista);
+
+        ModificarLista.setText("Modificar Lista de Reproduccion");
+>>>>>>> Stashed changes
         ModificarLista.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ModificarListaActionPerformed(evt);
@@ -406,6 +450,7 @@ public class UyTubeFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_ModificarListaActionPerformed
 
+
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
         listarVideos frmListarVideos = new listarVideos(user,vid,Escritorio);
@@ -417,6 +462,22 @@ public class UyTubeFrame extends javax.swing.JFrame {
         frmListarVideos.show();
     }//GEN-LAST:event_jMenuItem2ActionPerformed
     
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        AgregarInternalFrame(new comentariosTest(vid));
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void ConsultoCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultoCategoriasActionPerformed
+        consultarCategorias consultaC = new consultarCategorias(cate,user);
+             Escritorio.add(consultaC);
+             Escritorio.moveToFront(consultaC);
+             //consultaC.setSize(Escritorio.getWidth(),Escritorio.getHeight());
+             consultaC.setLocation(0,0);
+             consultaC.setVisible(true);
+    }//GEN-LAST:event_ConsultoCategoriasActionPerformed
+    
+                                              
+
 
     /**
      * @param args the command line arguments
@@ -455,6 +516,7 @@ public class UyTubeFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem ConsultoCategorias;
     private javax.swing.JMenuItem CrearLista;
     private javax.swing.JDesktopPane Escritorio;
     private javax.swing.JMenuItem ModificarLista;

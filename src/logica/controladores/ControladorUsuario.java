@@ -177,8 +177,12 @@ public class ControladorUsuario implements IControladorUsuario {
     public List<UsuarioDt> ListarUsuarios(){
         List<UsuarioDt> list = new ArrayList<UsuarioDt>();
         try {
+
             //probablemente devuelve una lista de los nicks de los usuarios existentes
             //esa lista luego es mostrada en su respectivo frameS
+
+            
+
             EntityManager em = emFactory.createEntityManager();
             List<Usuario> users = em.createQuery("SELECT u FROM Usuario u", Usuario.class).getResultList();
             for(int i=0;i < users.size(); i++) {
