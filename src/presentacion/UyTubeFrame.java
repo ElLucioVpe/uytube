@@ -182,6 +182,11 @@ public class UyTubeFrame extends javax.swing.JFrame {
         jMenu3.add(jMenuItem1);
 
         jMenuItem2.setText("Lista de Videos");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem2);
 
         jMenuItem3.setText("Comentarios Test");
@@ -248,18 +253,18 @@ public class UyTubeFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    protected void AgregarInternalFrame(JInternalFrame f) {                                               
+    protected void AgregarInternalFrame(JInternalFrame f) {
         try{
             Escritorio.add(f);
             Escritorio.moveToFront(f);
             f.setSize(Escritorio.getWidth(),Escritorio.getHeight());
             f.setLocation(0,0);
-            
+
         }catch(Exception ex){
             ex.printStackTrace();
         }
     }
-    
+
     private void RegistrarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarUsuarioActionPerformed
         // TODO add your handling code here:
         //Agregar Frame para esta funcion
@@ -360,7 +365,7 @@ public class UyTubeFrame extends javax.swing.JFrame {
 
     private void jMenu5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu5ActionPerformed
 
-        
+
     }//GEN-LAST:event_jMenu5ActionPerformed
 
     private void jMenu5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu5MouseClicked
@@ -377,13 +382,13 @@ public class UyTubeFrame extends javax.swing.JFrame {
              listaRep.setSize(Escritorio.getWidth(),Escritorio.getHeight());
              listaRep.setLocation(0,0);
 
-        
+
         }catch(Exception ex){
         ex.printStackTrace();
         }
     }//GEN-LAST:event_CrearListaActionPerformed
 
-    
+
         private void seguirUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seguirUsuarioActionPerformed
         // TODO add your handling code here:
              seguirUsuario seguirU = new seguirUsuario(user);
@@ -421,7 +426,7 @@ public class UyTubeFrame extends javax.swing.JFrame {
              listaC.setSize(Escritorio.getWidth(),Escritorio.getHeight());
              listaC.setLocation(0,0);
              listaC.setVisible(true);
-             
+
     }//GEN-LAST:event_listarCategoriasActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -448,13 +453,20 @@ public class UyTubeFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_ModificarListaActionPerformed
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        AgregarInternalFrame(new comentariosTest(vid));
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
-    
-                                              
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        listarVideos frmListarVideos = new listarVideos(user);
+        Escritorio.add(frmListarVideos);
+        Escritorio.moveToFront(frmListarVideos);
+        frmListarVideos.setSize(Escritorio.getWidth(),Escritorio.getHeight());
+        frmListarVideos.setLocation(0,0);
+        frmListarVideos.setVisible(true);
+        frmListarVideos.show();
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
-                                        
+
+
+
     /**
      * @param args the command line arguments
      */

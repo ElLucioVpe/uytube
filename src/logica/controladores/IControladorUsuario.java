@@ -7,6 +7,7 @@ package logica.controladores;
 
 import java.util.List;
 import logica.dt.UsuarioDt;
+import logica.dt.VideoDt;
 import logica.dt.VideoListaDt;
 
 /**
@@ -32,6 +33,8 @@ public interface IControladorUsuario {
     public abstract void seguirUsuario(String seguidor, String seguido);
     public void dejarDeSeguirUsuario(String seguidor, String seguido);
     
+    //listar video
+    public abstract List<VideoDt> listarVideosDeUsuario(String usernick);
     //Auxiliares
     public abstract int obtenerIdUsuario(String nick);
     public abstract void EliminarUsuario(int id);
