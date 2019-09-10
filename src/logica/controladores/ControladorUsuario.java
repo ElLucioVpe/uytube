@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package logica.controladores;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
