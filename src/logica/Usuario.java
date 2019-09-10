@@ -168,6 +168,10 @@ public class Usuario implements Serializable {
     public Canal getCanal() {
         return canal;
     }
+    
+    public Collection<Canal> getSuscripciones() {
+        return suscripciones;
+    }
 
     public void setCanal(Canal canal) {
         this.canal = canal;

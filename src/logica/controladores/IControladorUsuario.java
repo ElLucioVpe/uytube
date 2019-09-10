@@ -44,6 +44,4 @@ public interface IControladorUsuario {
     
     //TO-DO
     public abstract List<String> ListarSeguidores(int userId);
-    public abstract List<String> ListarSiguiendo(int userId);
-    public abstract List<String> ListarVideos(int userId);
 }

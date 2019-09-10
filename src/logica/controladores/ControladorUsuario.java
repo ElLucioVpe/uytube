@@ -397,36 +397,24 @@ public List<VideoDt> listarVideosDeUsuario(String usernick){
     @Override
     public List<String> ListarSeguidores(int userId){
         List<String> seguidores = null;
-        /*
-        try {
-            EntityManager em = emFactory.createEntityManager();
-            //List users = em.createQuery("SELECT nick FROM Usuario u WHERE id = :id").getResultList();
-            TypedQuery<Usuario> query = em.createQuery("SELECT * FROM Usuario u WHERE u.id = :id", Usuario.class);
-            Usuario u = query.setParameter("id", id).getSingleResult();
-            dt = new UsuarioDt(u);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
-        }
-*/
-        seguidores.add("prueba");
-        return seguidores;
-    }
+        UsuarioDt thisUser = this.ConsultarUsuario(userId);
+        Collection<Usuario> colUsuarios = null;
 
-        @Override
-    public List<String> ListarSiguiendo(int userId){
-        List<String> seguidores = null;
-        /*
         try {
             EntityManager em = emFactory.createEntityManager();
-            //List users = em.createQuery("SELECT nick FROM Usuario u WHERE id = :id").getResultList();
-            TypedQuery<Usuario> query = em.createQuery("SELECT * FROM Usuario u WHERE u.id = :id", Usuario.class);
-            Usuario u = query.setParameter("id", id).getSingleResult();
-            dt = new UsuarioDt(u);
+            List<Usuario> users = em.createQuery("SELECT u FROM Usuario u", Usuario.class).getResultList();
+            for(int i=0;i < users.size(); i++) {
+                colUsuarios = thisUser.getCanal().getSeguidores();
+                Iterator it = colUsuarios.iterator();
+                while(it.hasNext()) {
+                    Usuario usuario = (Usuario) it.next();
+                    seguidores.add(usuario.getNickname());
+                }
+            }
+            em.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
         }
-*/
-        seguidores.add("prueba");
         return seguidores;
     }
 
@@ -556,22 +544,5 @@ public List<VideoDt> listarVideosDeUsuario(String usernick){
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
         }
         return l;
-    }
-
-    @Override
-    public List<String> ListarVideos(int userId) {
-        List<String> lista = null;
-        /*
-        try {
-            EntityManager em = emFactory.createEntityManager();
-            //List users = em.createQuery("SELECT nick FROM Usuario u WHERE id = :id").getResultList();
-            TypedQuery<Video> query = em.createQuery("SELECT nombre FROM Video v WHERE v.CANAL_USER_ID = :id", Video.class);
-            Video u = query.setParameter("id", userId).getSingleResult();
-            //dt = new VideoDt(u);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
-        }
-    */
-        return lista;
     }
 }

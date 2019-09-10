@@ -5,8 +5,11 @@
  */
 package presentacion;
 
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import javax.swing.DefaultListModel;
+import logica.Canal;
 import logica.controladores.IControladorUsuario;
 import logica.dt.UsuarioDt;
 import logica.dt.VideoDt;
@@ -26,7 +29,7 @@ public class listarUsuario extends javax.swing.JInternalFrame {
     UsuarioDt dt;
     List<String> listas;
     List<String> seguidores;
-    List<String> siguiendo;
+    Collection<Canal> siguiendo;
     List<VideoDt> videos;
 
     public listarUsuario(IControladorUsuario _user, String _usuario) {
@@ -38,19 +41,42 @@ public class listarUsuario extends javax.swing.JInternalFrame {
         UsuarioDt dt = u.ConsultarUsuario(id);
         listas = u.obtenerListasUsuario(id);
         videos = u.listarVideosDeUsuario(_usuario);
+        siguiendo = dt.getSuscripciones();
+        seguidores = u.ListarSeguidores(id);
         
         lblNickname.setText(dt.getNickname()); 
         lblNombre.setText(dt.getNombre()); 
         lblApellido.setText(dt.getApellido()); 
         lblFechaNac.setText(dt.getFechanac().toString()); 
-        lblMail.setText(dt.getMail()); 
-        DefaultListModel<String> model = new DefaultListModel<>();
+        lblMail.setText(dt.getMail());
+        
+        DefaultListModel<String> model = new DefaultListModel<>();        
         for(int i = 0; i < listas.size(); i++) {
             model.addElement((String)listas.get(i));
-            //model.addRow(new Object[]{list.get(i).getNickname(), list.get(i).getNombre(), list.get(i).getApellido(), list.get(i).getFechanac(), list.get(i).getImagen(), list.get(i).getMail()});
         }
         listListas.setModel(model);
 
+        model = new DefaultListModel<>();
+        for(int i = 0; i < videos.size(); i++) {
+            model.addElement(videos.get(i).getNombre());
+        }
+        listVideos.setModel(model);
+        
+        model = new DefaultListModel<>();
+        Iterator it = siguiendo.iterator();
+        for(int i = 0; i < siguiendo.size(); i++) {
+            while(it.hasNext()) {
+                Canal canal = (Canal) it.next();
+                model.addElement(canal.getNombre());
+            }
+        }
+        listSiguiendo.setModel(model);
+        
+        model = new DefaultListModel<>();
+        for(int i = 0; i < seguidores.size(); i++) {
+            model.addElement(seguidores.get(i));
+        }
+        listSeguidores.setModel(model);
     }
 
     /**

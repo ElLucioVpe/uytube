@@ -100,7 +100,11 @@ public class UsuarioDt {
     public void setMail(String mail) {
         this.mail = mail;
     }
-
+    
+    public Collection<Canal> getSuscripciones() {
+        return suscripciones;
+    }
+    
     public Date getFechanac() {
         return fechanac;
     }
