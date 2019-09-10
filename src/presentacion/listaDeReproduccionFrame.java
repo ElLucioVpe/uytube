@@ -9,6 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import logica.controladores.IControladorUsuario;
+import logica.controladores.IControladorVideo;
 
 /**
  *
@@ -21,13 +22,15 @@ public class listaDeReproduccionFrame extends javax.swing.JInternalFrame {
      */
     UyTubeFrame p;
     IControladorUsuario u;
+    IControladorVideo v;
     int id_user = -1; //inicializada como valor imposible
     
-    public listaDeReproduccionFrame(IControladorUsuario user, UyTubeFrame padre) {
+    public listaDeReproduccionFrame(IControladorUsuario user, IControladorVideo video, UyTubeFrame padre) {
         initComponents();
         this.setVisible(true);
         this.setResizable(false);
         u = user;
+        v = video;
         p = padre;
         ListasLabel.setVisible(false);
         jScrollPane1.setVisible(false);
@@ -55,6 +58,7 @@ public class listaDeReproduccionFrame extends javax.swing.JInternalFrame {
         SearchButton = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         OkButton = new javax.swing.JButton();
+        ConsultarButton = new javax.swing.JButton();
 
         setClosable(true);
 
@@ -113,6 +117,13 @@ public class listaDeReproduccionFrame extends javax.swing.JInternalFrame {
             }
         });
 
+        ConsultarButton.setText("Consultar");
+        ConsultarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ConsultarButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -134,25 +145,24 @@ public class listaDeReproduccionFrame extends javax.swing.JInternalFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(OkButton)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(UpdateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(AddButton)))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(28, 28, 28)
-                                        .addComponent(CancelButton)
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(RemoveButton))))
-                            .addGroup(layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(jLabel3))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addGap(40, 40, 40))))
+                        .addGap(40, 40, 40))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ConsultarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(UpdateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(AddButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(RemoveButton))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(OkButton)
+                                .addGap(157, 157, 157)
+                                .addComponent(CancelButton)))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -167,17 +177,18 @@ public class listaDeReproduccionFrame extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(ListasLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(UpdateButton)
                     .addComponent(AddButton)
                     .addComponent(RemoveButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(ConsultarButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(OkButton)
-                    .addComponent(CancelButton))
-                .addContainerGap())
+                    .addComponent(CancelButton)))
         );
 
         pack();
@@ -220,12 +231,20 @@ public class listaDeReproduccionFrame extends javax.swing.JInternalFrame {
         p.AgregarInternalFrame(new modificarListaDR(u, lista, u.obtenerIdUsuario(jTextField1.getText())));
         this.dispose();
     }//GEN-LAST:event_UpdateButtonActionPerformed
+
+    private void ConsultarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultarButtonActionPerformed
+        String lista = jList1.getSelectedValue();
+
+        p.AgregarInternalFrame(new consultarListaDR(u, v, p, lista, u.obtenerIdUsuario(jTextField1.getText())));
+        this.dispose();
+    }//GEN-LAST:event_ConsultarButtonActionPerformed
     
     //Auxiliares
     private void MostrarSeleccion(boolean x) {
         UpdateButton.setVisible(x);
         AddButton.setVisible(x);
         RemoveButton.setVisible(x);
+        ConsultarButton.setVisible(x);
     }
 
     private void obtenerListas(int id) {
@@ -245,6 +264,7 @@ public class listaDeReproduccionFrame extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddButton;
     private javax.swing.JButton CancelButton;
+    private javax.swing.JButton ConsultarButton;
     private javax.swing.JLabel ListasLabel;
     private javax.swing.JButton OkButton;
     private javax.swing.JButton RemoveButton;

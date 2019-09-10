@@ -156,6 +156,10 @@ public class Canal implements Serializable {
         return v;
     }
     
+    public Collection<Video> getVideos() {
+        return videos;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

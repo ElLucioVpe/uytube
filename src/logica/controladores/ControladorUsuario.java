@@ -7,6 +7,7 @@ package logica.controladores;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -20,6 +21,7 @@ import logica.ListaDeReproduccion;
 import logica.ListaDeReproduccion_PorDefecto;
 import logica.Usuario;
 import logica.Video;
+import logica.dt.ListaDeReproduccionDt;
 import logica.dt.UsuarioDt;
 import logica.dt.VideoDt;
     import logica.dt.VideoListaDt;
@@ -38,7 +40,7 @@ public class ControladorUsuario implements IControladorUsuario {
     }
 
     @Override
-    public void AltaUsuario(String nick, String nom, String apell, String mail, String fnac, String img) {
+    public void AltaUsuario(String nick, String nom, String apell, String mail, Date fnac, String img) {
         try {
 
             EntityManager em = emFactory.createEntityManager();
@@ -49,7 +51,7 @@ public class ControladorUsuario implements IControladorUsuario {
             if(em.createNamedQuery("Usuario.findByMail", Usuario.class).setParameter("mail",mail).getResultList().size() > 0)
                 throw new Exception("El mail ya esta registrado");
 
-            Usuario u = new Usuario(nick, nom, apell, mail, new SimpleDateFormat("dd/MM/yyyy").parse(fnac));
+            Usuario u = new Usuario(nick, nom, apell, mail, fnac);
             if(!img.isEmpty()) u.setImagen(img);
 
             em.persist(u);
@@ -102,7 +104,7 @@ public class ControladorUsuario implements IControladorUsuario {
     }
 
     @Override
-    public void ModificarUsuario(int id, String nuevonom, String nuevoapell, String nuevafechaNac, String nuevonomC, String nuevadesC, boolean nuevaprivC){
+    public void ModificarUsuario(int id, String nuevonom, String nuevoapell, Date nuevafechaNac, String nuevonomC, String nuevadesC, boolean nuevaprivC){
         //en su respectivo frame deberan antes ser utilizados
         //ListarUsuarios() y ConsultarUsuario(id)
         //los atributos que no se deseen modificar llegaran en blanco o null
@@ -114,7 +116,7 @@ public class ControladorUsuario implements IControladorUsuario {
             Usuario u = em.find(Usuario.class, id);
             if(!nuevonom.isBlank()) u.setNombre(nuevonom);
             if(!nuevoapell.isBlank()) u.setApellido(nuevoapell);
-            if(nuevafechaNac != null) u.setFechanac(new SimpleDateFormat("dd/MM/yyyy").parse(nuevafechaNac));
+            if(nuevafechaNac != null) u.setFechanac(nuevafechaNac);
 
             Canal c = em.find(Canal.class, u.getId()); //Por las dudas lo busco con find
             if(!nuevonomC.isBlank()) c.setNombre(nuevonomC);
@@ -134,8 +136,9 @@ public class ControladorUsuario implements IControladorUsuario {
         //ademas la imagen al llamarse igual ya que su nombre es el nick del usuario
         //simplemente sera reemplazada luego de finalizada la modificacion en caso de ser necesario
     }
-@Override
-public List<VideoDt> listarVideosDeUsuario(String usernick){
+    
+    @Override
+    public List<VideoDt> listarVideosDeUsuario(String usernick){
       List<VideoDt> list = new ArrayList<VideoDt>();
         try {
             int idUser= obtenerIdUsuario(usernick);
@@ -153,7 +156,7 @@ public List<VideoDt> listarVideosDeUsuario(String usernick){
         }
         return list;
 
-}
+    }
 /*public List<VideoDt> listarVideo(String nombrevideo, usernick){
       List<VideoDt> list = new ArrayList<VideoDt>();
         try {
@@ -450,9 +453,10 @@ public List<VideoDt> listarVideosDeUsuario(String usernick){
 
             EntityManager em = emFactory.createEntityManager();
             em.getTransaction().begin();
-
-            Usuario u = em.createNamedQuery("Usuario.findByNickname", Usuario.class).setParameter("nickname", nick).getSingleResult();
-            if(u == null) throw new Exception("El usuario no existe");
+            
+            TypedQuery<Usuario> q = em.createNamedQuery("Usuario.findByNickname", Usuario.class).setParameter("nickname", nick);
+            if (q.getResultList().isEmpty()) throw new Exception("El usuario no existe");
+            Usuario u = q.getSingleResult();
 
             id = u.getId();
             em.getTransaction().commit();
@@ -544,5 +548,60 @@ public List<VideoDt> listarVideosDeUsuario(String usernick){
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
         }
         return l;
+    }
+    
+    @Override
+    public ListaDeReproduccionDt obtenerListaDt(int id, String lista) {
+        ListaDeReproduccionDt ldt = null;
+        try {
+            EntityManager em = emFactory.createEntityManager();
+            em.getTransaction().begin();
+
+            Usuario u = em.find(Usuario.class, id);
+            if(u == null) throw new Exception("El usuario no existe");
+            ListaDeReproduccion l = u.getLista(lista);
+            if(l == null) throw new Exception("El usuario no tiene ninguna lista con ese nombre");
+            
+            //Reviso su tipo
+            String tipo = "Particular";
+            if(em.find(ListaDeReproduccion_PorDefecto.class, l) != null) tipo = "Por Defecto";
+            //
+            ldt = new ListaDeReproduccionDt(
+                    l.getId(), 
+                    l.getNombre(), 
+                    tipo, 
+                    l.getPrivada(), 
+                    l.getCategoria().getNombre(),
+                    id
+            );
+            em.getTransaction().commit();
+            em.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+        }
+        return ldt;
+    }
+
+    @Override
+    public List<String> ListarVideos(int userId) {
+        List<String> lista = null;
+        try {
+            EntityManager em = emFactory.createEntityManager();
+            Canal c = em.find(Canal.class, userId);
+            if(c == null) throw new Exception("El usuario no existe");
+            
+            Collection<Video> l = c.getVideos();
+            if(l.isEmpty()) throw new Exception("El canal del usuario no tiene videos");
+            Iterator<Video> it = l.iterator();
+            
+            while(it.hasNext()) {
+                Video v = it.next();
+                lista.add(v.getNombre());
+            }
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+        }
+        return lista;
     }
 }

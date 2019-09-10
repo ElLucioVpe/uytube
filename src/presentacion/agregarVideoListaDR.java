@@ -178,15 +178,15 @@ public class agregarVideoListaDR extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_okButtonActionPerformed
 
     private void obtenerVideos(int id) {
-        /*List listas = u.obtenerVideos(id);
-        Iterator it = listas.iterator();
+        List<String> videos = u.ListarVideos(id);
+        Iterator<String> it = videos.iterator();
         DefaultListModel<String> model = new DefaultListModel<>();
         
         while(it.hasNext()){
-            model.addElement((String)it.next());
+            model.addElement(it.next());
         }
         
-        jList1.setModel(model);*/
+        jList1.setModel(model);
         VideosLabel.setVisible(true);
         jList1.setVisible(true);
     }

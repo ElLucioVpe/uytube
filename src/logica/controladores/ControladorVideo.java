@@ -169,7 +169,6 @@ public class ControladorVideo implements IControladorVideo {
             try {
                 EntityManager em = emFactory.createEntityManager();
                 em.getTransaction().begin();
-    //TypedQuery<Video> vid = em.createQuery("Video.findByNombre", Video.class).setParameter("nombre", nombrevideo);
 
                 TypedQuery<Video> vid = em.createNamedQuery("Video.findByNombre",Video.class).setParameter("nombre", videoNombre);
                 Video video = vid.getSingleResult();

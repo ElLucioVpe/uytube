@@ -48,22 +48,19 @@ public class UyTubeFrame extends javax.swing.JFrame {
         jFrame3 = new javax.swing.JFrame();
         Escritorio = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
         RegistrarUsuario = new javax.swing.JMenuItem();
         RegistrarVideo = new javax.swing.JMenuItem();
         seguirUsuario = new javax.swing.JMenuItem();
         bajaSeguidorMenuItem = new javax.swing.JMenuItem();
         RegistroCategoria = new javax.swing.JMenuItem();
-        jMenu1 = new javax.swing.JMenu();
+        CrearLista = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         listarCategorias = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenu4 = new javax.swing.JMenu();
-        CrearLista = new javax.swing.JMenuItem();
         ModificarLista = new javax.swing.JMenuItem();
-        jMenu5 = new javax.swing.JMenu();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -111,6 +108,14 @@ public class UyTubeFrame extends javax.swing.JFrame {
             .addGap(0, 349, Short.MAX_VALUE)
         );
 
+        jMenu1.setText("Inicio");
+        jMenu1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu1ActionPerformed(evt);
+            }
+        });
+        jMenuBar1.add(jMenu1);
+
         jMenu2.setText("Registro");
 
         RegistrarUsuario.setText("Registrar Usuario");
@@ -153,13 +158,13 @@ public class UyTubeFrame extends javax.swing.JFrame {
         });
         jMenu2.add(RegistroCategoria);
 
-        jMenu1.setText("Inicio");
-        jMenu1.addActionListener(new java.awt.event.ActionListener() {
+        CrearLista.setText("Crear Lista de Reproduccion");
+        CrearLista.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenu1ActionPerformed(evt);
+                CrearListaActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenu1);
+        jMenu2.add(CrearLista);
 
         jMenuBar1.add(jMenu2);
 
@@ -189,53 +194,15 @@ public class UyTubeFrame extends javax.swing.JFrame {
         });
         jMenu3.add(jMenuItem2);
 
-        jMenuItem3.setText("Comentarios Test");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
-            }
-        });
-        jMenu3.add(jMenuItem3);
-
-        jMenuBar1.add(jMenu3);
-
-        jMenu4.setText("Listas");
-        jMenu4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenu4ActionPerformed(evt);
-            }
-        });
-
-        CrearLista.setText("Crear Lista de Reproduccion");
-        CrearLista.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CrearListaActionPerformed(evt);
-            }
-        });
-        jMenu4.add(CrearLista);
-
-        ModificarLista.setText("Modificar Lista de Reproduccion");
+        ModificarLista.setText("Listado de Listas de Reproduccion");
         ModificarLista.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ModificarListaActionPerformed(evt);
             }
         });
-        jMenu4.add(ModificarLista);
+        jMenu3.add(ModificarLista);
 
-        jMenuBar1.add(jMenu4);
-
-        jMenu5.setText("Categoria");
-        jMenu5.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jMenu5MouseClicked(evt);
-            }
-        });
-        jMenu5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenu5ActionPerformed(evt);
-            }
-        });
-        jMenuBar1.add(jMenu5);
+        jMenuBar1.add(jMenu3);
 
         setJMenuBar(jMenuBar1);
 
@@ -358,20 +325,6 @@ public class UyTubeFrame extends javax.swing.JFrame {
         */
     }//GEN-LAST:event_jMenu1ActionPerformed
 
-    private void jMenu4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu4ActionPerformed
-
-
-    }//GEN-LAST:event_jMenu4ActionPerformed
-
-    private void jMenu5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu5ActionPerformed
-
-
-    }//GEN-LAST:event_jMenu5ActionPerformed
-
-    private void jMenu5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu5MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenu5MouseClicked
-
     private void CrearListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CrearListaActionPerformed
         // TODO add your handling code here:
         try{
@@ -442,7 +395,7 @@ public class UyTubeFrame extends javax.swing.JFrame {
     private void ModificarListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ModificarListaActionPerformed
         try{
 
-            listaDeReproduccionFrame listaRep = new listaDeReproduccionFrame(user, this);
+            listaDeReproduccionFrame listaRep = new listaDeReproduccionFrame(user, vid, this);
             Escritorio.add(listaRep);
             Escritorio.moveToFront(listaRep);
             listaRep.setSize(Escritorio.getWidth(),Escritorio.getHeight());
@@ -463,9 +416,7 @@ public class UyTubeFrame extends javax.swing.JFrame {
         frmListarVideos.setVisible(true);
         frmListarVideos.show();
     }//GEN-LAST:event_jMenuItem2ActionPerformed
-
-
-
+    
 
     /**
      * @param args the command line arguments
@@ -517,12 +468,9 @@ public class UyTubeFrame extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
-    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem listarCategorias;
     private javax.swing.JMenuItem seguirUsuario;
     // End of variables declaration//GEN-END:variables
