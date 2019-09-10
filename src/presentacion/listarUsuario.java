@@ -9,6 +9,7 @@ import java.util.List;
 import javax.swing.DefaultListModel;
 import logica.controladores.IControladorUsuario;
 import logica.dt.UsuarioDt;
+import logica.dt.VideoDt;
 import logica.dt.VideoListaDt;
 
 /**
@@ -26,7 +27,7 @@ public class listarUsuario extends javax.swing.JInternalFrame {
     List<String> listas;
     List<String> seguidores;
     List<String> siguiendo;
-    List<String> videos;
+    List<VideoDt> videos;
 
     public listarUsuario(IControladorUsuario _user, String _usuario) {
         initComponents();
@@ -35,23 +36,21 @@ public class listarUsuario extends javax.swing.JInternalFrame {
         usuario = _usuario;
         int id = u.obtenerIdUsuario(usuario);
         UsuarioDt dt = u.ConsultarUsuario(id);
-        //listas = u.obtenerListasUsuario(id);
-        //videos = u.ListarVideos(id);
+        listas = u.obtenerListasUsuario(id);
+        videos = u.listarVideosDeUsuario(_usuario);
         
         lblNickname.setText(dt.getNickname()); 
         lblNombre.setText(dt.getNombre()); 
         lblApellido.setText(dt.getApellido()); 
         lblFechaNac.setText(dt.getFechanac().toString()); 
         lblMail.setText(dt.getMail()); 
-
-        /*
         DefaultListModel<String> model = new DefaultListModel<>();
         for(int i = 0; i < listas.size(); i++) {
             model.addElement((String)listas.get(i));
             //model.addRow(new Object[]{list.get(i).getNickname(), list.get(i).getNombre(), list.get(i).getApellido(), list.get(i).getFechanac(), list.get(i).getImagen(), list.get(i).getMail()});
         }
         listListas.setModel(model);
-        */
+
     }
 
     /**

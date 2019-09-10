@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package logica.controladores;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -153,7 +154,7 @@ public List<VideoDt> listarVideosDeUsuario(String usernick){
         return list;
 
 }
-public List<VideoDt> listarVideo(String nombrevideo, usernick){
+public List<VideoDt> listarVideo(String nombrevideo, String usernick){
       List<VideoDt> list = new ArrayList<VideoDt>();
         try {
             int idUser= obtenerIdUsuario(usernick);
