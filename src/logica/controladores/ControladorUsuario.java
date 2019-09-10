@@ -24,7 +24,7 @@ import logica.Video;
 import logica.dt.ListaDeReproduccionDt;
 import logica.dt.UsuarioDt;
 import logica.dt.VideoDt;
-    import logica.dt.VideoListaDt;
+import logica.dt.VideoListaDt;
 //import logica.controladores.IControladorUsuario;
 
 /**
@@ -312,7 +312,7 @@ public class ControladorUsuario implements IControladorUsuario {
             if(v == null) throw new Exception("El video no existe");
 
             user_lista.agregarVideoLista(v, lista);
-
+            
             em.merge(user_lista);
             em.getTransaction().commit();
             em.close();
@@ -339,7 +339,7 @@ public class ControladorUsuario implements IControladorUsuario {
             em.getTransaction().commit();
             em.close();
 
-            JOptionPane.showMessageDialog(null,"El video fue agregado con exito");
+            JOptionPane.showMessageDialog(null,"El video fue removido con exito");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
         }
@@ -400,24 +400,36 @@ public class ControladorUsuario implements IControladorUsuario {
     @Override
     public List<String> ListarSeguidores(int userId){
         List<String> seguidores = null;
-        UsuarioDt thisUser = this.ConsultarUsuario(userId);
-        Collection<Usuario> colUsuarios = null;
-
+        /*
         try {
             EntityManager em = emFactory.createEntityManager();
-            List<Usuario> users = em.createQuery("SELECT u FROM Usuario u", Usuario.class).getResultList();
-            for(int i=0;i < users.size(); i++) {
-                colUsuarios = thisUser.getCanal().getSeguidores();
-                Iterator it = colUsuarios.iterator();
-                while(it.hasNext()) {
-                    Usuario usuario = (Usuario) it.next();
-                    seguidores.add(usuario.getNickname());
-                }
-            }
-            em.close();
+            //List users = em.createQuery("SELECT nick FROM Usuario u WHERE id = :id").getResultList();
+            TypedQuery<Usuario> query = em.createQuery("SELECT * FROM Usuario u WHERE u.id = :id", Usuario.class);
+            Usuario u = query.setParameter("id", id).getSingleResult();
+            dt = new UsuarioDt(u);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
         }
+*/
+        seguidores.add("prueba");
+        return seguidores;
+    }
+
+    @Override
+    public List<String> ListarSiguiendo(int userId){
+        List<String> seguidores = null;
+        /*
+        try {
+            EntityManager em = emFactory.createEntityManager();
+            //List users = em.createQuery("SELECT nick FROM Usuario u WHERE id = :id").getResultList();
+            TypedQuery<Usuario> query = em.createQuery("SELECT * FROM Usuario u WHERE u.id = :id", Usuario.class);
+            Usuario u = query.setParameter("id", id).getSingleResult();
+            dt = new UsuarioDt(u);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+        }
+*/
+        seguidores.add("prueba");
         return seguidores;
     }
 
@@ -564,15 +576,18 @@ public class ControladorUsuario implements IControladorUsuario {
             
             //Reviso su tipo
             String tipo = "Particular";
-            if(em.find(ListaDeReproduccion_PorDefecto.class, l) != null) tipo = "Por Defecto";
-            //
+            if(em.find(ListaDeReproduccion_PorDefecto.class, lista) != null) tipo = "Por Defecto";
+            //Reviso su categoria
+            String categoria = "Ninguna";
+            if(l.getCategoria() != null) categoria = l.getCategoria().getNombre();
+            //Creo el datatype
             ldt = new ListaDeReproduccionDt(
-                    l.getId(), 
-                    l.getNombre(), 
-                    tipo, 
-                    l.getPrivada(), 
-                    l.getCategoria().getNombre(),
-                    id
+                l.getId(), 
+                l.getNombre(), 
+                tipo, 
+                l.getPrivada(), 
+                categoria,
+                id
             );
             em.getTransaction().commit();
             em.close();
@@ -584,21 +599,20 @@ public class ControladorUsuario implements IControladorUsuario {
 
     @Override
     public List<String> ListarVideos(int userId) {
-        List<String> lista = null;
+        List<String> lista = new ArrayList<>();
         try {
             EntityManager em = emFactory.createEntityManager();
             Canal c = em.find(Canal.class, userId);
             if(c == null) throw new Exception("El usuario no existe");
-            
+           
             Collection<Video> l = c.getVideos();
             if(l.isEmpty()) throw new Exception("El canal del usuario no tiene videos");
-            Iterator<Video> it = l.iterator();
             
+            Iterator<Video> it = l.iterator();
             while(it.hasNext()) {
                 Video v = it.next();
                 lista.add(v.getNombre());
             }
-            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
         }

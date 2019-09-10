@@ -151,7 +151,6 @@ public class listaDeReproduccionFrame extends javax.swing.JInternalFrame {
                         .addGap(40, 40, 40))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(ConsultarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(UpdateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -161,7 +160,8 @@ public class listaDeReproduccionFrame extends javax.swing.JInternalFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(OkButton)
                                 .addGap(157, 157, 157)
-                                .addComponent(CancelButton)))
+                                .addComponent(CancelButton))
+                            .addComponent(ConsultarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
@@ -221,21 +221,21 @@ public class listaDeReproduccionFrame extends javax.swing.JInternalFrame {
     private void AddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddButtonActionPerformed
         String lista = jList1.getSelectedValue();
 
-        p.AgregarInternalFrame(new agregarVideoListaDR(u, lista, u.obtenerIdUsuario(jTextField1.getText())));
+        p.AgregarInternalFrame(new agregarVideoListaDR(u, lista, id_user));
         this.dispose();
     }//GEN-LAST:event_AddButtonActionPerformed
 
     private void UpdateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateButtonActionPerformed
         String lista = jList1.getSelectedValue();
 
-        p.AgregarInternalFrame(new modificarListaDR(u, lista, u.obtenerIdUsuario(jTextField1.getText())));
+        p.AgregarInternalFrame(new modificarListaDR(u, lista, id_user));
         this.dispose();
     }//GEN-LAST:event_UpdateButtonActionPerformed
 
     private void ConsultarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultarButtonActionPerformed
         String lista = jList1.getSelectedValue();
 
-        p.AgregarInternalFrame(new consultarListaDR(u, v, p, lista, u.obtenerIdUsuario(jTextField1.getText())));
+        p.AgregarInternalFrame(new consultarListaDR(u, v, p, lista, id_user));
         this.dispose();
     }//GEN-LAST:event_ConsultarButtonActionPerformed
     
