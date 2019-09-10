@@ -104,7 +104,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="CrearLista">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Crear Lista de Reproduccion"/>
+                <Property name="text" type="java.lang.String" value="Registrar Lista de Reproduccion"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CrearListaActionPerformed"/>
@@ -137,47 +137,7 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Lista de Videos"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem2ActionPerformed"/>
-              </Events>
             </MenuItem>
-<<<<<<< Updated upstream
-=======
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem3">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Comentarios Test"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem3ActionPerformed"/>
-              </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="ConsultoCategorias">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Consultar Categor&#xed;as"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ConsultoCategoriasActionPerformed"/>
-              </Events>
-            </MenuItem>
-          </SubComponents>
-        </Menu>
-        <Menu class="javax.swing.JMenu" name="jMenu4">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Listas"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenu4ActionPerformed"/>
-          </Events>
-          <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="CrearLista">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Crear Lista de Reproduccion"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CrearListaActionPerformed"/>
-              </Events>
-            </MenuItem>
->>>>>>> Stashed changes
             <MenuItem class="javax.swing.JMenuItem" name="ModificarLista">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Listado de Listas de Reproduccion"/>
