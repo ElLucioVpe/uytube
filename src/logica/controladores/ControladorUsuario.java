@@ -154,7 +154,7 @@ public List<VideoDt> listarVideosDeUsuario(String usernick){
         return list;
 
 }
-public List<VideoDt> listarVideo(String nombrevideo, String usernick){
+/*public List<VideoDt> listarVideo(String nombrevideo, usernick){
       List<VideoDt> list = new ArrayList<VideoDt>();
         try {
             int idUser= obtenerIdUsuario(usernick);
@@ -169,7 +169,7 @@ public List<VideoDt> listarVideo(String nombrevideo, String usernick){
         }
         return list;
 
-}
+}*/
     @Override
     public List<UsuarioDt> ListarUsuarios(){
         List<UsuarioDt> list = new ArrayList<UsuarioDt>();

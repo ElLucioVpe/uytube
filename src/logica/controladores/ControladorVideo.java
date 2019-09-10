@@ -4,21 +4,24 @@
  * and open the template in the editor.
  */
 package logica.controladores;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.MutableTreeNode;
 import logica.Canal;
 import logica.Usuario;
 import logica.Valoracion;
 import logica.ValoracionPK;
 import logica.Video;
 import logica.Comentario;
+import logica.dt.valoracionDt;
 
 /**
  *
@@ -161,18 +164,18 @@ public class ControladorVideo implements IControladorVideo {
         
         //Auxiliares
         @Override
-        public DefaultMutableTreeNode obtenerComentariosVideo(int video_id) {
+        public DefaultMutableTreeNode obtenerComentariosVideo(String videoNombre) {
             DefaultMutableTreeNode root = null;
             try {
                 EntityManager em = emFactory.createEntityManager();
                 em.getTransaction().begin();
+    //TypedQuery<Video> vid = em.createQuery("Video.findByNombre", Video.class).setParameter("nombre", nombrevideo);
 
-                Video video = em.find(Video.class, video_id);
+                TypedQuery<Video> vid = em.createNamedQuery("Video.findByNombre",Video.class).setParameter("nombre", videoNombre);
+                Video video = vid.getSingleResult();
                 if(video == null) throw new Exception("El video no existe");
-                
                 Collection<Comentario> cs = video.getComentarios();
                 Iterator<Comentario> it = cs.iterator();
-                
                 root = new DefaultMutableTreeNode(video.getNombre() + " :: Comentarios");
                 while(it.hasNext()) {
                     Comentario c = it.next();
@@ -202,4 +205,20 @@ public class ControladorVideo implements IControladorVideo {
                 }
             }
         }
+        
+        public List<valoracionDt>  obtenerValoracionVideo(int video_id){
+        List<valoracionDt> list = new ArrayList<valoracionDt>();
+        try {
+            EntityManager em = emFactory.createEntityManager();
+            List<Valoracion> vals = em.createQuery("SELECT v FROM Valoracion V where VIDEO_ID = idVideo", Valoracion.class).setParameter("idVideo", video_id).getResultList();
+            for(int i=0;i < vals.size(); i++) {
+                list.add(new valoracionDt(vals.get(i)));
+            }
+            em.close();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+        }
+        return list;
+         }
 }
