@@ -31,6 +31,7 @@ public class listarUsuario extends javax.swing.JInternalFrame {
     List<String> seguidores;
     Collection<Canal> siguiendo;
     List<VideoDt> videos;
+    Canal canal;
 
     public listarUsuario(IControladorUsuario _user, String _usuario) {
         initComponents();
@@ -43,6 +44,7 @@ public class listarUsuario extends javax.swing.JInternalFrame {
         videos = u.listarVideosDeUsuario(_usuario);
         siguiendo = dt.getSuscripciones();
         seguidores = u.ListarSeguidores(id);
+        canal = dt.getCanal();
         
         lblNickname.setText(dt.getNickname()); 
         lblNombre.setText(dt.getNombre()); 
@@ -50,33 +52,46 @@ public class listarUsuario extends javax.swing.JInternalFrame {
         lblFechaNac.setText(dt.getFechanac().toString()); 
         lblMail.setText(dt.getMail());
         
-        DefaultListModel<String> model = new DefaultListModel<>();        
-        for(int i = 0; i < listas.size(); i++) {
-            model.addElement((String)listas.get(i));
-        }
-        listListas.setModel(model);
+        lblNombreCanal.setText(canal.getNombre());
+        lblPrivacidadCanal.setText(canal.getPrivacidad().toString());
+        
+        DefaultListModel<String> model = new DefaultListModel<>();      
 
-        model = new DefaultListModel<>();
-        for(int i = 0; i < videos.size(); i++) {
-            model.addElement(videos.get(i).getNombre());
-        }
-        listVideos.setModel(model);
-        
-        model = new DefaultListModel<>();
-        Iterator it = siguiendo.iterator();
-        for(int i = 0; i < siguiendo.size(); i++) {
-            while(it.hasNext()) {
-                Canal canal = (Canal) it.next();
-                model.addElement(canal.getNombre());
+        if(listas.size() != 0) {
+            for(int i = 0; i < listas.size(); i++) {
+                model.addElement((String)listas.get(i));
             }
+            listListas.setModel(model);
         }
-        listSiguiendo.setModel(model);
+
+        if(videos.size() != 0) {
+            model = new DefaultListModel<>();
+            for(int i = 0; i < videos.size(); i++) {
+                model.addElement(videos.get(i).getNombre());
+            }
+            listVideos.setModel(model);
+        }
         
-        model = new DefaultListModel<>();
-        for(int i = 0; i < seguidores.size(); i++) {
-            model.addElement(seguidores.get(i));
+        
+        if(siguiendo.size() != 0) {
+            model = new DefaultListModel<>();
+            Iterator it = siguiendo.iterator();
+            for(int i = 0; i < siguiendo.size(); i++) {
+                while(it.hasNext()) {
+                    Canal canal = (Canal) it.next();
+                    model.addElement(canal.getNombre());
+                }
+            }
+            listSiguiendo.setModel(model);
         }
-        listSeguidores.setModel(model);
+        
+        if(seguidores != null) {
+            model = new DefaultListModel<>();
+            for(int i = 0; i < seguidores.size(); i++) {
+                model.addElement(seguidores.get(i));
+            }
+            listSeguidores.setModel(model);
+        }
     }
 
     /**

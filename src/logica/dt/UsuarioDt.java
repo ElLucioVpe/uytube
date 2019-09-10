@@ -59,6 +59,7 @@ public class UsuarioDt {
         this.listas = u.getListas();
         this.valoraciones = u.getValoraciones();
         this.suscripciones = new ArrayList<>();
+        this.canal = u.getCanal();
     }
 
        public Integer getId() {
