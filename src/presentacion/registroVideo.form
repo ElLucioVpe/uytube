@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JInternalFrameFormInfo">
+  <Properties>
+    <Property name="closable" type="boolean" value="true"/>
+  </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
   </SyntheticProperties>
@@ -25,13 +28,15 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="label5" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="CategoriasBox" min="-2" pref="81" max="-2" attributes="0"/>
+                  </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="label1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jButton1" min="-2" max="-2" attributes="0"/>
-                          <Component id="textField1" pref="81" max="32767" attributes="0"/>
-                      </Group>
+                      <Component id="textField1" pref="81" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -49,7 +54,14 @@
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace pref="144" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
+              <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="151" max="32767" attributes="0"/>
+              <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -76,13 +88,21 @@
                   <Component id="textField4" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="label4" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="label5" min="-2" max="-2" attributes="0"/>
+                  <Component id="CategoriasBox" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="textField6" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="label6" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="59" max="32767" attributes="0"/>
-              <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="63" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -132,6 +152,35 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="User"/>
       </Properties>
+    </Component>
+    <Component class="java.awt.Label" name="label5">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Categoria"/>
+      </Properties>
+      <AccessibilityProperties>
+        <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="Categoria (opcional)"/>
+      </AccessibilityProperties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="CategoriasBox">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="1">
+            <StringItem index="0" value="Ninguna"/>
+          </StringArray>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButton2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Cancelar"/>
+        <Property name="toolTipText" type="java.lang.String" value=""/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

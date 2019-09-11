@@ -21,6 +21,7 @@ import javax.swing.table.DefaultTableModel;
 import logica.Categoria;
 import logica.ListaDeReproduccion;
 import logica.Usuario;
+import logica.Video;
 import logica.dt.CategoriaDt;
 import logica.controladores.IControladorCategoria;
 import logica.dt.VideoDt;
@@ -105,25 +106,44 @@ public class ControladorCategoria implements IControladorCategoria {
      @Override
      
      public List<ListaDeReproduccion> obtenerListasCategoria(String nom){
-  
-         List<ListaDeReproduccion> query = null;
+        List<ListaDeReproduccion> query = null;
         try {
             EntityManager em = emFactory.createEntityManager();
             em.getTransaction().begin();
-            
-           
+
             Categoria c = em.find(Categoria.class, nom);
-           
+            if(c == null) throw new Exception("La categoria no existe");
             
-           query = em.createNamedQuery("Listadereproduccion.findByCategoria",ListaDeReproduccion.class).setParameter("categoria", c).getResultList();
-      
-           
+            query = em.createNamedQuery("ListaDeReproduccion.findByCategoria",ListaDeReproduccion.class).setParameter("categoria", c).getResultList();
             
+            em.getTransaction().commit();
             em.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
         }
         return query;
+         
+     }
+     
+     @Override
+     public List<Video> obtenerVideosCategoria(String nom){
+        List<Video> query = null;
+        try {
+            EntityManager em = emFactory.createEntityManager();
+            em.getTransaction().begin();
+
+            Categoria c = em.find(Categoria.class, nom);
+            if(c == null) throw new Exception("La categoria no existe");
+            
+            query = em.createNamedQuery("Video.findByCategoria",Video.class).setParameter("categoria", nom).getResultList();
+
+            em.getTransaction().commit();
+            em.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+        }
+        return query;
+         
          
      }
 }

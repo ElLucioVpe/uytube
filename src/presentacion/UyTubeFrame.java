@@ -389,12 +389,12 @@ public class UyTubeFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_RegistroCategoriaActionPerformed
 
     private void listarCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listarCategoriasActionPerformed
-        listarCategorias listaC = new listarCategorias(cate);
-             Escritorio.add(listaC);
-             Escritorio.moveToFront(listaC);
-             listaC.setSize(Escritorio.getWidth(),Escritorio.getHeight());
-             listaC.setLocation(0,0);
-             listaC.setVisible(true);
+            listarCategorias listaC = new listarCategorias(cate, user, this);
+            Escritorio.add(listaC);
+            Escritorio.moveToFront(listaC);
+            listaC.setSize(Escritorio.getWidth(),Escritorio.getHeight());
+            listaC.setLocation(0,0);
+            listaC.setVisible(true);
 
     }//GEN-LAST:event_listarCategoriasActionPerformed
 
@@ -433,7 +433,7 @@ public class UyTubeFrame extends javax.swing.JFrame {
         frmListarVideos.setVisible(true);
         frmListarVideos.show();
     }//GEN-LAST:event_jMenuItem2ActionPerformed
-    
+
 
     private void ConsultoCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultoCategoriasActionPerformed
         consultarCategorias consultaC = new consultarCategorias(cate,user);
@@ -459,12 +459,12 @@ public class UyTubeFrame extends javax.swing.JFrame {
         cate.AltaCategoria("Gente y blogs");
         cate.AltaCategoria("Mascotas y animales");
         cate.AltaCategoria("Viajes y eventos");
-        
+
         //USUARIOS
         SimpleDateFormat dateformat = new SimpleDateFormat("dd/M/yyyy");
         try {
         user.AltaUsuario("hrubino", "Horacio", "Rubino", "horacio.rubino@guambia.com.uy", dateformat.parse("25/02/1962") , "");
-        user.AltaUsuario("mbusca", "Martín", "Buscaglia", "Martin.bus@agadu.org.uy", dateformat.parse("14/06/1972") , "");        
+        user.AltaUsuario("mbusca", "Martín", "Buscaglia", "Martin.bus@agadu.org.uy", dateformat.parse("14/06/1972") , "");
         user.AltaUsuario("hectorg", "Héctor", "Guido", "hector.gui@elgalpon.org.uy",dateformat.parse("07/01/1954") , "");
         user.AltaUsuario("tabarec", "Tabaré", "Cardozo", "tabare.car@agadu.org.uy", dateformat.parse("24/07/1971"), "");
         user.AltaUsuario("cachilas", "Waldemar Cachila", "Silva", "Cachila.sil@c1080.org.uy", dateformat.parse("01/01/1947") , "");
@@ -528,19 +528,19 @@ public class UyTubeFrame extends javax.swing.JFrame {
        user.seguirUsuario("chino", "tonyp");
        user.seguirUsuario("tonyp", "sergiop");
        user.seguirUsuario("nicoJ", "diegop");
-        
+
        //VIDEO
        vid.AltaVideo("Locura celeste", duracion, url, desc, ERROR);
-       
-       
-       
-       
-       
-       
-       
+
+
+
+
+
+
+
     }//GEN-LAST:event_jButton1ActionPerformed
-    
-                                              
+
+
 
 
     /**

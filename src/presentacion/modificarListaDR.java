@@ -51,6 +51,8 @@ public class modificarListaDR extends javax.swing.JInternalFrame {
         CancelButton = new javax.swing.JButton();
         AcceptButton = new javax.swing.JButton();
 
+        setClosable(true);
+
         jLabel1.setText("Modificando Lista de Reproduccion: ");
 
         jLabel3.setText("Nueva Privacidad:");

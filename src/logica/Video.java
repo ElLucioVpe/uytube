@@ -170,6 +170,10 @@ public class Video implements Serializable {
         this.privacidad = privacidad;
     }
     
+    public Integer getIdUsuario() {
+        return canal_user_id;
+    }
+    
     public int getLikes() {
         int likes = 0;
         Iterator<Valoracion> it = valoraciones.iterator();
