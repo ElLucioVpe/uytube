@@ -448,7 +448,9 @@ public class ControladorUsuario implements IControladorUsuario {
             Usuario uSeguidor = em.find(Usuario.class, obtenerIdUsuario(seguidor));
             if(uSeguidor == null)
                 throw new Exception("El usuario seguidor no existe");
-            //aca hacen falta chequeos para saber si el uSeguidor efectivamente sigue a ese usuario o no y viceversa;
+            //con asegurarnos de uno de los lados de la relacion basta
+            if(!c.getSeguidores().contains(uSeguidor)) throw new Exception("El usuario no es seguidor del canal");
+            
             c.eliminarSeguidor(uSeguidor);
             uSeguidor.eliminarSuscripcion(c);
             em.merge(c);
