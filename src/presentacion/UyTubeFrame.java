@@ -527,17 +527,87 @@ public class UyTubeFrame extends javax.swing.JFrame {
        user.seguirUsuario("sergiop", "diegop");
        user.seguirUsuario("chino", "tonyp");
        user.seguirUsuario("tonyp", "sergiop");
-       user.seguirUsuario("nicoJ", "diegop");
-
-       //VIDEO
-       vid.AltaVideo("Locura celeste", duracion, url, desc, ERROR);
-
-
-
-
-
-
-
+       user.seguirUsuario("nicoJ", "diegop");//VIDEO
+        vid.AltaVideo("Locura celeste", "19:07", "https://youtu.be/PAfbzKcePx0", "Una cancion de fubol", 4  , "Música");
+        vid.AltaVideo("Niño payaso", "13:53", "https://youtu.be/K-uEIUnyZPg", "la emocion explota", 4 , "Música");
+        vid.AltaVideo("Sweet child'o mine", "14:13", "https://youtu.be/1w7OgIMMRc4", "cancion de los rolin",6 , "Música");
+        vid.AltaVideo("Dancing in the Dark", "56:12", "https://youtu.be/129kuDCQtHs", "temaso para la noche de la nostalgia",8  , "Música");
+        vid.AltaVideo("Thriller", "89:10", "https://youtu.be/sOnqjkJTMaA", "este medio raro con los nenes", 6 , "Música");
+        vid.AltaVideo("100 años de FING", "1:00", "https://youtu.be/peGS4TBxSaI", "mucha emocion", 3 , "Noticias");
+        vid.AltaVideo("50 años del InCo", "5:56", "https://youtu.be/GzOJSk4urlM", "la mitad que la fing jeje", 3 , "Noticias");
+        vid.AltaVideo("Ingeniería de Muestra 2017", "10:01", "https://youtu.be/RnaYRA1k5j4", "muy buenos trabajos",3  , "Noticias");
+        vid.AltaVideo("Etapa A contramano Liguilla", "10:01", "https://youtu.be/Es6GRMHXeCQ", "esta estuvo dificil", 5 , "Carnaval");
+        vid.AltaVideo("Etapa Don Timoteo Liguilla", "10:01", "https://youtu.be/I_spHBU9ZsI", "esta estuvo facil", 5 , "Carnaval");
+        vid.AltaVideo("Show de goles", "10:01", "https://youtu.be/g46w4_kD_lA", "tremendos goles variados", 6 , "Deporte");
+        vid.AltaVideo("Pacheco goles más recordados", "10:01", "https://youtu.be/wlEd6-HsIxI", "tremendos goles de pacheco", 4 , "Deporte");
+        vid.AltaVideo("Inauguración Estadio Peñarol", "10:01", "https://youtu.be/U6XPJ8Vz72A", "Presentacion de el nuevo estadio peñarol", 6 , "Deporte");
+        vid.AltaVideo("Recoba 20 mejores goles", "10:01", "https://youtu.be/Gy3fZhWdLEQ", "tremendos goles de recoba", 5 , "Deporte");
+        vid.AltaVideo("Entrevista a director CUTI", "10:01", "https://youtu.be/Eq5uBEzI6qs", "entrevista realizada el 13/7/1527", 15 , "Ciencia y Tecnología");
+        vid.AltaVideo("Ventana al futuro Uruguay y déficit de ingenieros", "10:01", "https://youtu.be/zBR2pnASlQE", "Muy complicado este tema, hicimos un video para aclarar", 15 , "Ciencia y Tecnología");
+        vid.AltaVideo("Locura celeste", "19:07", "https://youtu.be/PAfbzKcePx0", "Una cancion de fubol", 5  , "Música");
+        vid.AltaVideo("Niño payaso", "13:53", "https://youtu.be/K-uEIUnyZPg", "la emocion explota", 5 , "Música");
+        vid.AltaVideo("Sweet child'o mine", "14:13", "https://youtu.be/1w7OgIMMRc4", "cancion de los rolin",8 , "Música");
+        vid.AltaVideo("Thriller", "89:10", "https://youtu.be/sOnqjkJTMaA", "este medio raro con los nenes", 8 , "Música");
+        vid.AltaVideo("Recoba 20 mejores goles", "10:01", "https://youtu.be/Gy3fZhWdLEQ", "tremendos goles de recoba", 13 , "Deporte");
+        vid.AltaVideo("Pacheco goles más recordados", "10:01", "https://youtu.be/wlEd6-HsIxI", "tremendos goles de pacheco", 14 , "Deporte");
+        // lista de reproduccion
+            //por defecto
+        user.AltaListaDeReproduccionPorDefecto("Escuchar más tarde");
+        user.AltaListaDeReproduccionPorDefecto("Deporte total"); 
+        user.AltaListaDeReproduccionPorDefecto("Novedades generales");
+            //particular
+        //user.AltaListaDeReproduccionParticular(nombre, PROPERTIES, rootPaneCheckingEnabled, categoria);
+        user.AltaListaDeReproduccionParticular("Nostalgia", 8, true, "Música");
+        user.AltaListaDeReproduccionParticular("De fiesta", 4, false, "Música");
+        user.AltaListaDeReproduccionParticular("Novedades FING", 3, true, "Noticias");
+        user.AltaListaDeReproduccionParticular("De todo un poco", 5, false, "Música");
+        user.AltaListaDeReproduccionParticular("Noticias y CYT", 16, true, "Noticias");
+        user.AltaListaDeReproduccionParticular("Solo deportes", 6, true, "Deporte");
+            //videos en las listas
+        user.AgregarVideoListaDeReproduccion(6, 8, "Sweet child'o mine", "Nostalgia");
+        user.AgregarVideoListaDeReproduccion(8, 8, "Dancing in the Dark", "Nostalgia");
+        user.AgregarVideoListaDeReproduccion(6, 8, "Thriller", "Nostalgia");
+        user.AgregarVideoListaDeReproduccion(4, 4, "Locura celeste", "De fiesta");
+        user.AgregarVideoListaDeReproduccion(4, 4, "Niño payaso", "De fiesta");
+        user.AgregarVideoListaDeReproduccion(5, 4, "Etapa Don Timoteo Liguilla", "De fiesta");
+        user.AgregarVideoListaDeReproduccion(3, 3, "100 años de FING", "Novedades FING");
+        user.AgregarVideoListaDeReproduccion(3, 3, "50 años del InCo", "Novedades FING");
+        user.AgregarVideoListaDeReproduccion(3, 3, "Ingeniería de Muestra 2017", "Novedades FING");
+        user.AgregarVideoListaDeReproduccion(4, 5, "Locura celeste", "De todo un poco");
+        user.AgregarVideoListaDeReproduccion(4, 5, "Niño payaso", "De todo un poco");
+        user.AgregarVideoListaDeReproduccion(5, 5, "Etapa A contramano Liguilla", "De todo un poco");
+        user.AgregarVideoListaDeReproduccion(5, 5, "Etapa Don Timoteo Liguilla", "De todo un poco");
+        user.AgregarVideoListaDeReproduccion(6, 5, "Inauguración Estadio Peñarol", "De todo un poco");
+        user.AgregarVideoListaDeReproduccion(3, 16, "Ingeniería de Muestra 2017", "Noticias y CYT");
+        user.AgregarVideoListaDeReproduccion(15, 16, "Ventana al futuro Uruguay y déficit de ingenieros", "Noticias y CYT");
+        user.AgregarVideoListaDeReproduccion(6, 6, "Show de goles", "Solo deportes");
+        user.AgregarVideoListaDeReproduccion(6, 6, "Inauguración Estadio Peñarol", "Solo deportes");
+      //  user.AgregarVideoListaDeReproduccion(ICONIFIED, SOMEBITS, video, lista);
+        SimpleDateFormat dateformat2 = new SimpleDateFormat("dd/M/yyyy HH:mm");
+      try {
+        vid.ComentarVideo(16, 7, 0 ,"Fue un gran evento" , dateformat2.parse("05/12/17 14:35"));
+      vid.ComentarVideo(1, 7, 1 ,"Para el próximo aniversario ofrezco vamo’ con los Momo" , dateformat2.parse("05/12/17 14:35"));
+      vid.ComentarVideo(4, 7, 2 ,"Yo ofrezco a la banda tb" , dateformat2.parse("05/12/17 14:35"));
+      vid.ComentarVideo(16, 6, 0 ,"Felicitaciones FING!!!" , dateformat2.parse("05/12/17 14:35"));
+      vid.ComentarVideo(8, 8, 0 ,"Un gusto cubrir eventos como este." , dateformat2.parse("05/12/17 14:35"));
+      vid.ComentarVideo(8, 13, 0 ,"Peñarol peñarol!!!" , dateformat2.parse("05/12/17 14:35"));
+      vid.ComentarVideo(10, 3, 0 ,"Rock and Rolllll" , dateformat2.parse("05/12/17 14:35"));
+      vid.ComentarVideo(10, 4, 0 ,"Anoche explotó!!!" , dateformat2.parse("05/12/17 14:35"));
+      vid.ComentarVideo(10, 1, 0 ,"Me encanta este tema" , dateformat2.parse("05/12/17 14:35"));
+      vid.ComentarVideo(4, 1, 9 ,"Gracias Marce" , dateformat2.parse("05/12/17 14:35"));
+       } catch (ParseException e) {    
+            e.printStackTrace();
+        }        
+      // Valoraciones
+      vid.ValorarVideo(13, 7, false);
+      vid.ValorarVideo(13, 8, true);
+      vid.ValorarVideo(13, 11, true);
+      vid.ValorarVideo(13, 1, false);
+      vid.ValorarVideo(13, 7, true);
+      vid.ValorarVideo(13, 7, true);
+      vid.ValorarVideo(13, 13, true);
+      vid.ValorarVideo(13, 1, true);
+      vid.ValorarVideo(13, 4, true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
 
