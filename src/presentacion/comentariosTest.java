@@ -27,13 +27,16 @@ public class comentariosTest extends javax.swing.JInternalFrame {
     
     public comentariosTest(IControladorVideo v, IControladorUsuario u, String nomVideo) {
         initComponents();
-        setVisible(true);
+//        setVisible(true);
+                this.setVisible(true);
+
         cv = v;
         cu= u;
         DefaultMutableTreeNode root = cv.obtenerComentariosVideo(nomVideo);
         if(root != null) jTree1.setModel(new DefaultTreeModel(root));
          List<valoracionDt> list = cv.obtenerValoracionVideo(jTextField1.getText());
-         for(int i = 0; i < list.size(); i++) {
+       
+          if(list != null) for(int i = 0; i < list.size(); i++) {
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
             model.addRow(new Object[]{list.get(i).getUser(),list.get(i).getGusto()});
         } 

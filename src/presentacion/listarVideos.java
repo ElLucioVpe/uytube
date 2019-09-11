@@ -30,6 +30,8 @@ public class listarVideos extends javax.swing.JInternalFrame {
         u = user;
         v = video;
         Escritorio = Esc;
+        this.setVisible(true);
+
     }
 
     /**
@@ -126,7 +128,7 @@ public class listarVideos extends javax.swing.JInternalFrame {
         //DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         int i = table.getSelectedRow();
         Object videoName = table.getModel().getValueAt(i, 1);
-        comentariosTest frmListarVideo = new comentariosTest (v,u,jTextField1.getText());
+        comentariosTest frmListarVideo = new comentariosTest (v,u,videoName.toString());
         Escritorio.add(frmListarVideo);
         Escritorio.moveToFront(frmListarVideo);
         frmListarVideo.setSize(Escritorio.getWidth(),Escritorio.getHeight());

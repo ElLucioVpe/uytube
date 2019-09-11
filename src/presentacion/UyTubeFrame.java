@@ -5,8 +5,8 @@
  */
 package presentacion;
 
-import java.awt.Dimension;
-import java.beans.PropertyVetoException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
@@ -47,6 +47,7 @@ public class UyTubeFrame extends javax.swing.JFrame {
         jFrame2 = new javax.swing.JFrame();
         jFrame3 = new javax.swing.JFrame();
         Escritorio = new javax.swing.JDesktopPane();
+        jButton1 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -97,15 +98,30 @@ public class UyTubeFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jButton1.setText("Cargar Datos");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        Escritorio.setLayer(jButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
         javax.swing.GroupLayout EscritorioLayout = new javax.swing.GroupLayout(Escritorio);
         Escritorio.setLayout(EscritorioLayout);
         EscritorioLayout.setHorizontalGroup(
             EscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 429, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EscritorioLayout.createSequentialGroup()
+                .addContainerGap(322, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addContainerGap())
         );
         EscritorioLayout.setVerticalGroup(
             EscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 349, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EscritorioLayout.createSequentialGroup()
+                .addContainerGap(315, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addContainerGap())
         );
 
         jMenu1.setText("Inicio");
@@ -187,6 +203,11 @@ public class UyTubeFrame extends javax.swing.JFrame {
         jMenu3.add(jMenuItem1);
 
         jMenuItem2.setText("Lista de Videos");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem2);
 
         ModificarLista.setText("Listado de Listas de Reproduccion");
@@ -422,6 +443,102 @@ public class UyTubeFrame extends javax.swing.JFrame {
              consultaC.setLocation(0,0);
              consultaC.setVisible(true);
     }//GEN-LAST:event_ConsultoCategoriasActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+       //CATEGORIA
+        cate.AltaCategoria("Música");
+        cate.AltaCategoria("Deporte");
+        cate.AltaCategoria("Carnaval");
+        cate.AltaCategoria("Noticias");
+        cate.AltaCategoria("Entretenimiento");
+        cate.AltaCategoria("Comida");
+        cate.AltaCategoria("Videojuegos");
+        cate.AltaCategoria("Ciencia y Tecnología");
+        cate.AltaCategoria("ONG y activismo");
+        cate.AltaCategoria("Gente y blogs");
+        cate.AltaCategoria("Mascotas y animales");
+        cate.AltaCategoria("Viajes y eventos");
+        
+        //USUARIOS
+        SimpleDateFormat dateformat = new SimpleDateFormat("dd/M/yyyy");
+        try {
+        user.AltaUsuario("hrubino", "Horacio", "Rubino", "horacio.rubino@guambia.com.uy", dateformat.parse("25/02/1962") , "");
+        user.AltaUsuario("mbusca", "Martín", "Buscaglia", "Martin.bus@agadu.org.uy", dateformat.parse("14/06/1972") , "");        
+        user.AltaUsuario("hectorg", "Héctor", "Guido", "hector.gui@elgalpon.org.uy",dateformat.parse("07/01/1954") , "");
+        user.AltaUsuario("tabarec", "Tabaré", "Cardozo", "tabare.car@agadu.org.uy", dateformat.parse("24/07/1971"), "");
+        user.AltaUsuario("cachilas", "Waldemar Cachila", "Silva", "Cachila.sil@c1080.org.uy", dateformat.parse("01/01/1947") , "");
+        user.AltaUsuario("juliob", "Julio", "Bocca", "juliobocca@sodre.com.uy", dateformat.parse("16/03/1967") , "");
+        user.AltaUsuario("diegop", "Diego", "Parodi", "diego@efectocine.com", dateformat.parse("01/01/1975") , "");
+        user.AltaUsuario("kairoh", "Kairo", "Herrera", "kairoher@pilsenrock.com.uy", dateformat.parse("25/04/1840") , "");
+        user.AltaUsuario("robinh", "Robin", "Henderson", "Robin.h@tinglesa.com.uy", dateformat.parse("03/08/1940") , "");
+        user.AltaUsuario("marcelot", "Marcelo", "Tinelli", "marcelot@ideasdelsur.com.ar", dateformat.parse("01/04/1960") , "");
+        user.AltaUsuario("novick", "Edgardo", "Novick", "edgardo@novick.com.uy", dateformat.parse("17/07/1952") , "");
+        user.AltaUsuario("sergiop", "Sergio", "Puglia", "puglia@alpanpan.com.uy", dateformat.parse("28/01/1950") , "");
+        user.AltaUsuario("chino", "Alvaro", "Recoba", "chino@trico.org.uy", dateformat.parse("17/03/1976") , "");
+        user.AltaUsuario("tonyp", "Antonio", "Pacheco", "eltony@manya.org.uy", dateformat.parse("14/02/1955") , "");
+        user.AltaUsuario("nicoJ", "Nicolás", "Jodal", "jodal@artech.com.uy", dateformat.parse("09/08/1960") , "");
+        } catch (ParseException e) {
+    // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+       //CANALES
+       user.AltaCanal("Canal Horacio", true,1, "El canal Horacio es para publicar contenido divertido");
+       user.AltaCanal("El bocha", true,2, "Mi canal para colgar cosas");
+       user.AltaCanal("Canal Héctor", true,3, "Canal HG");
+       user.AltaCanal("Tabaré", true,4, "Mi música e ainda mais");
+       user.AltaCanal("El Cachila", false,5, "Para juntar cosas");
+       user.AltaCanal("Canal Julio", true,6, "Canal de JB");
+       user.AltaCanal("Canal Diego", true,7, "Canal de DP");
+       user.AltaCanal("Kairo música", true,8, "Videos de grandes canciones de hoy y siempre");
+       user.AltaCanal("Canal Robin", true,9, "Henderson");
+       user.AltaCanal("Tinelli total", true,10, "Todo lo que querías y más !");
+       user.AltaCanal("Con la gente", true,11, "Preparando las elecciones");
+       user.AltaCanal("Puglia invita", true,12, "Programas del ciclo y videos de cocina masterchef");
+       user.AltaCanal("Chino Recoba", false,13, "Canal de goles con Nacional");
+       user.AltaCanal("Tony Pacheco", false,14, "Todos los goles con Peñarol");
+       user.AltaCanal("Desde Genexus", true,15, "Canal información C y T");
+       //SEGUIDORES
+       user.seguirUsuario("hurbino", "hectorg");
+       user.seguirUsuario("hurbino", "diegop");
+       user.seguirUsuario("mbusca", "tabarec");
+       user.seguirUsuario("mbusca", "cachilas");
+       user.seguirUsuario("mbusca", "kairoh");
+       user.seguirUsuario("hecotrg", "mbusca");
+       user.seguirUsuario("hecotrg", "juliob");
+       user.seguirUsuario("tabarec", "hurbino");
+       user.seguirUsuario("tabarec", "cachilas");
+       user.seguirUsuario("cachilas", "hurbino");
+       user.seguirUsuario("juliob", "mbusca");
+       user.seguirUsuario("juliob", "diegop");
+       user.seguirUsuario("diegop", "hecotrg");
+       user.seguirUsuario("kairoh", "sergiop");
+       user.seguirUsuario("robinh", "hecotrg");
+       user.seguirUsuario("robinh", "juliob");
+       user.seguirUsuario("robinh", "diegop");
+       user.seguirUsuario("marcelot", "cachilas");
+       user.seguirUsuario("marcelot", "juliob");
+       user.seguirUsuario("marcelot", "kairoh");
+       user.seguirUsuario("novick", "hurbino");
+       user.seguirUsuario("novick", "tabarec");
+       user.seguirUsuario("novick", "cachilas");
+       user.seguirUsuario("sergiop", "mbusca");
+       user.seguirUsuario("sergiop", "juliob");
+       user.seguirUsuario("sergiop", "diegop");
+       user.seguirUsuario("chino", "tonyp");
+       user.seguirUsuario("tonyp", "sergiop");
+       user.seguirUsuario("nicoJ", "diegop");
+        
+       //VIDEO
+       vid.AltaVideo("Locura celeste", duracion, url, desc, ERROR);
+       
+       
+       
+       
+       
+       
+       
+    }//GEN-LAST:event_jButton1ActionPerformed
     
                                               
 
@@ -470,6 +587,7 @@ public class UyTubeFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem RegistrarVideo;
     private javax.swing.JMenuItem RegistroCategoria;
     private javax.swing.JMenuItem bajaSeguidorMenuItem;
+    private javax.swing.JButton jButton1;
     private javax.swing.JFrame jFrame1;
     private javax.swing.JFrame jFrame2;
     private javax.swing.JFrame jFrame3;

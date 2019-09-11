@@ -210,9 +210,11 @@ public class ControladorVideo implements IControladorVideo {
               EntityManager em = emFactory.createEntityManager();
            TypedQuery<Video> vid = em.createNamedQuery("Video.findByNombre",Video.class).setParameter("nombre", nomvideo);
            Video video = vid.getSingleResult();
-        List<valoracionDt> list = new ArrayList<valoracionDt>();
-        try {
-            List<Valoracion> vals = em.createQuery("SELECT v FROM Valoracion V where VIDEO_ID = idVideo", Valoracion.class).setParameter("idVideo", video.getId()).getResultList();
+           List<valoracionDt> list = new ArrayList<valoracionDt>();
+         try {
+           if(video == null) throw new Exception("El video no existe");
+            List<Valoracion> vals = em.createQuery("Valoracion.findByVideoId", Valoracion.class).setParameter("videoId", video.getId()).getResultList();
+            if(vals == null) throw new Exception("El video no existe");
             for(int i=0;i < vals.size(); i++) {
                 list.add(new valoracionDt(vals.get(i)));
             }
@@ -223,4 +225,5 @@ public class ControladorVideo implements IControladorVideo {
         }
         return list;
          }
+        
 }
