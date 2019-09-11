@@ -53,6 +53,25 @@ public class registroCanal extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextAreaDescripcion = new javax.swing.JTextArea();
 
+        setClosable(true);
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameClosing(evt);
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+            }
+        });
+
         jLabel2.setText("Nombre de Canal(opcional):");
 
         jLabel3.setText("Privacidad:");
@@ -157,6 +176,13 @@ public class registroCanal extends javax.swing.JInternalFrame {
         JOptionPane.showMessageDialog(null,"El registro ha sido cancelado");
         this.dispose();
     }//GEN-LAST:event_jButtonCancelarActionPerformed
+
+    private void formInternalFrameClosing(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosing
+        //Eliminar usuario
+        u.EliminarUsuario(u.obtenerIdUsuario(user_nick));
+        JOptionPane.showMessageDialog(null,"El registro ha sido cancelado");
+        this.dispose();
+    }//GEN-LAST:event_formInternalFrameClosing
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

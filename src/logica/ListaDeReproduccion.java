@@ -28,7 +28,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "ListaDeReproduccion")
 @NamedQueries({
-    @NamedQuery(name = "ListaDeReproduccion.findByCategoria", query = "SELECT l FROM ListaDeReproduccion l where l.categoria = :categoria")})
+@NamedQuery(name = "ListaDeReproduccion.findByCategoria", query = "SELECT l FROM ListaDeReproduccion l where l.categoria = :categoria")})
 public class ListaDeReproduccion implements Serializable {
 
     private static final long serialVersionUID = 1L;

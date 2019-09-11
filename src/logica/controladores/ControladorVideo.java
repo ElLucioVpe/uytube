@@ -21,6 +21,7 @@ import logica.Usuario;
 import logica.Valoracion;
 import logica.ValoracionPK;
 import logica.Video;
+import logica.Categoria;
 import logica.Comentario;
 import logica.dt.valoracionDt;
 
@@ -38,7 +39,7 @@ public class ControladorVideo implements IControladorVideo {
     }
     
     @Override
-    public void AltaVideo(String nombre, String duracion, String url, String desc, int user){
+    public void AltaVideo(String nombre, String duracion, String url, String desc, int user, String categoria){
           try {
             
             EntityManager em = emFactory.createEntityManager();
@@ -53,6 +54,13 @@ public class ControladorVideo implements IControladorVideo {
             //System.out.println(dtf.format(fecha));
             //new SimpleDateFormat("dd/MM/yyyy").parse(dtf.format(fecha))
             Video v = new Video(nombre, Integer.parseInt(duracion), url, desc, fecha,true,user);
+            
+            if(!categoria.equals("Ninguna")){
+                Categoria cat = em.find(Categoria.class, categoria);
+                if(cat == null) throw new Exception("La categoria no existe");
+                v.setCategoria(categoria);
+            }
+            
             c.agregarVideo(v);
             em.persist(v);
             em.merge(c);

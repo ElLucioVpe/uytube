@@ -55,6 +55,8 @@ public class agregarVideoListaDR extends javax.swing.JInternalFrame {
         okButton = new javax.swing.JButton();
         SearchButton = new javax.swing.JButton();
 
+        setClosable(true);
+
         jLabel3.setText("Escriba el nickname del usuario del que quiere ver sus videos:");
 
         jLabel1.setText("Usuario:");

@@ -53,6 +53,8 @@ public class quitarVideoListaDR extends javax.swing.JInternalFrame {
         okButton = new javax.swing.JButton();
         removeButton = new javax.swing.JButton();
 
+        setClosable(true);
+
         jList1.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 jList1ValueChanged(evt);

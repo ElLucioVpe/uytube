@@ -484,6 +484,26 @@ public class ControladorUsuario implements IControladorUsuario {
     }
 
     @Override
+    public String obtenerNickUsuario(int id) {
+        String nick = "";
+        try {
+
+            EntityManager em = emFactory.createEntityManager();
+            em.getTransaction().begin();
+            
+            Usuario u = em.find(Usuario.class, id);
+            if (u == null) throw new Exception("El usuario no existe");
+
+            nick = u.getNickname();
+            em.getTransaction().commit();
+            em.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+        }
+        return nick;
+    }
+    
+    @Override
     public void EliminarUsuario(int id) {
         try {
 
