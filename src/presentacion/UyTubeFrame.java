@@ -47,7 +47,7 @@ public class UyTubeFrame extends javax.swing.JFrame {
         jFrame2 = new javax.swing.JFrame();
         jFrame3 = new javax.swing.JFrame();
         Escritorio = new javax.swing.JDesktopPane();
-        jButton1 = new javax.swing.JButton();
+        ELBOTON = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -98,14 +98,14 @@ public class UyTubeFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("Cargar Datos");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        ELBOTON.setText("Cargar Datos");
+        ELBOTON.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                ELBOTONActionPerformed(evt);
             }
         });
 
-        Escritorio.setLayer(jButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        Escritorio.setLayer(ELBOTON, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout EscritorioLayout = new javax.swing.GroupLayout(Escritorio);
         Escritorio.setLayout(EscritorioLayout);
@@ -113,14 +113,14 @@ public class UyTubeFrame extends javax.swing.JFrame {
             EscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EscritorioLayout.createSequentialGroup()
                 .addContainerGap(322, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(ELBOTON)
                 .addContainerGap())
         );
         EscritorioLayout.setVerticalGroup(
             EscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EscritorioLayout.createSequentialGroup()
                 .addContainerGap(306, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(ELBOTON)
                 .addContainerGap())
         );
 
@@ -435,7 +435,7 @@ public class UyTubeFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void ELBOTONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ELBOTONActionPerformed
         // TODO add your handling code here:
        //CATEGORIA
         cate.AltaCategoria("Música");
@@ -523,29 +523,29 @@ public class UyTubeFrame extends javax.swing.JFrame {
         vid.AltaVideo("Locura celeste", "19.07", "https://youtu.be/PAfbzKcePx0", "Una cancion de fubol", 4, "Música");
         vid.AltaVideo("Niño payaso", "13.53", "https://youtu.be/K-uEIUnyZPg", "la emocion explota", 4 , "Música");
         vid.AltaVideo("Sweet child'o mine", "14.13", "https://youtu.be/1w7OgIMMRc4", "cancion de los rolin",6 , "Música");
-        vid.ModificarVideo(3, "", "", "", "", null, false);
+        vid.ModificarVideo(3, "", "", "", "", null, false, "Ninguna");
         vid.AltaVideo("Dancing in the Dark", "56.12", "https://youtu.be/129kuDCQtHs", "temaso para la noche de la nostalgia",8  , "Música");
-        vid.ModificarVideo(4, "", "", "", "", null, false);
+        vid.ModificarVideo(4, "", "", "", "", null, false, "Ninguna");
         vid.AltaVideo("Thriller", "89.10", "https://youtu.be/sOnqjkJTMaA", "este medio raro con los nenes", 6 , "Música");
-        vid.ModificarVideo(5, "", "", "", "", null, false);
+        vid.ModificarVideo(5, "", "", "", "", null, false, "Ninguna");
         vid.AltaVideo("100 años de FING", "1.00", "https://youtu.be/peGS4TBxSaI", "mucha emocion", 3 , "Noticias");
-        vid.ModificarVideo(6, "", "", "", "", null, false);
+        vid.ModificarVideo(6, "", "", "", "", null, false, "Ninguna");
         vid.AltaVideo("50 años del InCo", "5.56", "https://youtu.be/GzOJSk4urlM", "la mitad que la fing jeje", 3 , "Noticias");
-        vid.ModificarVideo(7, "", "", "", "", null, false);
+        vid.ModificarVideo(7, "", "", "", "", null, false, "Ninguna");
         vid.AltaVideo("Ingeniería de Muestra 2017", "10.01", "https://youtu.be/RnaYRA1k5j4", "muy buenos trabajos",3  , "Noticias");
-        vid.ModificarVideo(8, "", "", "", "", null, false);
+        vid.ModificarVideo(8, "", "", "", "", null, false, "Ninguna");
         vid.AltaVideo("Etapa A contramano Liguilla", "10.01", "https://youtu.be/Es6GRMHXeCQ", "esta estuvo dificil", 5 , "Carnaval");
         vid.AltaVideo("Etapa Don Timoteo Liguilla", "10.01", "https://youtu.be/I_spHBU9ZsI", "esta estuvo facil", 5 , "Carnaval");
         vid.AltaVideo("Show de goles", "10.01", "https://youtu.be/g46w4_kD_lA", "tremendos goles variados", 6 , "Deporte");
-        vid.ModificarVideo(11, "", "", "", "", null, false);
+        vid.ModificarVideo(11, "", "", "", "", null, false, "Ninguna");
         vid.AltaVideo("Pacheco goles más recordados", "10.01", "https://youtu.be/wlEd6-HsIxI", "tremendos goles de pacheco", 4 , "Deporte");
         vid.AltaVideo("Inauguración Estadio Peñarol", "10.01", "https://youtu.be/U6XPJ8Vz72A", "Presentacion de el nuevo estadio peñarol", 6 , "Deporte");
-        vid.ModificarVideo(13, "", "", "", "", null, false);
+        vid.ModificarVideo(13, "", "", "", "", null, false, "Ninguna");
         vid.AltaVideo("Recoba 20 mejores goles", "10.01", "https://youtu.be/Gy3fZhWdLEQ", "tremendos goles de recoba", 5 , "Deporte");
         vid.AltaVideo("Entrevista a director CUTI", "10.01", "https://youtu.be/Eq5uBEzI6qs", "entrevista realizada el 13/7/1527", 15 , "Ciencia y Tecnología");
-        vid.ModificarVideo(13, "", "", "", "", null, false);
+        vid.ModificarVideo(13, "", "", "", "", null, false, "Ninguna");
         vid.AltaVideo("Ventana al futuro Uruguay y déficit de ingenieros", "10.01", "https://youtu.be/zBR2pnASlQE", "Muy complicado este tema, hicimos un video para aclarar", 15 , "Ciencia y Tecnología");
-        vid.ModificarVideo(13, "", "", "", "", null, false);
+        vid.ModificarVideo(13, "", "", "", "", null, false, "Ninguna");
         // lista de reproduccion
         //por defecto
         user.AltaListaDeReproduccionPorDefecto("Escuchar más tarde");
@@ -556,7 +556,7 @@ public class UyTubeFrame extends javax.swing.JFrame {
         user.AltaListaDeReproduccionParticular("De fiesta", 4, true, "Carnaval"); //MUS y CAR
         user.AltaListaDeReproduccionParticular("Novedades FING", 3, false, "Noticias");
         user.AltaListaDeReproduccionParticular("De todo un poco", 5, true, "Ninguna"); //MUS, DEP y CAR
-        user.AltaListaDeReproduccionParticular("Noticias y CYT", 16, false, "Ciencia y Tecnología"); //NOT y CYT
+        user.AltaListaDeReproduccionParticular("Noticias y CYT", 15, false, "Ciencia y Tecnología"); //NOT y CYT
         user.AltaListaDeReproduccionParticular("Solo deportes", 6, false, "Deporte");
         //videos en las listas
         user.AgregarVideoListaDeReproduccion(6, 8, "Sweet child'o mine", "Nostalgia");
@@ -573,36 +573,40 @@ public class UyTubeFrame extends javax.swing.JFrame {
         user.AgregarVideoListaDeReproduccion(5, 5, "Etapa A contramano Liguilla", "De todo un poco");
         user.AgregarVideoListaDeReproduccion(5, 5, "Etapa Don Timoteo Liguilla", "De todo un poco");
         user.AgregarVideoListaDeReproduccion(6, 5, "Inauguración Estadio Peñarol", "De todo un poco");
-        user.AgregarVideoListaDeReproduccion(3, 16, "Ingeniería de Muestra 2017", "Noticias y CYT");
-        user.AgregarVideoListaDeReproduccion(15, 16, "Ventana al futuro Uruguay y déficit de ingenieros", "Noticias y CYT");
+        user.AgregarVideoListaDeReproduccion(3, 15, "Ingeniería de Muestra 2017", "Noticias y CYT");
+        user.AgregarVideoListaDeReproduccion(15, 15, "Ventana al futuro Uruguay y déficit de ingenieros", "Noticias y CYT");
         user.AgregarVideoListaDeReproduccion(6, 6, "Show de goles", "Solo deportes");
         user.AgregarVideoListaDeReproduccion(6, 6, "Inauguración Estadio Peñarol", "Solo deportes");
         SimpleDateFormat dateformat2 = new SimpleDateFormat("dd/M/yyyy HH:mm");
         try {
-            vid.ComentarVideo(16, 7, -1 ,"Fue un gran evento" , dateformat2.parse("05/12/17 14:35"));
+            vid.ComentarVideo(15, 7, -1 ,"Fue un gran evento" , dateformat2.parse("05/12/17 14:35"));
             vid.ComentarVideo(1, 7, 1 ,"Para el próximo aniversario ofrezco vamo’ con los Momo" , dateformat2.parse("05/12/17 14:35"));
             vid.ComentarVideo(4, 7, 2 ,"Yo ofrezco a la banda tb" , dateformat2.parse("05/12/2017 14:35"));
-            vid.ComentarVideo(16, 6, -1 ,"Felicitaciones FING!!!" , dateformat2.parse("05/12/2017 14:35"));
+            vid.ComentarVideo(15, 6, -1 ,"Felicitaciones FING!!!" , dateformat2.parse("05/12/2017 14:35"));
             vid.ComentarVideo(8, 8, -1 ,"Un gusto cubrir eventos como este." , dateformat2.parse("05/12/2017 14:35"));
             vid.ComentarVideo(8, 13, -1 ,"Peñarol peñarol!!!" , dateformat2.parse("05/12/2017 14:35"));
             vid.ComentarVideo(10, 3, -1 ,"Rock and Rolllll" , dateformat2.parse("05/12/2017 14:35"));
             vid.ComentarVideo(10, 4, -1 ,"Anoche explotó!!!" , dateformat2.parse("05/12/2017 14:35"));
             vid.ComentarVideo(10, 1, -1 ,"Me encanta este tema" , dateformat2.parse("05/12/2017 14:35"));
             vid.ComentarVideo(4, 1, 9 ,"Gracias Marce" , dateformat2.parse("05/12/2017 14:35"));
+            JOptionPane.showMessageDialog(null,"Comentarios agregados");
         } catch (ParseException e) {
             e.printStackTrace();
         }        
         // Valoraciones
-        vid.ValorarVideo(13, 7, false);
-        vid.ValorarVideo(13, 8, true);
-        vid.ValorarVideo(13, 11, true);
-        vid.ValorarVideo(13, 1, false);
-        vid.ValorarVideo(13, 7, true);
-        vid.ValorarVideo(13, 7, true);
-        vid.ValorarVideo(13, 13, true);
-        vid.ValorarVideo(13, 1, true);
-        vid.ValorarVideo(13, 4, true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+        vid.ValorarVideo(12, 7, false);
+        vid.ValorarVideo(12, 8, true);
+        vid.ValorarVideo(12, 11, true);
+        vid.ValorarVideo(15, 1, false);
+        vid.ValorarVideo(15, 7, true);
+        vid.ValorarVideo(8, 7, true);
+        vid.ValorarVideo(8, 13, true);
+        vid.ValorarVideo(10, 1, true);
+        vid.ValorarVideo(10, 4, true);
+        JOptionPane.showMessageDialog(null,"Valoraciones agregadas");
+        JOptionPane.showMessageDialog(null,"Datos cargados");
+        ELBOTON.setVisible(false);
+    }//GEN-LAST:event_ELBOTONActionPerformed
 
 
 
@@ -645,13 +649,13 @@ public class UyTubeFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem CrearLista;
+    private javax.swing.JButton ELBOTON;
     private javax.swing.JDesktopPane Escritorio;
     private javax.swing.JMenuItem ModificarLista;
     private javax.swing.JMenuItem RegistrarUsuario;
     private javax.swing.JMenuItem RegistrarVideo;
     private javax.swing.JMenuItem RegistroCategoria;
     private javax.swing.JMenuItem bajaSeguidorMenuItem;
-    private javax.swing.JButton jButton1;
     private javax.swing.JFrame jFrame1;
     private javax.swing.JFrame jFrame2;
     private javax.swing.JFrame jFrame3;

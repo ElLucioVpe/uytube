@@ -71,7 +71,8 @@ public class ControladorVideo implements IControladorVideo {
         }
     }
     
-        public void ModificarVideo(int id, String nuevoNom, String nuevaDur, String nuevaUrl, String nuevaDesc, Date nuevaFpub, boolean nuevaPriv){
+    @Override
+    public void ModificarVideo(int id, String nuevoNom, String nuevaDur, String nuevaUrl, String nuevaDesc, Date nuevaFpub, boolean nuevaPriv, String nuevaCat){
         try {
 
             EntityManager em = emFactory.createEntityManager();
@@ -83,15 +84,16 @@ public class ControladorVideo implements IControladorVideo {
             if(!nuevaDur.isBlank()) v.setDuracion(Float.parseFloat(nuevaDur));
             if(!nuevaUrl.isBlank()) v.setUrl(nuevaUrl);
             if(!nuevaDesc.isBlank()) v.setUrl(nuevaDesc);
-            if(nuevaFpub.after(fecha)){
-                throw new Exception("Fecha Imposible aun no estamos en esa fecha");
+            if(nuevaFpub != null){
+                if(nuevaFpub.after(fecha)) throw new Exception("Fecha Imposible aun no estamos en esa fecha");
+                v.setFechaPublicacion(nuevaFpub);
             }
-            if(nuevaFpub != null) v.setFechaPublicacion(nuevaFpub);
             //Priv cambiar chanc
             Canal cv = em.find(Canal.class, v.getIdUsuario());
             if(cv.getPrivacidad() && !nuevaPriv) throw new Exception("El video no puede ser publico ya que el canal es privado");
             v.setPrivacidad(nuevaPriv);
-
+            if(!nuevaCat.equals("Ninguna")) v.setCategoria(nuevaCat);
+            
             em.merge(v);
             em.getTransaction().commit();
             em.close();
@@ -112,23 +114,23 @@ public class ControladorVideo implements IControladorVideo {
                 if(video == null) throw new Exception("El video no existe");
                 Usuario user = em.find(Usuario.class, user_valoracion);
                 if(user == null) throw new Exception("El usuario no existe");
-
+                
                 Valoracion v = em.find(Valoracion.class, new ValoracionPK(user_valoracion, id_video));
                 if(v == null){ 
                     v = new Valoracion(user_valoracion, id_video, gusta);
                     em.persist(v);
+                    user.agregarValoracion(v);
+                    video.agregarValoracion(v);
                 } else {
                     v.setGustar(gusta);
                     em.merge(v);
                 }
-
-                user.agregarValoracion(v);
-                video.agregarValoracion(v);
-                em.merge(user);
+                
                 em.merge(video);
+                em.merge(user);
                 em.getTransaction().commit();
                 em.close();
-
+                
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
             }

@@ -195,10 +195,7 @@ public class Video implements Serializable {
     }
     
     public void agregarValoracion(Valoracion v) {
-        Valoracion opuesta =  new Valoracion(v.getUsuario().getId(), v.getVideo().getId(), !v.getGustar());
-        if(valoraciones.contains(opuesta)) eliminarValoracion(opuesta);
-        
-        if(!valoraciones.contains(v)) valoraciones.add(v);
+        this.valoraciones.add(v);
     }
     
     public void eliminarValoracion(Valoracion v) {

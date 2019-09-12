@@ -180,11 +180,8 @@ public class Usuario implements Serializable {
         this.suscripciones.remove(c);
     }
     
-    public void agregarValoracion(Valoracion v) {
-        Valoracion opuesta =  new Valoracion(v.getUsuario().getId(), v.getVideo().getId(), !v.getGustar());
-        if(valoraciones.contains(opuesta)) eliminarValoracion(opuesta);
-        
-        if(!valoraciones.contains(v)) valoraciones.add(v);
+    public void agregarValoracion(Valoracion v) {   
+        this.valoraciones.add(v);
     }
     
     public void eliminarValoracion(Valoracion v) {

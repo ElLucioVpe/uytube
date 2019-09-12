@@ -33,14 +33,23 @@ public class Valoracion implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected ValoracionPK valoracionPK;
+    
+    @Column(name = "USER_ID", insertable = false, updatable = false)
+    private Integer user_id;
+    
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "USER_ID", referencedColumnName = "ID", insertable = false, updatable = false)
+    private Usuario usuario;
+    
+    @Column(name = "VIDEO_ID", insertable = false, updatable = false)
+    private Integer video_id;
+    
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "VIDEO_ID", referencedColumnName = "ID", insertable = false, updatable = false)
+    private Video video;
+    
     @Column(name = "GUSTAR")
     private Boolean gustar;
-    @JoinColumn(name = "USER_ID", referencedColumnName = "ID", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Usuario usuario;
-    @JoinColumn(name = "VIDEO_ID", referencedColumnName = "ID", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Video video;
 
     public Valoracion() {
     }
@@ -51,6 +60,8 @@ public class Valoracion implements Serializable {
 
     public Valoracion(int userId, int videoId, boolean gustar) {
         this.valoracionPK = new ValoracionPK(userId, videoId);
+        this.user_id = userId;
+        this.video_id = videoId;
         this.gustar = gustar;
     }
 
