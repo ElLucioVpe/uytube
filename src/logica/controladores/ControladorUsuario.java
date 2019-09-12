@@ -422,17 +422,13 @@ public class ControladorUsuario implements IControladorUsuario {
     @Override
     public List<String> ListarSiguiendo(int userId){
         List<String> seguidores = null;
-        /*
-        try {
+        /*try {
             EntityManager em = emFactory.createEntityManager();
-            //List users = em.createQuery("SELECT nick FROM Usuario u WHERE id = :id").getResultList();
-            TypedQuery<Usuario> query = em.createQuery("SELECT * FROM Usuario u WHERE u.id = :id", Usuario.class);
-            Usuario u = query.setParameter("id", id).getSingleResult();
+            Usuario u = em.find(Usuario.class, userId)
             dt = new UsuarioDt(u);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
-        }
-*/
+        }*/
         seguidores.add("prueba");
         return seguidores;
     }

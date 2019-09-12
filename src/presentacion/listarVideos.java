@@ -128,7 +128,7 @@ public class listarVideos extends javax.swing.JInternalFrame {
         //DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         int i = table.getSelectedRow();
         Object videoName = table.getModel().getValueAt(i, 1);
-        comentariosTest frmListarVideo = new comentariosTest (v,u,videoName.toString());
+        consultarVideo frmListarVideo = new consultarVideo (v,u,videoName.toString());
         Escritorio.add(frmListarVideo);
         Escritorio.moveToFront(frmListarVideo);
         frmListarVideo.setSize(Escritorio.getWidth(),Escritorio.getHeight());

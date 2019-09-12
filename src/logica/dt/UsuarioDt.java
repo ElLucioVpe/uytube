@@ -55,9 +55,10 @@ public class UsuarioDt {
         this.nombre = u.getNombre();
         this.apellido = u.getApellido();
         this.mail = u.getMail();
+        this.imagen = u.getImagen();
         this.fechanac = u.getFechanac();
         this.valoraciones = u.getValoraciones();
-        this.suscripciones = new ArrayList<>();
+        this.suscripciones = u.getSuscripciones();
         this.canal = u.getCanal();
     }
 
@@ -150,17 +151,5 @@ public class UsuarioDt {
     
     public void eliminarSuscripcion(Canal c) {
         this.suscripciones.remove(c);
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public String toString() {
-        return "logica.Usuario[ id=" + id + " ]";
     }
 }

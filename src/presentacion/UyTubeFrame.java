@@ -242,10 +242,14 @@ public class UyTubeFrame extends javax.swing.JFrame {
             Escritorio.moveToFront(f);
             f.setSize(Escritorio.getWidth(),Escritorio.getHeight());
             f.setLocation(0,0);
-
         }catch(Exception ex){
             ex.printStackTrace();
         }
+    }
+    
+    protected void cambiarSize(int w, int h) {
+        this.setSize(w+10, h+50);
+        Escritorio.setSize(w, h);
     }
 
     private void RegistrarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarUsuarioActionPerformed

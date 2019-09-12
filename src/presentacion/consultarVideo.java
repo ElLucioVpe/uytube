@@ -17,18 +17,17 @@ import logica.dt.valoracionDt;
  *
  * @author Esteban
  */
-public class comentariosTest extends javax.swing.JInternalFrame {
+public class consultarVideo extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form comentariosTest
+     * Creates new form consultarVideo
      */
     IControladorVideo cv;
     IControladorUsuario cu;
     
-    public comentariosTest(IControladorVideo v, IControladorUsuario u, String nomVideo) {
+    public consultarVideo(IControladorVideo v, IControladorUsuario u, String nomVideo) {
         initComponents();
-//        setVisible(true);
-                this.setVisible(true);
+        this.setVisible(true);
 
         cv = v;
         cu= u;

@@ -5,15 +5,22 @@
  */
 package presentacion;
 
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import logica.Canal;
+import logica.Usuario;
 import logica.controladores.IControladorUsuario;
 import logica.dt.UsuarioDt;
 import logica.dt.VideoDt;
-import logica.dt.VideoListaDt;
 
 /**
  *
@@ -25,35 +32,52 @@ public class listarUsuario extends javax.swing.JInternalFrame {
      * Creates new form listarUsuario
      */
     String usuario;
+    UyTubeFrame p;
     IControladorUsuario u;
     UsuarioDt dt;
     List<String> listas;
-    List<String> seguidores;
+    Collection<Usuario> seguidores;
     Collection<Canal> siguiendo;
     List<VideoDt> videos;
     Canal canal;
 
-    public listarUsuario(IControladorUsuario _user, String _usuario) {
+    public listarUsuario(IControladorUsuario _user, UyTubeFrame padre, String _usuario) {
         initComponents();
         this.setVisible(true);
+        ConsultarL.setEnabled(false);
+        ConsultarV.setEnabled(false);
         u = _user;
+        p = padre;
         usuario = _usuario;
         int id = u.obtenerIdUsuario(usuario);
         UsuarioDt dt = u.ConsultarUsuario(id);
         listas = u.obtenerListasUsuario(id);
         videos = u.listarVideosDeUsuario(_usuario);
         siguiendo = dt.getSuscripciones();
-        seguidores = u.ListarSeguidores(id);
         canal = dt.getCanal();
+        seguidores = canal.getSeguidores();
         
         lblNickname.setText(dt.getNickname()); 
         lblNombre.setText(dt.getNombre()); 
-        lblApellido.setText(dt.getApellido()); 
+        lblApellido.setText(dt.getApellido());
         lblFechaNac.setText(dt.getFechanac().toString()); 
         lblMail.setText(dt.getMail());
         
+        if(dt.getImagen() == null) ImagenLabel.setText("Este usuario \nno tiene imagen");
+        else {
+            try {
+                BufferedImage img = ImageIO.read(new File("data/imagenes/" + dt.getImagen()));
+                ImageIcon icon = new ImageIcon(resize(img, 80, 100));
+                ImagenLabel.setIcon(icon);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        
         lblNombreCanal.setText(canal.getNombre());
-        lblPrivacidadCanal.setText(canal.getPrivacidad().toString());
+        String privacidad = "Publico";
+        if(canal.getPrivacidad()) privacidad = "Privado";
+        lblPrivacidadCanal.setText(privacidad);
         
         DefaultListModel<String> model = new DefaultListModel<>();      
 
@@ -73,27 +97,37 @@ public class listarUsuario extends javax.swing.JInternalFrame {
         }
         
         
-        if(siguiendo.size() != 0) {
+        if(!siguiendo.isEmpty()) {
             model = new DefaultListModel<>();
-            Iterator it = siguiendo.iterator();
-            for(int i = 0; i < siguiendo.size(); i++) {
-                while(it.hasNext()) {
-                    Canal canal = (Canal) it.next();
-                    model.addElement(canal.getNombre());
-                }
+            Iterator<Canal> itc = siguiendo.iterator();
+            
+            while(itc.hasNext()) {
+                Canal cn = itc.next();
+                model.addElement(cn.getUsuario().getNickname());
             }
             listSiguiendo.setModel(model);
         }
         
-        if(seguidores != null) {
+        if(!seguidores.isEmpty()) {
             model = new DefaultListModel<>();
-            for(int i = 0; i < seguidores.size(); i++) {
-                model.addElement(seguidores.get(i));
+            Iterator<Usuario> it = seguidores.iterator();
+            while(it.hasNext()) {
+                Usuario us = it.next();
+                model.addElement(us.getNickname());
             }
             listSeguidores.setModel(model);
         }
     }
 
+    private static BufferedImage resize(BufferedImage img, int height, int width) {
+        Image tmp = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        BufferedImage resized = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2d = resized.createGraphics();
+        g2d.drawImage(tmp, 0, 0, null);
+        g2d.dispose();
+        return resized;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -141,7 +175,11 @@ public class listarUsuario extends javax.swing.JInternalFrame {
         jLabel28 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         listSiguiendo = new javax.swing.JList<>();
+        ImagenLabel = new javax.swing.JLabel();
+        ConsultarV = new javax.swing.JButton();
+        ConsultarL = new javax.swing.JButton();
 
+        setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
@@ -156,11 +194,11 @@ public class listarUsuario extends javax.swing.JInternalFrame {
 
         lblApellido.setText("lblApellido");
 
-        jLabel5.setText("Fecha nac.");
+        jLabel5.setText("Fecha nac.:");
 
         lblFechaNac.setText("lblFechaNac");
 
-        jLabel7.setText("Mail");
+        jLabel7.setText("Correo electrónico:");
 
         lblMail.setText("lblMail");
 
@@ -254,7 +292,7 @@ public class listarUsuario extends javax.swing.JInternalFrame {
 
         lblNombreCanal.setText("lblNombreCanal");
 
-        jLabel23.setText("Privacidad");
+        jLabel23.setText("Privacidad:");
 
         lblPrivacidadCanal.setText("lblPrivacidadCanal");
 
@@ -262,12 +300,22 @@ public class listarUsuario extends javax.swing.JInternalFrame {
         jLabel25.setText("Canal");
         jLabel25.setToolTipText("");
 
+        listListas.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                listListasValueChanged(evt);
+            }
+        });
         jScrollPane1.setViewportView(listListas);
 
         jLabel26.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel26.setText("Videos");
         jLabel26.setToolTipText("");
 
+        listVideos.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                listVideosValueChanged(evt);
+            }
+        });
         jScrollPane2.setViewportView(listVideos);
 
         jLabel27.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -282,6 +330,24 @@ public class listarUsuario extends javax.swing.JInternalFrame {
 
         jScrollPane4.setViewportView(listSiguiendo);
 
+        ImagenLabel.setPreferredSize(new java.awt.Dimension(100, 80));
+
+        ConsultarV.setText("Consultar Video");
+        ConsultarV.setEnabled(false);
+        ConsultarV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ConsultarVActionPerformed(evt);
+            }
+        });
+
+        ConsultarL.setText("Consultar Lista");
+        ConsultarL.setEnabled(false);
+        ConsultarL.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ConsultarLActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -290,54 +356,69 @@ public class listarUsuario extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblNickname, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel21)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(lblNombreCanal))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel23)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(lblPrivacidadCanal)))
+                                        .addGap(60, 60, 60)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblNombre))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                    .addComponent(jLabel26, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel27, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
+                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                    .addComponent(jLabel28, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)))
+                            .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblApellido))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblFechaNac))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblMail))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel21)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblNombreCanal))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel23)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblPrivacidadCanal))
-                            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(jLabel26, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel27, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(jLabel28, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE))
+                                .addComponent(ImagenLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(lblApellido))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel5)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(lblFechaNac))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel7)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(lblMail))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(lblNombre)))))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(51, 51, 51)
+                .addComponent(ConsultarL, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(101, 101, 101)
+                .addComponent(ConsultarV, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 401, Short.MAX_VALUE)
+                    .addGap(0, 410, Short.MAX_VALUE)
                     .addComponent(jInternalFrame1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 401, Short.MAX_VALUE)))
+                    .addGap(0, 411, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -345,22 +426,25 @@ public class listarUsuario extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(lblNickname, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(lblNombre))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(ImagenLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(lblNombre))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(lblApellido))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(lblFechaNac))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(lblMail))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(lblApellido))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(lblFechaNac))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(lblMail))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -377,29 +461,55 @@ public class listarUsuario extends javax.swing.JInternalFrame {
                             .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 332, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2)
-                            .addComponent(jScrollPane3)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
                             .addComponent(jScrollPane4))))
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(ConsultarV)
+                    .addComponent(ConsultarL))
+                .addGap(0, 26, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 305, Short.MAX_VALUE)
+                    .addGap(0, 263, Short.MAX_VALUE)
                     .addComponent(jInternalFrame1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 306, Short.MAX_VALUE)))
+                    .addGap(0, 262, Short.MAX_VALUE)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void ConsultarVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultarVActionPerformed
+        p.AgregarInternalFrame(new consultarVideo(p.vid, u, listVideos.getSelectedValue()));
+        this.dispose();
+    }//GEN-LAST:event_ConsultarVActionPerformed
+
+    private void ConsultarLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultarLActionPerformed
+        p.AgregarInternalFrame(new consultarListaDR(u, p.vid, p, listListas.getSelectedValue(), dt.getId()));
+        this.dispose();
+    }//GEN-LAST:event_ConsultarLActionPerformed
+
+    private void listListasValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listListasValueChanged
+        ConsultarL.setEnabled(true);
+    }//GEN-LAST:event_listListasValueChanged
+
+    private void listVideosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listVideosValueChanged
+        ConsultarV.setEnabled(true);
+    }//GEN-LAST:event_listVideosValueChanged
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton ConsultarL;
+    private javax.swing.JButton ConsultarV;
+    private javax.swing.JLabel ImagenLabel;
     private javax.swing.Box.Filler filler1;
     private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JLabel jLabel1;

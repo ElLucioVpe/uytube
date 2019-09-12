@@ -8,6 +8,7 @@ package presentacion;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JDesktopPane;
+import javax.swing.JInternalFrame;
 import logica.controladores.IControladorUsuario;
 import logica.dt.UsuarioDt;
 
@@ -33,7 +34,6 @@ public class listarUsuarios extends javax.swing.JInternalFrame {
         List<UsuarioDt> list = u.ListarUsuarios();
         for(int i = 0; i < list.size(); i++) {
             model.addElement((String)list.get(i).getNickname());
-            //model.addRow(new Object[]{list.get(i).getNickname(), list.get(i).getNombre(), list.get(i).getApellido(), list.get(i).getFechanac(), list.get(i).getImagen(), list.get(i).getMail()});
         }
         listUsuarios.setModel(model);
     }
@@ -54,6 +54,7 @@ public class listarUsuarios extends javax.swing.JInternalFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         listUsuarios = new javax.swing.JList<>();
         btnListar = new javax.swing.JButton();
+        btnModificar = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -101,6 +102,14 @@ public class listarUsuarios extends javax.swing.JInternalFrame {
             }
         });
 
+        btnModificar.setText("Modificar");
+        btnModificar.setEnabled(false);
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -109,7 +118,9 @@ public class listarUsuarios extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnListar, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnListar, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -117,35 +128,43 @@ public class listarUsuarios extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnListar)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnListar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnModificar))
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 11, Short.MAX_VALUE))
+                .addGap(0, 15, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void listUsuariosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listUsuariosValueChanged
-        // TODO add your handling code here:
         this.MostrarSeleccion(true);
     }//GEN-LAST:event_listUsuariosValueChanged
 
     private void btnListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarActionPerformed
-        // TODO add your handling code here:
         String lista = listUsuarios.getSelectedValue();
-        p.AgregarInternalFrame(new listarUsuario(u, lista));
-
+        JInternalFrame f = new listarUsuario(u, p, lista);
+        p.cambiarSize(f.getWidth(), f.getHeight());
+        p.AgregarInternalFrame(f);
         this.dispose();
-
     }//GEN-LAST:event_btnListarActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        p.AgregarInternalFrame(new modificarUsuario(u, listUsuarios.getSelectedValue()));
+        this.dispose();
+    }//GEN-LAST:event_btnModificarActionPerformed
 
     private void MostrarSeleccion(boolean x) {
         btnListar.setEnabled(x);
+        btnModificar.setEnabled(x);
     }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnListar;
+    private javax.swing.JButton btnModificar;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
