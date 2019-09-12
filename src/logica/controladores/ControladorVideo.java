@@ -49,11 +49,9 @@ public class ControladorVideo implements IControladorVideo {
             if(u == null) throw new Exception("El usuario no existe");
             Canal c =  u.getCanal();
             if(c.obtenerVideo(nombre) != null) throw new Exception("El video ya esta registrado en ese user");
+            
             java.util.Date fecha = new Date();
-            //DateFormat dtf = new SimpleDateFormat("yyyy/MM/dd");
-            //System.out.println(dtf.format(fecha));
-            //new SimpleDateFormat("dd/MM/yyyy").parse(dtf.format(fecha))
-            Video v = new Video(nombre, Integer.parseInt(duracion), url, desc, fecha,true,user);
+            Video v = new Video(nombre, Float.parseFloat(duracion), url, desc, fecha,true,user);
             
             if(!categoria.equals("Ninguna")){
                 Categoria cat = em.find(Categoria.class, categoria);
@@ -82,7 +80,7 @@ public class ControladorVideo implements IControladorVideo {
 
             Video v = em.find(Video.class, id);
             if(!nuevoNom.isBlank()) v.setNombre(nuevoNom);
-            if(!nuevaDur.isBlank()) v.setDuracion( Integer.parseInt(nuevaDur));
+            if(!nuevaDur.isBlank()) v.setDuracion(Float.parseFloat(nuevaDur));
             if(!nuevaUrl.isBlank()) v.setUrl(nuevaUrl);
             if(!nuevaDesc.isBlank()) v.setUrl(nuevaDesc);
             if(nuevaFpub.after(fecha)){
@@ -90,6 +88,8 @@ public class ControladorVideo implements IControladorVideo {
             }
             if(nuevaFpub != null) v.setFechaPublicacion(nuevaFpub);
             //Priv cambiar chanc
+            Canal cv = em.find(Canal.class, v.getIdUsuario());
+            if(cv.getPrivacidad() && !nuevaPriv) throw new Exception("El video no puede ser publico ya que el canal es privado");
             v.setPrivacidad(nuevaPriv);
 
             em.merge(v);
@@ -214,24 +214,24 @@ public class ControladorVideo implements IControladorVideo {
             }
         }
         
-        public List<valoracionDt>  obtenerValoracionVideo(String nomvideo){
-              EntityManager em = emFactory.createEntityManager();
-           TypedQuery<Video> vid = em.createNamedQuery("Video.findByNombre",Video.class).setParameter("nombre", nomvideo);
-           Video video = vid.getSingleResult();
-           List<valoracionDt> list = new ArrayList<valoracionDt>();
-         try {
-           if(video == null) throw new Exception("El video no existe");
-            List<Valoracion> vals = em.createQuery("Valoracion.findByVideoId", Valoracion.class).setParameter("videoId", video.getId()).getResultList();
-            if(vals == null) throw new Exception("El video no existe");
-            for(int i=0;i < vals.size(); i++) {
-                list.add(new valoracionDt(vals.get(i)));
-            }
-            em.close();
+        public List<valoracionDt> obtenerValoracionVideo(String nomvideo){
+            EntityManager em = emFactory.createEntityManager();
+            TypedQuery<Video> vid = em.createNamedQuery("Video.findByNombre",Video.class).setParameter("nombre", nomvideo);
+            Video video = vid.getSingleResult();
+            List<valoracionDt> list = new ArrayList<valoracionDt>();
+            try {
+              if(video == null) throw new Exception("El video no existe");
+               List<Valoracion> vals = em.createQuery("Valoracion.findByVideoId", Valoracion.class).setParameter("videoId", video.getId()).getResultList();
+               if(vals == null) throw new Exception("El video no existe");
+               for(int i=0;i < vals.size(); i++) {
+                   list.add(new valoracionDt(vals.get(i)));
+               }
+               em.close();
 
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+           } catch (Exception e) {
+               JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+           }
+           return list;
         }
-        return list;
-         }
         
 }

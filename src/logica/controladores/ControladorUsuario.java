@@ -55,19 +55,6 @@ public class ControladorUsuario implements IControladorUsuario {
             if(!img.isEmpty()) u.setImagen(img);
 
             em.persist(u);
-            //Creacion de listas de reproduccion por defecto existentes
-            List listasD = em.createQuery("select l from ListaDeReproduccion_PorDefecto l").getResultList();
-            if (!listasD.isEmpty()) {
-                Iterator it = listasD.iterator();
-                while(it.hasNext()) {
-                    ListaDeReproduccion_PorDefecto ld = (ListaDeReproduccion_PorDefecto) it.next();
-                    ListaDeReproduccion l = new ListaDeReproduccion(ld.getNombre(), u, true);
-                    em.persist(l);
-                    u.addLista(l);
-                }
-                em.merge(u);
-            }
-            //
             em.getTransaction().commit();
             em.close();
 
@@ -95,8 +82,23 @@ public class ControladorUsuario implements IControladorUsuario {
             u.setCanal(c);
             em.persist(c);
             em.merge(u);
+            //Creacion de listas de reproduccion por defecto existentes
+            List listasD = em.createQuery("select l from ListaDeReproduccion_PorDefecto l").getResultList();
+            if (!listasD.isEmpty()) {
+                Iterator it = listasD.iterator();
+                while(it.hasNext()) {
+                    ListaDeReproduccion_PorDefecto ld = (ListaDeReproduccion_PorDefecto) it.next();
+                    ListaDeReproduccion l = new ListaDeReproduccion(ld.getNombre(), u, true);
+                    em.persist(l);
+                    c.addLista(l);
+                }
+                em.merge(c);
+            }
+            //
             em.getTransaction().commit();
             em.close();
+            
+            JOptionPane.showMessageDialog(null,"El usuario se registro con exito");
         } catch (Exception e) {
             EliminarUsuario(user_id); //Elimino ya que no se completo correctamente todo el proceso
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
@@ -142,12 +144,12 @@ public class ControladorUsuario implements IControladorUsuario {
       List<VideoDt> list = new ArrayList<VideoDt>();
         try {
             int idUser= obtenerIdUsuario(usernick);
-             EntityManager em = emFactory.createEntityManager();
-           TypedQuery<Video> query1 = em.createQuery("SELECT v FROM Video v where v.canal_user_id= :idUser", Video.class);
-           List<Video> vid = query1.setParameter("idUser", idUser).getResultList();
+            EntityManager em = emFactory.createEntityManager();
+            TypedQuery<Video> query1 = em.createQuery("SELECT v FROM Video v where v.canal_user_id= :idUser", Video.class);
+            List<Video> vid = query1.setParameter("idUser", idUser).getResultList();
 
 
-           for(int i=0;i < vid.size(); i++) {
+            for(int i=0;i < vid.size(); i++) {
                 list.add(new VideoDt(vid.get(i)));
             }
             em.close();
@@ -180,9 +182,6 @@ public class ControladorUsuario implements IControladorUsuario {
 
             //probablemente devuelve una lista de los nicks de los usuarios existentes
             //esa lista luego es mostrada en su respectivo frameS
-
-            
-
             EntityManager em = emFactory.createEntityManager();
             List<Usuario> users = em.createQuery("SELECT u FROM Usuario u", Usuario.class).getResultList();
             for(int i=0;i < users.size(); i++) {
@@ -224,15 +223,15 @@ public class ControladorUsuario implements IControladorUsuario {
                 throw new Exception("El nombre de la lista ya existe");
 
             em.persist(new ListaDeReproduccion_PorDefecto(nombre));
-            List users = em.createQuery("SELECT u FROM Usuario u").getResultList();
+            List users = em.createQuery("SELECT c FROM Canal c").getResultList();
 
             Iterator it = users.iterator();
             while(it.hasNext()) {
-                Usuario u = (Usuario) it.next();
-                ListaDeReproduccion l = new ListaDeReproduccion(nombre, u, true);
+                Canal c = (Canal) it.next();
+                ListaDeReproduccion l = new ListaDeReproduccion(nombre, c.getUsuario(), true);
                 em.persist(l);
-                u.addLista(l);
-                em.merge(u);
+                c.addLista(l);
+                em.merge(c);
             }
             em.getTransaction().commit();
             em.close();
@@ -251,12 +250,14 @@ public class ControladorUsuario implements IControladorUsuario {
             EntityManager em = emFactory.createEntityManager();
             em.getTransaction().begin();
 
-            Usuario propietario = em.find(Usuario.class, id_propietario);
-
+            Canal propietario = em.find(Canal.class, id_propietario);
+            
+            
             if(propietario == null) throw new Exception("El usuario ingresado no existe");
             if(propietario.existeLista(nombre)) throw new Exception("El nombre de la lista ya existe");
-
-            ListaDeReproduccion l = new ListaDeReproduccion(nombre, propietario, privacidad);
+            if(propietario.getPrivacidad() && !privacidad) throw new Exception("La lista no puede ser publica ya que el canal es privado");
+            
+            ListaDeReproduccion l = new ListaDeReproduccion(nombre, propietario.getUsuario(), privacidad);
             if(!categoria.equals("Ninguna")) l.setCategoria(em.find(Categoria.class, categoria));
 
             em.persist(l);
@@ -278,11 +279,12 @@ public class ControladorUsuario implements IControladorUsuario {
             EntityManager em = emFactory.createEntityManager();
             em.getTransaction().begin();
 
-            Usuario propietario = em.find(Usuario.class, usuario);
+            Canal propietario = em.find(Canal.class, usuario);
 
             if(propietario == null) throw new Exception("El usuario ingresado no existe");
             if(!propietario.existeLista(lista)) throw new Exception("La lista no existe");
-
+            if(propietario.getPrivacidad() && !nuevaPri) throw new Exception("La lista no puede ser publica ya que el canal es privado");
+            
             ListaDeReproduccion l = propietario.getLista(lista);
             if(!nuevaCat.equals("Ninguna")) l.setCategoria(em.find(Categoria.class, nuevaCat));
             l.setPrivada(nuevaPri); //Se supone que si no se va a cambiar nuevaPri tiene el valor anterior
@@ -307,17 +309,17 @@ public class ControladorUsuario implements IControladorUsuario {
             em.getTransaction().begin();
 
             Usuario user_video = em.find(Usuario.class, usuarioVideo);
-            Usuario user_lista = em.find(Usuario.class, usuarioLista);
+            Canal canal_lista = em.find(Canal.class, usuarioLista);
             if(user_video == null) throw new Exception("El usuario propietario del video no existe");
-            if(user_lista == null) throw new Exception("El usuario propietario de la lista no existe");
+            if(canal_lista == null) throw new Exception("El usuario propietario de la lista no existe");
 
             Canal canal_video = user_video.getCanal();
             Video v = canal_video.obtenerVideo(video);
             if(v == null) throw new Exception("El video no existe");
 
-            user_lista.agregarVideoLista(v, lista);
+            canal_lista.agregarVideoLista(v, lista);
             
-            em.merge(user_lista);
+            em.merge(canal_lista);
             em.getTransaction().commit();
             em.close();
 
@@ -334,12 +336,12 @@ public class ControladorUsuario implements IControladorUsuario {
             EntityManager em = emFactory.createEntityManager();
             em.getTransaction().begin();
 
-            Usuario user_lista = em.find(Usuario.class, usuariolista);
-            if(user_lista == null) throw new Exception("El usuario propietario de la lista no existe");
+            Canal canal_lista = em.find(Canal.class, usuariolista);
+            if(canal_lista == null) throw new Exception("El usuario propietario de la lista no existe");
 
-            user_lista.quitarVideoLista(video, lista);
+            canal_lista.quitarVideoLista(video, lista);
 
-            em.merge(user_lista);
+            em.merge(canal_lista);
             em.getTransaction().commit();
             em.close();
 
@@ -381,11 +383,9 @@ public class ControladorUsuario implements IControladorUsuario {
             em.getTransaction().begin();
 
             Canal c = em.find(Canal.class, obtenerIdUsuario(seguido));
-            if(c == null)
-                throw new Exception("Ese usuario al que quiere seguir no existe o no tiene canal");
+            if(c == null) throw new Exception("Ese usuario al que quiere seguir no existe o no tiene canal");
             Usuario uSeguidor = em.find(Usuario.class, obtenerIdUsuario(seguidor));
-            if(uSeguidor == null)
-                throw new Exception("El usuario seguidor no existe");
+            if(uSeguidor == null) throw new Exception("El usuario seguidor no existe");
 
             c.agregarSeguidor(uSeguidor);
             uSeguidor.agregarSuscripcion(c);
@@ -546,9 +546,9 @@ public class ControladorUsuario implements IControladorUsuario {
             EntityManager em = emFactory.createEntityManager();
             em.getTransaction().begin();
 
-            Usuario u = em.find(Usuario.class, id);
-            if(u == null) throw new Exception("El usuario no existe");
-            Collection<ListaDeReproduccion> aux = u.getListas();
+            Canal c = em.find(Canal.class, id);
+            if(c == null) throw new Exception("El usuario no existe");
+            Collection<ListaDeReproduccion> aux = c.getListas();
 
             Iterator<ListaDeReproduccion> it = aux.iterator();
             while(it.hasNext()) {
@@ -570,9 +570,9 @@ public class ControladorUsuario implements IControladorUsuario {
             EntityManager em = emFactory.createEntityManager();
             em.getTransaction().begin();
 
-            Usuario u = em.find(Usuario.class, id);
-            if(u == null) throw new Exception("El usuario no existe");
-            Collection<Video> lvideo = u.getLista(lista).getVideos();
+            Canal c = em.find(Canal.class, id);
+            if(c == null) throw new Exception("El usuario no existe");
+            Collection<Video> lvideo = c.getLista(lista).getVideos();
 
             Iterator it = lvideo.iterator();
             while(it.hasNext()) {
@@ -589,15 +589,37 @@ public class ControladorUsuario implements IControladorUsuario {
     }
     
     @Override
+    public String obtenerTipoLista(int propietario, String lista) {
+        String tipo = "Privada";
+        try {
+            EntityManager em = emFactory.createEntityManager();
+            em.getTransaction().begin();
+
+            Canal c = em.find(Canal.class, propietario);
+            if(c == null) throw new Exception("El usuario no existe");
+            ListaDeReproduccion l = c.getLista(lista);
+            if(l == null) throw new Exception("El usuario no tiene ninguna lista con ese nombre");
+            
+            if(em.find(ListaDeReproduccion_PorDefecto.class, lista) != null) tipo = "Por Defecto";
+            
+            em.getTransaction().commit();
+            em.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+        }
+        return tipo;
+    }
+    
+    @Override
     public ListaDeReproduccionDt obtenerListaDt(int id, String lista) {
         ListaDeReproduccionDt ldt = null;
         try {
             EntityManager em = emFactory.createEntityManager();
             em.getTransaction().begin();
 
-            Usuario u = em.find(Usuario.class, id);
-            if(u == null) throw new Exception("El usuario no existe");
-            ListaDeReproduccion l = u.getLista(lista);
+            Canal c = em.find(Canal.class, id);
+            if(c == null) throw new Exception("El usuario no existe");
+            ListaDeReproduccion l = c.getLista(lista);
             if(l == null) throw new Exception("El usuario no tiene ninguna lista con ese nombre");
             
             //Reviso su tipo

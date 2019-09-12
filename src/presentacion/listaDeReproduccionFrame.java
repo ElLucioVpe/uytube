@@ -8,6 +8,7 @@ package presentacion;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import logica.controladores.IControladorUsuario;
 import logica.controladores.IControladorVideo;
 
@@ -227,9 +228,15 @@ public class listaDeReproduccionFrame extends javax.swing.JInternalFrame {
 
     private void UpdateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateButtonActionPerformed
         String lista = jList1.getSelectedValue();
-
-        p.AgregarInternalFrame(new modificarListaDR(u, lista, id_user));
-        this.dispose();
+        try {
+            if(u.obtenerTipoLista(id_user, lista).equals("Por Defecto")) 
+                throw new Exception("No se puede modificar una lista por defecto");
+            
+            p.AgregarInternalFrame(new modificarListaDR(u, lista, id_user));
+            this.dispose();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+        }
     }//GEN-LAST:event_UpdateButtonActionPerformed
 
     private void ConsultarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultarButtonActionPerformed

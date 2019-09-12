@@ -59,12 +59,12 @@ public class Video implements Serializable {
     private String nombre;
     @Basic(optional = false)
     @Column(name = "DURACION")
-    private int duracion;
+    private float duracion;
     @Basic(optional = false)
     @Column(name = "URL")
     private String url;
     @Column(name = "DESCRIPCION")
-    private String descripcion;
+    private String descripcion; //en minutos
     @Basic(optional = false)
     @Column(name = "FECHA_PUBLICACION")
     @Temporal(TemporalType.DATE)
@@ -95,7 +95,7 @@ public class Video implements Serializable {
         this.id = id;
     }
 
-    public Video(String nombre, int duracion, String url,String Desc, Date fechaPublicacion, Boolean privacidad, int user) {
+    public Video(String nombre, float duracion, String url,String Desc, Date fechaPublicacion, Boolean privacidad, int user) {
         //this.id = id;
         this.nombre = nombre;
         this.duracion = duracion;
@@ -122,11 +122,11 @@ public class Video implements Serializable {
         this.nombre = nombre;
     }
 
-    public int getDuracion() {
+    public float getDuracion() {
         return duracion;
     }
 
-    public void setDuracion(int duracion) {
+    public void setDuracion(float duracion) {
         this.duracion = duracion;
     }
 

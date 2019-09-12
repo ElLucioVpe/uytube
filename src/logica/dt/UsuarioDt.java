@@ -56,7 +56,6 @@ public class UsuarioDt {
         this.apellido = u.getApellido();
         this.mail = u.getMail();
         this.fechanac = u.getFechanac();
-        this.listas = u.getListas();
         this.valoraciones = u.getValoraciones();
         this.suscripciones = new ArrayList<>();
         this.canal = u.getCanal();
@@ -128,14 +127,6 @@ public class UsuarioDt {
 
     public void setCanal(Canal canal) {
         this.canal = canal;
-    }
-
-    public Collection<ListaDeReproduccion> getListas() {
-        return listas;
-    }
-
-    public void setListas(Collection<ListaDeReproduccion> listas) {
-        this.listas = listas;
     }
 
     public void addLista(ListaDeReproduccion nuevalista) {

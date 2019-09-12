@@ -9,7 +9,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.Iterator;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -80,9 +79,6 @@ public class Usuario implements Serializable {
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "usuario")
     private Canal canal;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private Collection<ListaDeReproduccion> listas;
-
     @ManyToMany(cascade=CascadeType.ALL)
     @JoinTable(name="Canal_Usuario",  joinColumns={@JoinColumn(referencedColumnName="ID")}
     , inverseJoinColumns={@JoinColumn(referencedColumnName="USER_ID")})
@@ -104,7 +100,6 @@ public class Usuario implements Serializable {
         this.apellido = apellido;
         this.mail = mail;
         this.fechanac = fechanac;
-        this.listas = new ArrayList<>();
         this.valoraciones = new ArrayList<>();
         this.suscripciones = new ArrayList<>();
     }
@@ -176,29 +171,6 @@ public class Usuario implements Serializable {
     public void setCanal(Canal canal) {
         this.canal = canal;
     }
-
-    public Collection<ListaDeReproduccion> getListas() {
-        return listas;
-    }
-
-    public void setListas(Collection<ListaDeReproduccion> listas) {
-        this.listas = listas;
-    }
-
-    public void addLista(ListaDeReproduccion nuevalista) {
-        this.listas.add(nuevalista);
-    }
-
-    public boolean existeLista(String nom_lista) {
-        boolean existe = false;
-        Iterator<ListaDeReproduccion> it = listas.iterator();
-
-        while(it.hasNext()){
-            if(it.next().getNombre().equals(nom_lista)) existe = true;
-        }
-
-        return existe;
-    }
     
     public void agregarSuscripcion(Canal c) {
         this.suscripciones.add(c);
@@ -219,48 +191,6 @@ public class Usuario implements Serializable {
         this.valoraciones.remove(v);
     }
     
-    public void agregarVideoLista(Video v, String nomlista) {
-        Iterator it = listas.iterator();
-        boolean seguir = true;
-        
-        while(it.hasNext() && seguir) {
-            ListaDeReproduccion l = (ListaDeReproduccion) it.next();
-            if(l.getNombre().equals(nomlista)) {
-                l.agregarVideo(v);
-                seguir = false;
-            }
-        }
-    }
-    
-    public void quitarVideoLista(int video, String nomlista) {
-        Iterator it = listas.iterator();
-        boolean seguir = true;
-        
-        while(it.hasNext() && seguir) {
-            ListaDeReproduccion l = (ListaDeReproduccion) it.next();
-            if(l.getNombre().equals(nomlista)) {
-                l.quitarVideo(video);
-                seguir = false;
-            } 
-        }
-    }
-    
-    public ListaDeReproduccion getLista(String nom) {
-        Iterator it = listas.iterator();
-        boolean seguir = true;
-        ListaDeReproduccion retorno = null;
-        
-        while(it.hasNext() && seguir) {
-            ListaDeReproduccion l = (ListaDeReproduccion) it.next();
-            if(l.getNombre().equals(nom)) {
-                retorno = l;
-                seguir = false;
-            } 
-        }
-        return retorno;
-    }
-    
-    ////
     @Override
     public int hashCode() {
         int hash = 0;

@@ -5,26 +5,17 @@
  */
 package logica.controladores;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.NamedQuery;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 import logica.Categoria;
 import logica.ListaDeReproduccion;
-import logica.Usuario;
 import logica.Video;
 import logica.dt.CategoriaDt;
-import logica.controladores.IControladorCategoria;
-import logica.dt.VideoDt;
 
 
 /**
@@ -56,10 +47,10 @@ public class ControladorCategoria implements IControladorCategoria {
             
             EntityManager em = emFactory.createEntityManager();
             em.getTransaction().begin();
-
+            
+            if(em.find(Categoria.class, nombre) != null) throw new Exception("La categoria ya existe");
             Categoria c = new Categoria(nombre);
             em.persist(c);
-            em.merge(c);
             em.getTransaction().commit();
             em.close();
             
@@ -122,7 +113,6 @@ public class ControladorCategoria implements IControladorCategoria {
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
         }
         return query;
-         
      }
      
      @Override

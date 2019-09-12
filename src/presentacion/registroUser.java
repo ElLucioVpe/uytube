@@ -267,7 +267,6 @@ JFileChooser fc;
             //Copio el archivo al directorio de imagenes, lo hago luego por si el nick ya existe
             if(!fpath.equals(fnewpath) && !fnewpath.isEmpty()) FileUtils.copyFile(f, new File(fnewpath));
             
-            //Creacion de listas por defecto (favoritos, ver mas tarde, etc)
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
         }

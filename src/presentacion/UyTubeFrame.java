@@ -119,7 +119,7 @@ public class UyTubeFrame extends javax.swing.JFrame {
         EscritorioLayout.setVerticalGroup(
             EscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EscritorioLayout.createSequentialGroup()
-                .addContainerGap(315, Short.MAX_VALUE)
+                .addContainerGap(306, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addContainerGap())
         );
@@ -435,15 +435,6 @@ public class UyTubeFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
 
-    private void ConsultoCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultoCategoriasActionPerformed
-        consultarCategorias consultaC = new consultarCategorias(cate,user);
-             Escritorio.add(consultaC);
-             Escritorio.moveToFront(consultaC);
-             //consultaC.setSize(Escritorio.getWidth(),Escritorio.getHeight());
-             consultaC.setLocation(0,0);
-             consultaC.setVisible(true);
-    }//GEN-LAST:event_ConsultoCategoriasActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
        //CATEGORIA
@@ -463,63 +454,63 @@ public class UyTubeFrame extends javax.swing.JFrame {
         //USUARIOS
         SimpleDateFormat dateformat = new SimpleDateFormat("dd/M/yyyy");
         try {
-        user.AltaUsuario("hrubino", "Horacio", "Rubino", "horacio.rubino@guambia.com.uy", dateformat.parse("25/02/1962") , "");
-        user.AltaUsuario("mbusca", "Martín", "Buscaglia", "Martin.bus@agadu.org.uy", dateformat.parse("14/06/1972") , "");
+        user.AltaUsuario("hrubino", "Horacio", "Rubino", "horacio.rubino@guambia.com.uy", dateformat.parse("25/02/1962") , "hrubino.jpg");
+        user.AltaUsuario("mbusca", "Martín", "Buscaglia", "Martin.bus@agadu.org.uy", dateformat.parse("14/06/1972") , "mbusca.jpg");
         user.AltaUsuario("hectorg", "Héctor", "Guido", "hector.gui@elgalpon.org.uy",dateformat.parse("07/01/1954") , "");
-        user.AltaUsuario("tabarec", "Tabaré", "Cardozo", "tabare.car@agadu.org.uy", dateformat.parse("24/07/1971"), "");
-        user.AltaUsuario("cachilas", "Waldemar Cachila", "Silva", "Cachila.sil@c1080.org.uy", dateformat.parse("01/01/1947") , "");
+        user.AltaUsuario("tabarec", "Tabaré", "Cardozo", "tabare.car@agadu.org.uy", dateformat.parse("24/07/1971"), "tabarec.jpg");
+        user.AltaUsuario("cachilas", "Waldemar Cachila", "Silva", "Cachila.sil@c1080.org.uy", dateformat.parse("01/01/1947") , "cachilas.jpg");
         user.AltaUsuario("juliob", "Julio", "Bocca", "juliobocca@sodre.com.uy", dateformat.parse("16/03/1967") , "");
         user.AltaUsuario("diegop", "Diego", "Parodi", "diego@efectocine.com", dateformat.parse("01/01/1975") , "");
-        user.AltaUsuario("kairoh", "Kairo", "Herrera", "kairoher@pilsenrock.com.uy", dateformat.parse("25/04/1840") , "");
+        user.AltaUsuario("kairoh", "Kairo", "Herrera", "kairoher@pilsenrock.com.uy", dateformat.parse("25/04/1840") , "kairoh.jpg");
         user.AltaUsuario("robinh", "Robin", "Henderson", "Robin.h@tinglesa.com.uy", dateformat.parse("03/08/1940") , "");
         user.AltaUsuario("marcelot", "Marcelo", "Tinelli", "marcelot@ideasdelsur.com.ar", dateformat.parse("01/04/1960") , "");
         user.AltaUsuario("novick", "Edgardo", "Novick", "edgardo@novick.com.uy", dateformat.parse("17/07/1952") , "");
         user.AltaUsuario("sergiop", "Sergio", "Puglia", "puglia@alpanpan.com.uy", dateformat.parse("28/01/1950") , "");
-        user.AltaUsuario("chino", "Alvaro", "Recoba", "chino@trico.org.uy", dateformat.parse("17/03/1976") , "");
-        user.AltaUsuario("tonyp", "Antonio", "Pacheco", "eltony@manya.org.uy", dateformat.parse("14/02/1955") , "");
+        user.AltaUsuario("chino", "Alvaro", "Recoba", "chino@trico.org.uy", dateformat.parse("17/03/1976") , "chino.jpg");
+        user.AltaUsuario("tonyp", "Antonio", "Pacheco", "eltony@manya.org.uy", dateformat.parse("14/02/1955") , "tonyp.jpg");
         user.AltaUsuario("nicoJ", "Nicolás", "Jodal", "jodal@artech.com.uy", dateformat.parse("09/08/1960") , "");
         } catch (ParseException e) {
-    // TODO Auto-generated catch block
+            // TODO Auto-generated catch block
             e.printStackTrace();
         }
        //CANALES
-       user.AltaCanal("Canal Horacio", true,1, "El canal Horacio es para publicar contenido divertido");
-       user.AltaCanal("El bocha", true,2, "Mi canal para colgar cosas");
-       user.AltaCanal("Canal Héctor", true,3, "Canal HG");
-       user.AltaCanal("Tabaré", true,4, "Mi música e ainda mais");
-       user.AltaCanal("El Cachila", false,5, "Para juntar cosas");
-       user.AltaCanal("Canal Julio", true,6, "Canal de JB");
-       user.AltaCanal("Canal Diego", true,7, "Canal de DP");
-       user.AltaCanal("Kairo música", true,8, "Videos de grandes canciones de hoy y siempre");
-       user.AltaCanal("Canal Robin", true,9, "Henderson");
-       user.AltaCanal("Tinelli total", true,10, "Todo lo que querías y más !");
-       user.AltaCanal("Con la gente", true,11, "Preparando las elecciones");
-       user.AltaCanal("Puglia invita", true,12, "Programas del ciclo y videos de cocina masterchef");
-       user.AltaCanal("Chino Recoba", false,13, "Canal de goles con Nacional");
-       user.AltaCanal("Tony Pacheco", false,14, "Todos los goles con Peñarol");
-       user.AltaCanal("Desde Genexus", true,15, "Canal información C y T");
+       user.AltaCanal("Canal Horacio", false, 1, "El canal Horacio es para publicar contenido divertido");
+       user.AltaCanal("El bocha", false, 2, "Mi canal para colgar cosas");
+       user.AltaCanal("Canal Héctor", false,3, "Canal HG");
+       user.AltaCanal("Tabaré", false,4, "Mi música e ainda mais");
+       user.AltaCanal("El Cachila", true,5, "Para juntar cosas");
+       user.AltaCanal("Canal Julio", false,6, "Canal de JB");
+       user.AltaCanal("Canal Diego", false,7, "Canal de DP");
+       user.AltaCanal("Kairo música", false,8, "Videos de grandes canciones de hoy y siempre");
+       user.AltaCanal("Canal Robin", false,9, "Henderson");
+       user.AltaCanal("Tinelli total", false,10, "Todo lo que querías y más !");
+       user.AltaCanal("Con la gente", false,11, "Preparando las elecciones");
+       user.AltaCanal("Puglia invita", false,12, "Programas del ciclo y videos de cocina masterchef");
+       user.AltaCanal("Chino Recoba", true,13, "Canal de goles con Nacional");
+       user.AltaCanal("Tony Pacheco", true,14, "Todos los goles con Peñarol");
+       user.AltaCanal("Desde Genexus", false,15, "Canal información C y T");
        //SEGUIDORES
-       user.seguirUsuario("hurbino", "hectorg");
-       user.seguirUsuario("hurbino", "diegop");
+       user.seguirUsuario("hrubino", "hectorg");
+       user.seguirUsuario("hrubino", "diegop");
        user.seguirUsuario("mbusca", "tabarec");
        user.seguirUsuario("mbusca", "cachilas");
        user.seguirUsuario("mbusca", "kairoh");
-       user.seguirUsuario("hecotrg", "mbusca");
-       user.seguirUsuario("hecotrg", "juliob");
-       user.seguirUsuario("tabarec", "hurbino");
+       user.seguirUsuario("hectorg", "mbusca");
+       user.seguirUsuario("hectorg", "juliob");
+       user.seguirUsuario("tabarec", "hrubino");
        user.seguirUsuario("tabarec", "cachilas");
-       user.seguirUsuario("cachilas", "hurbino");
+       user.seguirUsuario("cachilas", "hrubino");
        user.seguirUsuario("juliob", "mbusca");
        user.seguirUsuario("juliob", "diegop");
-       user.seguirUsuario("diegop", "hecotrg");
+       user.seguirUsuario("diegop", "hectorg");
        user.seguirUsuario("kairoh", "sergiop");
-       user.seguirUsuario("robinh", "hecotrg");
+       user.seguirUsuario("robinh", "hectorg");
        user.seguirUsuario("robinh", "juliob");
        user.seguirUsuario("robinh", "diegop");
        user.seguirUsuario("marcelot", "cachilas");
        user.seguirUsuario("marcelot", "juliob");
        user.seguirUsuario("marcelot", "kairoh");
-       user.seguirUsuario("novick", "hurbino");
+       user.seguirUsuario("novick", "hrubino");
        user.seguirUsuario("novick", "tabarec");
        user.seguirUsuario("novick", "cachilas");
        user.seguirUsuario("sergiop", "mbusca");
@@ -527,43 +518,47 @@ public class UyTubeFrame extends javax.swing.JFrame {
        user.seguirUsuario("sergiop", "diegop");
        user.seguirUsuario("chino", "tonyp");
        user.seguirUsuario("tonyp", "sergiop");
-       user.seguirUsuario("nicoJ", "diegop");//VIDEO
-        vid.AltaVideo("Locura celeste", "19:07", "https://youtu.be/PAfbzKcePx0", "Una cancion de fubol", 4  , "Música");
-        vid.AltaVideo("Niño payaso", "13:53", "https://youtu.be/K-uEIUnyZPg", "la emocion explota", 4 , "Música");
-        vid.AltaVideo("Sweet child'o mine", "14:13", "https://youtu.be/1w7OgIMMRc4", "cancion de los rolin",6 , "Música");
-        vid.AltaVideo("Dancing in the Dark", "56:12", "https://youtu.be/129kuDCQtHs", "temaso para la noche de la nostalgia",8  , "Música");
-        vid.AltaVideo("Thriller", "89:10", "https://youtu.be/sOnqjkJTMaA", "este medio raro con los nenes", 6 , "Música");
-        vid.AltaVideo("100 años de FING", "1:00", "https://youtu.be/peGS4TBxSaI", "mucha emocion", 3 , "Noticias");
-        vid.AltaVideo("50 años del InCo", "5:56", "https://youtu.be/GzOJSk4urlM", "la mitad que la fing jeje", 3 , "Noticias");
-        vid.AltaVideo("Ingeniería de Muestra 2017", "10:01", "https://youtu.be/RnaYRA1k5j4", "muy buenos trabajos",3  , "Noticias");
-        vid.AltaVideo("Etapa A contramano Liguilla", "10:01", "https://youtu.be/Es6GRMHXeCQ", "esta estuvo dificil", 5 , "Carnaval");
-        vid.AltaVideo("Etapa Don Timoteo Liguilla", "10:01", "https://youtu.be/I_spHBU9ZsI", "esta estuvo facil", 5 , "Carnaval");
-        vid.AltaVideo("Show de goles", "10:01", "https://youtu.be/g46w4_kD_lA", "tremendos goles variados", 6 , "Deporte");
-        vid.AltaVideo("Pacheco goles más recordados", "10:01", "https://youtu.be/wlEd6-HsIxI", "tremendos goles de pacheco", 4 , "Deporte");
-        vid.AltaVideo("Inauguración Estadio Peñarol", "10:01", "https://youtu.be/U6XPJ8Vz72A", "Presentacion de el nuevo estadio peñarol", 6 , "Deporte");
-        vid.AltaVideo("Recoba 20 mejores goles", "10:01", "https://youtu.be/Gy3fZhWdLEQ", "tremendos goles de recoba", 5 , "Deporte");
-        vid.AltaVideo("Entrevista a director CUTI", "10:01", "https://youtu.be/Eq5uBEzI6qs", "entrevista realizada el 13/7/1527", 15 , "Ciencia y Tecnología");
-        vid.AltaVideo("Ventana al futuro Uruguay y déficit de ingenieros", "10:01", "https://youtu.be/zBR2pnASlQE", "Muy complicado este tema, hicimos un video para aclarar", 15 , "Ciencia y Tecnología");
-        vid.AltaVideo("Locura celeste", "19:07", "https://youtu.be/PAfbzKcePx0", "Una cancion de fubol", 5  , "Música");
-        vid.AltaVideo("Niño payaso", "13:53", "https://youtu.be/K-uEIUnyZPg", "la emocion explota", 5 , "Música");
-        vid.AltaVideo("Sweet child'o mine", "14:13", "https://youtu.be/1w7OgIMMRc4", "cancion de los rolin",8 , "Música");
-        vid.AltaVideo("Thriller", "89:10", "https://youtu.be/sOnqjkJTMaA", "este medio raro con los nenes", 8 , "Música");
-        vid.AltaVideo("Recoba 20 mejores goles", "10:01", "https://youtu.be/Gy3fZhWdLEQ", "tremendos goles de recoba", 13 , "Deporte");
-        vid.AltaVideo("Pacheco goles más recordados", "10:01", "https://youtu.be/wlEd6-HsIxI", "tremendos goles de pacheco", 14 , "Deporte");
+       user.seguirUsuario("nicoJ", "diegop");
+        //VIDEO
+        vid.AltaVideo("Locura celeste", "19.07", "https://youtu.be/PAfbzKcePx0", "Una cancion de fubol", 4, "Música");
+        vid.AltaVideo("Niño payaso", "13.53", "https://youtu.be/K-uEIUnyZPg", "la emocion explota", 4 , "Música");
+        vid.AltaVideo("Sweet child'o mine", "14.13", "https://youtu.be/1w7OgIMMRc4", "cancion de los rolin",6 , "Música");
+        vid.ModificarVideo(3, "", "", "", "", null, false);
+        vid.AltaVideo("Dancing in the Dark", "56.12", "https://youtu.be/129kuDCQtHs", "temaso para la noche de la nostalgia",8  , "Música");
+        vid.ModificarVideo(4, "", "", "", "", null, false);
+        vid.AltaVideo("Thriller", "89.10", "https://youtu.be/sOnqjkJTMaA", "este medio raro con los nenes", 6 , "Música");
+        vid.ModificarVideo(5, "", "", "", "", null, false);
+        vid.AltaVideo("100 años de FING", "1.00", "https://youtu.be/peGS4TBxSaI", "mucha emocion", 3 , "Noticias");
+        vid.ModificarVideo(6, "", "", "", "", null, false);
+        vid.AltaVideo("50 años del InCo", "5.56", "https://youtu.be/GzOJSk4urlM", "la mitad que la fing jeje", 3 , "Noticias");
+        vid.ModificarVideo(7, "", "", "", "", null, false);
+        vid.AltaVideo("Ingeniería de Muestra 2017", "10.01", "https://youtu.be/RnaYRA1k5j4", "muy buenos trabajos",3  , "Noticias");
+        vid.ModificarVideo(8, "", "", "", "", null, false);
+        vid.AltaVideo("Etapa A contramano Liguilla", "10.01", "https://youtu.be/Es6GRMHXeCQ", "esta estuvo dificil", 5 , "Carnaval");
+        vid.AltaVideo("Etapa Don Timoteo Liguilla", "10.01", "https://youtu.be/I_spHBU9ZsI", "esta estuvo facil", 5 , "Carnaval");
+        vid.AltaVideo("Show de goles", "10.01", "https://youtu.be/g46w4_kD_lA", "tremendos goles variados", 6 , "Deporte");
+        vid.ModificarVideo(11, "", "", "", "", null, false);
+        vid.AltaVideo("Pacheco goles más recordados", "10.01", "https://youtu.be/wlEd6-HsIxI", "tremendos goles de pacheco", 4 , "Deporte");
+        vid.AltaVideo("Inauguración Estadio Peñarol", "10.01", "https://youtu.be/U6XPJ8Vz72A", "Presentacion de el nuevo estadio peñarol", 6 , "Deporte");
+        vid.ModificarVideo(13, "", "", "", "", null, false);
+        vid.AltaVideo("Recoba 20 mejores goles", "10.01", "https://youtu.be/Gy3fZhWdLEQ", "tremendos goles de recoba", 5 , "Deporte");
+        vid.AltaVideo("Entrevista a director CUTI", "10.01", "https://youtu.be/Eq5uBEzI6qs", "entrevista realizada el 13/7/1527", 15 , "Ciencia y Tecnología");
+        vid.ModificarVideo(13, "", "", "", "", null, false);
+        vid.AltaVideo("Ventana al futuro Uruguay y déficit de ingenieros", "10.01", "https://youtu.be/zBR2pnASlQE", "Muy complicado este tema, hicimos un video para aclarar", 15 , "Ciencia y Tecnología");
+        vid.ModificarVideo(13, "", "", "", "", null, false);
         // lista de reproduccion
-            //por defecto
+        //por defecto
         user.AltaListaDeReproduccionPorDefecto("Escuchar más tarde");
         user.AltaListaDeReproduccionPorDefecto("Deporte total"); 
         user.AltaListaDeReproduccionPorDefecto("Novedades generales");
-            //particular
-        //user.AltaListaDeReproduccionParticular(nombre, PROPERTIES, rootPaneCheckingEnabled, categoria);
-        user.AltaListaDeReproduccionParticular("Nostalgia", 8, true, "Música");
-        user.AltaListaDeReproduccionParticular("De fiesta", 4, false, "Música");
-        user.AltaListaDeReproduccionParticular("Novedades FING", 3, true, "Noticias");
-        user.AltaListaDeReproduccionParticular("De todo un poco", 5, false, "Música");
-        user.AltaListaDeReproduccionParticular("Noticias y CYT", 16, true, "Noticias");
-        user.AltaListaDeReproduccionParticular("Solo deportes", 6, true, "Deporte");
-            //videos en las listas
+        //particular //En categorias multiples pongo una que no tenga nada o ninguna, luego vemos
+        user.AltaListaDeReproduccionParticular("Nostalgia", 8, false, "Música");
+        user.AltaListaDeReproduccionParticular("De fiesta", 4, true, "Carnaval"); //MUS y CAR
+        user.AltaListaDeReproduccionParticular("Novedades FING", 3, false, "Noticias");
+        user.AltaListaDeReproduccionParticular("De todo un poco", 5, true, "Ninguna"); //MUS, DEP y CAR
+        user.AltaListaDeReproduccionParticular("Noticias y CYT", 16, false, "Ciencia y Tecnología"); //NOT y CYT
+        user.AltaListaDeReproduccionParticular("Solo deportes", 6, false, "Deporte");
+        //videos en las listas
         user.AgregarVideoListaDeReproduccion(6, 8, "Sweet child'o mine", "Nostalgia");
         user.AgregarVideoListaDeReproduccion(8, 8, "Dancing in the Dark", "Nostalgia");
         user.AgregarVideoListaDeReproduccion(6, 8, "Thriller", "Nostalgia");
@@ -582,32 +577,31 @@ public class UyTubeFrame extends javax.swing.JFrame {
         user.AgregarVideoListaDeReproduccion(15, 16, "Ventana al futuro Uruguay y déficit de ingenieros", "Noticias y CYT");
         user.AgregarVideoListaDeReproduccion(6, 6, "Show de goles", "Solo deportes");
         user.AgregarVideoListaDeReproduccion(6, 6, "Inauguración Estadio Peñarol", "Solo deportes");
-      //  user.AgregarVideoListaDeReproduccion(ICONIFIED, SOMEBITS, video, lista);
         SimpleDateFormat dateformat2 = new SimpleDateFormat("dd/M/yyyy HH:mm");
-      try {
-        vid.ComentarVideo(16, 7, 0 ,"Fue un gran evento" , dateformat2.parse("05/12/17 14:35"));
-      vid.ComentarVideo(1, 7, 1 ,"Para el próximo aniversario ofrezco vamo’ con los Momo" , dateformat2.parse("05/12/17 14:35"));
-      vid.ComentarVideo(4, 7, 2 ,"Yo ofrezco a la banda tb" , dateformat2.parse("05/12/17 14:35"));
-      vid.ComentarVideo(16, 6, 0 ,"Felicitaciones FING!!!" , dateformat2.parse("05/12/17 14:35"));
-      vid.ComentarVideo(8, 8, 0 ,"Un gusto cubrir eventos como este." , dateformat2.parse("05/12/17 14:35"));
-      vid.ComentarVideo(8, 13, 0 ,"Peñarol peñarol!!!" , dateformat2.parse("05/12/17 14:35"));
-      vid.ComentarVideo(10, 3, 0 ,"Rock and Rolllll" , dateformat2.parse("05/12/17 14:35"));
-      vid.ComentarVideo(10, 4, 0 ,"Anoche explotó!!!" , dateformat2.parse("05/12/17 14:35"));
-      vid.ComentarVideo(10, 1, 0 ,"Me encanta este tema" , dateformat2.parse("05/12/17 14:35"));
-      vid.ComentarVideo(4, 1, 9 ,"Gracias Marce" , dateformat2.parse("05/12/17 14:35"));
-       } catch (ParseException e) {    
+        try {
+            vid.ComentarVideo(16, 7, -1 ,"Fue un gran evento" , dateformat2.parse("05/12/17 14:35"));
+            vid.ComentarVideo(1, 7, 1 ,"Para el próximo aniversario ofrezco vamo’ con los Momo" , dateformat2.parse("05/12/17 14:35"));
+            vid.ComentarVideo(4, 7, 2 ,"Yo ofrezco a la banda tb" , dateformat2.parse("05/12/2017 14:35"));
+            vid.ComentarVideo(16, 6, -1 ,"Felicitaciones FING!!!" , dateformat2.parse("05/12/2017 14:35"));
+            vid.ComentarVideo(8, 8, -1 ,"Un gusto cubrir eventos como este." , dateformat2.parse("05/12/2017 14:35"));
+            vid.ComentarVideo(8, 13, -1 ,"Peñarol peñarol!!!" , dateformat2.parse("05/12/2017 14:35"));
+            vid.ComentarVideo(10, 3, -1 ,"Rock and Rolllll" , dateformat2.parse("05/12/2017 14:35"));
+            vid.ComentarVideo(10, 4, -1 ,"Anoche explotó!!!" , dateformat2.parse("05/12/2017 14:35"));
+            vid.ComentarVideo(10, 1, -1 ,"Me encanta este tema" , dateformat2.parse("05/12/2017 14:35"));
+            vid.ComentarVideo(4, 1, 9 ,"Gracias Marce" , dateformat2.parse("05/12/2017 14:35"));
+        } catch (ParseException e) {
             e.printStackTrace();
         }        
-      // Valoraciones
-      vid.ValorarVideo(13, 7, false);
-      vid.ValorarVideo(13, 8, true);
-      vid.ValorarVideo(13, 11, true);
-      vid.ValorarVideo(13, 1, false);
-      vid.ValorarVideo(13, 7, true);
-      vid.ValorarVideo(13, 7, true);
-      vid.ValorarVideo(13, 13, true);
-      vid.ValorarVideo(13, 1, true);
-      vid.ValorarVideo(13, 4, true);
+        // Valoraciones
+        vid.ValorarVideo(13, 7, false);
+        vid.ValorarVideo(13, 8, true);
+        vid.ValorarVideo(13, 11, true);
+        vid.ValorarVideo(13, 1, false);
+        vid.ValorarVideo(13, 7, true);
+        vid.ValorarVideo(13, 7, true);
+        vid.ValorarVideo(13, 13, true);
+        vid.ValorarVideo(13, 1, true);
+        vid.ValorarVideo(13, 4, true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
 

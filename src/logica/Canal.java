@@ -62,6 +62,9 @@ public class Canal implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL)
     private Collection<Video> videos;
+    
+    @OneToMany(cascade = CascadeType.ALL)
+    private Collection<ListaDeReproduccion> listas;
 
     @ManyToMany(mappedBy="suscripciones")
     private Collection<Usuario> seguidores;
@@ -78,6 +81,7 @@ public class Canal implements Serializable {
         this.nombre = nombre;
         this.privacidad = privacidad;
         this.videos = new ArrayList<>();
+        this.listas = new ArrayList<>();
         this.seguidores = new ArrayList<>();
     }
 
@@ -158,6 +162,70 @@ public class Canal implements Serializable {
     
     public Collection<Video> getVideos() {
         return videos;
+    }
+    
+    public Collection<ListaDeReproduccion> getListas() {
+        return listas;
+    }
+
+    public void setListas(Collection<ListaDeReproduccion> listas) {
+        this.listas = listas;
+    }
+
+    public void addLista(ListaDeReproduccion nuevalista) {
+        this.listas.add(nuevalista);
+    }
+
+    public boolean existeLista(String nom_lista) {
+        boolean existe = false;
+        Iterator<ListaDeReproduccion> it = listas.iterator();
+
+        while(it.hasNext()){
+            if(it.next().getNombre().equals(nom_lista)) existe = true;
+        }
+
+        return existe;
+    }
+    
+    public void agregarVideoLista(Video v, String nomlista) {
+        Iterator it = listas.iterator();
+        boolean seguir = true;
+        
+        while(it.hasNext() && seguir) {
+            ListaDeReproduccion l = (ListaDeReproduccion) it.next();
+            if(l.getNombre().equals(nomlista)) {
+                l.agregarVideo(v);
+                seguir = false;
+            }
+        }
+    }
+    
+    public void quitarVideoLista(int video, String nomlista) {
+        Iterator it = listas.iterator();
+        boolean seguir = true;
+        
+        while(it.hasNext() && seguir) {
+            ListaDeReproduccion l = (ListaDeReproduccion) it.next();
+            if(l.getNombre().equals(nomlista)) {
+                l.quitarVideo(video);
+                seguir = false;
+            } 
+        }
+    }
+    
+    public ListaDeReproduccion getLista(String nom) {
+        Iterator it = listas.iterator();
+        boolean seguir = true;
+        ListaDeReproduccion retorno = null;
+        
+        while(it.hasNext() && seguir) {
+            ListaDeReproduccion l = (ListaDeReproduccion) it.next();
+            if(l.getNombre().equals(nom)) {
+                retorno = l;
+                seguir = false;
+            } 
+        }
+        return retorno;
     }
     
     @Override

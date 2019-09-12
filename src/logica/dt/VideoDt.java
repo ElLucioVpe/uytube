@@ -19,7 +19,7 @@ import logica.Video;
 public class VideoDt {
         private Integer id;
     private String nombre;
-    private int duracion;
+    private float duracion;
     private String url;
     private String descripcion;
     private Date fechaPublicacion;
@@ -76,11 +76,11 @@ public VideoDt(Video v){
         this.nombre = nombre;
     }
 
-    public int getDuracion() {
+    public float getDuracion() {
         return duracion;
     }
 
-    public void setDuracion(int duracion) {
+    public void setDuracion(float duracion) {
         this.duracion = duracion;
     }
 

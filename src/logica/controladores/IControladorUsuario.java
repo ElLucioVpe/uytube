@@ -42,6 +42,7 @@ public interface IControladorUsuario {
     public abstract String obtenerNickUsuario(int id);
     public abstract void EliminarUsuario(int id);
     public abstract List obtenerCategorias();
+    public abstract String obtenerTipoLista(int propietario, String lista);
     public abstract List<String> obtenerListasUsuario(int id);
     public abstract List<VideoListaDt> obtenerVideosLista(int id, String lista);
     public abstract ListaDeReproduccionDt obtenerListaDt(int id, String lista);
