@@ -15,6 +15,7 @@ import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
+import javax.swing.JInternalFrame;
 import logica.Canal;
 import logica.controladores.IControladorUsuario;
 import logica.controladores.IControladorVideo;
@@ -448,7 +449,9 @@ public class listarUsuario extends javax.swing.JInternalFrame {
     private void ConsultarVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultarVActionPerformed
         String video_nom = listVideos.getSelectedValue();
         int id_user = dt.getId();
-        p.AgregarInternalFrame(new consultarVideo(v, u, v.obtenerVideoDt(video_nom, id_user)));
+        JInternalFrame f = new consultarVideo(v, u, v.obtenerVideoDt(video_nom, id_user));
+        p.cambiarSize(f.getWidth(), f.getHeight());
+        p.AgregarInternalFrame(f);
         this.dispose();
     }//GEN-LAST:event_ConsultarVActionPerformed
 

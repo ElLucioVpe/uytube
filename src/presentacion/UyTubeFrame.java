@@ -5,9 +5,15 @@
  */
 package presentacion;
 
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import logica.controladores.Fabrica;
@@ -31,9 +37,17 @@ public class UyTubeFrame extends javax.swing.JFrame {
 
     public UyTubeFrame() {
         initComponents();
+        
+        try {
+            BufferedImage img = ImageIO.read(new File("data/logo.png"));
+            if(img != null){
+                ImageIcon icon = new ImageIcon(resize(img, 80, 80));
+                logoLabel.setIcon(icon);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-    private registroVideo registroVidWin;
-    private registroUser registroUserWin;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -48,13 +62,14 @@ public class UyTubeFrame extends javax.swing.JFrame {
         jFrame3 = new javax.swing.JFrame();
         Escritorio = new javax.swing.JDesktopPane();
         ELBOTON = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        logoLabel = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
         RegistrarUsuario = new javax.swing.JMenuItem();
         RegistrarVideo = new javax.swing.JMenuItem();
-        seguirUsuario = new javax.swing.JMenuItem();
-        bajaSeguidorMenuItem = new javax.swing.JMenuItem();
         RegistroCategoria = new javax.swing.JMenuItem();
         CrearLista = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
@@ -98,6 +113,8 @@ public class UyTubeFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        Escritorio.setBackground(new java.awt.Color(0, 0, 0));
+
         ELBOTON.setText("Cargar Datos");
         ELBOTON.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -105,7 +122,20 @@ public class UyTubeFrame extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(240, 240, 240));
+        jLabel1.setText("Bienvenido al sistema de gestión de");
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(51, 255, 255));
+        jLabel2.setText("uyTube");
+
+        logoLabel.setText("jLabel3");
+
         Escritorio.setLayer(ELBOTON, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        Escritorio.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        Escritorio.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        Escritorio.setLayer(logoLabel, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout EscritorioLayout = new javax.swing.GroupLayout(Escritorio);
         Escritorio.setLayout(EscritorioLayout);
@@ -115,11 +145,29 @@ public class UyTubeFrame extends javax.swing.JFrame {
                 .addContainerGap(322, Short.MAX_VALUE)
                 .addComponent(ELBOTON)
                 .addContainerGap())
+            .addGroup(EscritorioLayout.createSequentialGroup()
+                .addGap(75, 75, 75)
+                .addGroup(EscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(EscritorioLayout.createSequentialGroup()
+                        .addComponent(logoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         EscritorioLayout.setVerticalGroup(
             EscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EscritorioLayout.createSequentialGroup()
-                .addContainerGap(306, Short.MAX_VALUE)
+                .addGap(98, 98, 98)
+                .addComponent(jLabel1)
+                .addGroup(EscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(EscritorioLayout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addComponent(jLabel2))
+                    .addGroup(EscritorioLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(logoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 104, Short.MAX_VALUE)
                 .addComponent(ELBOTON)
                 .addContainerGap())
         );
@@ -149,22 +197,6 @@ public class UyTubeFrame extends javax.swing.JFrame {
             }
         });
         jMenu2.add(RegistrarVideo);
-
-        seguirUsuario.setText("Registro Seguidor");
-        seguirUsuario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                seguirUsuarioActionPerformed(evt);
-            }
-        });
-        jMenu2.add(seguirUsuario);
-
-        bajaSeguidorMenuItem.setText("Baja Seguidor");
-        bajaSeguidorMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bajaSeguidorMenuItemActionPerformed(evt);
-            }
-        });
-        jMenu2.add(bajaSeguidorMenuItem);
 
         RegistroCategoria.setText("Registrar Categoría");
         RegistroCategoria.addActionListener(new java.awt.event.ActionListener() {
@@ -240,16 +272,18 @@ public class UyTubeFrame extends javax.swing.JFrame {
         try{
             Escritorio.add(f);
             Escritorio.moveToFront(f);
+            cambiarSize(f.getWidth(), f.getHeight());
             f.setSize(Escritorio.getWidth(),Escritorio.getHeight());
             f.setLocation(0,0);
+            f.setVisible(true);
         }catch(Exception ex){
             ex.printStackTrace();
         }
     }
     
     protected void cambiarSize(int w, int h) {
-        this.setSize(w+10, h+50);
-        Escritorio.setSize(w, h);
+        this.setSize(w+15, h+70);
+        Escritorio.setSize(w, h+10);
     }
 
     private void RegistrarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarUsuarioActionPerformed
@@ -258,45 +292,20 @@ public class UyTubeFrame extends javax.swing.JFrame {
         String x = registroUser.x;
 
         if(x==null){
-        try{
-
-             registroUserWin = new registroUser(user, this);
-             Escritorio.add(registroUserWin);
-             Escritorio.moveToFront(registroUserWin);
-             registroUserWin.setSize(Escritorio.getWidth(),Escritorio.getHeight());
-             registroUserWin.setLocation(0,0);
-
-
-        }catch(Exception ex){
-            ex.printStackTrace();
-        }
+            AgregarInternalFrame(new registroUser(user, this));
         }else{
             JOptionPane.showMessageDialog(null,"Ya tiene una ventana de usuarios abierta");
         }
-       /*
-        Dimension desktopSize = Escritorio.getSize();
-        Dimension FrameSize = registroUserWin.getSize();
-        registroUserWin.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);
-        registroUserWin.show();
-        */
 
     }//GEN-LAST:event_RegistrarUsuarioActionPerformed
 
 
     private void RegistrarVideoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarVideoActionPerformed
-        // TODO add your handling code here:
-          String registroVideoX = registroVideo.VideoRegister;
+        String registroVideoX = registroVideo.VideoRegister;
 
         if(registroVideoX==null){
         try{
-
-             registroVidWin = new registroVideo(vid, user);
-             Escritorio.add(registroVidWin);
-             Escritorio.moveToFront(registroVidWin);
-             registroVidWin.setSize(Escritorio.getWidth(),Escritorio.getHeight());
-             registroVidWin.setLocation(0,0);
-
-
+            AgregarInternalFrame(new registroVideo(vid, user));
         }catch(Exception ex){
             ex.printStackTrace();
         }
@@ -306,136 +315,32 @@ public class UyTubeFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_RegistrarVideoActionPerformed
 
     private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
-        // TODO add your handling code here:
-
-        String registroVideoX = registroVideo.VideoRegister;
-        String x = registroUser.x;
-
-
-
-        try{
-             welcome welcomeUser = new welcome();
-             Escritorio.add(welcomeUser);
-             Escritorio.moveToFront(welcomeUser);
-             registroVidWin.setSize(Escritorio.getWidth(),Escritorio.getHeight());
-             registroVidWin.setLocation(0,0);
-
-
-        }catch(Exception ex){
-            ex.printStackTrace();
-        }
-
-          /*
-        if(registroVideoX!=null){
-          try {
-                registroVidWin.setClosed(true);
-              } catch (PropertyVetoException ex) {
-                  System.err.println("Closing Exception");
-              }
-        }
-
-        if(x!=null){
-            try {
-                registroUserWin.setClosed(true);
-              } catch (PropertyVetoException ex) {
-                  System.err.println("Closing Exception");
-              }
-        }
-
-        */
+        
     }//GEN-LAST:event_jMenu1ActionPerformed
 
     private void CrearListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CrearListaActionPerformed
-        // TODO add your handling code here:
-        try{
-
-             crearlistaReproduccion listaRep = new crearlistaReproduccion(user);
-             Escritorio.add(listaRep);
-             Escritorio.moveToFront(listaRep);
-             listaRep.setSize(Escritorio.getWidth(),Escritorio.getHeight());
-             listaRep.setLocation(0,0);
-
-
-        }catch(Exception ex){
-        ex.printStackTrace();
-        }
+        AgregarInternalFrame(new crearlistaReproduccion(user));
     }//GEN-LAST:event_CrearListaActionPerformed
 
 
-        private void seguirUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seguirUsuarioActionPerformed
-        // TODO add your handling code here:
-             seguirUsuario seguirU = new seguirUsuario(user);
-             Escritorio.add(seguirU);
-             Escritorio.moveToFront(seguirU);
-             seguirU.setSize(Escritorio.getWidth(),Escritorio.getHeight());
-             seguirU.setLocation(0,0);
-             seguirU.setVisible(true);
-
-    }//GEN-LAST:event_seguirUsuarioActionPerformed
-
-    private void bajaSeguidorMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bajaSeguidorMenuItemActionPerformed
-        // TODO add your handling code here:
-        dejarDeSeguirUsuario dejarU = new  dejarDeSeguirUsuario(user);
-         Escritorio.add(dejarU);
-         Escritorio.moveToFront(dejarU);
-         dejarU.setSize(Escritorio.getWidth(),Escritorio.getHeight());
-         dejarU.setLocation(0,0);
-         dejarU.setVisible(true);
-    }//GEN-LAST:event_bajaSeguidorMenuItemActionPerformed
-
     private void RegistroCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistroCategoriaActionPerformed
-             registroCategorias registroC = new registroCategorias(cate);
-             Escritorio.add(registroC);
-             Escritorio.moveToFront(registroC);
-             registroC.setSize(Escritorio.getWidth(),Escritorio.getHeight());
-             registroC.setLocation(0,0);
-             registroC.setVisible(true);
+        AgregarInternalFrame(new registroCategorias(cate));
     }//GEN-LAST:event_RegistroCategoriaActionPerformed
 
     private void listarCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listarCategoriasActionPerformed
-            listarCategorias listaC = new listarCategorias(cate, user, this);
-            Escritorio.add(listaC);
-            Escritorio.moveToFront(listaC);
-            listaC.setSize(Escritorio.getWidth(),Escritorio.getHeight());
-            listaC.setLocation(0,0);
-            listaC.setVisible(true);
-
+        AgregarInternalFrame(new listarCategorias(cate, user, this));
     }//GEN-LAST:event_listarCategoriasActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here:
-            listarUsuarios frmListarUsuarios = new listarUsuarios(user, vid, this);
-            Escritorio.add(frmListarUsuarios);
-            Escritorio.moveToFront(frmListarUsuarios);
-            frmListarUsuarios.setSize(Escritorio.getWidth(),Escritorio.getHeight());
-            frmListarUsuarios.setLocation(0,0);
-            frmListarUsuarios.setVisible(true);
-            frmListarUsuarios.show();
+        AgregarInternalFrame(new listarUsuarios(user, vid, this));
     }//GEN-LAST:event_jMenuItem1ActionPerformed
     private void ModificarListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ModificarListaActionPerformed
-        try{
-
-            listaDeReproduccionFrame listaRep = new listaDeReproduccionFrame(user, vid, this);
-            Escritorio.add(listaRep);
-            Escritorio.moveToFront(listaRep);
-            listaRep.setSize(Escritorio.getWidth(),Escritorio.getHeight());
-            listaRep.setLocation(0,0);
-
-        }catch(Exception ex){
-            ex.printStackTrace();
-        }
+        AgregarInternalFrame(new listaDeReproduccionFrame(user, vid, this));
     }//GEN-LAST:event_ModificarListaActionPerformed
 
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        // TODO add your handling code here:
-        listarVideos frmListarVideos = new listarVideos(user,vid,this);
-        Escritorio.add(frmListarVideos);
-        Escritorio.moveToFront(frmListarVideos);
-        frmListarVideos.setSize(Escritorio.getWidth(),Escritorio.getHeight());
-        frmListarVideos.setLocation(0,0);
-        frmListarVideos.setVisible(true);
-        frmListarVideos.show();
+        AgregarInternalFrame(new listarVideos(user,vid,this));
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
 
@@ -612,7 +517,14 @@ public class UyTubeFrame extends javax.swing.JFrame {
         ELBOTON.setVisible(false);
     }//GEN-LAST:event_ELBOTONActionPerformed
 
-
+    private static BufferedImage resize(BufferedImage img, int height, int width) {
+        Image tmp = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        BufferedImage resized = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2d = resized.createGraphics();
+        g2d.drawImage(tmp, 0, 0, null);
+        g2d.dispose();
+        return resized;
+    }
 
 
     /**
@@ -659,10 +571,11 @@ public class UyTubeFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem RegistrarUsuario;
     private javax.swing.JMenuItem RegistrarVideo;
     private javax.swing.JMenuItem RegistroCategoria;
-    private javax.swing.JMenuItem bajaSeguidorMenuItem;
     private javax.swing.JFrame jFrame1;
     private javax.swing.JFrame jFrame2;
     private javax.swing.JFrame jFrame3;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -670,6 +583,6 @@ public class UyTubeFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem listarCategorias;
-    private javax.swing.JMenuItem seguirUsuario;
+    private javax.swing.JLabel logoLabel;
     // End of variables declaration//GEN-END:variables
 }
