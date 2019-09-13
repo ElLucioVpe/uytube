@@ -99,6 +99,7 @@ public class ControladorVideo implements IControladorVideo {
             em.getTransaction().commit();
             em.close();
 
+             JOptionPane.showMessageDialog(null,"El video se modifico correctamente");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
         }
