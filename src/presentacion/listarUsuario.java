@@ -10,14 +10,12 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import logica.Canal;
-import logica.Usuario;
 import logica.controladores.IControladorUsuario;
 import logica.controladores.IControladorVideo;
 import logica.dt.UsuarioDt;
@@ -38,8 +36,8 @@ public class listarUsuario extends javax.swing.JInternalFrame {
     IControladorVideo v;
     UsuarioDt dt;
     List<String> listas;
-    Collection<Usuario> seguidores;
-    Collection<Canal> siguiendo;
+    List<String> seguidores;
+    List<String> siguiendo;
     List<VideoDt> videos;
     Canal canal;
 
@@ -49,16 +47,16 @@ public class listarUsuario extends javax.swing.JInternalFrame {
         ConsultarL.setEnabled(false);
         ConsultarV.setEnabled(false);
         u = _user;
-        p = padre;
         v = vid;
+        p = padre;
         usuario = _usuario;
         int id = u.obtenerIdUsuario(usuario);
-        UsuarioDt dt = u.ConsultarUsuario(id);
+        dt = u.ConsultarUsuario(id);
+        canal = dt.getCanal();
         listas = u.obtenerListasUsuario(id);
         videos = u.listarVideosDeUsuario(_usuario);
-        siguiendo = dt.getSuscripciones();
-        canal = dt.getCanal();
-        seguidores = canal.getSeguidores();
+        siguiendo = u.ListarSiguiendo(id);
+        seguidores = u.ListarSeguidores(id);
         
         lblNickname.setText(dt.getNickname()); 
         lblNombre.setText(dt.getNombre()); 
@@ -81,44 +79,7 @@ public class listarUsuario extends javax.swing.JInternalFrame {
         if(canal.getPrivacidad()) privacidad = "Privado";
         lblPrivacidadCanal.setText(privacidad);
         
-        DefaultListModel<String> model = new DefaultListModel<>();      
-
-        if(listas.size() != 0) {
-            for(int i = 0; i < listas.size(); i++) {
-                model.addElement((String)listas.get(i));
-            }
-            listListas.setModel(model);
-        }
-
-        if(videos.size() != 0) {
-            model = new DefaultListModel<>();
-            for(int i = 0; i < videos.size(); i++) {
-                model.addElement(videos.get(i).getNombre());
-            }
-            listVideos.setModel(model);
-        }
-        
-        
-        if(!siguiendo.isEmpty()) {
-            model = new DefaultListModel<>();
-            Iterator<Canal> itc = siguiendo.iterator();
-            
-            while(itc.hasNext()) {
-                Canal cn = itc.next();
-                model.addElement(cn.getUsuario().getNickname());
-            }
-            listSiguiendo.setModel(model);
-        }
-        
-        if(!seguidores.isEmpty()) {
-            model = new DefaultListModel<>();
-            Iterator<Usuario> it = seguidores.iterator();
-            while(it.hasNext()) {
-                Usuario us = it.next();
-                model.addElement(us.getNickname());
-            }
-            listSeguidores.setModel(model);
-        }
+        cargarListas();
     }
 
     private static BufferedImage resize(BufferedImage img, int height, int width) {
@@ -485,13 +446,16 @@ public class listarUsuario extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ConsultarVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultarVActionPerformed
-        p.AgregarInternalFrame(new consultarVideo(v, u, p.vid.obtenerVideoDt(listVideos.getSelectedValue(), dt.getId())));
+        String video_nom = listVideos.getSelectedValue();
+        int id_user = dt.getId();
+        p.AgregarInternalFrame(new consultarVideo(v, u, v.obtenerVideoDt(video_nom, id_user)));
         this.dispose();
     }//GEN-LAST:event_ConsultarVActionPerformed
 
     private void ConsultarLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultarLActionPerformed
-        
-        p.AgregarInternalFrame(new consultarListaDR(u, v, p, listListas.getSelectedValue(), dt.getId()));
+        String lista = listListas.getSelectedValue();
+        int id_user = dt.getId();
+        p.AgregarInternalFrame(new consultarListaDR(u, v, p, lista, id_user));
         this.dispose();
     }//GEN-LAST:event_ConsultarLActionPerformed
 
@@ -547,4 +511,41 @@ public class listarUsuario extends javax.swing.JInternalFrame {
     private javax.swing.JList<String> listSiguiendo;
     private javax.swing.JList<String> listVideos;
     // End of variables declaration//GEN-END:variables
+
+    private void cargarListas() {
+        DefaultListModel<String> model = new DefaultListModel<>();      
+        if(listas.size() != 0) {
+            for(int i = 0; i < listas.size(); i++) {
+                model.addElement((String)listas.get(i));
+            }
+            listListas.setModel(model);
+        }
+
+        if(videos.size() != 0) {
+            model = new DefaultListModel<>();
+            for(int i = 0; i < videos.size(); i++) {
+                model.addElement(videos.get(i).getNombre());
+            }
+            listVideos.setModel(model);
+        }
+        
+        if(!seguidores.isEmpty()) {
+            model = new DefaultListModel<>();
+            Iterator<String> it = seguidores.iterator();
+            while(it.hasNext()) {
+                model.addElement(it.next());
+            }
+            listSeguidores.setModel(model);
+        }
+        
+        if(!siguiendo.isEmpty()) {
+            model = new DefaultListModel<>();
+            Iterator<String> its = siguiendo.iterator();
+            
+            while(its.hasNext()) {
+                model.addElement(its.next());
+            }
+            listSiguiendo.setModel(model);
+        }
+    }
 }

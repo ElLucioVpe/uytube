@@ -188,8 +188,31 @@ public class ControladorUsuario implements IControladorUsuario {
         UsuarioDt dt = null;
         try {
             EntityManager em = emFactory.createEntityManager();
+            em.getTransaction().begin();
             Usuario u = em.find(Usuario.class, id);
-            dt = new UsuarioDt(u);
+            
+            List<String> suscripciones = new ArrayList<>(); 
+            Collection<Canal> sus = u.getSuscripciones();
+            
+            if(!sus.isEmpty()) {
+                Iterator<Canal> it = sus.iterator();
+                while(it.hasNext()){
+                    suscripciones.add(it.next().getUsuario().getNickname());
+                }
+            }
+            
+            dt = new UsuarioDt(
+                    u.getId(),
+                    u.getNickname(),
+                    u.getNombre(),
+                    u.getApellido(),
+                    u.getMail(),
+                    u.getFechanac(),
+                    u.getImagen(),
+                    u.getCanal(),
+                    suscripciones
+            );
+            em.getTransaction().commit();
             em.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
@@ -364,34 +387,51 @@ public class ControladorUsuario implements IControladorUsuario {
 
     @Override
     public List<String> ListarSeguidores(int userId){
-        List<String> seguidores = null;
-        /*
+        List<String> seguidores = new ArrayList<>();
         try {
             EntityManager em = emFactory.createEntityManager();
-            //List users = em.createQuery("SELECT nick FROM Usuario u WHERE id = :id").getResultList();
-            TypedQuery<Usuario> query = em.createQuery("SELECT * FROM Usuario u WHERE u.id = :id", Usuario.class);
-            Usuario u = query.setParameter("id", id).getSingleResult();
-            dt = new UsuarioDt(u);
+            em.getTransaction().begin();
+            
+            Canal c = em.find(Canal.class, userId);
+            if(c == null) throw new Exception("El usuario no existe"); //es lo mismo canal o usuario
+            
+            Collection<Usuario> seg = c.getSeguidores();
+            Iterator<Usuario> it = seg.iterator();
+            while(it.hasNext()) {
+                seguidores.add(it.next().getNickname());
+            }
+            
+            em.getTransaction().commit();
+            em.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
         }
-*/
-        seguidores.add("prueba");
         return seguidores;
     }
 
     @Override
     public List<String> ListarSiguiendo(int userId){
-        List<String> seguidores = null;
-        /*try {
+        List<String> suscripciones = new ArrayList<>();
+        try {
             EntityManager em = emFactory.createEntityManager();
-            Usuario u = em.find(Usuario.class, userId)
-            dt = new UsuarioDt(u);
+            em.getTransaction().begin();
+            
+            Usuario u = em.find(Usuario.class, userId);
+            if(u == null) throw new Exception("El usuario no existe");
+            
+            Collection<Canal> sig = u.getSuscripciones();
+            Iterator<Canal> it = sig.iterator();
+            while(it.hasNext()) {
+                Usuario uc = it.next().getUsuario();
+                suscripciones.add(uc.getNickname());
+            }
+            
+            em.getTransaction().commit();
+            em.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
-        }*/
-        seguidores.add("prueba");
-        return seguidores;
+        }
+        return suscripciones;
     }
 
     @Override

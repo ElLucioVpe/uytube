@@ -25,9 +25,8 @@ public class listarUsuarios extends javax.swing.JInternalFrame {
     IControladorUsuario u;
     IControladorVideo v;
     UyTubeFrame p;
-    JDesktopPane escritorio;
 
-    public listarUsuarios(IControladorUsuario user, IControladorVideo vid, UyTubeFrame padre, JDesktopPane desktop) {
+    public listarUsuarios(IControladorUsuario user, IControladorVideo vid, UyTubeFrame padre) {
         initComponents();
         u = user;
         v = vid;

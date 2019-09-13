@@ -13,6 +13,7 @@ import logica.ListaDeReproduccion;
 import logica.Usuario;
 import logica.Valoracion;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -27,9 +28,7 @@ public class UsuarioDt {
     private Date fechanac;
     private String imagen;
     private Canal canal;
-    private Collection<ListaDeReproduccion> listas;
-    private Collection<Canal> suscripciones;
-    private Collection<Valoracion> valoraciones;
+    private List<String> suscripciones;
 
 
     public UsuarioDt() {
@@ -39,15 +38,15 @@ public class UsuarioDt {
         this.id = id;
     }
 
-    public UsuarioDt(String nickname, String nombre, String apellido, String mail, Date fechanac) {
+    public UsuarioDt(Integer id, String nickname, String nombre, String apellido, String mail, Date fechanac, String imagen, Canal canal, List<String> suscripciones) {
+        this.id = id;
         this.nickname = nickname;
         this.nombre = nombre;
         this.apellido = apellido;
         this.mail = mail;
         this.fechanac = fechanac;
-        this.listas = new ArrayList<>();
-        this.valoraciones = new ArrayList<>();
-        this.suscripciones = new ArrayList<>();
+        this.imagen = imagen;
+        this.canal = canal;
     }
     
     public UsuarioDt(Usuario u) {
@@ -58,52 +57,30 @@ public class UsuarioDt {
         this.mail = u.getMail();
         this.imagen = u.getImagen();
         this.fechanac = u.getFechanac();
-        this.valoraciones = u.getValoraciones();
-        this.suscripciones = u.getSuscripciones();
         this.canal = u.getCanal();
     }
-
-       public Integer getId() {
+    
+    public Integer getId() {
         return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getNombre() {
         return nombre;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
     public String getApellido() {
         return apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
     }
 
     public String getNickname() {
         return nickname;
     }
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
     public String getMail() {
         return mail;
     }
-
-    public void setMail(String mail) {
-        this.mail = mail;
-    }
     
-    public Collection<Canal> getSuscripciones() {
+    public List<String> getSuscripciones() {
         return suscripciones;
     }
     
@@ -111,46 +88,12 @@ public class UsuarioDt {
         return fechanac;
     }
 
-    public void setFechanac(Date fechanac) {
-        this.fechanac = fechanac;
-    }
-
     public String getImagen() {
         return imagen;
-    }
-
-    public void setImagen(String imagen) {
-        this.imagen = imagen;
     }
 
     public Canal getCanal() {
         return canal;
     }
-
-    public void setCanal(Canal canal) {
-        this.canal = canal;
-    }
-
-    public void addLista(ListaDeReproduccion nuevalista) {
-        this.listas.add(nuevalista);
-    }
-
-    public boolean existeLista(String nom_lista) {
-        boolean existe = false;
-        Iterator<ListaDeReproduccion> it = listas.iterator();
-
-        while(it.hasNext()){
-            if(it.next().getNombre().equals(nom_lista)) existe = true;
-        }
-
-        return existe;
-    }
-    
-    public void agregarSuscripcion(Canal c) {
-        this.suscripciones.add(c);
-    }
-    
-    public void eliminarSuscripcion(Canal c) {
-        this.suscripciones.remove(c);
-    }
+   
 }

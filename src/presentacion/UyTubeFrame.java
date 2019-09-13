@@ -404,13 +404,13 @@ public class UyTubeFrame extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
-            listarUsuarios frmListarUsuarios = new listarUsuarios(user, vid, this, Escritorio);
-             Escritorio.add(frmListarUsuarios);
-             Escritorio.moveToFront(frmListarUsuarios);
-             frmListarUsuarios.setSize(Escritorio.getWidth(),Escritorio.getHeight());
-             frmListarUsuarios.setLocation(0,0);
-             frmListarUsuarios.setVisible(true);
-             frmListarUsuarios.show();
+            listarUsuarios frmListarUsuarios = new listarUsuarios(user, vid, this);
+            Escritorio.add(frmListarUsuarios);
+            Escritorio.moveToFront(frmListarUsuarios);
+            frmListarUsuarios.setSize(Escritorio.getWidth(),Escritorio.getHeight());
+            frmListarUsuarios.setLocation(0,0);
+            frmListarUsuarios.setVisible(true);
+            frmListarUsuarios.show();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
     private void ModificarListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ModificarListaActionPerformed
         try{
