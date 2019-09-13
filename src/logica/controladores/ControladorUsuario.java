@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package logica.controladores;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -25,7 +24,6 @@ import logica.dt.ListaDeReproduccionDt;
 import logica.dt.UsuarioDt;
 import logica.dt.VideoDt;
 import logica.dt.VideoListaDt;
-//import logica.controladores.IControladorUsuario;
 
 /**
  *
@@ -190,11 +188,9 @@ public class ControladorUsuario implements IControladorUsuario {
         UsuarioDt dt = null;
         try {
             EntityManager em = emFactory.createEntityManager();
-            //List users = em.createQuery("SELECT nick FROM Usuario u WHERE id = :id").getResultList();
-            //TypedQuery<Usuario> query = em.createQuery("SELECT * FROM Usuario u WHERE u.id = :id", Usuario.class);
-            //Usuario u = query.setParameter("id", id).getSingleResult();
             Usuario u = em.find(Usuario.class, id);
             dt = new UsuarioDt(u);
+            em.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
         }
@@ -340,31 +336,6 @@ public class ControladorUsuario implements IControladorUsuario {
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
         }
     }
-
-    //Seguir Usuario y eso
-    /*@Override
-    public void seguirUsuario(String seguidor, String seguido){
-        try {
-            EntityManager em = emFactory.createEntityManager();
-            em.getTransaction().begin();
-
-            if(em.find(Canal.class, obtenerIdUsuario(seguido)) == null)
-                throw new Exception("Ese usuario a seguir no existe o no tiene canal");
-            if(em.find(Usuario.class, obtenerIdUsuario(seguidor)) == null)
-                throw new Exception("Ese usuario seguidor no existe");
-
-            Canal c = em.find(Canal.class, obtenerIdUsuario(seguido));
-            Usuario u = em.createNamedQuery("Usuario.findByNickname", Usuario.class).setParameter("nickname", seguidor).getSingleResult();
-
-            u.agregarSuscripcion(c);
-            c.agregarSeguidor(u);
-            em.merge(c);
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
-        }
-
-    }*/
 
     @Override
     public void seguirUsuario(String seguidor, String seguido){

@@ -19,6 +19,7 @@ import javax.swing.ImageIcon;
 import logica.Canal;
 import logica.Usuario;
 import logica.controladores.IControladorUsuario;
+import logica.controladores.IControladorVideo;
 import logica.dt.UsuarioDt;
 import logica.dt.VideoDt;
 
@@ -34,6 +35,7 @@ public class listarUsuario extends javax.swing.JInternalFrame {
     String usuario;
     UyTubeFrame p;
     IControladorUsuario u;
+    IControladorVideo v;
     UsuarioDt dt;
     List<String> listas;
     Collection<Usuario> seguidores;
@@ -41,13 +43,14 @@ public class listarUsuario extends javax.swing.JInternalFrame {
     List<VideoDt> videos;
     Canal canal;
 
-    public listarUsuario(IControladorUsuario _user, UyTubeFrame padre, String _usuario) {
+    public listarUsuario(IControladorUsuario _user, IControladorVideo vid, UyTubeFrame padre, String _usuario) {
         initComponents();
         this.setVisible(true);
         ConsultarL.setEnabled(false);
         ConsultarV.setEnabled(false);
         u = _user;
         p = padre;
+        v = vid;
         usuario = _usuario;
         int id = u.obtenerIdUsuario(usuario);
         UsuarioDt dt = u.ConsultarUsuario(id);
@@ -482,12 +485,13 @@ public class listarUsuario extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ConsultarVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultarVActionPerformed
-        p.AgregarInternalFrame(new consultarVideo(p.vid, u, p.vid.obtenerVideoDt(listVideos.getSelectedValue(), dt.getId())));
+        p.AgregarInternalFrame(new consultarVideo(v, u, p.vid.obtenerVideoDt(listVideos.getSelectedValue(), dt.getId())));
         this.dispose();
     }//GEN-LAST:event_ConsultarVActionPerformed
 
     private void ConsultarLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultarLActionPerformed
-        p.AgregarInternalFrame(new consultarListaDR(u, p.vid, p, listListas.getSelectedValue(), dt.getId()));
+        
+        p.AgregarInternalFrame(new consultarListaDR(u, v, p, listListas.getSelectedValue(), dt.getId()));
         this.dispose();
     }//GEN-LAST:event_ConsultarLActionPerformed
 
