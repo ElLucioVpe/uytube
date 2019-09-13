@@ -42,7 +42,7 @@ public class consultarVideo extends javax.swing.JInternalFrame {
         LabelDuracion.setText("Duración: " + video.getDuracion() + " minutos");
         String privacidad = "Publico";
         if(video.getPrivacidad()) privacidad = "Privado";
-        LabelPrivacidad.setText(privacidad);
+        LabelPrivacidad.setText("Privacidad: " + privacidad);
         LabelFecha.setText("Fecha de publicación: " + video.getFechaPublicacion().toString());
         DescripcionArea.setText(video.getDescripcion());
         DescripcionArea.setEditable(false);
