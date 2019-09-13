@@ -10,6 +10,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import logica.controladores.IControladorUsuario;
+import logica.controladores.IControladorVideo;
 import logica.dt.UsuarioDt;
 
 /**
@@ -22,12 +23,14 @@ public class listarUsuarios extends javax.swing.JInternalFrame {
      * Creates new form listarUsuarios
      */
     IControladorUsuario u;
+    IControladorVideo v;
     UyTubeFrame p;
     JDesktopPane escritorio;
 
-    public listarUsuarios(IControladorUsuario user, UyTubeFrame padre, JDesktopPane desktop) {
+    public listarUsuarios(IControladorUsuario user, IControladorVideo vid, UyTubeFrame padre, JDesktopPane desktop) {
         initComponents();
         u = user;
+        v = vid;
         p = padre;
         DefaultListModel<String> model = new DefaultListModel<>();
 
@@ -145,7 +148,7 @@ public class listarUsuarios extends javax.swing.JInternalFrame {
 
     private void btnListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarActionPerformed
         String lista = listUsuarios.getSelectedValue();
-        JInternalFrame f = new listarUsuario(u, p, lista);
+        JInternalFrame f = new listarUsuario(u, v, p, lista);
         p.cambiarSize(f.getWidth(), f.getHeight());
         p.AgregarInternalFrame(f);
         this.dispose();

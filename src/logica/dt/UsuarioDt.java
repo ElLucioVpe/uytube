@@ -51,6 +51,7 @@ public class UsuarioDt {
     }
     
     public UsuarioDt(Usuario u) {
+        this.id = u.getId();
         this.nickname = u.getNickname();
         this.nombre = u.getNombre();
         this.apellido = u.getApellido();
