@@ -8,6 +8,7 @@ package logica.controladores;
 import java.util.Date;
 import java.util.List;
 import javax.swing.tree.DefaultMutableTreeNode;
+import logica.dt.VideoDt;
 import logica.dt.valoracionDt;
 
 /**
@@ -22,6 +23,7 @@ public interface IControladorVideo {
     public abstract void ComentarVideo(int user_id, int video_id, long id_padre, String texto, Date fecha);
 
     //Auxiliares
-    public abstract DefaultMutableTreeNode obtenerComentariosVideo(String videoNombre);
-    public abstract List<valoracionDt>  obtenerValoracionVideo(String nomvideo);
+    public abstract VideoDt obtenerVideoDt(String video, int user);
+    public abstract DefaultMutableTreeNode obtenerComentariosVideo(int id_video);
+    public abstract List<valoracionDt>  obtenerValoracionVideo(int id_video);
 }

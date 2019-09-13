@@ -5,8 +5,10 @@
  */
 package presentacion;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JDesktopPane;
+import javax.swing.JInternalFrame;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import logica.controladores.IControladorUsuario;
@@ -23,15 +25,18 @@ public class listarVideos extends javax.swing.JInternalFrame {
      * Creates new form listarVideos
      */
     IControladorUsuario u;
-     IControladorVideo v;
-     JDesktopPane Escritorio;
-    public listarVideos(IControladorUsuario user, IControladorVideo video, JDesktopPane Esc ) {
+    IControladorVideo v;
+    UyTubeFrame p;
+    List<VideoDt> listV;
+    String user_nick;
+    
+    public listarVideos(IControladorUsuario user, IControladorVideo video, UyTubeFrame padre) {
         initComponents();
         u = user;
         v = video;
-        Escritorio = Esc;
-        this.setVisible(true);
-
+        p = padre;
+        listV = new ArrayList<>();
+        setVisible(true);
     }
 
     /**
@@ -45,36 +50,62 @@ public class listarVideos extends javax.swing.JInternalFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        botonBuscar = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         label1 = new java.awt.Label();
-        jButton2 = new javax.swing.JButton();
+        botonCancelar = new javax.swing.JButton();
+        botonConsultar = new javax.swing.JButton();
+        botonModificar = new javax.swing.JButton();
 
-        setTitle("Consultar Videos");
+        setClosable(true);
+        setMaximizable(true);
+        setTitle("Lista de Videos");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null}
+
             },
             new String [] {
-                "Nombre", "Categoria", "Descripcion", "Duracion", "Fecha", "Privacidad"
+                "Nombre"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
-        jButton1.setText("Consultar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        botonBuscar.setText("Buscar");
+        botonBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                botonBuscarActionPerformed(evt);
             }
         });
 
         label1.setText("Nick usuario");
 
-        jButton2.setText("Mas Informacion");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        botonCancelar.setText("Cancelar");
+        botonCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                botonCancelarActionPerformed(evt);
+            }
+        });
+
+        botonConsultar.setText("Consultar");
+        botonConsultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonConsultarActionPerformed(evt);
+            }
+        });
+
+        botonModificar.setText("Modificar");
+        botonModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonModificarActionPerformed(evt);
             }
         });
 
@@ -83,67 +114,82 @@ public class listarVideos extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 533, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 533, Short.MAX_VALUE))
+                        .addComponent(botonConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(botonModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(botonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2)))
+                        .addComponent(botonBuscar)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 11, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(label1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton1)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton2)))
+                        .addComponent(botonBuscar)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 427, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(botonCancelar)
+                    .addComponent(botonConsultar)
+                    .addComponent(botonModificar))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        List<VideoDt> list = u.listarVideosDeUsuario(jTextField1.getText());
-         for(int i = 0; i < list.size(); i++) {
+    private void botonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_botonCancelarActionPerformed
+
+    private void botonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscarActionPerformed
+        user_nick = jTextField1.getText(); //por si el usuario se manda macanas
+        listV = u.listarVideosDeUsuario(user_nick);
+        for(int i = 0; i < listV.size(); i++) {
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-            model.addRow(new Object[]{list.get(i).getNombre(), list.get(i).getCategoria(), list.get(i).getDescripcion(), list.get(i).getDuracion(), list.get(i).getFechaPublicacion(), list.get(i).getPrivacidad()});
-        } 
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
+            model.addRow(new Object[]{listV.get(i).getNombre()});
+        }
+    }//GEN-LAST:event_botonBuscarActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        JTable table = (JTable) jTable1;
-        //DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        int i = table.getSelectedRow();
-        Object videoName = table.getModel().getValueAt(i, 1);
-        consultarVideo frmListarVideo = new consultarVideo (v,u,videoName.toString());
-        Escritorio.add(frmListarVideo);
-        Escritorio.moveToFront(frmListarVideo);
-        frmListarVideo.setSize(Escritorio.getWidth(),Escritorio.getHeight());
-        frmListarVideo.setLocation(0,0);
-        frmListarVideo.setVisible(true);
-        frmListarVideo.show();
-        
-        
-        
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void botonConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonConsultarActionPerformed
+        int row = jTable1.getSelectedRow();
+        String vidnom = jTable1.getModel().getValueAt(row, 0).toString();
+        JInternalFrame f = new consultarVideo(v, u, v.obtenerVideoDt(vidnom, u.obtenerIdUsuario(user_nick)));
+        p.cambiarSize(f.getWidth(), f.getHeight());
+        p.AgregarInternalFrame(f);
+        this.dispose();
+    }//GEN-LAST:event_botonConsultarActionPerformed
 
+    private void botonModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonModificarActionPerformed
+        int row = jTable1.getSelectedRow();
+        String vidnom = jTable1.getModel().getValueAt(row, 0).toString();
+        p.AgregarInternalFrame(new modificarVideo(v, p.cate, v.obtenerVideoDt(vidnom, u.obtenerIdUsuario(user_nick)).getId()));
+        this.dispose();
+    }//GEN-LAST:event_botonModificarActionPerformed
+
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton botonBuscar;
+    private javax.swing.JButton botonCancelar;
+    private javax.swing.JButton botonConsultar;
+    private javax.swing.JButton botonModificar;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;

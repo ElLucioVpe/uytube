@@ -141,17 +141,22 @@ public class ControladorUsuario implements IControladorUsuario {
     
     @Override
     public List<VideoDt> listarVideosDeUsuario(String usernick){
-      List<VideoDt> list = new ArrayList<VideoDt>();
+        List<VideoDt> list = new ArrayList<>();
         try {
             int idUser= obtenerIdUsuario(usernick);
             EntityManager em = emFactory.createEntityManager();
-            TypedQuery<Video> query1 = em.createQuery("SELECT v FROM Video v where v.canal_user_id= :idUser", Video.class);
-            List<Video> vid = query1.setParameter("idUser", idUser).getResultList();
-
-
-            for(int i=0;i < vid.size(); i++) {
-                list.add(new VideoDt(vid.get(i)));
+            em.getTransaction().begin();
+            
+            Canal c = em.find(Canal.class, idUser);
+            if(c == null) throw new Exception("El usuario no existe");
+            
+            Collection<Video> vid = c.getVideos();
+            Iterator<Video> it = vid.iterator();
+            
+            while(it.hasNext()) {
+                list.add(new VideoDt(it.next()));
             }
+            em.getTransaction().commit();
             em.close();
         }catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
@@ -159,22 +164,7 @@ public class ControladorUsuario implements IControladorUsuario {
         return list;
 
     }
-/*public List<VideoDt> listarVideo(String nombrevideo, usernick){
-      List<VideoDt> list = new ArrayList<VideoDt>();
-        try {
-            int idUser= obtenerIdUsuario(usernick);
-             EntityManager em = emFactory.createEntityManager();
-            TypedQuery<Video> vid = em.createQuery("Video.findByNombre", Video.class).setParameter("nombre", nombrevideo);
 
-           //query1.setParameter("nombrevideo", nombrevideo);
-           // vidID = query1.setParameter("idUser", idUser).getResultList();
-         //  vid
-        }catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
-        }
-        return list;
-
-}*/
     @Override
     public List<UsuarioDt> ListarUsuarios(){
         List<UsuarioDt> list = new ArrayList<UsuarioDt>();

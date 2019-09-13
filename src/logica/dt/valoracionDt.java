@@ -15,16 +15,15 @@ public class valoracionDt {
      private String user;
      private boolean like;
      
-     public valoracionDt() {
-         
+    public valoracionDt() {     
+    }
+    
+    public valoracionDt(Valoracion v) {
+        this.user=v.getUsuario().getNickname();
+        this.like=v.getGustar();
     }
      
-     public valoracionDt(Valoracion v) {
-      this.user=v.getUsuario().getNickname();
-      this.like=v.getGustar();
-    }
-     
-     public String getUser() {
+    public String getUser() {
         return user;
     }
 
@@ -33,11 +32,11 @@ public class valoracionDt {
     }
     
     public boolean getGusto(){
-    return like;
+        return like;
     }
     
     public void setGusto(boolean gusto){
-    this.like=gusto;
+        this.like=gusto;
     }
 
      

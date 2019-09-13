@@ -6,6 +6,7 @@
 package logica;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
@@ -104,6 +105,8 @@ public class Video implements Serializable {
         this.fechaPublicacion = fechaPublicacion;
         this.privacidad = privacidad;
         this.canal_user_id=user;
+        this.valoraciones = new ArrayList<>();
+        this.comentarios = new ArrayList<>();
     }
 
     public Integer getId() {
@@ -176,20 +179,24 @@ public class Video implements Serializable {
     
     public int getLikes() {
         int likes = 0;
-        Iterator<Valoracion> it = valoraciones.iterator();
+        if(!valoraciones.isEmpty()) {
+            Iterator<Valoracion> it = valoraciones.iterator();
         
-        while(it.hasNext()) {
-            if(it.next().getGustar()) likes++;
+            while(it.hasNext()) {
+                if(it.next().getGustar()) likes++;
+            }
         }
         return likes;
     }
 
     public int getDislikes() {
         int dislikes = 0;
-        Iterator<Valoracion> it = valoraciones.iterator();
-        
-        while(it.hasNext()) {
-            if(!it.next().getGustar()) dislikes++;
+        if(!valoraciones.isEmpty()) {
+            Iterator<Valoracion> it = valoraciones.iterator();
+
+            while(it.hasNext()) {
+                if(!it.next().getGustar()) dislikes++;
+            }
         }
         return dislikes;
     }

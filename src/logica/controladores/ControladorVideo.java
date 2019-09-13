@@ -23,6 +23,7 @@ import logica.ValoracionPK;
 import logica.Video;
 import logica.Categoria;
 import logica.Comentario;
+import logica.dt.VideoDt;
 import logica.dt.valoracionDt;
 
 /**
@@ -175,15 +176,41 @@ public class ControladorVideo implements IControladorVideo {
         
         //Auxiliares
         @Override
-        public DefaultMutableTreeNode obtenerComentariosVideo(String videoNombre) {
+        public VideoDt obtenerVideoDt(String nom, int user) {
+            VideoDt dt = null;
+            try {
+                EntityManager em = emFactory.createEntityManager();
+                em.getTransaction().begin();
+                
+                Canal c = em.find(Canal.class, user);
+                if(c == null) throw new Exception("El usuario no existe");
+                
+                
+                var querry = em.createQuery("SELECT v FROM Video v WHERE v.nombre = :nombre AND v.canal_user_id = :canal_user_id", Video.class);
+                
+                Video video = querry.setParameter("nombre", nom).setParameter("canal_user_id", user).getSingleResult();
+                if(video == null) throw new Exception("El video no existe");
+                
+                dt = new VideoDt(video);
+                em.getTransaction().commit();
+                em.close();
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+            }
+            return dt;
+        }
+        
+        @Override
+        public DefaultMutableTreeNode obtenerComentariosVideo(int id_video) {
             DefaultMutableTreeNode root = null;
             try {
                 EntityManager em = emFactory.createEntityManager();
                 em.getTransaction().begin();
 
-                TypedQuery<Video> vid = em.createNamedQuery("Video.findByNombre",Video.class).setParameter("nombre", videoNombre);
-                Video video = vid.getSingleResult();
+                Video video = em.find(Video.class, id_video);
                 if(video == null) throw new Exception("El video no existe");
+                
                 Collection<Comentario> cs = video.getComentarios();
                 Iterator<Comentario> it = cs.iterator();
                 root = new DefaultMutableTreeNode(video.getNombre() + " :: Comentarios");
@@ -216,20 +243,19 @@ public class ControladorVideo implements IControladorVideo {
             }
         }
         
-        public List<valoracionDt> obtenerValoracionVideo(String nomvideo){
-            EntityManager em = emFactory.createEntityManager();
-            TypedQuery<Video> vid = em.createNamedQuery("Video.findByNombre",Video.class).setParameter("nombre", nomvideo);
-            Video video = vid.getSingleResult();
+        public List<valoracionDt> obtenerValoracionVideo(int id_video){
             List<valoracionDt> list = new ArrayList<valoracionDt>();
             try {
-              if(video == null) throw new Exception("El video no existe");
-               List<Valoracion> vals = em.createQuery("Valoracion.findByVideoId", Valoracion.class).setParameter("videoId", video.getId()).getResultList();
-               if(vals == null) throw new Exception("El video no existe");
-               for(int i=0;i < vals.size(); i++) {
-                   list.add(new valoracionDt(vals.get(i)));
-               }
-               em.close();
+                EntityManager em = emFactory.createEntityManager();
 
+                Video vid = em.find(Video.class, id_video);
+                if(vid == null) throw new Exception("El video no existe");
+                Collection<Valoracion> vals = vid.getValoraciones();
+                Iterator<Valoracion> it = vals.iterator();
+                while(it.hasNext()) {
+                    list.add(new valoracionDt(it.next()));
+                }
+                em.close();
            } catch (Exception e) {
                JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
            }
