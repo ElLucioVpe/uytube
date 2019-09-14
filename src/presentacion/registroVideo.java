@@ -39,7 +39,7 @@ IControladorUsuario u;
         jSpinner1.setModel(modeloSpinner);
         
         SpinnerNumberModel modeloSpinner2 = new SpinnerNumberModel();
-        modeloSpinner2.setMaximum(60);
+        modeloSpinner2.setMaximum(59);
         modeloSpinner2.setMinimum(0);
         jSpinner2.setModel(modeloSpinner2);
         

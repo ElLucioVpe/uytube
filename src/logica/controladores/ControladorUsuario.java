@@ -127,7 +127,8 @@ public class ControladorUsuario implements IControladorUsuario {
             em.merge(u);
             em.getTransaction().commit();
             em.close();
-
+            
+            JOptionPane.showMessageDialog(null,"El usuario se modifico con exito");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
         }

@@ -84,7 +84,7 @@ public class ControladorVideo implements IControladorVideo {
             if(!nuevoNom.isBlank()) v.setNombre(nuevoNom);
             if(!nuevaDur.isBlank()) v.setDuracion(Float.parseFloat(nuevaDur));
             if(!nuevaUrl.isBlank()) v.setUrl(nuevaUrl);
-            if(!nuevaDesc.isBlank()) v.setUrl(nuevaDesc);
+            if(!nuevaDesc.isBlank()) v.setDescripcion(nuevaDesc);
             if(nuevaFpub != null){
                 if(nuevaFpub.after(fecha)) throw new Exception("Fecha Imposible aun no estamos en esa fecha");
                 v.setFechaPublicacion(nuevaFpub);
