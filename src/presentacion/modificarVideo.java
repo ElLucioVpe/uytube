@@ -212,9 +212,17 @@ public class modificarVideo extends javax.swing.JInternalFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
        
+            String durat;
+            
+        try { 
+            
+            if(Integer.parseInt(jSpinner2.getValue().toString())<10){
+            durat = jSpinner1.getValue().toString()+".0"+jSpinner2.getValue().toString();
+            }else{
+            durat = jSpinner1.getValue().toString()+"."+jSpinner2.getValue().toString();
+            }
             
             
-        try {
              boolean privado = false;
              if(jComboBoxPrivacidad.getSelectedItem() == jComboBoxPrivacidad.getItemAt(0)) privado = true;
              String categoria = CategoriasBox.getSelectedItem().toString();
@@ -222,7 +230,7 @@ public class modificarVideo extends javax.swing.JInternalFrame {
            v.ModificarVideo(
                     video_id,
                     textField1.getText(),
-                    jSpinner1.getValue().toString()+"."+jSpinner2.getValue().toString(),
+                    durat,
                     textField3.getText(), 
                     textField4.getText(),
                     jDateChooser1.getDate(),

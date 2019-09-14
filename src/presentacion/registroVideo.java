@@ -171,11 +171,17 @@ IControladorUsuario u;
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        try {       
+        String durat;
+        try {     
+            if(Integer.parseInt(jSpinner2.getValue().toString())<10){
+            durat = jSpinner1.getValue().toString()+".0"+jSpinner2.getValue().toString();
+            }else{
+            durat = jSpinner1.getValue().toString()+"."+jSpinner2.getValue().toString();
+            }
             //Creo el video
             v.AltaVideo(
                     textField1.getText(),
-                    jSpinner1.getValue().toString()+"."+jSpinner2.getValue().toString(),
+                    durat,
                     textField3.getText(), 
                     textField4.getText(),
                     u.obtenerIdUsuario(textField6.getText()),
