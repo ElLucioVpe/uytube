@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import logica.controladores.IControladorUsuario;
+import logica.dt.VideoDt;
 import logica.dt.VideoListaDt;
 
 /**
@@ -143,12 +144,12 @@ public class quitarVideoListaDR extends javax.swing.JInternalFrame {
 
     //Auxiliares
     private void obtenerVideosLista() {
-        List<VideoListaDt> listas = u.obtenerVideosLista(id, l);
-        Iterator<VideoListaDt> it = listas.iterator();
+        List<VideoDt> listas = u.obtenerVideosLista(id, l);
+        Iterator<VideoDt> it = listas.iterator();
         DefaultListModel<String> model = new DefaultListModel<>();
         
         while(it.hasNext()){
-            VideoListaDt v = it.next();
+            VideoDt v = it.next();
             ids_videos.add(v.getId());
             model.addElement(v.getNombre());
         }

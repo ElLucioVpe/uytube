@@ -44,7 +44,7 @@ public interface IControladorUsuario {
     public abstract List obtenerCategorias();
     public abstract String obtenerTipoLista(int propietario, String lista);
     public abstract List<String> obtenerListasUsuario(int id);
-    public abstract List<VideoListaDt> obtenerVideosLista(int id, String lista);
+    public abstract List<VideoDt> obtenerVideosLista(int id, String lista);
     public abstract ListaDeReproduccionDt obtenerListaDt(int id, String lista);
     
     //TO-DO

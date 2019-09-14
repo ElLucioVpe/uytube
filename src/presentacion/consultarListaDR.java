@@ -12,6 +12,7 @@ import javax.swing.DefaultListModel;
 import logica.controladores.IControladorUsuario;
 import logica.controladores.IControladorVideo;
 import logica.dt.ListaDeReproduccionDt;
+import logica.dt.VideoDt;
 import logica.dt.VideoListaDt;
 
 /**
@@ -27,10 +28,10 @@ public class consultarListaDR extends javax.swing.JInternalFrame {
     IControladorVideo v;
     UyTubeFrame p;
     String l;
-    int id;
+    Integer id;
     List<Integer> ids_videos;
     
-    public consultarListaDR(IControladorUsuario user, IControladorVideo video, UyTubeFrame padre, String lista, int id_user) {
+    public consultarListaDR(IControladorUsuario user, IControladorVideo video, UyTubeFrame padre, String lista, Integer id_user) {
         initComponents();
         setVisible(true);
         setTitle("Consulta de Lista de Reproduccion");
@@ -138,8 +139,11 @@ public class consultarListaDR extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BotonConsultarVideoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonConsultarVideoActionPerformed
-        //p.AgregarInternalFrame(new consultarVideo(ids_videos.get(jList1.getSelectedIndex()));
-        //this.dispose();
+        String nom = jList1.getSelectedValue();
+        Integer idv = jList1.getSelectedIndex();
+        VideoDt vdt = v.obtenerVideoDt(nom, ids_videos.get(idv));
+        p.AgregarInternalFrame(new consultarVideo(v, u, vdt));
+        this.dispose();
     }//GEN-LAST:event_BotonConsultarVideoActionPerformed
 
     private void jList1ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jList1ValueChanged
@@ -173,14 +177,14 @@ public class consultarListaDR extends javax.swing.JInternalFrame {
     }
     
     private void obtenerVideosLista() {
-        List<VideoListaDt> listas = u.obtenerVideosLista(id, l);
-        Iterator<VideoListaDt> it = listas.iterator();
+        List<VideoDt> listas = u.obtenerVideosLista(id, l);
+        Iterator<VideoDt> it = listas.iterator();
         DefaultListModel<String> model = new DefaultListModel<>();
         
         while(it.hasNext()){
-            VideoListaDt v = it.next();
-            ids_videos.add(v.getId());
-            model.addElement(v.getNombre());
+            VideoDt vdt = it.next();
+            ids_videos.add(vdt.getIdCanal());
+            model.addElement(vdt.getNombre());
         }
         
         jList1.setModel(model);

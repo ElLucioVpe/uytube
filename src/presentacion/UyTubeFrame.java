@@ -429,31 +429,31 @@ public class UyTubeFrame extends javax.swing.JFrame {
        user.seguirUsuario("tonyp", "sergiop");
        user.seguirUsuario("nicoJ", "diegop");
         //VIDEO
-        vid.AltaVideo("Locura celeste", "19.07", "https://youtu.be/PAfbzKcePx0", "Una cancion de fubol", 4, "Música");
-        vid.AltaVideo("Niño payaso", "13.53", "https://youtu.be/K-uEIUnyZPg", "la emocion explota", 4 , "Música");
-        vid.AltaVideo("Sweet child'o mine", "14.13", "https://youtu.be/1w7OgIMMRc4", "cancion de los rolin",6 , "Música");
+        vid.AltaVideo("Locura celeste", "3.04", "https://youtu.be/PAfbzKcePx0", "Una cancion de fubol", 4, "Música");
+        vid.AltaVideo("Niño payaso", "4.18", "https://youtu.be/K-uEIUnyZPg", "la emocion explota", 4 , "Música");
+        vid.AltaVideo("Sweet child'o mine", "5.02", "https://youtu.be/1w7OgIMMRc4", "cancion de los rolin",6 , "Música");
         vid.ModificarVideo(3, "", "", "", "", null, false, "Ninguna");
-        vid.AltaVideo("Dancing in the Dark", "56.12", "https://youtu.be/129kuDCQtHs", "temaso para la noche de la nostalgia",8  , "Música");
+        vid.AltaVideo("Dancing in the Dark", "5.58", "https://youtu.be/129kuDCQtHs", "temaso para la noche de la nostalgia",8  , "Música");
         vid.ModificarVideo(4, "", "", "", "", null, false, "Ninguna");
-        vid.AltaVideo("Thriller", "89.10", "https://youtu.be/sOnqjkJTMaA", "este medio raro con los nenes", 6 , "Música");
+        vid.AltaVideo("Thriller", "13.42", "https://youtu.be/sOnqjkJTMaA", "este medio raro con los nenes", 6 , "Música");
         vid.ModificarVideo(5, "", "", "", "", null, false, "Ninguna");
-        vid.AltaVideo("100 años de FING", "1.00", "https://youtu.be/peGS4TBxSaI", "mucha emocion", 3 , "Noticias");
+        vid.AltaVideo("100 años de FING", "6.26", "https://youtu.be/peGS4TBxSaI", "mucha emocion", 3 , "Noticias");
         vid.ModificarVideo(6, "", "", "", "", null, false, "Ninguna");
-        vid.AltaVideo("50 años del InCo", "5.56", "https://youtu.be/GzOJSk4urlM", "la mitad que la fing jeje", 3 , "Noticias");
+        vid.AltaVideo("50 años del InCo", "27.22", "https://youtu.be/GzOJSk4urlM", "la mitad que la fing jeje", 3 , "Noticias");
         vid.ModificarVideo(7, "", "", "", "", null, false, "Ninguna");
-        vid.AltaVideo("Ingeniería de Muestra 2017", "10.01", "https://youtu.be/RnaYRA1k5j4", "muy buenos trabajos",3  , "Noticias");
+        vid.AltaVideo("Ingeniería de Muestra 2017", "1.00", "https://youtu.be/RnaYRA1k5j4", "muy buenos trabajos",3  , "Noticias");
         vid.ModificarVideo(8, "", "", "", "", null, false, "Ninguna");
-        vid.AltaVideo("Etapa A contramano Liguilla", "10.01", "https://youtu.be/Es6GRMHXeCQ", "esta estuvo dificil", 5 , "Carnaval");
-        vid.AltaVideo("Etapa Don Timoteo Liguilla", "10.01", "https://youtu.be/I_spHBU9ZsI", "esta estuvo facil", 5 , "Carnaval");
-        vid.AltaVideo("Show de goles", "10.01", "https://youtu.be/g46w4_kD_lA", "tremendos goles variados", 6 , "Deporte");
+        vid.AltaVideo("Etapa A contramano Liguilla", "57.15", "https://youtu.be/Es6GRMHXeCQ", "esta estuvo dificil", 5 , "Carnaval");
+        vid.AltaVideo("Etapa Don Timoteo Liguilla", "51.38", "https://youtu.be/I_spHBU9ZsI", "esta estuvo facil", 5 , "Carnaval");
+        vid.AltaVideo("Show de goles", "4.23", "https://youtu.be/g46w4_kD_lA", "tremendos goles variados", 6 , "Deporte");
         vid.ModificarVideo(11, "", "", "", "", null, false, "Ninguna");
-        vid.AltaVideo("Pacheco goles más recordados", "10.01", "https://youtu.be/wlEd6-HsIxI", "tremendos goles de pacheco", 4 , "Deporte");
-        vid.AltaVideo("Inauguración Estadio Peñarol", "10.01", "https://youtu.be/U6XPJ8Vz72A", "Presentacion de el nuevo estadio peñarol", 6 , "Deporte");
+        vid.AltaVideo("Pacheco goles más recordados", "5.48", "https://youtu.be/wlEd6-HsIxI", "tremendos goles de pacheco", 4 , "Deporte");
+        vid.AltaVideo("Inauguración Estadio Peñarol", "207.26", "https://youtu.be/U6XPJ8Vz72A", "Presentacion de el nuevo estadio peñarol", 6 , "Deporte");
         vid.ModificarVideo(13, "", "", "", "", null, false, "Ninguna");
-        vid.AltaVideo("Recoba 20 mejores goles", "10.01", "https://youtu.be/Gy3fZhWdLEQ", "tremendos goles de recoba", 5 , "Deporte");
-        vid.AltaVideo("Entrevista a director CUTI", "10.01", "https://youtu.be/Eq5uBEzI6qs", "entrevista realizada el 13/7/1527", 15 , "Ciencia y Tecnología");
+        vid.AltaVideo("Recoba 20 mejores goles", "13.36", "https://youtu.be/Gy3fZhWdLEQ", "tremendos goles de recoba", 5 , "Deporte");
+        vid.AltaVideo("Entrevista a director CUTI", "5.39", "https://youtu.be/Eq5uBEzI6qs", "entrevista realizada el 13/7/1527", 15 , "Ciencia y Tecnología");
         vid.ModificarVideo(13, "", "", "", "", null, false, "Ninguna");
-        vid.AltaVideo("Ventana al futuro Uruguay y déficit de ingenieros", "10.01", "https://youtu.be/zBR2pnASlQE", "Muy complicado este tema, hicimos un video para aclarar", 15 , "Ciencia y Tecnología");
+        vid.AltaVideo("Ventana al futuro Uruguay y déficit de ingenieros", "19.21", "https://youtu.be/zBR2pnASlQE", "Muy complicado este tema, hicimos un video para aclarar", 15 , "Ciencia y Tecnología");
         vid.ModificarVideo(13, "", "", "", "", null, false, "Ninguna");
         // lista de reproduccion
         //por defecto

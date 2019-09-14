@@ -23,7 +23,7 @@ public interface IControladorVideo {
     public abstract void ComentarVideo(int user_id, int video_id, long id_padre, String texto, Date fecha);
 
     //Auxiliares
-    public abstract VideoDt obtenerVideoDt(String video, int user);
+    public abstract VideoDt obtenerVideoDt(String video, Integer user);
     public abstract DefaultMutableTreeNode obtenerComentariosVideo(int id_video);
     public abstract List<valoracionDt>  obtenerValoracionVideo(int id_video);
 }

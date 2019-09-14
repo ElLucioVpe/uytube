@@ -177,7 +177,7 @@ public class ControladorVideo implements IControladorVideo {
         
         //Auxiliares
         @Override
-        public VideoDt obtenerVideoDt(String nom, int user) {
+        public VideoDt obtenerVideoDt(String nom, Integer user) {
             VideoDt dt = null;
             try {
                 EntityManager em = emFactory.createEntityManager();

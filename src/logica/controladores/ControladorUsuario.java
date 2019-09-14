@@ -561,8 +561,8 @@ public class ControladorUsuario implements IControladorUsuario {
     }
 
     @Override
-    public List<VideoListaDt> obtenerVideosLista(int id, String lista) {
-        List<VideoListaDt> l = new ArrayList<>();
+    public List<VideoDt> obtenerVideosLista(int id, String lista) {
+        List<VideoDt> l = new ArrayList<>();
         try {
             EntityManager em = emFactory.createEntityManager();
             em.getTransaction().begin();
@@ -574,7 +574,7 @@ public class ControladorUsuario implements IControladorUsuario {
             Iterator it = lvideo.iterator();
             while(it.hasNext()) {
                 Video v = (Video) it.next();
-                l.add(new VideoListaDt(v.getId(), v.getNombre()));
+                l.add(new VideoDt(v));
             }
 
             em.getTransaction().commit();
