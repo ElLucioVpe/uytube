@@ -27,11 +27,11 @@ public class modificarVideo extends javax.swing.JInternalFrame {
     /** Creates new form modificarVideo */
     public modificarVideo(IControladorVideo video, IControladorCategoria cat, int idd) {
         setVisible(true);
+        setResizable(true);
         initComponents();
         
         //Spinner model aca
         SpinnerNumberModel modeloSpinner = new SpinnerNumberModel();
-        modeloSpinner.setMaximum(60);
         modeloSpinner.setMinimum(0);
         jSpinner1.setModel(modeloSpinner);
         
