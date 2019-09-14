@@ -367,7 +367,7 @@ public class UyTubeFrame extends javax.swing.JFrame {
         user.AltaUsuario("mbusca", "Martín", "Buscaglia", "Martin.bus@agadu.org.uy", dateformat.parse("14/06/1972") , "mbusca.jpg");
         user.AltaUsuario("hectorg", "Héctor", "Guido", "hector.gui@elgalpon.org.uy",dateformat.parse("07/01/1954") , "");
         user.AltaUsuario("tabarec", "Tabaré", "Cardozo", "tabare.car@agadu.org.uy", dateformat.parse("24/07/1971"), "tabarec.jpg");
-        user.AltaUsuario("cachilas", "Waldemar Cachila", "Silva", "Cachila.sil@c1080.org.uy", dateformat.parse("01/01/1947") , "cachilas.jpg");
+        user.AltaUsuario("cachilas", "Waldemar \"Cachila\"", "Silva", "Cachila.sil@c1080.org.uy", dateformat.parse("01/01/1947") , "cachilas.jpg");
         user.AltaUsuario("juliob", "Julio", "Bocca", "juliobocca@sodre.com.uy", dateformat.parse("16/03/1967") , "");
         user.AltaUsuario("diegop", "Diego", "Parodi", "diego@efectocine.com", dateformat.parse("01/01/1975") , "");
         user.AltaUsuario("kairoh", "Kairo", "Herrera", "kairoher@pilsenrock.com.uy", dateformat.parse("25/04/1840") , "kairoh.jpg");
