@@ -25,6 +25,7 @@ public class VideoDt {
     private Date fechaPublicacion;
     private String categoria;
     private Boolean privacidad;
+    private int canal_user_id;
     private Collection<Valoracion> valoraciones;
     private int likes;
     private int dislikes;
@@ -45,6 +46,7 @@ public class VideoDt {
         this.fechaPublicacion = v.getFechaPublicacion();
         this.privacidad  = v.getPrivacidad();
         this.valoraciones = v.getValoraciones();
+        this.canal_user_id = v.getIdUsuario();
         this.categoria = v.getCategoria();
         //por cosas de la vida asi se queda
         this.likes = v.getLikes();
@@ -53,6 +55,10 @@ public class VideoDt {
 
     public Integer getId() {
         return id;
+    }
+    
+    public int getIdCanal() {
+        return canal_user_id;
     }
     
     public String getNombre() {
