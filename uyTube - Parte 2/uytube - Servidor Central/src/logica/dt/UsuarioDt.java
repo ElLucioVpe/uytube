@@ -22,6 +22,7 @@ import java.util.List;
 public class UsuarioDt {
     private Integer id;
     private String nombre;
+    private String password;
     private String apellido;
     private String nickname;
     private String mail;
@@ -38,10 +39,11 @@ public class UsuarioDt {
         this.id = id;
     }
 
-    public UsuarioDt(Integer id, String nickname, String nombre, String apellido, String mail, Date fechanac, String imagen, Canal canal, List<String> suscripciones) {
+    public UsuarioDt(Integer id, String pass, String nickname, String nombre, String apellido, String mail, Date fechanac, String imagen, Canal canal, List<String> suscripciones) {
         this.id = id;
         this.nickname = nickname;
         this.nombre = nombre;
+        this.password = pass;
         this.apellido = apellido;
         this.mail = mail;
         this.fechanac = fechanac;
@@ -53,6 +55,7 @@ public class UsuarioDt {
         this.id = u.getId();
         this.nickname = u.getNickname();
         this.nombre = u.getNombre();
+        this.password = u.getPassword();
         this.apellido = u.getApellido();
         this.mail = u.getMail();
         this.imagen = u.getImagen();
