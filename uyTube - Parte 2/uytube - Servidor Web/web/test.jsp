@@ -3,7 +3,9 @@
     Created on : Sep 28, 2019, 5:15:56 PM
     Author     : Luciano
 --%>
-<%@page import="java.util.Date"%>
+<%@page import = "logica.controladores.Fabrica" %>
+<%@page import = "logica.controladores.IControladorUsuario"%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
