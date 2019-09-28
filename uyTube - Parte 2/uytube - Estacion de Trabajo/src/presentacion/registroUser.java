@@ -72,6 +72,8 @@ public class registroUser extends javax.swing.JInternalFrame {
         jButtonSubir = new javax.swing.JButton();
         jButtonSiguiente = new javax.swing.JButton();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jLabel1 = new javax.swing.JLabel();
+        textField5 = new java.awt.TextField();
 
         setClosable(true);
         setMinimumSize(new java.awt.Dimension(381, 324));
@@ -126,20 +128,20 @@ public class registroUser extends javax.swing.JInternalFrame {
 
         label3.setText("Nickname");
         getContentPane().add(label3, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 83, -1, -1));
-        getContentPane().add(textField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 83, 79, -1));
-        getContentPane().add(textField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 113, 79, -1));
+        getContentPane().add(textField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 80, 79, -1));
+        getContentPane().add(textField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 140, 79, -1));
 
         label4.setText("Email");
-        getContentPane().add(label4, new org.netbeans.lib.awtextra.AbsoluteConstraints(104, 113, -1, -1));
+        getContentPane().add(label4, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 140, -1, -1));
 
         label5.setText("Fecha de nacimiento");
-        getContentPane().add(label5, new org.netbeans.lib.awtextra.AbsoluteConstraints(21, 143, -1, -1));
+        getContentPane().add(label5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, -1, -1));
 
         textField6.setEditable(false);
-        getContentPane().add(textField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 173, 77, -1));
+        getContentPane().add(textField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 200, 77, -1));
 
         label6.setText("Imagen");
-        getContentPane().add(label6, new org.netbeans.lib.awtextra.AbsoluteConstraints(94, 173, -1, -1));
+        getContentPane().add(label6, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 200, -1, -1));
 
         jButtonSubir.setText("Subir");
         jButtonSubir.addActionListener(new java.awt.event.ActionListener() {
@@ -147,7 +149,7 @@ public class registroUser extends javax.swing.JInternalFrame {
                 jButtonSubirActionPerformed(evt);
             }
         });
-        getContentPane().add(jButtonSubir, new org.netbeans.lib.awtextra.AbsoluteConstraints(237, 173, -1, 20));
+        getContentPane().add(jButtonSubir, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 200, -1, 20));
 
         jButtonSiguiente.setText("Siguiente");
         jButtonSiguiente.addActionListener(new java.awt.event.ActionListener() {
@@ -156,7 +158,11 @@ public class registroUser extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(jButtonSiguiente, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 240, -1, -1));
-        getContentPane().add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 143, 122, -1));
+        getContentPane().add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 170, 122, -1));
+
+        jLabel1.setText("Contraseña");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 110, -1, -1));
+        getContentPane().add(textField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 110, 79, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -206,10 +212,11 @@ public class registroUser extends javax.swing.JInternalFrame {
                 imagen = textField3.getText() + "." + extension;
                 fnewpath = "data/imagenes/" + imagen;
             }
-            
+            //AltaUsuario(String nick,String passw, String nom, String apell, String mail, Date fnac, String img)
             //Creo el usuario
             u.AltaUsuario(
                 textField3.getText(),
+                textField5.getText(),    
                 textField1.getText(),
                 textField2.getText(), 
                 textField4.getText(),
@@ -240,6 +247,7 @@ public class registroUser extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButtonSiguiente;
     private javax.swing.JButton jButtonSubir;
     private com.toedter.calendar.JDateChooser jDateChooser1;
+    private javax.swing.JLabel jLabel1;
     private java.awt.Label label1;
     private java.awt.Label label2;
     private java.awt.Label label3;
@@ -250,6 +258,7 @@ public class registroUser extends javax.swing.JInternalFrame {
     private java.awt.TextField textField2;
     private java.awt.TextField textField3;
     private java.awt.TextField textField4;
+    private java.awt.TextField textField5;
     private java.awt.TextField textField6;
     // End of variables declaration//GEN-END:variables
 }

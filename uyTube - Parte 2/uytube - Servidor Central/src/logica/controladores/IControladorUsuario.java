@@ -18,7 +18,7 @@ import logica.dt.VideoListaDt;
  */
 public interface IControladorUsuario {
 
-    public abstract void AltaUsuario(String nick, String nom, String apell, String mail, Date fnac, String img);
+    public abstract void AltaUsuario(String nick, String pass, String nom, String apell, String mail, Date fnac, String img);
     public abstract void AltaCanal(String nombre, boolean privado, int user_id, String descripcion);
     public abstract void ModificarUsuario(int id, String nuevonom, String nuevoapell, Date nuevafechaNac, String nuevonomC, String nuevadesC, boolean nuevaprivC);
     public abstract List<UsuarioDt> ListarUsuarios();
