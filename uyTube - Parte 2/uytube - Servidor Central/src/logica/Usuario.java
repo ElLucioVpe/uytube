@@ -75,6 +75,9 @@ public class Usuario implements Serializable {
 
     @Column(name = "IMAGEN")
     private String imagen;
+    
+    @Column(name = "PASSWORD")
+    private String password;
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "usuario")
     private Canal canal;
@@ -94,8 +97,9 @@ public class Usuario implements Serializable {
         this.id = id;
     }
 
-    public Usuario(String nickname, String nombre, String apellido, String mail, Date fechanac) {
+    public Usuario(String nickname, String password, String nombre, String apellido, String mail, Date fechanac) {
         this.nickname = nickname;
+        this.password = password;
         this.nombre = nombre;
         this.apellido = apellido;
         this.mail = mail;
@@ -114,6 +118,10 @@ public class Usuario implements Serializable {
 
     public String getNombre() {
         return nombre;
+    }
+    
+    public String getPassword() {
+        return password;
     }
 
     public void setNombre(String nombre) {
@@ -134,6 +142,10 @@ public class Usuario implements Serializable {
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
+    }
+    
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getMail() {

@@ -57,7 +57,7 @@ public class ControladorUsuario implements IControladorUsuario {
             if(em.createNamedQuery("Usuario.findByMail", Usuario.class).setParameter("mail",mail).getResultList().size() > 0)
                 throw new Exception("El mail ya esta registrado");
 
-            Usuario u = new Usuario(nick, nom, apell, mail, fnac);
+            Usuario u = new Usuario(nick, "", nom, apell, mail, fnac);
             if(!img.isEmpty()) u.setImagen(img);
 
             em.persist(u);
@@ -671,5 +671,18 @@ public class ControladorUsuario implements IControladorUsuario {
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
         }
         return lista;
+    }
+    
+    @Override
+    public Boolean LoginUsuario(String _user, String _password) {
+        Boolean userExists = false;
+        try {
+            EntityManager em = emFactory.createEntityManager();
+            
+            Usuario u = em.find(Usuario.class, this.obtenerIdUsuario(_user));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+        }
+        return userExists;
     }
 }

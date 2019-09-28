@@ -47,8 +47,11 @@ public interface IControladorUsuario {
     public abstract List<VideoDt> obtenerVideosLista(int id, String lista);
     public abstract ListaDeReproduccionDt obtenerListaDt(int id, String lista);
     
-    //TO-DO
     public abstract List<String> ListarSeguidores(int userId);
     public abstract List<String> ListarSiguiendo(int userId);
     public abstract List<String> ListarVideos(int userId);
+    
+    // Para servidor web
+    public abstract List<Boolean> LoginUsuario(String _user, String _password);
+
 }
