@@ -52,6 +52,6 @@ public interface IControladorUsuario {
     public abstract List<String> ListarVideos(int userId);
     
     // Para servidor web
-    public abstract Boolean LoginUsuario(String _user, String _password);
+    public abstract Integer LoginUsuario(String _user, String _password);
 
 }

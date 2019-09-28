@@ -675,15 +675,18 @@ public class ControladorUsuario implements IControladorUsuario {
     }
     
     @Override
-    public Boolean LoginUsuario(String _user, String _password) {
-        Boolean userExists = false;
+    public Integer LoginUsuario(String _user, String _password) {
+        Integer userId = null;
         try {
             EntityManager em = emFactory.createEntityManager();
-            
-            Usuario u = em.find(Usuario.class, this.obtenerIdUsuario(_user));
+            int _id = this.obtenerIdUsuario(_user);
+            Usuario u = em.find(Usuario.class, _id);
+            if (u.getNickname() == _user && u.getPassword() == _password) {
+                userId = _id;
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
         }
-        return userExists;
+        return userId;
     }
 }

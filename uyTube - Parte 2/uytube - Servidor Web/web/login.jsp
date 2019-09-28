@@ -19,6 +19,20 @@
             <%
                 Fabrica f = Fabrica.getInstance();
                 IControladorUsuario user = f.getIControladorUsuario();
+                
+                Boolean formInput = false;
+                
+                if (request.getParameter("user") != null) {
+                    if (request.getParameter("password") != null) {
+                        Integer _id = user.LoginUsuario(request.getParameter("user"), request.getParameter("password"));
+                        if (_id != null) {
+                            session.setAttribute("userid",_id); 
+                            String redirectURL = "index.jsp";
+                            response.sendRedirect(redirectURL);
+                        }
+                    }
+                    formInput = true;
+                }
             %>
     </head>
     <body>
@@ -54,6 +68,14 @@
                                             Iniciar sesion
                                         </button>
                                     </div>
+                                    
+                                    <%
+                                        if (formInput) { %>
+                                            <div class="alert alert-danger" role="alert">
+                                                El usuario o la contraseña no son correctos. Intente nuevamente.
+                                            </div>
+                                        <%}
+                                    %>
                             </div>
                             </form>
                         </div>
