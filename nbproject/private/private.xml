@@ -3,10 +3,30 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Xavel/Desktop/UytubeSiqueSi/uytube/src/logica/controladores/IControladorCategoria.java</file>
-            <file>file:/C:/Users/Xavel/Desktop/UytubeSiqueSi/uytube/src/logica/controladores/Fabrica.java</file>
-            <file>file:/C:/Users/Xavel/Desktop/UytubeSiqueSi/uytube/src/presentacion/registroCategorias.java</file>
-            <file>file:/C:/Users/Xavel/Desktop/UytubeSiqueSi/uytube/src/presentacion/listarCategorias.java</file>
+            <file>file:/C:/OLD/DiscoD/UyTube/uytube2/uytube/src/logica/controladores/IControladorCategoria.java</file>
+            <file>file:/C:/OLD/DiscoD/UyTube/uytube2/uytube/src/logica/Usuario.java</file>
+            <file>file:/C:/OLD/DiscoD/UyTube/uytube2/uytube/src/logica/controladores/IControladorVideo.java</file>
+            <file>file:/C:/OLD/DiscoD/UyTube/uytube2/uytube/src/logica/dt/valoracionDt.java</file>
+            <file>file:/C:/OLD/DiscoD/UyTube/uytube2/uytube/src/logica/Valoracion.java</file>
+            <file>file:/C:/OLD/DiscoD/UyTube/uytube2/uytube/src/logica/controladores/IControladorUsuario.java</file>
+            <file>file:/C:/OLD/DiscoD/UyTube/uytube2/uytube/src/presentacion/UyTubeFrame.java</file>
+            <file>file:/C:/OLD/DiscoD/UyTube/uytube2/uytube/src/logica/Comentario.java</file>
+            <file>file:/C:/OLD/DiscoD/UyTube/uytube2/uytube/src/logica/Video.java</file>
+            <file>file:/C:/OLD/DiscoD/UyTube/uytube2/uytube/src/presentacion/registroUser.java</file>
+            <file>file:/C:/OLD/DiscoD/UyTube/uytube2/uytube/src/logica/ListaDeReproduccion_PorDefecto.java</file>
+            <file>file:/C:/OLD/DiscoD/UyTube/uytube2/uytube/src/logica/controladores/Fabrica.java</file>
+            <file>file:/C:/OLD/DiscoD/UyTube/uytube2/uytube/src/logica/controladores/ControladorVideo.java</file>
+            <file>file:/C:/OLD/DiscoD/UyTube/uytube2/uytube/src/logica/dt/VideoListaDt.java</file>
+            <file>file:/C:/OLD/DiscoD/UyTube/uytube2/uytube/src/presentacion/modificarVideo.java</file>
+            <file>file:/C:/OLD/DiscoD/UyTube/uytube2/uytube/src/logica/controladores/ControladorCategoria.java</file>
+            <file>file:/C:/OLD/DiscoD/UyTube/uytube2/uytube/src/presentacion/registroVideo.java</file>
+            <file>file:/C:/OLD/DiscoD/UyTube/uytube2/uytube/src/logica/Canal.java</file>
+            <file>file:/C:/OLD/DiscoD/UyTube/uytube2/uytube/src/logica/dt/CategoriaDt.java</file>
+            <file>file:/C:/OLD/DiscoD/UyTube/uytube2/uytube/src/logica/dt/VideoDt.java</file>
+            <file>file:/C:/OLD/DiscoD/UyTube/uytube2/uytube/src/logica/ValoracionPK.java</file>
+            <file>file:/C:/OLD/DiscoD/UyTube/uytube2/uytube/src/logica/ListaDeReproduccion.java</file>
+            <file>file:/C:/OLD/DiscoD/UyTube/uytube2/uytube/src/logica/dt/ListaDeReproduccionDt.java</file>
+            <file>file:/C:/OLD/DiscoD/UyTube/uytube2/uytube/src/logica/controladores/ControladorUsuario.java</file>
         </group>
     </open-files>
 </project-private>
