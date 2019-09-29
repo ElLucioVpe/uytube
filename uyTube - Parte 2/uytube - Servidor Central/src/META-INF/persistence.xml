@@ -13,7 +13,7 @@
     <class>logica.ListaDeReproduccion_PorDefecto</class>
     <class>logica.Comentario</class>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:hsqldb:file:..\data\uytubedb"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:hsqldb:hsql://localhost/uytubedb"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
       <property name="javax.persistence.jdbc.driver" value="org.hsqldb.jdbc.JDBCDriver"/>
       <property name="javax.persistence.jdbc.password" value="root"/>
