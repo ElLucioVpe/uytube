@@ -14,7 +14,12 @@
     </head>
     <body>
         <h1>Hello World!</h1>
-        <!Fabrica f = Fabrica.getInstance()-->
-        <!IControladorUsuario user = f.getIControladorUsuario()-->
+        <!-- Alta User-->
+        <% Fabrica f = Fabrica.getInstance(); %>
+        <% IControladorUsuario user = f.getIControladorUsuario(); %>
+     
+        <% user.AltaUsuario("hrubino", "Horacio", "Rubino", "horacio.Rubias@guambia.com.uy", ("25/02/1962") , "hrubino.jpg");  %>
+        <!--/Alta User -->
+        
     </body>
 </html>
