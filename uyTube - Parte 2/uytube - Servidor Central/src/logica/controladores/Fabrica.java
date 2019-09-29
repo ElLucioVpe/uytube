@@ -26,7 +26,7 @@ public class Fabrica {
         return ControladorUsuario.getInstance();
     }
     
-    public ControladorVideo getIControladorVideo() {
+    public IControladorVideo getIControladorVideo() {
         return ControladorVideo.getInstance();
     }
     

@@ -72,7 +72,7 @@ public class listarUsuario extends javax.swing.JInternalFrame {
         if(dt.getImagen() == null) ImagenLabel.setText("<html>Este usuario<br/>no tiene imagen</html>");
         else {
             try {
-                BufferedImage img = ImageIO.read(new File("data/imagenes/" + dt.getImagen()));
+                BufferedImage img = ImageIO.read(new File("../data/imagenes/" + dt.getImagen()));
                 ImageIcon icon = new ImageIcon(resize(img, 80, 100));
                 ImagenLabel.setIcon(icon);
             } catch (IOException e) {
