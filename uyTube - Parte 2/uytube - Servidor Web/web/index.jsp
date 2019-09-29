@@ -17,7 +17,7 @@
         <script src="js/bootstrap.min.js"></script>
         <script src="js/jquery.min.js"></script>
 
-        <title>Fecha de Hoy</title>
+        <title>UyTube Test</title>
     </head>
     <%
         Date date = new Date();
@@ -30,7 +30,7 @@
             IControladorUsuario user = f.getIControladorUsuario(); %>
      
         <!--/Alta User -->
-        <h1>Hello World!</h1>
-        <p>hoy es <%= date %> </p>
+        <h1>Prueba de Base de Datos</h1>
+        <p>El usuario con id = 1 es <%= user.obtenerNickUsuario(1) %> </p>
     </body>
 </html>
