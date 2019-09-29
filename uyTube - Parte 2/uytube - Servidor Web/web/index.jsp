@@ -3,6 +3,10 @@
     Created on : Sep 27, 2019, 10:32:17 PM
     Author     : pagol
 --%>
+<%@page import = "javax.persistence.*"%>
+<%@page import = "logica.controladores.Fabrica"%>
+<%@page import = "logica.controladores.IControladorUsuario"%>
+
 <%@page import="java.util.Date"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -19,7 +23,13 @@
         Date date = new Date();
         
     %>
+        
     <body>
+         <!-- Alta User-->
+        <%! Fabrica f = Fabrica.getInstance();
+            IControladorUsuario user = f.getIControladorUsuario(); %>
+     
+        <!--/Alta User -->
         <h1>Hello World!</h1>
         <p>hoy es <%= date %> </p>
     </body>

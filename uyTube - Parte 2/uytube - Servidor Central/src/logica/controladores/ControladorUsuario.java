@@ -46,7 +46,7 @@ public class ControladorUsuario implements IControladorUsuario {
     }
 
     @Override
-    public void AltaUsuario(String nick, String nom, String apell, String mail, Date fnac, String img) {
+    public void AltaUsuario(String nick, String pass, String nom, String apell, String mail, Date fnac, String img) {
         try {
 
             EntityManager em = emFactory.createEntityManager();
@@ -212,6 +212,7 @@ public class ControladorUsuario implements IControladorUsuario {
             
             dt = new UsuarioDt(
                     u.getId(),
+                    u.getPassword(),
                     u.getNickname(),
                     u.getNombre(),
                     u.getApellido(),

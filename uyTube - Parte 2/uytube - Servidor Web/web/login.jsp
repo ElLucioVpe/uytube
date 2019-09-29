@@ -16,6 +16,10 @@
         <script src="js/bootstrap.min.js"></script>
         <script src="js/jquery.min.js"></script>
         <title>Iniciar sesion en uyTube</title>
+            <%
+                Fabrica f = Fabrica.getInstance();
+                IControladorUsuario user = f.getIControladorUsuario();
+            %>
     </head>
     <body>
         <main class="login-form">

@@ -363,21 +363,21 @@ public class UyTubeFrame extends javax.swing.JFrame {
         //USUARIOS
         SimpleDateFormat dateformat = new SimpleDateFormat("dd/M/yyyy");
         try {
-        user.AltaUsuario("hrubino", "Horacio", "Rubino", "horacio.rubino@guambia.com.uy", dateformat.parse("25/02/1962") , "hrubino.jpg");
-        user.AltaUsuario("mbusca", "Martín", "Buscaglia", "Martin.bus@agadu.org.uy", dateformat.parse("14/06/1972") , "mbusca.jpg");
-        user.AltaUsuario("hectorg", "Héctor", "Guido", "hector.gui@elgalpon.org.uy",dateformat.parse("07/01/1954") , "");
-        user.AltaUsuario("tabarec", "Tabaré", "Cardozo", "tabare.car@agadu.org.uy", dateformat.parse("24/07/1971"), "tabarec.jpg");
-        user.AltaUsuario("cachilas", "Waldemar \"Cachila\"", "Silva", "Cachila.sil@c1080.org.uy", dateformat.parse("01/01/1947") , "cachilas.jpg");
-        user.AltaUsuario("juliob", "Julio", "Bocca", "juliobocca@sodre.com.uy", dateformat.parse("16/03/1967") , "");
-        user.AltaUsuario("diegop", "Diego", "Parodi", "diego@efectocine.com", dateformat.parse("01/01/1975") , "");
-        user.AltaUsuario("kairoh", "Kairo", "Herrera", "kairoher@pilsenrock.com.uy", dateformat.parse("25/04/1840") , "kairoh.jpg");
-        user.AltaUsuario("robinh", "Robin", "Henderson", "Robin.h@tinglesa.com.uy", dateformat.parse("03/08/1940") , "");
-        user.AltaUsuario("marcelot", "Marcelo", "Tinelli", "marcelot@ideasdelsur.com.ar", dateformat.parse("01/04/1960") , "");
-        user.AltaUsuario("novick", "Edgardo", "Novick", "edgardo@novick.com.uy", dateformat.parse("17/07/1952") , "");
-        user.AltaUsuario("sergiop", "Sergio", "Puglia", "puglia@alpanpan.com.uy", dateformat.parse("28/01/1950") , "");
-        user.AltaUsuario("chino", "Alvaro", "Recoba", "chino@trico.org.uy", dateformat.parse("17/03/1976") , "chino.jpg");
-        user.AltaUsuario("tonyp", "Antonio", "Pacheco", "eltony@manya.org.uy", dateformat.parse("14/02/1955") , "tonyp.jpg");
-        user.AltaUsuario("nicoJ", "Nicolás", "Jodal", "jodal@artech.com.uy", dateformat.parse("09/08/1960") , "");
+        user.AltaUsuario("hrubino", "123", "Horacio", "Rubino", "horacio.rubino@guambia.com.uy", dateformat.parse("25/02/1962") , "hrubino.jpg");
+        user.AltaUsuario("mbusca", "123", "Martín", "Buscaglia", "Martin.bus@agadu.org.uy", dateformat.parse("14/06/1972") , "mbusca.jpg");
+        user.AltaUsuario("hectorg", "123", "Héctor", "Guido", "hector.gui@elgalpon.org.uy",dateformat.parse("07/01/1954") , "");
+        user.AltaUsuario("tabarec", "123", "Tabaré", "Cardozo", "tabare.car@agadu.org.uy", dateformat.parse("24/07/1971"), "tabarec.jpg");
+        user.AltaUsuario("cachilas", "123", "Waldemar \"Cachila\"", "Silva", "Cachila.sil@c1080.org.uy", dateformat.parse("01/01/1947") , "cachilas.jpg");
+        user.AltaUsuario("juliob", "123", "Julio", "Bocca", "juliobocca@sodre.com.uy", dateformat.parse("16/03/1967") , "");
+        user.AltaUsuario("diegop", "123", "Diego", "Parodi", "diego@efectocine.com", dateformat.parse("01/01/1975") , "");
+        user.AltaUsuario("kairoh", "123", "Kairo", "Herrera", "kairoher@pilsenrock.com.uy", dateformat.parse("25/04/1840") , "kairoh.jpg");
+        user.AltaUsuario("robinh", "123", "Robin", "Henderson", "Robin.h@tinglesa.com.uy", dateformat.parse("03/08/1940") , "");
+        user.AltaUsuario("marcelot", "123", "Marcelo", "Tinelli", "marcelot@ideasdelsur.com.ar", dateformat.parse("01/04/1960") , "");
+        user.AltaUsuario("novick", "123", "Edgardo", "Novick", "edgardo@novick.com.uy", dateformat.parse("17/07/1952") , "");
+        user.AltaUsuario("sergiop", "123", "Sergio", "Puglia", "puglia@alpanpan.com.uy", dateformat.parse("28/01/1950") , "");
+        user.AltaUsuario("chino", "123", "Alvaro", "Recoba", "chino@trico.org.uy", dateformat.parse("17/03/1976") , "chino.jpg");
+        user.AltaUsuario("tonyp", "123", "Antonio", "Pacheco", "eltony@manya.org.uy", dateformat.parse("14/02/1955") , "tonyp.jpg");
+        user.AltaUsuario("nicoJ", "123", "Nicolás", "Jodal", "jodal@artech.com.uy", dateformat.parse("09/08/1960") , "");
         } catch (ParseException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
