@@ -40,7 +40,7 @@
             <div class="cotainer">
                 <div class="row justify-content-center">
                     <div class="col-md-8">
-                        <h1>uyTube</h1>
+                        <h1>uyTube v2</h1>
                     </div>
                 </div>
                 <div class="row justify-content-center">
@@ -59,7 +59,7 @@
                                     <div class="form-group row">
                                         <label for="password" class="col-md-4 col-form-label text-md-right">Contraseña</label>
                                         <div class="col-md-6">
-                                            <input type="password" id="password" class="form-control" name="password" required>
+                                            <input type="text" id="password" class="form-control" name="password" required>
                                         </div>
                                     </div>
 
@@ -69,8 +69,7 @@
                                         </button>
                                     </div>
                                     
-                                    <%
-                                        if (formInput) { %>
+                                    <% if (formInput) { %>
                                             <div class="alert alert-danger" role="alert">
                                                 El usuario o la contraseña no son correctos. Intente nuevamente.
                                             </div>

@@ -681,7 +681,8 @@ public class ControladorUsuario implements IControladorUsuario {
             EntityManager em = emFactory.createEntityManager();
             int _id = this.obtenerIdUsuario(_user);
             Usuario u = em.find(Usuario.class, _id);
-            if (u.getNickname() == _user && u.getPassword() == _password) {
+            JOptionPane.showMessageDialog(null,"Contra: "+u.getPassword());
+            if (u.getNickname().equals(_user) && u.getPassword().equals(_password)) {
                 userId = _id;
             }
         } catch (Exception e) {

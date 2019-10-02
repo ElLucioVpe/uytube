@@ -32,5 +32,13 @@
         <!--/Alta User -->
         <h1>Prueba de Base de Datos</h1>
         <p>El usuario con id = 1 es <%= user.obtenerNickUsuario(1) %> </p>
+        
+        <%
+            if (session.getAttribute("userid") != "" ) { %>
+                <div class="alert alert-danger" role="alert">
+                   El usuario <%= session.getAttribute("userid") %> esta logueado.
+                </div>
+            <%}
+        %>
     </body>
 </html>
