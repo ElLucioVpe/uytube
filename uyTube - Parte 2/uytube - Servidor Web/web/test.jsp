@@ -17,18 +17,29 @@
 
         <title>Sitio de prueba</title>
     </head>
-    <%
-        Date date = new Date();
-    %>
     <body>
         <h1 class="display-1">Que onda!</h1>
-        <p>esto es una pagina de prueba para probar que todo este funcionando. btw, la fecha es <%= date %> </p>
+        <p>esto es una pagina de prueba de toda la wea AJAX/JS/JSON para comunicar una lista de usuarios que se actualiza en tiempo real</p>
     
+        
+        
         <script>
-            // Un ricolino script de jQuery
-            console.log("1 2 3 4 5 6, i take em all no matter what the price is");
-            $( document ).ready(function() {
-                $( "#prueba" ).append( '<div class="alert alert-success" role="alert">jQuery funciona!</div>' );
+            $(document).ready(function () {
+                $('#txtCountry').typeahead({
+                    source: function (query, result) {
+                        $.ajax({
+                            url: "server.php",
+                            data: 'query=' + query,            
+                            dataType: "json",
+                            type: "POST",
+                            success: function (data) {
+                            result($.map(data, function (item) {
+                                    return item;
+                            }));
+                            }
+                        });
+                    }
+                });
             });
         </script>
         
