@@ -65,7 +65,10 @@ public class ControladorCategoria implements IControladorCategoria {
             
             JOptionPane.showMessageDialog(null,"La categoría se registro con exito");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+            Throwable t = new Throwable();
+            StackTraceElement[] elements = t.getStackTrace();
+            String invocador = elements[1].getFileName();
+            exceptionAux(invocador, e);
         }
     }
      
@@ -83,7 +86,10 @@ public class ControladorCategoria implements IControladorCategoria {
             em.close();
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+            Throwable t = new Throwable();
+            StackTraceElement[] elements = t.getStackTrace();
+            String invocador = elements[1].getFileName();
+            exceptionAux(invocador, e);
         }
         return list;
 }
@@ -98,7 +104,10 @@ public class ControladorCategoria implements IControladorCategoria {
             Categoria c = query.setParameter("Nombre", Nombre).getSingleResult();
             dt = new CategoriaDt(c);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+            Throwable t = new Throwable();
+            StackTraceElement[] elements = t.getStackTrace();
+            String invocador = elements[1].getFileName();
+            exceptionAux(invocador, e);
         }
         return dt;
          
@@ -119,7 +128,10 @@ public class ControladorCategoria implements IControladorCategoria {
             em.getTransaction().commit();
             em.close();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+            Throwable t = new Throwable();
+            StackTraceElement[] elements = t.getStackTrace();
+            String invocador = elements[1].getFileName();
+            exceptionAux(invocador, e);
         }
         return query;
      }
@@ -139,12 +151,23 @@ public class ControladorCategoria implements IControladorCategoria {
             em.getTransaction().commit();
             em.close();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+            Throwable t = new Throwable();
+            StackTraceElement[] elements = t.getStackTrace();
+            String invocador = elements[1].getFileName();
+            exceptionAux(invocador, e);
         }
         return query;
          
          
      }
+     
+    private void exceptionAux(String inv, Exception e){
+        if(!inv.endsWith("_jsp.java")){
+            JOptionPane.showMessageDialog(null," Error: "+e.getMessage());
+        } else {
+            System.out.println("Error: "+e.getMessage());
+        }
+    }
 }
 
 
