@@ -34,7 +34,7 @@
         <p>El usuario con id = 1 es <%= user.obtenerNickUsuario(1) %> </p>
         
         <%
-            if (session.getAttribute("userid") != "" ) { %>
+            if (session.getAttribute("userid") != null ) { %>
                 <div class="alert alert-danger" role="alert">
                    El usuario <%= session.getAttribute("userid") %> esta logueado.
                 </div>
