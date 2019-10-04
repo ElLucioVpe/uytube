@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import logica.controladores.Fabrica;
 import logica.controladores.IControladorUsuario;
 import logica.dt.VideoDt;
@@ -141,6 +142,7 @@ public class quitarVideoListaDR extends javax.swing.JInternalFrame {
 
     private void removeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtonActionPerformed
         u.QuitarVideoListaDeReproduccion(id, l, ids_videos.get(jList1.getSelectedIndex()));
+        JOptionPane.showMessageDialog(null,"El video fue removido con exito");
         obtenerVideosLista();
     }//GEN-LAST:event_removeButtonActionPerformed
 

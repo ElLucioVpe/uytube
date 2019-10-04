@@ -190,6 +190,7 @@ public class registroVideo extends javax.swing.JInternalFrame {
                     CategoriasBox.getSelectedItem().toString()
             );
             
+            JOptionPane.showMessageDialog(null,"El video se registro con exito");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
         }
