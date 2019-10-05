@@ -3,6 +3,9 @@
     Created on : Oct 2, 2019, 3:15:18 PM
     Author     : antus
 --%>
+<%@page import = "javax.persistence.*"%>
+<%@page import = "logica.controladores.Fabrica"%>
+<%@page import = "logica.controladores.IControladorUsuario"%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!doctype html>
@@ -18,8 +21,8 @@
 <body>
 <!-- Load JSON file and output it-->
 
-<script>
-$(function() {
+<!--$<script>
+(function() {
     myData = [];
    // myData.push({"id":1,"name":'Item1',"ignore":false},{"id":2,"name":'Item2',"ignore":false},{"id":3,"name":'Item3',"ignore":false})
 
@@ -54,17 +57,97 @@ $(function() {
 
 });
 
-</script>
+</script>-->
+
 <script>
+        myData = [];
+        console.log("prueba1");
+        $( document ).ready(function() {
+            console.log("prueba2");          
+              cargarBuscador();
+          $( "#btnBuscarUsuario" ).click(function() {
+              listarDatosUsuario();
+              // alert("button was clicked");
+            }); 
+        });
+        
+        function cargarBuscador() {
+            $.ajax({
+                url:"http://localhost:8080/WebApplication/api/obtenerUsuarios.jsp",
+                success:function(response){   
+                    //console.log(response);
+                    let usuarios = jQuery.parseJSON(response);
+                    //let html = "";
+                    //console.log(usuarios);
+                    console.log(usuarios[0].mail);
+                    for (let i = 0; i < usuarios.length; i++) {
+                    myData.push({"id":1,"name":usuarios[i].nickname,"ignore":false});
+ 
+                    }
+                            $('.demo').autocomplete({nameProperty:'name',valueField:'#hidden-field',dataSource: myData});
+                }
+            });
+        }
+          
+        
+        function listarDatosUsuario() {
+            $.ajax({
+                url:"http://localhost:8080/WebApplication/api/obtenerUsuarios.jsp",
+                success:function(response){   
+                    //console.log(response);
+                    let usuarios = jQuery.parseJSON(response);
+                    let html = "";
+                    //console.log(usuarios);
+                    console.log(usuarios[0].mail);
+                    var nick = document.getElementById("txtBoxSelected").value;
+
+                    for (let i = 0; i < usuarios.length; i++) {
+                        if (nick == usuarios[i].nickname){
+                        html += "<tr>";
+                        html += '<th scope="row">'+usuarios[i].id+'</th>';
+                        html += '<td>'+usuarios[i].nombre+'</td>';
+                        html += '<td>'+usuarios[i].apellido+'</td>';
+                        html += '<td>'+usuarios[i].nickname+'</td>';
+                        html += "</tr>";
+                    }
+                    }
+                    $('.table tbody').html(html);
+                }
+            });
+        }
+          
+    </script>
+<!--<script>
     
 
     $( document ).ready(function() {
-        $('.demo').autocomplete({nameProperty:'name',valueField:'#hidden-field',dataSource: myData});
     });
-</script>
+</script>-->
 <!-- The output appears here -->
-<input type="text" class="demo">
-<input type="hidden" id="hidden-field">
-<button id="getData">Display Artists</button>
-<div id="artistList"></div>
+<section class="container">
+    <div style="float: left; width: 80px;">
+
+    <img src="logo.jpg" alt="Youtube Logo" style= " width:70px;height:40px;">
+    </div>
+    <div style="float: left; width: 500px;">
+    <input type="text" id= "txtBoxSelected" class="demo">
+    <input type="hidden" id="hidden-field">
+    </div>
+     <div style="float: right; width: 200px;">
+     <button type="button" class="btn btn-primary" id="btnBuscarUsuario">Buscar Usuario</button>
+    </div>
+    </section>
+    
+      <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Apellido</th>
+              <th scope="col">Nickname</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
 </body>
