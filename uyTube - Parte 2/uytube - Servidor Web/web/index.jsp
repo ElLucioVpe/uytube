@@ -28,6 +28,6 @@ a<%--
         
         <iframe width="420" height="345" src="http://www.youtube.com/embed/CsKbCdzkNZg?autoplay=1" frameborder="0" allowfullscreen></iframe>
         
-
+        <span>si estan buscando el test de json vayan a test.jsp</span>
     </body>
 </html>
