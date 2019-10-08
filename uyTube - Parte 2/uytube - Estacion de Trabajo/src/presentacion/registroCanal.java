@@ -127,7 +127,7 @@ public class registroCanal extends javax.swing.JInternalFrame {
         if(jComboBoxPrivacidad.getSelectedItem() == jComboBoxPrivacidad.getItemAt(0)) privado = true;
         int user_id = u.obtenerIdUsuario(user_nick);
         u.AltaCanal(jTextFieldNombre.getText(), privado, user_id, jTextAreaDescripcion.getText());
-        JOptionPane.showMessageDialog(null,"El usuario se registro con exito");
+        //JOptionPane.showMessageDialog(null,"El usuario se registro con exito");
         this.dispose();
     }//GEN-LAST:event_jButtonFinalizarActionPerformed
 

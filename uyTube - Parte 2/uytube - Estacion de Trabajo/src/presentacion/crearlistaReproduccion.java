@@ -250,7 +250,7 @@ public class crearlistaReproduccion extends javax.swing.JInternalFrame {
             );
         }
         else u.AltaListaDeReproduccionPorDefecto(jTextField1.getText());
-        JOptionPane.showMessageDialog(null,"La lista de reproduccion se creo con exito");
+        //JOptionPane.showMessageDialog(null,"La lista de reproduccion se creo con exito");
     }//GEN-LAST:event_jButtonCrearActionPerformed
 
     private void ParticularButtonStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_ParticularButtonStateChanged

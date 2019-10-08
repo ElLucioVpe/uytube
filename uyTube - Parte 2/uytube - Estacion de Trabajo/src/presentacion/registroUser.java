@@ -214,6 +214,7 @@ public class registroUser extends javax.swing.JInternalFrame {
             }
             //AltaUsuario(String nick,String passw, String nom, String apell, String mail, Date fnac, String img)
             //Creo el usuario
+            int existe = u.obtenerIdUsuario(textField3.getText());
             u.AltaUsuario(
                 textField3.getText(),
                 textField5.getText(),    
@@ -227,14 +228,15 @@ public class registroUser extends javax.swing.JInternalFrame {
             //Copio el archivo al directorio de imagenes, lo hago luego por si el nick ya existe
             if(!fpath.equals(fnewpath) && !fnewpath.isEmpty()) FileUtils.copyFile(f, new File(fnewpath));
             
+            if(existe != u.obtenerIdUsuario(textField3.getText())) {
+                p.AgregarInternalFrame(new registroCanal(textField3.getText()));
+                x=null;
+                u=null;
+                this.dispose();
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
         }
-        
-        p.AgregarInternalFrame(new registroCanal(textField3.getText()));
-        x=null;
-        u=null;
-        this.dispose();
     }//GEN-LAST:event_jButtonSiguienteActionPerformed
 
     private void textField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textField1ActionPerformed

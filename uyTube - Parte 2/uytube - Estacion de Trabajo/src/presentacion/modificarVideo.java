@@ -174,7 +174,7 @@ public class modificarVideo extends javax.swing.JInternalFrame {
                     categoria
             );
            
-           JOptionPane.showMessageDialog(null,"El video se modifico correctamente");
+           //JOptionPane.showMessageDialog(null,"El video se modifico correctamente");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Error Modificando Video: "+e.getMessage());
         }

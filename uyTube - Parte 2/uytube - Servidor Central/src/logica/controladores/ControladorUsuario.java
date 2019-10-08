@@ -56,8 +56,10 @@ public class ControladorUsuario implements IControladorUsuario {
                 throw new Exception("El nickname ya existe");
             if(em.createNamedQuery("Usuario.findByMail", Usuario.class).setParameter("mail",mail).getResultList().size() > 0)
                 throw new Exception("El mail ya esta registrado");
-
-            Usuario u = new Usuario(nick, "", nom, apell, mail, fnac);
+            if(!mail.matches(".*@.*[.].*")) 
+                throw new Exception("El mail no es valido");
+            
+            Usuario u = new Usuario(nick, pass, nom, apell, mail, fnac);
             if(!img.isEmpty()) u.setImagen(img);
 
             em.persist(u);

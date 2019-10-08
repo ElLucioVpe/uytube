@@ -285,7 +285,7 @@ public class modificarUsuario extends javax.swing.JInternalFrame {
             //Copio el archivo al directorio de imagenes, lo hago luego por si el nick ya existe
             if(!fpath.equals(fnewpath) && !fnewpath.isEmpty()) FileUtils.copyFile(f, new File(fnewpath));
             
-            JOptionPane.showMessageDialog(null,"El usuario se modifico con exito");
+            //JOptionPane.showMessageDialog(null,"El usuario se modifico con exito");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
         }
