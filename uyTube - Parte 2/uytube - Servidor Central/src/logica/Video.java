@@ -249,6 +249,5 @@ public class Video implements Serializable {
 
     public void setValoraciones(Collection<Valoracion> valoracionCollection) {
         this.valoraciones = valoracionCollection;
-    }
-    
+    }    
 }

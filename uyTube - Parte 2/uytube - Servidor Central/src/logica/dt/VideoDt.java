@@ -98,6 +98,20 @@ public class VideoDt {
         }
         return _url;
     }
+    
+    public String getEmbedded() {
+        var _url = "";
+        var video_id = "";
+        if(this.url.length() > 17) {
+            if(this.url.contains("https://youtu.be/")) {
+                video_id = url.substring(17);
+            } else if (this.url.contains("https://www.youtube.com/")) {
+                video_id = url.substring(24);
+            }
+            _url = "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/"+ video_id +"\" frameborder=\"0\" allow=\"autoplay; encrypted-media\" allowfullscreen></iframe>";
+        }
+        return _url;
+    }
 
     public Boolean getPrivacidad() {
         return privacidad;
