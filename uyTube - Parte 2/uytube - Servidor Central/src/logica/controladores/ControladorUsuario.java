@@ -56,8 +56,10 @@ public class ControladorUsuario implements IControladorUsuario {
                 throw new Exception("El nickname ya existe");
             if(em.createNamedQuery("Usuario.findByMail", Usuario.class).setParameter("mail",mail).getResultList().size() > 0)
                 throw new Exception("El mail ya esta registrado");
-
-            Usuario u = new Usuario(nick, "", nom, apell, mail, fnac);
+            if(!mail.matches(".*@.*[.].*")) 
+                throw new Exception("El mail no es valido");
+            
+            Usuario u = new Usuario(nick, pass, nom, apell, mail, fnac);
             if(!img.isEmpty()) u.setImagen(img);
 
             em.persist(u);
@@ -65,7 +67,10 @@ public class ControladorUsuario implements IControladorUsuario {
             em.close();
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+            Throwable t = new Throwable();
+            StackTraceElement[] elements = t.getStackTrace();
+            String invocador = elements[1].getFileName();
+            exceptionAux(invocador, e);
         }
     }
 
@@ -103,11 +108,12 @@ public class ControladorUsuario implements IControladorUsuario {
             //
             em.getTransaction().commit();
             em.close();
-            
-            JOptionPane.showMessageDialog(null,"El usuario se registro con exito");
         } catch (Exception e) {
             EliminarUsuario(user_id); //Elimino ya que no se completo correctamente todo el proceso
-            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+            Throwable t = new Throwable();
+            StackTraceElement[] elements = t.getStackTrace();
+            String invocador = elements[1].getFileName();
+            exceptionAux(invocador, e);
         }
     }
 
@@ -135,10 +141,11 @@ public class ControladorUsuario implements IControladorUsuario {
             em.merge(u);
             em.getTransaction().commit();
             em.close();
-            
-            JOptionPane.showMessageDialog(null,"El usuario se modifico con exito");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+            Throwable t = new Throwable();
+            StackTraceElement[] elements = t.getStackTrace();
+            String invocador = elements[1].getFileName();
+            exceptionAux(invocador, e);
         }
         //Posteriormente en su respectivo frame se podra seleccionar para editar datos
         //de los videos o listas de reproduccion del usuario
@@ -166,7 +173,10 @@ public class ControladorUsuario implements IControladorUsuario {
             em.getTransaction().commit();
             em.close();
         }catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+            Throwable t = new Throwable();
+            StackTraceElement[] elements = t.getStackTrace();
+            String invocador = elements[1].getFileName();
+            exceptionAux(invocador, e);
         }
         return list;
 
@@ -187,7 +197,10 @@ public class ControladorUsuario implements IControladorUsuario {
             em.close();
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+            Throwable t = new Throwable();
+            StackTraceElement[] elements = t.getStackTrace();
+            String invocador = elements[1].getFileName();
+            exceptionAux(invocador, e);
         }
         return list;
     }
@@ -225,7 +238,10 @@ public class ControladorUsuario implements IControladorUsuario {
             em.getTransaction().commit();
             em.close();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+            Throwable t = new Throwable();
+            StackTraceElement[] elements = t.getStackTrace();
+            String invocador = elements[1].getFileName();
+            exceptionAux(invocador, e);
         }
         return dt;
     }
@@ -254,10 +270,11 @@ public class ControladorUsuario implements IControladorUsuario {
             }
             em.getTransaction().commit();
             em.close();
-
-            JOptionPane.showMessageDialog(null,"La lista de reproduccion se creo con exito");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+            Throwable t = new Throwable();
+            StackTraceElement[] elements = t.getStackTrace();
+            String invocador = elements[1].getFileName();
+            exceptionAux(invocador, e);
         }
     }
 
@@ -284,10 +301,11 @@ public class ControladorUsuario implements IControladorUsuario {
             em.merge(propietario);
             em.getTransaction().commit();
             em.close();
-
-            JOptionPane.showMessageDialog(null,"La lista de reproduccion se creo con exito");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+            Throwable t = new Throwable();
+            StackTraceElement[] elements = t.getStackTrace();
+            String invocador = elements[1].getFileName();
+            exceptionAux(invocador, e);
         }
     }
 
@@ -313,10 +331,11 @@ public class ControladorUsuario implements IControladorUsuario {
             em.merge(propietario);
             em.getTransaction().commit();
             em.close();
-
-            JOptionPane.showMessageDialog(null,"La lista de reproduccion se modifico con exito");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+            Throwable t = new Throwable();
+            StackTraceElement[] elements = t.getStackTrace();
+            String invocador = elements[1].getFileName();
+            exceptionAux(invocador, e);
         }
     }
 
@@ -341,10 +360,11 @@ public class ControladorUsuario implements IControladorUsuario {
             em.merge(canal_lista);
             em.getTransaction().commit();
             em.close();
-
-            JOptionPane.showMessageDialog(null,"El video fue agregado con exito");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+            Throwable t = new Throwable();
+            StackTraceElement[] elements = t.getStackTrace();
+            String invocador = elements[1].getFileName();
+            exceptionAux(invocador, e);
         }
     }
 
@@ -363,10 +383,11 @@ public class ControladorUsuario implements IControladorUsuario {
             em.merge(canal_lista);
             em.getTransaction().commit();
             em.close();
-
-            JOptionPane.showMessageDialog(null,"El video fue removido con exito");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+            Throwable t = new Throwable();
+            StackTraceElement[] elements = t.getStackTrace();
+            String invocador = elements[1].getFileName();
+            exceptionAux(invocador, e);
         }
     }
 
@@ -387,10 +408,11 @@ public class ControladorUsuario implements IControladorUsuario {
             em.merge(uSeguidor);
             em.getTransaction().commit();
             em.close();
-
-            JOptionPane.showMessageDialog(null,"La suscripcion se realizo con exito");
        } catch (Exception e) {
-           JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+           Throwable t = new Throwable();
+           StackTraceElement[] elements = t.getStackTrace();
+           String invocador = elements[1].getFileName();
+           exceptionAux(invocador, e);
        }
 
     }
@@ -414,7 +436,10 @@ public class ControladorUsuario implements IControladorUsuario {
             em.getTransaction().commit();
             em.close();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+            Throwable t = new Throwable();
+            StackTraceElement[] elements = t.getStackTrace();
+            String invocador = elements[1].getFileName();
+            exceptionAux(invocador, e);
         }
         return seguidores;
     }
@@ -439,7 +464,10 @@ public class ControladorUsuario implements IControladorUsuario {
             em.getTransaction().commit();
             em.close();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+            Throwable t = new Throwable();
+            StackTraceElement[] elements = t.getStackTrace();
+            String invocador = elements[1].getFileName();
+            exceptionAux(invocador, e);
         }
         return suscripciones;
     }
@@ -464,10 +492,11 @@ public class ControladorUsuario implements IControladorUsuario {
             em.merge(uSeguidor);
             em.getTransaction().commit();
             em.close();
-
-            JOptionPane.showMessageDialog(null,"La suscripcion se eliminó con exito");
        } catch (Exception e) {
-           JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+           Throwable t = new Throwable();
+           StackTraceElement[] elements = t.getStackTrace();
+           String invocador = elements[1].getFileName();
+           exceptionAux(invocador, e);
        }
     }
     //Auxiliares
@@ -480,14 +509,18 @@ public class ControladorUsuario implements IControladorUsuario {
             em.getTransaction().begin();
             
             TypedQuery<Usuario> q = em.createNamedQuery("Usuario.findByNickname", Usuario.class).setParameter("nickname", nick);
-            if (q.getResultList().isEmpty()) throw new Exception("El usuario no existe");
-            Usuario u = q.getSingleResult();
-
-            id = u.getId();
+            //if (q.getResultList().isEmpty()) throw new Exception("El usuario no existe");
+            if (!q.getResultList().isEmpty()){ 
+                Usuario u = q.getSingleResult();
+                id = u.getId();
+            }
             em.getTransaction().commit();
             em.close();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+            Throwable t = new Throwable();
+            StackTraceElement[] elements = t.getStackTrace();
+            String invocador = elements[1].getFileName();
+            exceptionAux(invocador, e);
         }
         return id;
     }
@@ -507,7 +540,10 @@ public class ControladorUsuario implements IControladorUsuario {
             em.getTransaction().commit();
             em.close();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+            Throwable t = new Throwable();
+            StackTraceElement[] elements = t.getStackTrace();
+            String invocador = elements[1].getFileName();
+            exceptionAux(invocador, e);
         }
         return nick;
     }
@@ -525,7 +561,10 @@ public class ControladorUsuario implements IControladorUsuario {
             em.close();
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+            Throwable t = new Throwable();
+            StackTraceElement[] elements = t.getStackTrace();
+            String invocador = elements[1].getFileName();
+            exceptionAux(invocador, e);
         }
     }
 
@@ -541,7 +580,10 @@ public class ControladorUsuario implements IControladorUsuario {
             em.getTransaction().commit();
             em.close();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+            Throwable t = new Throwable();
+            StackTraceElement[] elements = t.getStackTrace();
+            String invocador = elements[1].getFileName();
+            exceptionAux(invocador, e);
         }
         return l;
     }
@@ -565,7 +607,10 @@ public class ControladorUsuario implements IControladorUsuario {
             em.getTransaction().commit();
             em.close();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+            Throwable t = new Throwable();
+            StackTraceElement[] elements = t.getStackTrace();
+            String invocador = elements[1].getFileName();
+            exceptionAux(invocador, e);
         }
         return l;
     }
@@ -590,7 +635,10 @@ public class ControladorUsuario implements IControladorUsuario {
             em.getTransaction().commit();
             em.close();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+            Throwable t = new Throwable();
+            StackTraceElement[] elements = t.getStackTrace();
+            String invocador = elements[1].getFileName();
+            exceptionAux(invocador, e);
         }
         return l;
     }
@@ -612,7 +660,10 @@ public class ControladorUsuario implements IControladorUsuario {
             em.getTransaction().commit();
             em.close();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+            Throwable t = new Throwable();
+            StackTraceElement[] elements = t.getStackTrace();
+            String invocador = elements[1].getFileName();
+            exceptionAux(invocador, e);
         }
         return tipo;
     }
@@ -647,7 +698,10 @@ public class ControladorUsuario implements IControladorUsuario {
             em.getTransaction().commit();
             em.close();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+            Throwable t = new Throwable();
+            StackTraceElement[] elements = t.getStackTrace();
+            String invocador = elements[1].getFileName();
+            exceptionAux(invocador, e);
         }
         return ldt;
     }
@@ -669,24 +723,42 @@ public class ControladorUsuario implements IControladorUsuario {
                 lista.add(v.getNombre());
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+            Throwable t = new Throwable();
+            StackTraceElement[] elements = t.getStackTrace();
+            String invocador = elements[1].getFileName();
+            exceptionAux(invocador, e);
         }
         return lista;
     }
     
+    private void exceptionAux(String inv, Exception e){
+        if(!inv.endsWith("_jsp.java")){
+            JOptionPane.showMessageDialog(null," Error: "+e.getMessage());
+        } else {
+            System.out.println("Error: "+e.getMessage());
+        }
+    }
+    
+    //Para el servidor web
     @Override
     public Integer LoginUsuario(String _user, String _password) {
         Integer userId = null;
         try {
             EntityManager em = emFactory.createEntityManager();
-            int _id = this.obtenerIdUsuario(_user);
+            
+            int _id = obtenerIdUsuario(_user);
             Usuario u = em.find(Usuario.class, _id);
-            JOptionPane.showMessageDialog(null,"Contra: "+u.getPassword());
-            if (u.getNickname().equals(_user) && u.getPassword().equals(_password)) {
-                userId = _id;
+            if(u != null) {
+                if (u.getNickname().equals(_user) && u.getPassword().equals(_password)) {
+                    userId = _id;
+                }
             }
+            em.close();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+            Throwable t = new Throwable();
+            StackTraceElement[] elements = t.getStackTrace();
+            String invocador = elements[1].getFileName();
+            exceptionAux(invocador, e);
         }
         return userId;
     }

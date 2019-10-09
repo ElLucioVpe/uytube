@@ -24,6 +24,8 @@ public interface IControladorVideo {
 
     //Auxiliares
     public abstract VideoDt obtenerVideoDt(String video, Integer user);
+    public abstract VideoDt obtenerVideoDtPorID(int id);
     public abstract DefaultMutableTreeNode obtenerComentariosVideo(int id_video);
     public abstract List<valoracionDt>  obtenerValoracionVideo(int id_video);
+    public abstract List<VideoDt> obtenerVideos();
 }

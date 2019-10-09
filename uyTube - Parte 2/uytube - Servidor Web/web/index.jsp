@@ -8,6 +8,7 @@
 <%@page import = "logica.controladores.IControladorUsuario"%>
 
 <%@page import="java.util.Date"%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -17,28 +18,65 @@
         <script src="js/bootstrap.min.js"></script>
         <script src="js/jquery.min.js"></script>
 
-        <title>UyTube Test</title>
+        <title>uyTube - Transmite tú mismo</title>
     </head>
-    <%
-        Date date = new Date();
-        
-    %>
-        
     <body>
-         <!-- Alta User-->
         <%! Fabrica f = Fabrica.getInstance();
             IControladorUsuario user = f.getIControladorUsuario(); %>
-     
-        <!--/Alta User -->
-        <h1>Prueba de Base de Datos</h1>
-        <p>El usuario con id = 1 es <%= user.obtenerNickUsuario(1) %> </p>
+        <%@ include file="include/header.jsp" %>  
         
-        <%
-            if (session.getAttribute("userid") != "" ) { %>
-                <div class="alert alert-danger" role="alert">
-                   El usuario <%= session.getAttribute("userid") %> esta logueado.
-                </div>
-            <%}
-        %>
+        <table class="table" id="tblVideos">
+          <thead>
+            <tr>
+              <th class="thumbnail"></th>
+              <th class="titulo" scope="col">Título</th>
+              <th class="descripcion">Descripcion</th>
+              <th class="canal">Canal</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+        
+        <%@ include file="include/footer.jsp" %>
+        
+            <script>
+                $( document ).ready(function() {
+                    // Cuando se hace click en btnRecargar llama a la funcion recargar table
+                    listarVideos();
+                });
+
+                function listarVideos() {
+                    $.ajax({
+                        url:"http://localhost:8080/WebApplication/api/obtenerVideos.jsp",
+                        success:function(response){   
+                            //console.log(response);
+                            let videos = jQuery.parseJSON(response);
+                            let html = "";
+                            //console.log(usuarios);
+                            console.log(videos[0].mail);
+                            for (let i = 0; i < videos.length; i++) {
+                                html += "<tr>";
+                                if(videos[i].thumbnail != "") {
+                                    html += '<th><img src="'+videos[i].thumbnail+'" alt="Thumbnail"></th>';
+                                } else {
+                                    html += '<th><img src="img/no-thumbnail.jpg" alt="Thumbnail"></th>';
+                                }
+                                html += '<td  scope="row"><a href="video.jsp?id='+ videos[i].id +'">'+videos[i].nombre+'</a></td>';
+                                html += '<td>'+videos[i].descripcion+'</td>';
+                                html += '<td>'+videos[i].user+'</td>';
+                                html += "</tr>";
+                            }
+                            $('.table tbody').html(html);
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                          console.log(xhr.status);
+                          console.log(thrownError);
+                          $('.table tbody').html('<span style="color:red">obtenerUsuarios.jsp esta tirando error 500 cabeza. pa mi que te falto importar la libreria de json.</span>');
+                        }
+                    });
+                }
+
+            </script>
     </body>
 </html>

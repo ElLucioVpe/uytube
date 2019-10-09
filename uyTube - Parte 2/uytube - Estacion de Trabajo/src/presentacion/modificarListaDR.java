@@ -7,6 +7,7 @@ package presentacion;
 
 import java.util.Iterator;
 import java.util.List;
+import javax.swing.JOptionPane;
 import logica.controladores.Fabrica;
 import logica.controladores.IControladorUsuario;
 
@@ -146,6 +147,7 @@ public class modificarListaDR extends javax.swing.JInternalFrame {
         if(jComboBoxPrivacidad.getSelectedItem() == jComboBoxPrivacidad.getItemAt(0)) privado = true;
         String categoria = CategoriasBox.getSelectedItem().toString();
         u.ModificarListaDeReproduccion(id, l, categoria, privado);
+        //JOptionPane.showMessageDialog(null,"La lista de reproduccion se modifico con exito");
     }//GEN-LAST:event_AcceptButtonActionPerformed
 
     private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButtonActionPerformed

@@ -8,6 +8,7 @@ package presentacion;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import logica.controladores.Fabrica;
 import logica.controladores.IControladorUsuario;
 
@@ -175,6 +176,7 @@ public class agregarVideoListaDR extends javax.swing.JInternalFrame {
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         u.AgregarVideoListaDeReproduccion(id_videouser, id_listuser, jList1.getSelectedValue(), l);
+        //JOptionPane.showMessageDialog(null,"El video fue agregado con exito");
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed

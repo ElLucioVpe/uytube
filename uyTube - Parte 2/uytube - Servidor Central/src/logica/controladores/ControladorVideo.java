@@ -73,10 +73,11 @@ public class ControladorVideo implements IControladorVideo {
             em.merge(c);
             em.getTransaction().commit();
             em.close();
-            
-            JOptionPane.showMessageDialog(null,"El video se registro con exito");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+            Throwable t = new Throwable();
+            StackTraceElement[] elements = t.getStackTrace();
+            String invocador = elements[1].getFileName();
+            exceptionAux(invocador, e);
         }
     }
     
@@ -106,12 +107,13 @@ public class ControladorVideo implements IControladorVideo {
             em.merge(v);
             em.getTransaction().commit();
             em.close();
-
-             JOptionPane.showMessageDialog(null,"El video se modifico correctamente");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+            Throwable t = new Throwable();
+            StackTraceElement[] elements = t.getStackTrace();
+            String invocador = elements[1].getFileName();
+            exceptionAux(invocador, e);
         }
-        }
+    }
         
         @Override
         public void ValorarVideo(int user_valoracion, int id_video, boolean gusta) {
@@ -142,7 +144,10 @@ public class ControladorVideo implements IControladorVideo {
                 em.close();
                 
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+                Throwable t = new Throwable();
+                StackTraceElement[] elements = t.getStackTrace();
+                String invocador = elements[1].getFileName();
+                exceptionAux(invocador, e);
             }
         }
         
@@ -179,7 +184,10 @@ public class ControladorVideo implements IControladorVideo {
                 em.close();
 
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+                Throwable t = new Throwable();
+                StackTraceElement[] elements = t.getStackTrace();
+                String invocador = elements[1].getFileName();
+                exceptionAux(invocador, e);
             }
         }
         
@@ -205,7 +213,10 @@ public class ControladorVideo implements IControladorVideo {
                 em.close();
 
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+                Throwable t = new Throwable();
+                StackTraceElement[] elements = t.getStackTrace();
+                String invocador = elements[1].getFileName();
+                exceptionAux(invocador, e);
             }
             return dt;
         }
@@ -232,7 +243,10 @@ public class ControladorVideo implements IControladorVideo {
                 em.close();
 
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+                Throwable t = new Throwable();
+                StackTraceElement[] elements = t.getStackTrace();
+                String invocador = elements[1].getFileName();
+                exceptionAux(invocador, e);
             }
             return root;
         }
@@ -266,9 +280,56 @@ public class ControladorVideo implements IControladorVideo {
                 }
                 em.close();
            } catch (Exception e) {
-               JOptionPane.showMessageDialog(null,"Error: "+e.getMessage());
+               Throwable t = new Throwable();
+               StackTraceElement[] elements = t.getStackTrace();
+               String invocador = elements[1].getFileName();
+               exceptionAux(invocador, e);
            }
            return list;
         }
         
+        @Override
+        public List<VideoDt> obtenerVideos() {
+                List<VideoDt> list = new ArrayList<VideoDt>();
+                try {
+                EntityManager em = emFactory.createEntityManager();
+                List<Video> videos = em.createQuery("SELECT v FROM Video v", Video.class).getResultList();
+                for(int i=0;i < videos.size(); i++) {
+                    list.add(new VideoDt(videos.get(i)));
+                }
+                em.close();
+           } catch (Exception e) {
+               Throwable t = new Throwable();
+               StackTraceElement[] elements = t.getStackTrace();
+               String invocador = elements[1].getFileName();
+               exceptionAux(invocador, e);
+           }
+           return list;
+        }
+        
+        @Override
+        public VideoDt obtenerVideoDtPorID(int id){
+            VideoDt video = new VideoDt();
+            try {
+                EntityManager em = emFactory.createEntityManager();
+                Video v = em.find(Video.class, id);
+                //List<Video> videos = em.createQuery("SELECT v FROM Video v WHERE id = ", Video.class).getResultList();
+                video = new VideoDt(v);
+                em.close();
+            } catch (Exception e) {
+               Throwable t = new Throwable();
+               StackTraceElement[] elements = t.getStackTrace();
+               String invocador = elements[1].getFileName();
+               exceptionAux(invocador, e);
+            }
+            return video;
+        }
+        
+        private void exceptionAux(String inv, Exception e){
+            if(!inv.endsWith("_jsp.java")){
+                JOptionPane.showMessageDialog(null," Error: "+e.getMessage());
+            } else {
+                System.out.println("Error: "+e.getMessage());
+            }
+        }
 }
