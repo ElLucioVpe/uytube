@@ -22,6 +22,7 @@
                 
                 Boolean formInput = false;
                 
+                
                 if (request.getParameter("user") != null) {
                     if (request.getParameter("password") != null) {
                         Integer _id = user.LoginUsuario(request.getParameter("user"), request.getParameter("password"));
