@@ -27,7 +27,8 @@
                     if (request.getParameter("password") != null) {
                         Integer _id = user.LoginUsuario(request.getParameter("user"), request.getParameter("password"));
                         if (_id != null) {
-                            session.setAttribute("userid",_id); 
+                            session.setAttribute("userid",_id);
+                            session.setAttribute("user_dt", user.ConsultarUsuario(_id));
                             String redirectURL = "index.jsp";
                             response.sendRedirect(redirectURL);
                         }
