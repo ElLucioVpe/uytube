@@ -17,6 +17,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -46,7 +47,7 @@ public class UploadServlet extends HttpServlet {
     
     
      public UploadServlet(){
-
+     
     }
 
     /**
@@ -60,6 +61,12 @@ public class UploadServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+         request.setAttribute("message", "hello");
+        RequestDispatcher view=request.getRequestDispatcher("index.jsp");
+        view.forward(request,response);
+        
+        
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
@@ -88,6 +95,7 @@ public class UploadServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+        
     }
 
     /**
@@ -101,14 +109,15 @@ public class UploadServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-          
         /*
+          
+        
         String description = request.getParameter("description"); // Retrieves <input type="text" name="description">
     Part filePart = request.getPart("file"); // Retrieves <input type="file" name="file">
     //String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // solo 3.1
     String fileName = getSubmittedFileName(filePart);
     InputStream fileContent = filePart.getInputStream();
-        */
+        
         
         //File
               // Check that we have a file upload request
@@ -117,7 +126,7 @@ public class UploadServlet extends HttpServlet {
         /*
         if (!isMultipart) {
             return;
-        }*/
+        }
 
         // Create a factory for disk-based file items
         DiskFileItemFactory factory = new DiskFileItemFactory();
@@ -150,6 +159,7 @@ public class UploadServlet extends HttpServlet {
 
                 if (!item.isFormField()) {
                     String fileName = new File(item.getName()).getName();
+                    //String fileName = new File("Richardz").getName();
                     String filePath = uploadFolder + File.separator + fileName;
                     File uploadedFile = new File(filePath);
                     System.out.println(filePath);
@@ -193,6 +203,9 @@ public class UploadServlet extends HttpServlet {
                       user.AltaUsuario(request.getParameter("user"), request.getParameter("password"), request.getParameter("name"),request.getParameter("apellido"), request.getParameter("mail"), fechaNacimiento, request.getParameter("img"));
                     }
                 }
+                
+                
+                */
     }
     
     //Solo los servlet 3.1 tienen implementado por default el getsumbittedfilename asi que lo hacemos manual
