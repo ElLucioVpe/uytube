@@ -6,7 +6,6 @@
 <%@page import = "javax.persistence.*"%>
 <%@page import = "logica.controladores.Fabrica"%>
 <%@page import = "logica.controladores.IControladorUsuario"%>
-
 <%@page import="java.util.Date"%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
