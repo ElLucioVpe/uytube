@@ -3,17 +3,27 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/OLD/DiscoD/UyTube/uytube3/uytube/uyTube%20-%20Parte%202/uytube%20-%20Servidor%20Web/nbproject/build-impl.xml</file>
             <file>file:/C:/OLD/DiscoD/UyTube/uytube3/uytube/uyTube%20-%20Parte%202/uytube%20-%20Servidor%20Web/web/uploadFile.jsp</file>
+            <file>file:/C:/OLD/DiscoD/UyTube/uytube3/uytube/uyTube%20-%20Parte%202/uytube%20-%20Servidor%20Web/web/JsonArtists.jsp</file>
+            <file>file:/C:/OLD/DiscoD/UyTube/uytube3/uytube/uyTube%20-%20Parte%202/uytube%20-%20Servidor%20Web/web/altaUser.jsp</file>
+            <file>file:/C:/OLD/DiscoD/UyTube/uytube3/uytube/uyTube%20-%20Parte%202/uytube%20-%20Servidor%20Web/web/altaFileImage.jsp</file>
+            <file>file:/C:/OLD/DiscoD/UyTube/uytube3/uytube/uyTube%20-%20Parte%202/uytube%20-%20Servidor%20Web/src/conf/MANIFEST.MF</file>
+            <file>file:/C:/OLD/DiscoD/UyTube/uytube3/uytube/uyTube%20-%20Parte%202/uytube%20-%20Servidor%20Web/web/prueba.jsp</file>
+            <file>file:/C:/OLD/DiscoD/UyTube/uytube3/uytube/uyTube%20-%20Parte%202/uytube%20-%20Servidor%20Web/web/api/obtenerVideos.jsp</file>
+            <file>file:/C:/OLD/DiscoD/UyTube/uytube3/uytube/uyTube%20-%20Parte%202/uytube%20-%20Servidor%20Web/nbproject/build-impl.xml</file>
+            <file>file:/C:/OLD/DiscoD/UyTube/uytube3/uytube/uyTube%20-%20Parte%202/uytube%20-%20Servidor%20Web/web/consultaUser.jsp</file>
+            <file>file:/C:/OLD/DiscoD/UyTube/uytube3/uytube/uyTube%20-%20Parte%202/uytube%20-%20Servidor%20Web/web/logo.jpg</file>
             <file>file:/C:/OLD/DiscoD/UyTube/uytube3/uytube/uyTube%20-%20Parte%202/uytube%20-%20Servidor%20Web/web/META-INF/context.xml</file>
             <file>file:/C:/OLD/DiscoD/UyTube/uytube3/uytube/uyTube%20-%20Parte%202/uytube%20-%20Servidor%20Web/web/done.jsp</file>
+            <file>file:/C:/OLD/DiscoD/UyTube/uytube3/uytube/uyTube%20-%20Parte%202/uytube%20-%20Servidor%20Web/web/test.jsp</file>
+            <file>file:/C:/OLD/DiscoD/UyTube/uytube3/uytube/uyTube%20-%20Parte%202/uytube%20-%20Servidor%20Web/web/video.jsp</file>
             <file>file:/C:/OLD/DiscoD/UyTube/uytube3/uytube/uyTube%20-%20Parte%202/uytube%20-%20Servidor%20Web/web/WEB-INF/web.xml</file>
+            <file>file:/C:/OLD/DiscoD/UyTube/uytube3/uytube/uyTube%20-%20Parte%202/uytube%20-%20Servidor%20Web/web/comentarVideo.jsp</file>
             <file>file:/C:/OLD/DiscoD/UyTube/uytube3/uytube/uyTube%20-%20Parte%202/uytube%20-%20Servidor%20Web/web/login.jsp</file>
-            <file>file:/C:/OLD/DiscoD/UyTube/uytube3/uytube/uyTube%20-%20Parte%202/uytube%20-%20Servidor%20Web/web/altaUser.jsp</file>
+            <file>file:/C:/OLD/DiscoD/UyTube/uytube3/uytube/uyTube%20-%20Parte%202/uytube%20-%20Servidor%20Web/web/api/obtenerUsuarios.jsp</file>
             <file>file:/C:/OLD/DiscoD/UyTube/uytube3/uytube/uyTube%20-%20Parte%202/uytube%20-%20Servidor%20Web/test/com/UyTube/UploadServlet.java</file>
             <file>file:/C:/OLD/DiscoD/UyTube/uytube3/uytube/uyTube%20-%20Parte%202/uytube%20-%20Servidor%20Web/web/index.jsp</file>
             <file>file:/C:/OLD/DiscoD/UyTube/uytube3/uytube/uyTube%20-%20Parte%202/uytube%20-%20Servidor%20Web/web/WEB-INF/hola.txt</file>
-            <file>file:/C:/OLD/DiscoD/UyTube/uytube3/uytube/uyTube%20-%20Parte%202/uytube%20-%20Servidor%20Web/src/conf/MANIFEST.MF</file>
         </group>
     </open-files>
 </project-private>

@@ -4,6 +4,9 @@
     Author     : pagol
 --%>
 
+<%@page import="java.lang.System.Logger.Level"%>
+<%@page import="org.jboss.logging.Logger"%>
+<%@page import="java.text.ParseException"%>
 <%@page import="org.apache.commons.fileupload.FileItem"%>
 <%@page import="java.util.Iterator"%>
 <%@page import="java.util.List"%>
@@ -28,8 +31,16 @@
    File file ;
    int maxFileSize = 5000 * 1024;
    int maxMemSize = 5000 * 1024;
+   
+   //Relative Path
    ServletContext context = pageContext.getServletContext();
-   String filePath = context.getInitParameter("file-upload");
+   File contextBasePath = new File(getServletContext().getRealPath(""));
+   File path2 = new File(contextBasePath.getParent()).getParentFile();
+   String pathFolder = path2.getParent();
+
+   //Adding Path
+   //String filePath = context.getInitParameter("file-upload");
+   String filePath = pathFolder+"\\data\\imagenes\\";
 
    // Verify the content type
    String contentType = request.getContentType();
@@ -49,24 +60,43 @@
       upload.setSizeMax( maxFileSize );
       
       try { 
+          
+           out.println("<html>");
+         out.println("<head>");
+         out.println("<title>JSP File upload</title>");  
+         out.println("</head>");
+         out.println("<body>");
+         out.println("</br>");
+         
+         
          // Parse the request to get file items.
          List fileItems = upload.parseRequest(request);
 
          // Process the uploaded file items
          Iterator i = fileItems.iterator();
-
+            
+         
+         /*
          out.println("<html>");
          out.println("<head>");
          out.println("<title>JSP File upload</title>");  
          out.println("</head>");
          out.println("<body>");
+         out.println(session.getAttribute("nombrecito"));
+         out.println("</br>");
+
+         */
+         
+         String fileName="";
          
          while ( i.hasNext () ) {
             FileItem fi = (FileItem)i.next();
             if ( !fi.isFormField () ) {
                // Get the uploaded file parameters
                String fieldName = fi.getFieldName();
-               String fileName = fi.getName();
+               //String fileName = fi.getName();
+               fileName = (String)session.getAttribute("userx")+".jpg";
+               //String fileName = username;
                boolean isInMemory = fi.isInMemory();
                long sizeInBytes = fi.getSize();
             
@@ -83,6 +113,36 @@
                fileName + "<br>");
             }
          }
+         
+                 
+                 
+                 String userUp = (String)session.getAttribute("userx");
+                 String pswdUp = (String)session.getAttribute("pswdx");
+                 String nameUp = (String)session.getAttribute("namex");
+                 String apellidoUp = (String)session.getAttribute("apellidox");
+                 String mailUp = (String)session.getAttribute("mailx");
+                 String fechaUp = (String)session.getAttribute("fechax");
+                 
+                 //Alta User
+                    Fabrica f = Fabrica.getInstance();
+                    IControladorUsuario user = f.getIControladorUsuario();
+              
+              
+                        String startDateStr = fechaUp;
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                        //surround below line with try catch block as below code throws checked exception
+                        Date fechaNacimiento = null;
+                        try {
+                            fechaNacimiento = sdf.parse(startDateStr);
+                        } catch (ParseException ex) {
+                           
+                        }
+                        
+                        
+                 if(fileName!=""){
+                     user.AltaUsuario(userUp, pswdUp, nameUp,apellidoUp, mailUp, fechaNacimiento, fileName);
+                 }
+                 
          out.println("</body>");
          out.println("</html>");
       } catch(Exception ex) {
@@ -103,6 +163,8 @@
             
     </head>
     <body>
+        
+        User Creado!
         
        
                                     

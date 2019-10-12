@@ -44,6 +44,24 @@
                 } );
             </script>
             
+            <%
+                
+                
+                 if (request.getParameter("user") != null) {
+                    if (request.getParameter("file") != null) {
+                        
+               //session.setAttribute("myname","TULIOs");  
+               //session.setAttribute("myname",request.getParameter("name")); 
+               //session.setAttribute("file",request.getParameter("file")); 
+                //request.setAttribute("myname",login);
+                //equest.getRequestDispatcher("altaFileImage.jsp").forward(request, response);
+                //String redirectURL = "altaFileImage.jsp";
+                //response.sendRedirect(redirectURL);                
+                 }
+                
+                }
+                
+            %>
             
             
   
@@ -62,9 +80,11 @@
                 <div class="row justify-content-center">
                     <div class="col-md-8">
                         <div class="card">
-                            <div class="card-header">Crear User</div>
+                            <div class="card-header">Crear User - Parte 1</div>
                             <div class="card-body">
-                                <form action="" method="">
+                                 <!-- <form action="UploadServlet" method="post" enctype = "multipart/form-data">-->
+                                   <!--   <form action="altaFileImage.jsp" method="post" enctype = "multipart/form-data">-->
+                                <form action="altaFileImage.jsp" method="post" >
                                     <div class="form-group row">
                                         <label for="user" class="col-md-4 col-form-label text-md-right">Usuario</label>
                                         <div class="col-md-6">
@@ -110,32 +130,14 @@
                                         </div>
                                     </div>
                                     
-                                    <div class="form-group row">
-                                        <label for="Imagen" class="col-md-4 col-form-label text-md-right">Imagen</label>
-                                        <div class="col-md-6">
-                                      <div class="md-form">
-                                      <form action="UploadServlet"  method="post" enctype="multipart/form-data">
-                                        <input type="file" name="file" />
-                                        <input type="submit" />
-                                      </form>
-                                       </div>
-                                        </div>
-                                    </div>
 
                                     <div class="col-md-6 offset-md-4">
                                         <button type="submit" class="btn btn-primary">
-                                            Crear
+                                            Siguiente
                                         </button>
                                     </div>
                                     
-                                    <h3>File Upload:</h3>
-                                    Select a file to upload: <br />
-                                    <form action = "UploadServlet" method = "post"
-                                       enctype = "multipart/form-data">
-                                       <input type = "file" name = "file" size = "50" />
-                                       <br />
-                                       <input type = "submit" value = "Upload File" />
-                                    </form>
+                                    
                                     
                             </div>
                             </form>
