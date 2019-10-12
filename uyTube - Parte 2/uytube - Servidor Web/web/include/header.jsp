@@ -7,6 +7,11 @@
 <script src="js/bootstrap.min.js"></script>
 <script src="js/jquery.min.js"></script>
 
+<!-- Font Awesome -->
+<link href="css/font-awesome.min.css" rel="stylesheet">
+<script defer src="js/solid.js"></script>
+<script defer src="js/font-awesome.js"></script>
+
 <%@page import = "logica.dt.UsuarioDt"%>
 <%
     //Nombres con "header_" para evitar posibles conflictos de nombres con donde se agregue el header 
@@ -21,17 +26,16 @@
 <script>.dropdown-menu.pull-left {left:0;}</script>
 <header>
     <div class="pos-f-t">
-        <div class="collapse" id="navbarUserToggle">
-          <div class="bg-dark p-4">
-            <h5 class="text-white h4">Collapsed content</h5>
-            <span class="text-muted">Toggleable via the navbar brand.</span>
-          </div>
-        </div>
         <nav class="navbar navbar-light bg-light">
+            <form class="form-inline">
             <a class="navbar-brand" href="#">
               <img src="img/logo.png" width="60" height="40" alt="Logo">
               uyTube
             </a>
+            <button type="button" id="sidebarCollapse" class="btn toggle">
+                <i class="navbar-toggler-icon"></i>
+            </button>
+            </form>
             <form class="form-inline">
               <input class="form-control mr-sm-2" type="search" placeholder="El judio esta haciendo este buscador" aria-label="Buscar">
               <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
@@ -46,9 +50,9 @@
                 <ul class="dropdown-menu dropdown-menu-right" role="menu">
                   <!-- dropdown menu links -->
                   <%if(session.getAttribute("userid") == null) {%>
-                  <li><a tabindex="-1" href="http://localhost:8080/WebApplication/login.jsp" style="black">Iniciar Sesion</a></li>
+                  <li><a tabindex="-1" href="http://localhost:8080/WebApplication/login.jsp"><i class="fas fa-sign-in-alt"></i> Iniciar Sesion</a></li>
                   <%}else{%>
-                  <li><a tabindex="-1" onclick="logout()" style="black">Cerrar Sesion</a></li>
+                  <li><a tabindex="-1" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Cerrar Sesion</a></li>
                   <%}%>
                 </ul>
                 <script>
@@ -65,3 +69,4 @@
         </nav>
     </div>
 </header>
+<%@ include file="sidebar.jsp" %>
