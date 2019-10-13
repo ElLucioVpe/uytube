@@ -23,11 +23,11 @@
 
                 <ul class="list-unstyled components">
                     <ul>
-                      <li><a href="#"><i class="fa fa-user"></i> Mi Canal</a></li> <!-- href=".....consultarUser.jsp" -->    
+                      <li><a href="http://localhost:8080/WebApplication/consultarUser.jsp"><i class="fa fa-user"></i> Mi Canal</a></li>
                     </ul>
                     <ul id="videos">
                       <li class="title">VIDEOS</li>
-                      <li><a href="#"><i class="fa fa-plus"></i> Subir video</a></li> <!-- href=".....altaVideo.jsp" --> 
+                      <li><a href="http://localhost:8080/WebApplication/altaVideo.jsp"><i class="fa fa-plus"></i> Subir video</a></li>
                       <li><a href="http://localhost:8080/WebApplication/"><i class="fa fa-film"></i> Ver videos</a></li>
                     </ul>
                     <ul id="playlists">
@@ -64,6 +64,7 @@
                 
                 if(sidebar_user_id === null  || sidebar_user_id === "null") //Y posta hizo la de asignar null como string
                     lists.innerHTML += '<li><a href="http://localhost:8080/WebApplication/login.jsp">Inicie sesión para ver sus listas</a></li>';
+                else lists.innerHTML += '<li><a href="http://localhost:8080/WebApplication/crearListaDR.jsp"><i class="fa fa-plus"></i> Crear Lista</a></li>';
                 
                 $.ajax({
                     url:'http://localhost:8080/WebApplication/api/obtenerListas.jsp?user_id='+sidebar_user_id,
@@ -75,7 +76,7 @@
                             if(listas[i].nombre == "Ver mas tarde" || listas[i].nombre == "Ver más tarde") icono = "fas fa-redo-alt";
                             if(listas[i].nombre == "Favoritos") icono = "fas fa-redo-alt";
                             
-                            html += '<li><a href="http://localhost:8080/WebApplication/buscador.jsp?lista='+listas[i].id+'"><i class="'+icono+'"></i>'+listas[i].nombre+'</a></li>';
+                            html += '<li><a href="http://localhost:8080/WebApplication/buscador.jsp?lista='+listas[i].id+'"><i class="'+icono+'"></i> '+listas[i].nombre+'</a></li>';
                         }
                         lists.innerHTML += html;
                     },
@@ -94,7 +95,7 @@
                         let categorias = jQuery.parseJSON(data);
                         let html = "";
                         for (let i = 0; i < categorias.length; i++) {
-                            html += '<li><a href="http://localhost:8080/WebApplication/buscador.jsp?cat='+categorias[i].nombre+'"><i class="fas fa-circle"></i>'+categorias[i].nombre+'</a></li>';
+                            html += '<li><a href="http://localhost:8080/WebApplication/buscador.jsp?cat='+categorias[i].nombre+'"><i class="fas fa-circle"></i> '+categorias[i].nombre+'</a></li>';
                         }
                         cats.innerHTML += html;
                     },
