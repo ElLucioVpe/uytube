@@ -23,7 +23,6 @@ import logica.Video;
 import logica.dt.ListaDeReproduccionDt;
 import logica.dt.UsuarioDt;
 import logica.dt.VideoDt;
-import logica.dt.VideoListaDt;
 
 /**
  *
@@ -401,7 +400,8 @@ public class ControladorUsuario implements IControladorUsuario {
             if(c == null) throw new Exception("Ese usuario al que quiere seguir no existe o no tiene canal");
             Usuario uSeguidor = em.find(Usuario.class, obtenerIdUsuario(seguidor));
             if(uSeguidor == null) throw new Exception("El usuario seguidor no existe");
-
+            if(c.getSeguidores().contains(uSeguidor)) throw new Exception("El usuario ya es seguidor del canal");
+            
             c.agregarSeguidor(uSeguidor);
             uSeguidor.agregarSuscripcion(c);
             em.merge(c);
@@ -761,5 +761,141 @@ public class ControladorUsuario implements IControladorUsuario {
             exceptionAux(invocador, e);
         }
         return userId;
+    }
+    
+    @Override
+    public boolean estaSuscripto(int suscripto, int pcanal) {
+        boolean si = false;
+        try{
+            EntityManager em = emFactory.createEntityManager();
+            
+            Usuario u = em.find(Usuario.class, suscripto);
+            if(u == null) throw new Exception("No se encontro el usuario suscriptor");
+            Canal c = em.find(Canal.class, pcanal);
+            if(u == null) throw new Exception("No se encontro al propietario del canal");
+            
+            if(c.getSeguidores().contains(u)) si = true;
+            
+            em.close();
+        }
+        catch (Exception e) {
+            Throwable t = new Throwable();
+            StackTraceElement[] elements = t.getStackTrace();
+            String invocador = elements[1].getFileName();
+            exceptionAux(invocador, e);
+        }
+        return si;
+    }
+    
+    @Override
+    public List<ListaDeReproduccionDt> obtenerListasDtPorUsuario(int id) {
+            List<ListaDeReproduccionDt> list = new ArrayList<>();
+            try {
+                EntityManager em = emFactory.createEntityManager();
+                
+                Canal c = em.find(Canal.class, id);
+                if(c == null) throw new Exception("El usuario no existe");
+                
+                Collection<ListaDeReproduccion> l = c.getListas();
+                Iterator<ListaDeReproduccion> it = l.iterator();
+                while (it.hasNext()) {
+                    ListaDeReproduccion li = it.next();
+                    //Reviso su tipo
+                    String tipo = "Particular";
+                    if(em.find(ListaDeReproduccion_PorDefecto.class, li.getNombre()) != null) tipo = "Por Defecto";
+                    //Reviso su categoria
+                    String categoria = "Ninguna";
+                    if(li.getCategoria() != null) categoria = li.getCategoria().getNombre();
+                    //Creo el datatype
+                    list.add(new ListaDeReproduccionDt(
+                        li.getId(), 
+                        li.getNombre(), 
+                        tipo, 
+                        li.getPrivada(), 
+                        categoria,
+                        id
+                    ));
+                }
+                em.close();
+       } catch (Exception e) {
+           Throwable t = new Throwable();
+           StackTraceElement[] elements = t.getStackTrace();
+           String invocador = elements[1].getFileName();
+           exceptionAux(invocador, e);
+       }
+       return list;
+    }
+    
+    @Override
+    public List<ListaDeReproduccionDt> obtenerListas() {
+            List<ListaDeReproduccionDt> list = new ArrayList<>();
+            try {
+                EntityManager em = emFactory.createEntityManager();
+                
+                List<ListaDeReproduccion> l = em.createQuery("SELECT l FROM ListaDeReproduccion l", ListaDeReproduccion.class).getResultList();
+                Iterator<ListaDeReproduccion> it = l.iterator();
+                
+                while (it.hasNext()) {
+                    ListaDeReproduccion li = it.next();
+                    //Reviso su tipo
+                    String tipo = "Particular";
+                    if(em.find(ListaDeReproduccion_PorDefecto.class, li.getNombre()) != null) tipo = "Por Defecto";
+                    //Reviso su categoria
+                    String categoria = "Ninguna";
+                    if(li.getCategoria() != null) categoria = li.getCategoria().getNombre();
+                    //Creo el datatype
+                    list.add(new ListaDeReproduccionDt(
+                        li.getId(), 
+                        li.getNombre(), 
+                        tipo, 
+                        li.getPrivada(), 
+                        categoria,
+                        li.getUsuario().getId()
+                    ));
+                }
+                em.close();
+       } catch (Exception e) {
+           Throwable t = new Throwable();
+           StackTraceElement[] elements = t.getStackTrace();
+           String invocador = elements[1].getFileName();
+           exceptionAux(invocador, e);
+       }
+       return list;
+    }
+    
+    @Override
+    public ListaDeReproduccionDt obtenerListaDtPorId(int id) {
+        ListaDeReproduccionDt ldt = null;
+        try {
+            EntityManager em = emFactory.createEntityManager();
+            em.getTransaction().begin();
+            
+            ListaDeReproduccion l = em.find(ListaDeReproduccion.class, id);
+            if(l == null) throw new Exception("La lista no existe");
+            
+            //Reviso su tipo
+            String tipo = "Particular";
+            if(em.find(ListaDeReproduccion_PorDefecto.class, l.getNombre()) != null) tipo = "Por Defecto";
+            //Reviso su categoria
+            String categoria = "Ninguna";
+            if(l.getCategoria() != null) categoria = l.getCategoria().getNombre();
+            //Creo el datatype
+            ldt = new ListaDeReproduccionDt(
+                l.getId(), 
+                l.getNombre(), 
+                tipo, 
+                l.getPrivada(), 
+                categoria,
+                id
+            );
+            em.getTransaction().commit();
+            em.close();
+        } catch (Exception e) {
+            Throwable t = new Throwable();
+            StackTraceElement[] elements = t.getStackTrace();
+            String invocador = elements[1].getFileName();
+            exceptionAux(invocador, e);
+        }
+        return ldt;
     }
 }

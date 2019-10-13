@@ -3,6 +3,8 @@
     Created on : 11 oct. 2019, 20:21:50
     Author     : Esteban
 --%>
+<%@page import="java.util.List"%>
+<%@page import = "org.json.JSONArray"%>
 <!-- Our Custom CSS -->
 <link rel="stylesheet" href="css/sidebar.css">
 <!-- Scrollbar Custom CSS -->
@@ -30,24 +32,15 @@
                     </ul>
                     <ul id="playlists">
                       <li class="title">LISTAS</li>
-                      <li><a href="#"><i class="fa fa-plus"></i> Crear Lista</a></li>
-                      <!-- Cargar listas genericas-->
-                      <li><a href="#"><i class="fa fa-film"></i> Me gusta</a></li>
-                      <li><a href="#"><i class="fa fa-repeat"></i> Ver mas tarde</a></li>
-                      <!-- Cargar listas particulares-->
                       
                     </ul>
                     <ul id="cat">
-                      <li class="title">CATEGORIAS</li> 
-                      <!-- Cargar categorias-->
-                      <li><a href="#"> 1</a></li>
-                      <li><a href="#"> 2</a></li>
-                      <li><a href="#"> 3</a></li>
+                        <li class="title">CATEGORIAS</li>
                     </ul>
                 </ul> <!-- End list -->
             </nav>
         </div>
-
+		
 
 
         <div class="overlay"></div>
@@ -57,7 +50,62 @@
         <script src="js/popper.min.js"></script>
         <!-- jQuery Custom Scroller CDN -->
         <script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
+		
+        <script>
+            $(document).ready(function () {
+                listarListasDeReproduccion();
+                listarCategorias();
+            });
+            
+            function listarListasDeReproduccion() {
+                var lists = document.getElementById("playlists");
+                
+                var sidebar_user_id = '<%=session.getAttribute("userid")%>';
+                
+                if(sidebar_user_id === null  || sidebar_user_id === "null") //Y posta hizo la de asignar null como string
+                    lists.innerHTML += '<li><a href="http://localhost:8080/WebApplication/login.jsp">Inicie sesión para ver sus listas</a></li>';
+                
+                $.ajax({
+                    url:'http://localhost:8080/WebApplication/api/obtenerListas.jsp?user_id='+sidebar_user_id,
+                    success:function(data){   
+                        let listas = jQuery.parseJSON(data);
+                        let html = "";
+                        for (let i = 0; i < listas.length; i++) {
+                            var icono = "fas fa-list";
+                            if(listas[i].nombre == "Ver mas tarde" || listas[i].nombre == "Ver más tarde") icono = "fas fa-redo-alt";
+                            if(listas[i].nombre == "Favoritos") icono = "fas fa-redo-alt";
+                            
+                            html += '<li><a href="http://localhost:8080/WebApplication/buscador.jsp?lista='+listas[i].id+'"><i class="'+icono+'"></i>'+listas[i].nombre+'</a></li>';
+                        }
+                        lists.innerHTML += html;
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                      console.log(xhr.status);
+                      console.log(thrownError);
+                    }
+                });
+            }
+            
+            function listarCategorias() {
+                var cats = document.getElementById("cat");
+                $.ajax({
+                    url:"http://localhost:8080/WebApplication/api/obtenerCategorias.jsp",
+                    success:function(data){   
+                        let categorias = jQuery.parseJSON(data);
+                        let html = "";
+                        for (let i = 0; i < categorias.length; i++) {
+                            html += '<li><a href="http://localhost:8080/WebApplication/buscador.jsp?cat='+categorias[i].nombre+'"><i class="fas fa-circle"></i>'+categorias[i].nombre+'</a></li>';
+                        }
+                        cats.innerHTML += html;
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                      console.log(xhr.status);
+                      console.log(thrownError);
+                    }
+                });
+            }
 
+        </script>
         <script type="text/javascript">
             $(document).ready(function () {
                 $("#sidebar").mCustomScrollbar({

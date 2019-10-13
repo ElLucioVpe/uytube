@@ -10,7 +10,6 @@ import java.util.List;
 import logica.dt.ListaDeReproduccionDt;
 import logica.dt.UsuarioDt;
 import logica.dt.VideoDt;
-import logica.dt.VideoListaDt;
 
 /**
  *
@@ -53,5 +52,8 @@ public interface IControladorUsuario {
     
     // Para servidor web
     public abstract Integer LoginUsuario(String _user, String _password);
-
+    public abstract boolean estaSuscripto(int suscripto, int pcanal);
+    public abstract List<ListaDeReproduccionDt> obtenerListasDtPorUsuario(int id);
+    public abstract List<ListaDeReproduccionDt> obtenerListas();
+    public abstract ListaDeReproduccionDt obtenerListaDtPorId(int id); //Creo esto porque es mas conveniente a nivel de web pero obtenerListaDt(id_user, nombre) es mas conveniente en la estacion
 }

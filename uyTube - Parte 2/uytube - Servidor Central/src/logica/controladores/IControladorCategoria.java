@@ -11,6 +11,8 @@ import logica.Categoria;
 import logica.ListaDeReproduccion;
 import logica.Video;
 import logica.dt.CategoriaDt;
+import logica.dt.ListaDeReproduccionDt;
+import logica.dt.VideoDt;
 
 /**
  *
@@ -18,11 +20,13 @@ import logica.dt.CategoriaDt;
  */
 public interface IControladorCategoria {
     
-    public void AltaCategoria(String nombre);
-    public List<CategoriaDt> ListarCategorias();
-    public CategoriaDt ConsultarCategorias(String c);
-    public List<ListaDeReproduccion> obtenerListasCategoria(String nom);
-    public List<Video> obtenerVideosCategoria(String nom);
+    public abstract void AltaCategoria(String nombre);
+    public abstract List<CategoriaDt> ListarCategorias();
+    public abstract CategoriaDt ConsultarCategorias(String c);
+    public abstract List<ListaDeReproduccion> obtenerListasCategoria(String nom);
+    public abstract List<Video> obtenerVideosCategoria(String nom);
     
-    
+    //Para la web
+    public abstract List<ListaDeReproduccionDt> obtenerListasDtCategoria(String nom);
+    public abstract List<VideoDt> obtenerVideosDtCategoria(String nom);
 }

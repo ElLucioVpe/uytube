@@ -20,7 +20,7 @@
     if(session.getAttribute("userid") != null) {
         UsuarioDt header_u = (UsuarioDt) session.getAttribute("user_dt");
         header_user_nick = header_u.getNickname();
-        header_user_img = "http://localhost:8080/images/"+header_u.getImagen();
+        if(header_u.getImagen() != null) header_user_img = "http://localhost:8080/images/"+header_u.getImagen();
     }
 %>
 <script>.dropdown-menu.pull-left {left:0;}</script>
@@ -59,7 +59,10 @@
                   function logout() {
                       $.ajax({
                           url: "http://localhost:8080/WebApplication/api/logout.jsp",
-                          success: function(){ alert("Se cerro la sesión");},
+                          success: function(){ 
+                              alert("Se cerro la sesión");
+                              location.reload();
+                          },
                           error: function() { alert("Error inesperado cerrando sesión");}
                       });
                   }                    

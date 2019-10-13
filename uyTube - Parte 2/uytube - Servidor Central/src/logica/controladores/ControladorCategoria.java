@@ -14,8 +14,11 @@ import javax.persistence.TypedQuery;
 import javax.swing.JOptionPane;
 import logica.Categoria;
 import logica.ListaDeReproduccion;
+import logica.ListaDeReproduccion_PorDefecto;
 import logica.Video;
 import logica.dt.CategoriaDt;
+import logica.dt.ListaDeReproduccionDt;
+import logica.dt.VideoDt;
 
 
 /**
@@ -157,8 +160,6 @@ public class ControladorCategoria implements IControladorCategoria {
             exceptionAux(invocador, e);
         }
         return query;
-         
-         
      }
      
     private void exceptionAux(String inv, Exception e){
@@ -167,6 +168,71 @@ public class ControladorCategoria implements IControladorCategoria {
         } else {
             System.out.println("Error: "+e.getMessage());
         }
+    }
+    
+    //Para la web
+    
+    @Override
+    public List<ListaDeReproduccionDt> obtenerListasDtCategoria(String nom){
+        List<ListaDeReproduccionDt> retorno = new ArrayList<>();
+        try {
+            EntityManager em = emFactory.createEntityManager();
+            
+            Categoria c = em.find(Categoria.class, nom);
+            if(c == null) throw new Exception("La categoria no existe");
+            
+            List<ListaDeReproduccion> lista = this.obtenerListasCategoria(nom);
+            
+            for(int i=0; i < lista.size(); i++) {
+                ListaDeReproduccion l = lista.get(i);
+                //Reviso su tipo
+                String tipo = "Particular";
+                if(em.find(ListaDeReproduccion_PorDefecto.class, l.getNombre()) != null) tipo = "Por Defecto";
+                //Reviso su categoria
+                String categoria = "Ninguna";
+                if(l.getCategoria() != null) categoria = l.getCategoria().getNombre();
+                //Creo el datatype
+                retorno.add(new ListaDeReproduccionDt(
+                    l.getId(), 
+                    l.getNombre(), 
+                    tipo, 
+                    l.getPrivada(), 
+                    categoria,
+                    l.getUsuario().getId()
+                ));
+            }
+            em.close();
+        } catch (Exception e) {
+            Throwable t = new Throwable();
+            StackTraceElement[] elements = t.getStackTrace();
+            String invocador = elements[1].getFileName();
+            exceptionAux(invocador, e);
+        }
+        return retorno;
+    }
+    
+    @Override
+    public List<VideoDt> obtenerVideosDtCategoria(String nom) {
+        List<VideoDt> retorno = new ArrayList<>();
+        try {
+            EntityManager em = emFactory.createEntityManager();
+            
+            Categoria c = em.find(Categoria.class, nom);
+            if(c == null) throw new Exception("La categoria no existe");
+            
+            List<Video> lista = this.obtenerVideosCategoria(nom);
+
+            for(int i=0; i < lista.size(); i++) {
+                retorno.add(new VideoDt(lista.get(i)));
+            }
+            em.close();
+        } catch (Exception e) {
+            Throwable t = new Throwable();
+            StackTraceElement[] elements = t.getStackTrace();
+            String invocador = elements[1].getFileName();
+            exceptionAux(invocador, e);
+        }
+        return retorno;
     }
 }
 

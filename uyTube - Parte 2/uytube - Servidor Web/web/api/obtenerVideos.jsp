@@ -41,7 +41,7 @@
 
                     jarr.put(json1);
                 }
-
+                
                 out.println(jarr);
             } else {
                 VideoDt _video = video.obtenerVideoDtPorID(Integer.parseInt(request.getParameter("id")));
