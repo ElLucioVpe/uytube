@@ -183,7 +183,7 @@
                                         
                                    <div class="form-group row">
                                     <label for="exampleFormControlSelect1">Categoria del canal</label>
-                                    <select class="form-control" id="categoria">
+                                    <select class="form-control" id="categoria" name="categoria">
                                         <%
                                             Fabrica f = Fabrica.getInstance();
                                             IControladorCategoria cat = f.getIControladorCategoria();
@@ -194,11 +194,11 @@
                                         <%
                                             for (CategoriaDt c : catArray) {
                                         %>
-                                            <option>
-                                        <%    
-                                                out.println(c.getNombre());
-                                        %>
-                                            </option>
+                                            <option value=<% out.println(c.getNombre()); %>>
+                                          <%
+                                               out.println(c.getNombre());
+                                           %>
+                                           </option>
                                       
                                             <%
                                                 

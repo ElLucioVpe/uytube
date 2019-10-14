@@ -61,7 +61,7 @@
       
       try { 
           
-           out.println("<html>");
+         out.println("<html>");
          out.println("<head>");
          out.println("<title>JSP File upload</title>");  
          out.println("</head>");
@@ -131,9 +131,10 @@
                  String catUp = (String)session.getAttribute("catx");
                  Boolean visUp = true;
                  
-                 if(visibility=="privado"){
+                 if(visibility.contains("privado")){
                  visUp=true;
-                 }else if (visibility=="publico"){
+                 }
+                 if (visibility.contains("publico")){
                  visUp=false;
                  }
                  
@@ -160,7 +161,8 @@
                      
                  }
                  
-         /*        
+           
+         /*
          out.println(userUp); 
          out.println(pswdUp); 
          out.println(nameUp); 
@@ -169,8 +171,14 @@
          out.println(fechaNacimiento.toString()); 
          out.println(fileName); 
          out.println(IdUsuarioCreate); 
-         */
          
+         out.println(visUp);
+         out.println(visibility);
+         out.println((String)session.getAttribute("catx"));
+         
+         out.println(catUp);
+         out.println(descUp);
+         */
          
          out.println("</body>");
          out.println("</html>");
