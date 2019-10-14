@@ -147,6 +147,17 @@
                                         </div>
                                     </div>
                                     
+                                    <div class="card-body">Canal
+                                        
+                                    <div class="form-group row">
+                                        <label for="mail" class="col-md-4 col-form-label text-md-right">Descripcion</label>
+                                        <div class="col-md-6">
+                                            <input type="desc" id="mail" class="form-control" name="desc" required>
+                                        </div>
+                                    </div>
+                                        
+                                        
+                                    </div>
 
                                     <div class="col-md-6 offset-md-4">
                                         <button type="submit" class="btn btn-primary">
