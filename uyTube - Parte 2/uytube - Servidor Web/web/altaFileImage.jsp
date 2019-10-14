@@ -4,6 +4,8 @@
     Author     : pagol
 --%>
 
+<%@page import="logica.controladores.Fabrica"%>
+<%@page import="logica.controladores.IControladorUsuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -24,12 +26,57 @@
         <title>JSP Page</title>
         
          <%
+             
+             //ErrorAltaUser seteo en null por si las dudas
+             session.setAttribute("errorAltaUser","");
+             
+             
+               //Verifica User
+                    Fabrica f = Fabrica.getInstance();
+                    IControladorUsuario user = f.getIControladorUsuario();
+                    
+                    int idUserV=-1;
+                    idUserV = user.obtenerIdUsuario(request.getParameter("user"));
+                    
+                    
+             if(idUserV!=-1){
+             //if user ya existe tira pa tra loco  - scriptear al principio con msj de error
+                session.setAttribute("errorAltaUser","nick");
+                String redirectURL = "altaUser.jsp";
+                  if (!response.isCommitted()){
+                response.sendRedirect(redirectURL); 
+                }
+             
+             }
+             
+             
+             //Verifico Email
+            String emailV = request.getParameter("mail");
+            int posEmailV = emailV.indexOf("@");
+            int posEmailV2 = emailV.indexOf(".");
+            
+            if((posEmailV2==-1)||(posEmailV==-1)){
+                session.setAttribute("errorAltaUser","email");
+                String redirectURL = "altaUser.jsp";
+                //evitar intento de doble redirect
+                if (!response.isCommitted()){
+                response.sendRedirect(redirectURL); 
+                }
+              
+            }
+                 
+                 
+             //Setea sessions atributes para despues de el upload de img step 2
                session.setAttribute("userx",request.getParameter("user"));
                session.setAttribute("pswdx",request.getParameter("password"));
                session.setAttribute("namex",request.getParameter("name"));
                session.setAttribute("apellidox",request.getParameter("apellido"));
                session.setAttribute("mailx",request.getParameter("mail"));
                session.setAttribute("fechax",request.getParameter("datepicker"));
+               
+               
+               
+               
                 
          %>
             

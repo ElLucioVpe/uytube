@@ -46,6 +46,23 @@
             
             <%
                 
+                //Testing weas
+                /*
+                Fabrica f = Fabrica.getInstance();
+                IControladorUsuario user = f.getIControladorUsuario();
+              
+                     SimpleDateFormat sdf= new SimpleDateFormat("dd/MM/yyyy");
+                     java.util.Date fechaNacimiento = sdf.parse("11/11/1999"); 
+                     
+                user.AltaUsuario("asd", "123", "123","123", "123@123.com", fechaNacimiento, "Richard.jpg");
+                
+                int IdUsuarioCreate = user.obtenerIdUsuario("asd");
+                */   
+                     
+                //user.AltaCanal("asd", true, IdUsuarioCreate, "");
+                     
+                     
+                
                 
                  if (request.getParameter("user") != null) {
                     if (request.getParameter("file") != null) {
@@ -137,6 +154,19 @@
                                         </button>
                                     </div>
                                     
+                                     <% if (session.getAttribute("errorAltaUser")=="nick") { %>
+                                            <div class="alert alert-danger" role="alert">
+                                                Ya existe un user con ese Nick
+                                            </div>
+                                        <%}
+                                    %>
+                                    
+                                    <% if (session.getAttribute("errorAltaUser")=="email") { %>
+                                            <div class="alert alert-danger" role="alert">
+                                                No ingreso un email valido
+                                            </div>
+                                        <%}
+                                    %>
                                     
                                     
                             </div>
