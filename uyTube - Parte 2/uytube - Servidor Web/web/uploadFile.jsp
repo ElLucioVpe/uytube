@@ -115,7 +115,7 @@
          }
          
                  
-                 
+                 //User sets
                  String userUp = (String)session.getAttribute("userx");
                  String pswdUp = (String)session.getAttribute("pswdx");
                  String nameUp = (String)session.getAttribute("namex");
@@ -123,6 +123,21 @@
                  String mailUp = (String)session.getAttribute("mailx");
                  String fechaUp = (String)session.getAttribute("fechax");
                  int IdUsuarioCreate = -1;
+                 
+                 
+                 //Canal sets
+                 String descUp = (String)session.getAttribute("descx");
+                 String visibility = (String)session.getAttribute("visx");
+                 String catUp = (String)session.getAttribute("catx");
+                 Boolean visUp = true;
+                 
+                 if(visibility=="privado"){
+                 visUp=true;
+                 }else if (visibility=="publico"){
+                 visUp=false;
+                 }
+                 
+                 
                  
                  //Alta User
                     Fabrica f = Fabrica.getInstance();
@@ -140,7 +155,7 @@
                      IdUsuarioCreate = user.obtenerIdUsuario(userUp);
                      
                      if(IdUsuarioCreate!=-1){
-                        user.AltaCanal(userUp, true, IdUsuarioCreate, "");
+                        user.AltaCanal(userUp, visUp, catUp, IdUsuarioCreate, descUp);
                      }
                      
                  }

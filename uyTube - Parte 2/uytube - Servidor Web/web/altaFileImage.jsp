@@ -74,6 +74,11 @@
                session.setAttribute("mailx",request.getParameter("mail"));
                session.setAttribute("fechax",request.getParameter("datepicker"));
                
+
+            //Canal Sessions
+            session.setAttribute("descx",request.getParameter("desc"));            
+            session.setAttribute("visx",request.getParameter("visibilidad"));
+            session.setAttribute("catx",request.getParameter("categoria"));
                
                
                
