@@ -122,27 +122,41 @@
                  String apellidoUp = (String)session.getAttribute("apellidox");
                  String mailUp = (String)session.getAttribute("mailx");
                  String fechaUp = (String)session.getAttribute("fechax");
+                 int IdUsuarioCreate = -1;
                  
                  //Alta User
                     Fabrica f = Fabrica.getInstance();
                     IControladorUsuario user = f.getIControladorUsuario();
               
               
-                        String startDateStr = fechaUp;
-                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                        //surround below line with try catch block as below code throws checked exception
-                        Date fechaNacimiento = null;
-                        try {
-                            fechaNacimiento = sdf.parse(startDateStr);
-                        } catch (ParseException ex) {
-                           
-                        }
+                     SimpleDateFormat sdf= new SimpleDateFormat("dd/MM/yyyy");
+                     java.util.Date fechaNacimiento = sdf.parse(fechaUp); 
+                      
                         
                         
                  if(fileName!=""){
                      user.AltaUsuario(userUp, pswdUp, nameUp,apellidoUp, mailUp, fechaNacimiento, fileName);
+                     
+                     IdUsuarioCreate = user.obtenerIdUsuario(userUp);
+                     
+                     if(IdUsuarioCreate!=-1){
+                        user.AltaCanal(userUp, true, IdUsuarioCreate, "");
+                     }
+                     
                  }
                  
+         /*        
+         out.println(userUp); 
+         out.println(pswdUp); 
+         out.println(nameUp); 
+         out.println(apellidoUp); 
+         out.println(mailUp); 
+         out.println(fechaNacimiento.toString()); 
+         out.println(fileName); 
+         out.println(IdUsuarioCreate); 
+         */
+         
+         
          out.println("</body>");
          out.println("</html>");
       } catch(Exception ex) {
