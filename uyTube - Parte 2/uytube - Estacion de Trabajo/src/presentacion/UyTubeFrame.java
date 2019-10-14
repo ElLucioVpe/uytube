@@ -383,21 +383,21 @@ public class UyTubeFrame extends javax.swing.JFrame {
             e.printStackTrace();
         }
        //CANALES
-       user.AltaCanal("Canal Horacio", false, 1, "El canal Horacio es para publicar contenido divertido");
-       user.AltaCanal("El bocha", false, 2, "Mi canal para colgar cosas");
-       user.AltaCanal("Canal Héctor", false,3, "Canal HG");
-       user.AltaCanal("Tabaré", false,4, "Mi música e ainda mais");
-       user.AltaCanal("El Cachila", true,5, "Para juntar cosas");
-       user.AltaCanal("Canal Julio", false,6, "Canal de JB");
-       user.AltaCanal("Canal Diego", false,7, "Canal de DP");
-       user.AltaCanal("Kairo música", false,8, "Videos de grandes canciones de hoy y siempre");
-       user.AltaCanal("Canal Robin", false,9, "Henderson");
-       user.AltaCanal("Tinelli total", false,10, "Todo lo que querías y más !");
-       user.AltaCanal("Con la gente", false,11, "Preparando las elecciones");
-       user.AltaCanal("Puglia invita", false,12, "Programas del ciclo y videos de cocina masterchef");
-       user.AltaCanal("Chino Recoba", true,13, "Canal de goles con Nacional");
-       user.AltaCanal("Tony Pacheco", true,14, "Todos los goles con Peñarol");
-       user.AltaCanal("Desde Genexus", false,15, "Canal información C y T");
+       user.AltaCanal("Canal Horacio", false, "Ninguna", 1, "El canal Horacio es para publicar contenido divertido");
+       user.AltaCanal("El bocha", false, "Ninguna", 2, "Mi canal para colgar cosas");
+       user.AltaCanal("Canal Héctor", false, "Ninguna", 3, "Canal HG");
+       user.AltaCanal("Tabaré", false, "Ninguna", 4, "Mi música e ainda mais");
+       user.AltaCanal("El Cachila", true, "Ninguna", 5, "Para juntar cosas");
+       user.AltaCanal("Canal Julio", false, "Ninguna", 6, "Canal de JB");
+       user.AltaCanal("Canal Diego", false, "Ninguna", 7, "Canal de DP");
+       user.AltaCanal("Kairo música", false, "Ninguna", 8, "Videos de grandes canciones de hoy y siempre");
+       user.AltaCanal("Canal Robin", false, "Ninguna", 9, "Henderson");
+       user.AltaCanal("Tinelli total", false, "Ninguna", 10, "Todo lo que querías y más !");
+       user.AltaCanal("Con la gente", false, "Ninguna", 11, "Preparando las elecciones");
+       user.AltaCanal("Puglia invita", false, "Ninguna", 12, "Programas del ciclo y videos de cocina masterchef");
+       user.AltaCanal("Chino Recoba", true, "Ninguna", 13, "Canal de goles con Nacional");
+       user.AltaCanal("Tony Pacheco", true, "Ninguna", 14, "Todos los goles con Peñarol");
+       user.AltaCanal("Desde Genexus", false, "Ninguna", 15, "Canal información C y T");
        //SEGUIDORES
        user.seguirUsuario("hrubino", "hectorg");
        user.seguirUsuario("hrubino", "diegop");

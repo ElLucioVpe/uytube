@@ -7,6 +7,7 @@ package logica.controladores;
 
 import java.util.Date;
 import java.util.List;
+import logica.dt.CanalDt;
 import logica.dt.ListaDeReproduccionDt;
 import logica.dt.UsuarioDt;
 import logica.dt.VideoDt;
@@ -18,7 +19,7 @@ import logica.dt.VideoDt;
 public interface IControladorUsuario {
 
     public abstract void AltaUsuario(String nick, String pass, String nom, String apell, String mail, Date fnac, String img);
-    public abstract void AltaCanal(String nombre, boolean privado, int user_id, String descripcion);
+    public abstract void AltaCanal(String nombre, boolean privado, String categoria, int user_id, String descripcion);
     public abstract void ModificarUsuario(int id, String nuevonom, String nuevoapell, Date nuevafechaNac, String nuevonomC, String nuevadesC, boolean nuevaprivC);
     public abstract List<UsuarioDt> ListarUsuarios();
     public abstract UsuarioDt ConsultarUsuario(int id);
@@ -56,4 +57,5 @@ public interface IControladorUsuario {
     public abstract List<ListaDeReproduccionDt> obtenerListasDtPorUsuario(int id);
     public abstract List<ListaDeReproduccionDt> obtenerListas();
     public abstract ListaDeReproduccionDt obtenerListaDtPorId(int id); //Creo esto porque es mas conveniente a nivel de web pero obtenerListaDt(id_user, nombre) es mas conveniente en la estacion
+    public abstract CanalDt obtenerCanalDt(int id);
 }

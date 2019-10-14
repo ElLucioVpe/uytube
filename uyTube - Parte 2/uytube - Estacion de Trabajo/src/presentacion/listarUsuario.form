@@ -83,6 +83,11 @@
                                       <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
                                       <Component id="lblPrivacidadCanal" min="-2" max="-2" attributes="0"/>
                                   </Group>
+                                  <Group type="102" attributes="0">
+                                      <Component id="jLabel24" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                                      <Component id="lblCategoriaCanal" min="-2" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
@@ -143,39 +148,49 @@
                       <EmptySpace min="5" pref="5" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="ImagenLabel" min="-2" max="-2" attributes="0"/>
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblNombre" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblApellido" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblFechaNac" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblMail" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jLabel21" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblNombreCanal" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jLabel23" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblPrivacidadCanal" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
                           <Component id="lblNombreCanal1" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lblNombre" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lblApellido" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="jLabel21" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lblNombreCanal" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="jLabel23" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lblPrivacidadCanal" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                              </Group>
+                              <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lblFechaNac" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="3" attributes="0">
+                                          <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lblMail" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <Component id="jLabel24" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblCategoriaCanal" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
                       </Group>
                   </Group>
               </Group>
@@ -577,5 +592,15 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JLabel" name="jLabel24">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Categoria:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblCategoriaCanal">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="lblCategoriaCanal"/>
+      </Properties>
+    </Component>
   </SubComponents>
 </Form>

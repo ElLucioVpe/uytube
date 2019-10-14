@@ -37,9 +37,17 @@
             </button>
             </form>
             <form class="form-inline">
-              <input class="form-control mr-sm-2" type="search" placeholder="El judio esta haciendo este buscador" aria-label="Buscar">
-              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+              <input id="search-text" class="form-control mr-sm-2" type="search" placeholder="Busque videos, listas o canales" aria-label="Buscar">
+              <button class="btn btn-outline-success my-2 my-sm-0" type="button" onclick="buscar()">Buscar</button>
             </form>
+            <script>
+                function buscar() {
+                    var contenido = $('#search-text').val();
+                    if(contenido !== null) window.location.replace("http://localhost:8080/WebApplication/buscador.jsp?video=true&channel=true&list=true&text="+contenido);
+                    else window.location.replace("http://localhost:8080/WebApplication/buscador.jsp?video=true&channel=true&list=true");
+                }
+            </script>
+            
             <form class="form-inline" id="user-info">
               <img src=<%=header_user_img%> class="rounded-circle" width="30" height="30" alt="User Picture">
               <span class="text-muted"><%=header_user_nick%></span>

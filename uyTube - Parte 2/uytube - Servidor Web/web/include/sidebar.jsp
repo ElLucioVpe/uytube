@@ -9,7 +9,6 @@
 <link rel="stylesheet" href="css/sidebar.css">
 <!-- Scrollbar Custom CSS -->
 <link rel="stylesheet" href="css/jquery.mCustomScrollbar.min.css">
-
         <div class="wrapper">
             <!-- Sidebar Holder -->
             <nav id="sidebar">
@@ -62,29 +61,31 @@
                 
                 var sidebar_user_id = '<%=session.getAttribute("userid")%>';
                 
-                if(sidebar_user_id === null  || sidebar_user_id === "null") //Y posta hizo la de asignar null como string
+                if(sidebar_user_id === null  || sidebar_user_id === "null")
                     lists.innerHTML += '<li><a href="http://localhost:8080/WebApplication/login.jsp">Inicie sesión para ver sus listas</a></li>';
-                else lists.innerHTML += '<li><a href="http://localhost:8080/WebApplication/crearListaDR.jsp"><i class="fa fa-plus"></i> Crear Lista</a></li>';
+                else { 
+                    lists.innerHTML += '<li><a href="http://localhost:8080/WebApplication/crearListaDR.jsp"><i class="fa fa-plus"></i> Crear Lista</a></li>';
                 
-                $.ajax({
-                    url:'http://localhost:8080/WebApplication/api/obtenerListas.jsp?user_id='+sidebar_user_id,
-                    success:function(data){   
-                        let listas = jQuery.parseJSON(data);
-                        let html = "";
-                        for (let i = 0; i < listas.length; i++) {
-                            var icono = "fas fa-list";
-                            if(listas[i].nombre == "Ver mas tarde" || listas[i].nombre == "Ver más tarde") icono = "fas fa-redo-alt";
-                            if(listas[i].nombre == "Favoritos") icono = "fas fa-redo-alt";
-                            
-                            html += '<li><a href="http://localhost:8080/WebApplication/buscador.jsp?lista='+listas[i].id+'"><i class="'+icono+'"></i> '+listas[i].nombre+'</a></li>';
+                    $.ajax({
+                        url:"http://localhost:8080/WebApplication/api/obtenerListas.jsp?user_id="+sidebar_user_id,
+                        success:function(data){   
+                            let listas = jQuery.parseJSON(data);
+                            let html = "";
+                            for (let i = 0; i < listas.length; i++) {
+                                var icono = "fas fa-list";
+                                if(listas[i].nombre === "Ver mas tarde" || listas[i].nombre === "Ver más tarde") icono = "fas fa-redo-alt";
+                                if(listas[i].nombre === "Favoritos") icono = "fas fa-redo-alt";
+
+                                html += '<li><a href="http://localhost:8080/WebApplication/consultarLista.jsp?user_id='+listas[i].user_id+'&nom='+listas[i].nombre+'"><i class="'+icono+'"></i> '+listas[i].nombre+'</a></li>';
+                            }
+                            lists.innerHTML += html;
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                          console.log(xhr.status);
+                          console.log(thrownError);
                         }
-                        lists.innerHTML += html;
-                    },
-                    error: function (xhr, ajaxOptions, thrownError) {
-                      console.log(xhr.status);
-                      console.log(thrownError);
-                    }
-                });
+                    });
+                }   
             }
             
             function listarCategorias() {
@@ -95,7 +96,7 @@
                         let categorias = jQuery.parseJSON(data);
                         let html = "";
                         for (let i = 0; i < categorias.length; i++) {
-                            html += '<li><a href="http://localhost:8080/WebApplication/buscador.jsp?cat='+categorias[i].nombre+'"><i class="fas fa-circle"></i> '+categorias[i].nombre+'</a></li>';
+                            html += '<li><a href="http://localhost:8080/WebApplication/buscador.jsp?video=true&channel=true&list=true&cat='+categorias[i].nombre+'"><i class="fas fa-circle"></i> '+categorias[i].nombre+'</a></li>';
                         }
                         cats.innerHTML += html;
                     },

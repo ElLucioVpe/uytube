@@ -20,6 +20,7 @@ import logica.ListaDeReproduccion;
 import logica.ListaDeReproduccion_PorDefecto;
 import logica.Usuario;
 import logica.Video;
+import logica.dt.CanalDt;
 import logica.dt.ListaDeReproduccionDt;
 import logica.dt.UsuarioDt;
 import logica.dt.VideoDt;
@@ -74,7 +75,7 @@ public class ControladorUsuario implements IControladorUsuario {
     }
 
     @Override
-    public void AltaCanal(String nombre, boolean privado, int user_id, String descripcion) {
+    public void AltaCanal(String nombre, boolean privado, String categoria, int user_id, String descripcion) {
         try {
 
             EntityManager em = emFactory.createEntityManager();
@@ -85,9 +86,16 @@ public class ControladorUsuario implements IControladorUsuario {
 
             Usuario u = em.find(Usuario.class, user_id);
             if(nombre.isBlank()) nombre = u.getNickname();
-
+            
             Canal c = new Canal(user_id, nombre, privado);
             if(!descripcion.isEmpty()) c.setDescripcion(descripcion);
+            
+            if(!categoria.equals("Ninguna")){
+                Categoria cat = em.find(Categoria.class, categoria);
+                if(cat == null) throw new Exception("La categoria no existe");
+                c.setCategoria(cat);
+            }
+            
             c.setUsuario(u);
             u.setCanal(c);
             em.persist(c);
@@ -897,5 +905,25 @@ public class ControladorUsuario implements IControladorUsuario {
             exceptionAux(invocador, e);
         }
         return ldt;
+    }
+    
+    @Override
+    public CanalDt obtenerCanalDt(int id) {
+        CanalDt dt = null;
+        try {
+            EntityManager em = emFactory.createEntityManager();
+            
+            Canal c = em.find(Canal.class, id);
+            if(c == null) throw new Exception("El canal no existe");
+            
+            dt = new CanalDt(c);
+            em.close();
+        } catch (Exception e) {
+            Throwable t = new Throwable();
+            StackTraceElement[] elements = t.getStackTrace();
+            String invocador = elements[1].getFileName();
+            exceptionAux(invocador, e);
+        }
+        return dt;
     }
 }

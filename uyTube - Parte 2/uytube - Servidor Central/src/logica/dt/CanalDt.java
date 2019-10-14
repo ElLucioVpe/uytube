@@ -17,31 +17,38 @@ import logica.Video;
  * @author antus
  */
 public class CanalDt {
-private Integer userId;
-private String nombre;
-private String descripcion;
-private Boolean privacidad;
-private Usuario usuario;
-private Collection<Video> videos;
-private Collection<ListaDeReproduccion> listas;
-private Collection<Usuario> seguidores;
- public CanalDt() {
-     
- }
+    
+    private Integer userId;
+    private String nombre;
+    private String descripcion;
+    private Boolean privacidad;
+    private String categoria;
+    private Usuario usuario;
+    private Collection<Video> videos;
+    private Collection<ListaDeReproduccion> listas;
+    private Collection<Usuario> seguidores;
+
+    public CanalDt() {
+
+    }
  
- public CanalDt(Integer userId, String nombre, Boolean privacidad, String descripcion) {
+    public CanalDt(Integer userId, String nombre, Boolean privacidad, String categoria, String descripcion) {
         this.userId = userId;
         this.nombre = nombre;
         this.privacidad = privacidad;
+        this.categoria = categoria;
         this.descripcion  = descripcion;
         this.videos = new ArrayList<>();
         this.listas = new ArrayList<>();
         this.seguidores = new ArrayList<>();
     }
-public CanalDt(Canal c) {
+    
+    public CanalDt(Canal c) {
         this.userId = c.getUserId();
         this.nombre = c.getNombre();
         this.privacidad = c.getPrivacidad();
+        this.categoria = "Ninguna";
+        if(c.getCategoria() != null) this.categoria = c.getCategoria().getNombre();
         this.videos = c.getVideos();
         this.listas = c.getListas();
         this.seguidores = c.getSeguidores();
@@ -74,6 +81,10 @@ public CanalDt(Canal c) {
 
     public Boolean getPrivacidad() {
         return privacidad;
+    }
+    
+    public String getCategoria() {
+        return categoria;
     }
 
     public void setPrivacidad(Boolean privacidad) {

@@ -83,6 +83,9 @@ public class listarUsuario extends javax.swing.JInternalFrame {
         String privacidad = "Publico";
         if(canal.getPrivacidad()) privacidad = "Privado";
         lblPrivacidadCanal.setText(privacidad);
+        String categoria = "Ninguna";
+        if(canal.getCategoria() != null) categoria = canal.getCategoria().getNombre();
+        lblCategoriaCanal.setText(categoria);
         
         cargarListas();
     }
@@ -149,6 +152,8 @@ public class listarUsuario extends javax.swing.JInternalFrame {
         lblNombreCanal1 = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
         lblDescripcion = new javax.swing.JTextArea();
+        jLabel24 = new javax.swing.JLabel();
+        lblCategoriaCanal = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setClosable(true);
@@ -326,6 +331,10 @@ public class listarUsuario extends javax.swing.JInternalFrame {
         lblDescripcion.setRows(5);
         jScrollPane5.setViewportView(lblDescripcion);
 
+        jLabel24.setText("Categoria:");
+
+        lblCategoriaCanal.setText("lblCategoriaCanal");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -364,7 +373,11 @@ public class listarUsuario extends javax.swing.JInternalFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel23)
                                         .addGap(6, 6, 6)
-                                        .addComponent(lblPrivacidadCanal))))
+                                        .addComponent(lblPrivacidadCanal))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel24)
+                                        .addGap(6, 6, 6)
+                                        .addComponent(lblCategoriaCanal))))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -411,31 +424,37 @@ public class listarUsuario extends javax.swing.JInternalFrame {
                         .addGap(5, 5, 5)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(ImagenLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblNombreCanal1)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(lblNombre))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel1)
+                                            .addComponent(lblNombre))
+                                        .addGap(6, 6, 6)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel3)
+                                            .addComponent(lblApellido)))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel21)
+                                            .addComponent(lblNombreCanal))
+                                        .addGap(6, 6, 6)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel23)
+                                            .addComponent(lblPrivacidadCanal))))
                                 .addGap(6, 6, 6)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(lblApellido))
-                                .addGap(6, 6, 6)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5)
-                                    .addComponent(lblFechaNac))
-                                .addGap(6, 6, 6)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel7)
-                                    .addComponent(lblMail)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel21)
-                                    .addComponent(lblNombreCanal))
-                                .addGap(6, 6, 6)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel23)
-                                    .addComponent(lblPrivacidadCanal)))
-                            .addComponent(lblNombreCanal1))))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel5)
+                                            .addComponent(lblFechaNac))
+                                        .addGap(6, 6, 6)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(jLabel7)
+                                            .addComponent(lblMail)))
+                                    .addComponent(jLabel24)
+                                    .addComponent(lblCategoriaCanal))))))
                 .addGap(50, 50, 50)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel9)
@@ -505,6 +524,7 @@ public class listarUsuario extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
@@ -519,6 +539,7 @@ public class listarUsuario extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JLabel lblApellido;
+    private javax.swing.JLabel lblCategoriaCanal;
     private javax.swing.JTextArea lblDescripcion;
     private javax.swing.JLabel lblFechaNac;
     private javax.swing.JLabel lblMail;

@@ -3,7 +3,7 @@
     Created on : Sep 27, 2019, 10:32:17 PM
     Author     : pagol
 --%>
-<%@page import = "javax.persistence.*"%>
+
 <%@page import = "logica.controladores.Fabrica"%>
 <%@page import = "logica.controladores.IControladorUsuario"%>
 <%@page import="java.util.Date"%>
@@ -53,7 +53,7 @@
                             let videos = jQuery.parseJSON(response);
                             let html = "";
                             //console.log(usuarios);
-                            console.log(videos[0].mail);
+                            //console.log(videos[0].mail);
                             for (let i = 0; i < videos.length; i++) {
                                 html += "<tr>";
                                 if(videos[i].thumbnail != "") {

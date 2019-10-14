@@ -19,6 +19,7 @@
             IControladorVideo video = f.getIControladorVideo();
             IControladorUsuario user = f.getIControladorUsuario();
             
+            String cat = request.getParameter("cat");
             JSONObject json1 = null;
             JSONArray jarr = new JSONArray();
             
@@ -27,6 +28,7 @@
                 for(int i = 0; i < list.size(); i++) {
                     UsuarioDt _user = user.ConsultarUsuario((int)list.get(i).getIdCanal());
                     json1 = new JSONObject();
+                    json1.put("jsonType", "video");
                     json1.put("id", (Integer)list.get(i).getId());
                     json1.put("nombre", (String)list.get(i).getNombre());
                     json1.put("thumbnail", (String)list.get(i).getThumbnail());
@@ -34,12 +36,14 @@
                     json1.put("descripcion", (String)list.get(i).getDescripcion());
                     json1.put("fechaPublicacion", (Date)list.get(i).getFechaPublicacion());
                     json1.put("privacidad", (Boolean)list.get(i).getPrivacidad());
+                    json1.put("categoria", list.get(i).getCategoria());
                     json1.put("canal_user_id", (int)list.get(i).getIdCanal());
                     json1.put("user", _user.getNickname());
                     json1.put("likes", (int)list.get(i).getLikes());
                     json1.put("dislikes", (int)list.get(i).getDislikes());
-
-                    jarr.put(json1);
+                    
+                    if(cat == null || cat == "") jarr.put(json1);
+                    else if(cat == list.get(i).getCategoria()) jarr.put(json1);
                 }
                 
                 out.println(jarr);

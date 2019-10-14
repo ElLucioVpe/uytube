@@ -54,6 +54,8 @@ public class registroCanal extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextAreaDescripcion = new javax.swing.JTextArea();
+        CategoriasBox = new javax.swing.JComboBox<>();
+        jLabel5 = new javax.swing.JLabel();
 
         setClosable(true);
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
@@ -76,10 +78,10 @@ public class registroCanal extends javax.swing.JInternalFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setText("Nombre de Canal(opcional):");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 22, -1, 22));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, 22));
 
-        jLabel3.setText("Privacidad:");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(93, 65, -1, -1));
+        jLabel3.setText("Categoria (opcional):");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, -1, -1));
 
         jComboBoxPrivacidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Privado", "Publico" }));
         jComboBoxPrivacidad.addActionListener(new java.awt.event.ActionListener() {
@@ -87,8 +89,8 @@ public class registroCanal extends javax.swing.JInternalFrame {
                 jComboBoxPrivacidadActionPerformed(evt);
             }
         });
-        getContentPane().add(jComboBoxPrivacidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(151, 62, 81, -1));
-        getContentPane().add(jTextFieldNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(151, 23, 91, -1));
+        getContentPane().add(jComboBoxPrivacidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 60, 81, -1));
+        getContentPane().add(jTextFieldNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 20, 91, -1));
 
         jButtonFinalizar.setText("Finalizar");
         jButtonFinalizar.addActionListener(new java.awt.event.ActionListener() {
@@ -96,7 +98,7 @@ public class registroCanal extends javax.swing.JInternalFrame {
                 jButtonFinalizarActionPerformed(evt);
             }
         });
-        getContentPane().add(jButtonFinalizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(242, 235, -1, -1));
+        getContentPane().add(jButtonFinalizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 240, -1, -1));
 
         jButtonCancelar.setText("Cancelar");
         jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -107,13 +109,24 @@ public class registroCanal extends javax.swing.JInternalFrame {
         getContentPane().add(jButtonCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(31, 235, -1, -1));
 
         jLabel4.setText("Descripción:");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(87, 93, -1, 22));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 140, -1, 22));
 
         jTextAreaDescripcion.setColumns(20);
         jTextAreaDescripcion.setRows(5);
         jScrollPane1.setViewportView(jTextAreaDescripcion);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(151, 103, -1, -1));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 140, -1, -1));
+
+        CategoriasBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ninguna" }));
+        CategoriasBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CategoriasBoxActionPerformed(evt);
+            }
+        });
+        getContentPane().add(CategoriasBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 100, 112, -1));
+
+        jLabel5.setText("Privacidad:");
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 60, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -126,7 +139,7 @@ public class registroCanal extends javax.swing.JInternalFrame {
         boolean privado = false;
         if(jComboBoxPrivacidad.getSelectedItem() == jComboBoxPrivacidad.getItemAt(0)) privado = true;
         int user_id = u.obtenerIdUsuario(user_nick);
-        u.AltaCanal(jTextFieldNombre.getText(), privado, user_id, jTextAreaDescripcion.getText());
+        u.AltaCanal(jTextFieldNombre.getText(), privado, CategoriasBox.getSelectedItem().toString(), user_id, jTextAreaDescripcion.getText());
         //JOptionPane.showMessageDialog(null,"El usuario se registro con exito");
         this.dispose();
     }//GEN-LAST:event_jButtonFinalizarActionPerformed
@@ -146,14 +159,20 @@ public class registroCanal extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_formInternalFrameClosing
 
+    private void CategoriasBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CategoriasBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CategoriasBoxActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> CategoriasBox;
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JButton jButtonFinalizar;
     private javax.swing.JComboBox<String> jComboBoxPrivacidad;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextAreaDescripcion;
     private javax.swing.JTextField jTextFieldNombre;
