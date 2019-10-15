@@ -108,13 +108,22 @@
                     });
                 } else {
                     datosAux.sort(function(a, b) {
-                       if(a.jsonType === "usuario") {
-                           if(b.jsonType === "usuario") return a.canal.ultimaFecha < b.canal.ultimaFecha;
-                           else return a.canal.ultimaFecha < b.fecha;
+                       /*if(a.jsonType === "usuario") {
+                           if(b.jsonType === "usuario") return dates.compare(a.canal.ultimaFecha, b.canal.ultimaFecha);
+                           else return dates.compare(a.canal.ultimaFecha, b.fecha);
                        } else { 
-                           if(b.jsonType === "usuario") return a.fecha < b.canal.ultimaFecha;
-                           else return a.fecha < b.fecha;
-                       }
+                           if(b.jsonType === "usuario") return dates.compare(a.fecha, b.canal.ultimaFecha);
+                           else return dates.compare(a.fecha, b.fecha);
+                       }*/
+                       var dateA;
+                       var dateB;
+                       if(a.jsonType === "usuario") dateA = new Date(a.canal.ultimaFecha);
+                       else dateA = new Date(a.fecha);
+                       
+                       if(b.jsonType === "usuario") dateB = new Date(b.canal.ultimaFecha);
+                       else dateB = new Date(b.fecha);
+                       
+                       return dateA < dateB;
                     });
                 }
                 
