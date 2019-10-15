@@ -5,8 +5,11 @@
  */
 package logica.dt;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
+import java.util.Iterator;
 import logica.Canal;
 import logica.ListaDeReproduccion;
 import logica.Usuario;
@@ -27,6 +30,7 @@ public class CanalDt {
     private Collection<Video> videos;
     private Collection<ListaDeReproduccion> listas;
     private Collection<Usuario> seguidores;
+    private Date fechaUV; //Fecha ultimo video
 
     public CanalDt() {
 
@@ -53,8 +57,29 @@ public class CanalDt {
         this.listas = c.getListas();
         this.seguidores = c.getSeguidores();
         this.descripcion  = c.getDescripcion();
+        this.fechaUV = fechaUltimoVideo();
     }
 
+    private Date fechaUltimoVideo() {
+        Date retorno = null;
+        
+        if(videos != null) {
+            Iterator<Video> it = videos.iterator();
+            
+            try {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                Date ultima = sdf.parse("1990-01-01");
+                
+                while(it.hasNext()) {
+                    Video aux = it.next();
+                    if(aux.getFechaPublicacion().after(ultima)) ultima = aux.getFechaPublicacion();
+                }
+                retorno = ultima;
+            }catch(Exception e){}
+        }
+        return retorno;
+    }
+    
     public Integer getUserId() {
         return userId;
     }
@@ -95,6 +120,10 @@ public class CanalDt {
         return usuario;
     }
 
+    public Date getFechaUV() {
+        return fechaUV;
+    }
+    
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }

@@ -5,6 +5,8 @@
  */
 package logica.dt;
 
+import java.util.Date;
+
 /**
  *
  * @author Esteban
@@ -16,19 +18,25 @@ public class ListaDeReproduccionDt {
     private String tipo;
     private String categoria;
     private int user_id;
+    private Date fechaUV;
 
     public ListaDeReproduccionDt(){
     }
 
-    public ListaDeReproduccionDt(int id, String nombre, String tipo, boolean privada, String categoria, int usuario) {
+    public ListaDeReproduccionDt(int id, String nombre, String tipo, boolean privada, String categoria, int usuario, Date fechaUV) {
         this.id = id;
         this.nombre = nombre;
         this.privada = privada;
         this.tipo = tipo;
         this.categoria = categoria;
         this.user_id = usuario;
+        this.fechaUV = fechaUV;
     }
 
+    public Date getFechaUV() {
+        return fechaUV;
+    }
+    
     public int getId() {
         return id;
     }

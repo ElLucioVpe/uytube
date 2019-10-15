@@ -12,6 +12,8 @@
 <script defer src="js/solid.js"></script>
 <script defer src="js/font-awesome.js"></script>
 
+<%@page import = "logica.controladores.Fabrica"%>
+<%@page import = "logica.controladores.IControladorUsuario"%>
 <%@page import = "logica.dt.UsuarioDt"%>
 <%
     //Nombres con "header_" para evitar posibles conflictos de nombres con donde se agregue el header 

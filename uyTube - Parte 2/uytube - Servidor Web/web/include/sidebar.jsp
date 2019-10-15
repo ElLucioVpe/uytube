@@ -4,7 +4,6 @@
     Author     : Esteban
 --%>
 <%@page import="java.util.List"%>
-<%@page import = "org.json.JSONArray"%>
 <!-- Our Custom CSS -->
 <link rel="stylesheet" href="css/sidebar.css">
 <!-- Scrollbar Custom CSS -->

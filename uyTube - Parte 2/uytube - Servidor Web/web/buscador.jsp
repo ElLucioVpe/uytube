@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
     <%
@@ -23,86 +24,32 @@
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
         <script src="js/bootstrap.min.js"></script>
         <script src="js/jquery.min.js"></script>
-
+        
         <title>uyTube - Transmite tú mismo</title>
     </head>
     <body>
-        <%@ include file="include/header.jsp" %>  
-        
-        <div class="row">
-            <%-- Aca van todos los datos de videos, listas y canales --%>
-            <div id="data" class="col-xs-12 col-md-8">
-            <%-- Formato
-              <div id="nombre+id" class="media">
-                <a href="#" class="pull-left"><img src="" class="" alt=""></a> 
-                
-                <div class="media-body">
-                  <h4 class="media-heading"><a href="">Titulo</a></h4><a>Descripcion</a>
-                </div>
-              </div>
-            --%>
-            </div>
-        </div>
-        
-        <%@ include file="include/footer.jsp" %>
-        
+        <%@ include file="include/header.jsp" %>
         <script>
             $( document ).ready(function() {
-                cargarDatos('<%=text%>', '<%=video%>', '<%=channel%>', '<%=list%>', '<%=cat%>');
-                //ordenarDatos();
+                cargarDatos('<%=cat%>', '<%=text%>');
+                
+                $('#tipos-de-orden').change(function() {
+                    var v = $(this).find(':selected').val();
+                    $('input[name="hidden-order"]').val(v);
+                });
+                
+                //$('.mdb-select').materialSelect();
+                
+                //Seteo los valores de filtros de acuerdo a las variables
+                //$('#toggle-videos').prop('checked').val(false);
+                
+                //$('#toggle-listas').prop('checked').val(false);
+                
+                //$('#toggle-canales').prop('checked').val(false);
+                
+                //$('input[name="hidden-order"]').val('order');
             });
-            
-            function cargarDatos(text, video, channel, list, cat) {
-                //Arrays de datos
-                //Si la categoria esta vacia busca en general
-                listarVideos(cat, function(val) { 
-                    if(video === "true") {
-                        var datos = [];
-                        var videos = jQuery.parseJSON(val);
-                        
-                        if(text === null || text === "") videos.forEach(function(v){datos.push(v);});
-                        else {
-                            videos.forEach(function(v){
-                                if(v.nombre.includes(text)) datos.push(v);
-                            });
-                        }
-                        crearHTML(JSON.stringify(datos));
-                    }
-                });
-                
-                listarUsuarios(cat, function(val) { 
-                    if(channel === "true") {
-                        var datos = [];
-                        var usuarios = jQuery.parseJSON(val);
-                        
-                        if(text === null || text === "") usuarios.forEach(function(u){datos.push(u);});
-                        else {
-                            usuarios.forEach(function(u){
-                                if(u.canal.nombre.includes(text)) datos.push(u);
-                            });
-                        }
-                        crearHTML(JSON.stringify(datos));
-                    }
-                    
-                });
-                
-                listarListasDR(cat, function(val) { 
-                    if(list === "true") {
-                        var datos = [];
-                        var listas = jQuery.parseJSON(val);
-                        
-                        if(text === null || text === "") listas.forEach(function(l){datos.push(l);});
-                        else {
-                            listas.forEach(function(l){
-                                if(l.nombre.includes(text)) datos.push(l);
-                            });
-                        }
-                        crearHTML(JSON.stringify(datos));
-                    }
-                    
-                });
-            }
-            
+
             function crearHTML(data) {
                 var divDatos = document.getElementById("data");
                 var datos = jQuery.parseJSON(data);
@@ -144,55 +91,158 @@
                 divDatos.innerHTML += html;
             }
             
-            function ordenarDatos() {
-                var divData = $('#data');
-                var listitems = divData.children('div').get();
+            function ordenarDatos(datos) {
+                var datosAux = [];
+                var retorno = "";
                 
-                listitems.sort(function(a, b) {
-                   return $(a).id.toUpperCase().localeCompare($(b).id.toUpperCase());
-                });
-
-                $.each(listitems, function(index, item) {
-                   divData.append(item); 
-                });
+                datosAux = jQuery.parseJSON(datos);
+                if('<%=order%>' !== "date") {
+                    datosAux.sort(function(a, b) {
+                       if(a.jsonType === "usuario") {
+                           if(b.jsonType === "usuario") return a.canal.nombre.localeCompare(b.canal.nombre);
+                           else return a.canal.nombre.localeCompare(b.nombre);
+                       } else { 
+                           if(b.jsonType === "usuario") return a.nombre.localeCompare(b.canal.nombre);
+                           else return a.nombre.localeCompare(b.nombre);
+                       }
+                    });
+                } else {
+                    datosAux.sort(function(a, b) {
+                       if(a.jsonType === "usuario") {
+                           if(b.jsonType === "usuario") return a.canal.ultimaFecha < b.canal.ultimaFecha;
+                           else return a.canal.ultimaFecha < b.fecha;
+                       } else { 
+                           if(b.jsonType === "usuario") return a.fecha < b.canal.ultimaFecha;
+                           else return a.fecha < b.fecha;
+                       }
+                    });
+                }
                 
-                if('<%=order%>' === "desc") listitems = listitems.reverse();
-                console.log(listitems);
+                //Muestro la cantidad de resultados
+                document.getElementById("cantidad-resultados").innerHTML = datosAux.length + " resultados";
+                
+                retorno = JSON.stringify(datosAux);
+                return retorno;
             }
             
-            function listarVideos(cat, callback) {
-                $.ajax({
+            function cargarDatos(cat, text) {
+                var listarVideos = $.ajax({
                     url:"http://localhost:8080/WebApplication/api/obtenerVideos.jsp?cat="+cat,
-                    success: callback,
+                    success: function (result) {},
                     error: function (xhr, ajaxOptions, thrownError) {
                       console.log(xhr.status);
                       console.log(thrownError);
                     }
                 });
-            }
-            
-            function listarListasDR(cat, callback) {
-                $.ajax({
+                
+                var listarListasDR = $.ajax({
                     url:'http://localhost:8080/WebApplication/api/obtenerListas.jsp?cat='+cat,
-                    success: callback,
+                    success: function (result) {},
                     error: function (xhr, ajaxOptions, thrownError) {
                       console.log(xhr.status);
                       console.log(thrownError);
                     }
                 });
-            }
-            
-            function listarUsuarios(cat, callback) {
-                $.ajax({
+                
+                var listarUsuarios = $.ajax({
                     url:'http://localhost:8080/WebApplication/api/obtenerUsuarios.jsp?cat='+cat,
-                    success: callback,
+                    success: function (result) {},
                     error: function (xhr, ajaxOptions, thrownError) {
                       console.log(xhr.status);
                       console.log(thrownError);
                     }
                 });
+                
+                $.when(listarVideos, listarListasDR, listarUsuarios).done(function(dv, dl, du) {
+                    var datos = [];
+                    var videos = jQuery.parseJSON(dv[0]);
+                    var listas = jQuery.parseJSON(dl[0]);
+                    var usuarios = jQuery.parseJSON(du[0]);
+                    
+                    if('<%=video%>' === "true") {
+                        if(text === null || text === "") videos.forEach(function(v){datos.push(v);});
+                        else {
+                            videos.forEach(function(v){
+                                if(v.nombre.includes(text)) datos.push(v);
+                            });
+                        }
+                    }
+                    
+                    if('<%=list%>' === "true") {
+                        if(text === null || text === "") listas.forEach(function(l){datos.push(l);});
+                        else {
+                            listas.forEach(function(l){
+                                if(l.nombre.includes(text)) datos.push(l);
+                            });
+                        }
+                    }
+
+                    if('<%=channel%>' === "true") {
+                        if(text === null || text === "") usuarios.forEach(function(u){datos.push(u);});
+                        else {
+                            usuarios.forEach(function(u){
+                                if(u.canal.nombre.includes(text)) datos.push(u);
+                            });
+                        }
+                    }
+                    
+                    datos = ordenarDatos(JSON.stringify(datos));
+                    crearHTML(datos);
+                });
             }
             
+            function filtrarDatos() {
+                var videos = ($('#toggle-videos').prop('checked'));
+                var listas = ($('#toggle-listas').prop('checked'));
+                var canales = ($('#toggle-canales').prop('checked'));
+                var orden = ($('input[name="hidden-order"]').val());
+                
+                redirectURL = "http://localhost:8080/WebApplication/buscador.jsp?";
+                redirectURL += "video="+videos;
+                redirectURL += "&list="+listas;
+                redirectURL += "&channel="+canales;
+                redirectURL += "&order="+orden;
+                redirectURL += "&text="+'<%=text%>';
+                
+                console.log(redirectURL);
+                window.location.href = redirectURL;
+            }
         </script>
+        <input type="hidden" value="asc" name="hidden-order">
+        <div class="row">
+            <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #7EA16B; display:inline-block;">
+              <a class="navbar-brand" href="#"></a>
+              <ul class="navbar-nav mr-auto">
+                <li id="cantidad-resultados" class="nav-item px-5"> X resultados </li>
+                <li class="nav-item px-2"></li>
+                <%-- Filtros de tipos --%>
+                <li class="nav-item px-1"> Videos <input id="toggle-videos" type="checkbox" data-toggle="toggle" data-size="mini"></li>
+                <li class="nav-item px-1"> Listas <input id="toggle-listas" type="checkbox" data-toggle="toggle" data-size="mini"></li>
+                <li class="nav-item px-1"> Canales <input id="toggle-canales" type="checkbox" data-toggle="toggle" data-size="mini"></li>
+                <li class="nav-item px-2"></li>
+                <%-- Filtros de Orden --%>
+                <li class="nav-item"> Ordenar: </li>
+                  <select id="tipos-de-orden" class="mdb-select md-form colorful-select dropdown-dark">
+                    <option selected>Seleccione una opción</option>
+                    <option value="asc">Alfabéticamente (A-Z a-z)</option>
+                    <option value="date">Fecha de publicación (descendente)</option>
+                  </select>
+                <li class="nav-item px-2"><button id="filtrar-btn" class="btn btn-outline-dark my-2 my-sm-0" onclick="filtrarDatos()"> Filtrar </button></li>
+              </ul>
+            </nav>
+            <%-- Aca van todos los datos de videos, listas y canales --%>
+            <div id="data" class="col-xs-12 col-md-8">
+            <%-- Formato
+              <div id="nombre+id" class="media">
+                <a href="#" class="pull-left"><img src="" class="" alt=""></a> 
+                
+                <div class="media-body">
+                  <h4 class="media-heading"><a href="">Titulo</a></h4><a>Descripcion</a>
+                </div>
+              </div>
+            --%>
+            </div>
+        </div>
+        <%@ include file="include/footer.jsp" %>
     </body>
 </html>

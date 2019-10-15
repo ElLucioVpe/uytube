@@ -45,6 +45,7 @@
                 jsonC.put("descripcion", cdt.getDescripcion());
                 jsonC.put("privada", cdt.getPrivacidad());
                 jsonC.put("categoria", cdt.getCategoria());
+                jsonC.put("ultimaFecha", cdt.getFechaUV()); //Fecha del ultimo video
                 json1.put("canal", jsonC);
                 
                 if(cat == null || cat == "") jarr.put(json1);

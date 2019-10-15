@@ -72,6 +72,7 @@
             json.put("categoria", ldt.getCategoria());
             json.put("user_id", ldt.getIdUsuario());
             json.put("user_nick", udt.getNickname());
+            json.put("fecha", ldt.getFechaUV());
         } catch (Exception e) {
         }
         return json;

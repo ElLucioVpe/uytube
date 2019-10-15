@@ -5,7 +5,11 @@
  */
 package logica.controladores;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -191,6 +195,8 @@ public class ControladorCategoria implements IControladorCategoria {
                 //Reviso su categoria
                 String categoria = "Ninguna";
                 if(l.getCategoria() != null) categoria = l.getCategoria().getNombre();
+                //Reviso fecha del ultimo video
+                Date d = fechaUltimoVideo(l.getVideos());
                 //Creo el datatype
                 retorno.add(new ListaDeReproduccionDt(
                     l.getId(), 
@@ -198,7 +204,8 @@ public class ControladorCategoria implements IControladorCategoria {
                     tipo, 
                     l.getPrivada(), 
                     categoria,
-                    l.getUsuario().getId()
+                    l.getUsuario().getId(),
+                    d
                 ));
             }
             em.close();
@@ -231,6 +238,26 @@ public class ControladorCategoria implements IControladorCategoria {
             StackTraceElement[] elements = t.getStackTrace();
             String invocador = elements[1].getFileName();
             exceptionAux(invocador, e);
+        }
+        return retorno;
+    }
+    
+    private Date fechaUltimoVideo(Collection<Video> videos) {
+        Date retorno = null;
+        
+        if(videos != null) {
+            Iterator<Video> it = videos.iterator();
+            
+            try {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                Date ultima = sdf.parse("1990-01-01");
+                
+                while(it.hasNext()) {
+                    Video aux = it.next();
+                    if(aux.getFechaPublicacion().after(ultima)) ultima = aux.getFechaPublicacion();
+                }
+                retorno = ultima;
+            }catch(Exception e){}
         }
         return retorno;
     }

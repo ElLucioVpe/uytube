@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package logica.controladores;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -694,6 +695,8 @@ public class ControladorUsuario implements IControladorUsuario {
             //Reviso su categoria
             String categoria = "Ninguna";
             if(l.getCategoria() != null) categoria = l.getCategoria().getNombre();
+            //Reviso fecha del ultimo video
+            Date d = fechaUltimoVideo(l.getVideos());
             //Creo el datatype
             ldt = new ListaDeReproduccionDt(
                 l.getId(), 
@@ -701,7 +704,8 @@ public class ControladorUsuario implements IControladorUsuario {
                 tipo, 
                 l.getPrivada(), 
                 categoria,
-                id
+                id,
+                d
             );
             em.getTransaction().commit();
             em.close();
@@ -814,6 +818,8 @@ public class ControladorUsuario implements IControladorUsuario {
                     //Reviso su categoria
                     String categoria = "Ninguna";
                     if(li.getCategoria() != null) categoria = li.getCategoria().getNombre();
+                    //Reviso fecha del ultimo video
+                    Date d = fechaUltimoVideo(li.getVideos());
                     //Creo el datatype
                     list.add(new ListaDeReproduccionDt(
                         li.getId(), 
@@ -821,7 +827,8 @@ public class ControladorUsuario implements IControladorUsuario {
                         tipo, 
                         li.getPrivada(), 
                         categoria,
-                        id
+                        id,
+                        d
                     ));
                 }
                 em.close();
@@ -851,6 +858,8 @@ public class ControladorUsuario implements IControladorUsuario {
                     //Reviso su categoria
                     String categoria = "Ninguna";
                     if(li.getCategoria() != null) categoria = li.getCategoria().getNombre();
+                    //Reviso fecha del ultimo video
+                    Date d = fechaUltimoVideo(li.getVideos());
                     //Creo el datatype
                     list.add(new ListaDeReproduccionDt(
                         li.getId(), 
@@ -858,7 +867,8 @@ public class ControladorUsuario implements IControladorUsuario {
                         tipo, 
                         li.getPrivada(), 
                         categoria,
-                        li.getUsuario().getId()
+                        li.getUsuario().getId(),
+                        d
                     ));
                 }
                 em.close();
@@ -887,6 +897,8 @@ public class ControladorUsuario implements IControladorUsuario {
             //Reviso su categoria
             String categoria = "Ninguna";
             if(l.getCategoria() != null) categoria = l.getCategoria().getNombre();
+            //Reviso fecha del ultimo video
+            Date d = fechaUltimoVideo(l.getVideos());
             //Creo el datatype
             ldt = new ListaDeReproduccionDt(
                 l.getId(), 
@@ -894,7 +906,8 @@ public class ControladorUsuario implements IControladorUsuario {
                 tipo, 
                 l.getPrivada(), 
                 categoria,
-                id
+                id,
+                d
             );
             em.getTransaction().commit();
             em.close();
@@ -925,5 +938,25 @@ public class ControladorUsuario implements IControladorUsuario {
             exceptionAux(invocador, e);
         }
         return dt;
+    }
+    
+    private Date fechaUltimoVideo(Collection<Video> videos) {
+        Date retorno = null;
+        
+        if(videos != null) {
+            Iterator<Video> it = videos.iterator();
+            
+            try {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                Date ultima = sdf.parse("1990-01-01");
+                
+                while(it.hasNext()) {
+                    Video aux = it.next();
+                    if(aux.getFechaPublicacion().after(ultima)) ultima = aux.getFechaPublicacion();
+                }
+                retorno = ultima;
+            }catch(Exception e){}
+        }
+        return retorno;
     }
 }

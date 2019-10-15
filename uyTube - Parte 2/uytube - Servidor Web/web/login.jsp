@@ -38,11 +38,12 @@
             %>
     </head>
     <body>
+        <%@include file="include/header.jsp" %>
         <main class="login-form">
             <div class="cotainer">
                 <div class="row justify-content-center">
                     <div class="col-md-8">
-                        <h1>uyTube v2</h1>
+                        <h1>uyTube - Inicio de sesión</h1>
                     </div>
                 </div>
                 <div class="row justify-content-center">
@@ -86,5 +87,6 @@
             </div>
 
         </main>
+        <%@include file="include/footer.jsp" %>
     </body>
 </html>
