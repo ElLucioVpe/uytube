@@ -19,7 +19,7 @@
     //Nombres con "header_" para evitar posibles conflictos de nombres con donde se agregue el header 
     String header_user_nick = "Anonimo";
     String header_user_img = "img/user.png";
-    if(session.getAttribute("userid") != null) {
+    if(session.getAttribute("user_dt") != null) {
         UsuarioDt header_u = (UsuarioDt) session.getAttribute("user_dt");
         header_user_nick = header_u.getNickname();
         if(header_u.getImagen() != null) header_user_img = "http://localhost:8080/images/"+header_u.getImagen();

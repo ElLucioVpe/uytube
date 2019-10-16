@@ -104,12 +104,14 @@ public class ControladorCategoria implements IControladorCategoria {
      
      @Override
      public CategoriaDt ConsultarCategorias(String Nombre){
-         CategoriaDt dt = null;
+        CategoriaDt dt = null;
         try {
             EntityManager em = emFactory.createEntityManager();
-            TypedQuery<Categoria> query = em.createQuery("SELECT * FROM Categoria c WHERE c.nombre = :nombre", Categoria.class);
-            Categoria c = query.setParameter("Nombre", Nombre).getSingleResult();
-            dt = new CategoriaDt(c);
+            
+            Categoria c = em.find(Categoria.class, Nombre);
+            if(c == null) throw new Exception("La categoria no existe");
+            
+            dt = new CategoriaDt(c.getNombre());
         } catch (Exception e) {
             Throwable t = new Throwable();
             StackTraceElement[] elements = t.getStackTrace();
@@ -117,10 +119,9 @@ public class ControladorCategoria implements IControladorCategoria {
             exceptionAux(invocador, e);
         }
         return dt;
-         
      }
-     @Override
      
+     @Override
      public List<ListaDeReproduccion> obtenerListasCategoria(String nom){
         List<ListaDeReproduccion> query = null;
         try {
