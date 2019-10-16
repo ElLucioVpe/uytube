@@ -43,14 +43,14 @@
                 jsonC.put("id", cdt.getUserId());
                 jsonC.put("nombre", cdt.getNombre());
                 jsonC.put("descripcion", cdt.getDescripcion());
-                jsonC.put("privada", cdt.getPrivacidad());
+                jsonC.put("privacidad", cdt.getPrivacidad());
                 jsonC.put("categoria", cdt.getCategoria());
-                if(cdt.getFechaUV() != null) jsonC.put("ultimaFecha", cdt.getFechaUV().toString());
-                else jsonC.put("ultimaFecha", "1990-01-01"); //no tiene videos lo mando bien para el fondo
+                if(cdt.getFechaUV() != null) json1.put("fechaPublicacion", cdt.getFechaUV());
+                else json1.put("fechaPublicacion", "1990-01-01"); //no tiene videos lo mando bien para el fondo
                 json1.put("canal", jsonC);
                 
                 if(cat == null || cat == "") jarr.put(json1);
-                else if(cat == cdt.getCategoria()) jarr.put(json1);
+                else if(cat.equals(cdt.getCategoria())) jarr.put(json1);
             }
             
             out.println(jarr);

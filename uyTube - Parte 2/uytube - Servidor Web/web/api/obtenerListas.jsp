@@ -13,6 +13,7 @@
 <%@page import = "java.util.List" %>
 <%@page import = "org.json.JSONObject"%>
 <%@page import = "org.json.JSONArray"%>
+<%@page import = "java.util.Date"%>
 
 <%
     Fabrica f = Fabrica.getInstance();
@@ -37,25 +38,18 @@
             }
             out.println(retorno);
         } else {
-            if(request.getParameter("cat") != null && request.getParameter("cat") != "") {
-                l = cat.obtenerListasDtCategoria((String) request.getParameter("cat"));
-                
-                for(int i = 0; i < l.size(); i++) {
-                    UsuarioDt u = user.ConsultarUsuario(l.get(i).getIdUsuario());
-                    retorno.put(crearJSON(l.get(i), u));
-                }
-                out.println(retorno);
-            } else {
-                l = user.obtenerListas();
+            l = user.obtenerListas();
 
-                for(int i = 0; i < l.size(); i++) {
-                    if(!l.get(i).getPrivada()){
-                        UsuarioDt u = user.ConsultarUsuario(l.get(i).getIdUsuario());
-                        retorno.put(crearJSON(l.get(i), u)); //Solo agrego las listas publicas
-                    } 
-                }
-                out.println(retorno);
+            for(int i = 0; i < l.size(); i++) {
+                if(!l.get(i).getPrivada()){//Solo agrego las listas publicas
+                    UsuarioDt u = user.ConsultarUsuario(l.get(i).getIdUsuario());
+                    JSONObject json1 = crearJSON(l.get(i), u);
+                    if(request.getParameter("cat") != null && request.getParameter("cat") != "") {
+                        if(json1.getString("categoria").equals(request.getParameter("cat"))) retorno.put(json1);
+                    } else retorno.put(json1);
+                } 
             }
+            out.println(retorno);
         }
     }
 %>
@@ -67,13 +61,13 @@
             json.put("jsonType", "lista");
             json.put("id", ldt.getId());
             json.put("nombre", ldt.getNombre());
-            json.put("privada", ldt.getPrivada());
+            json.put("privacidad", ldt.getPrivada());
             json.put("tipo", ldt.getTipo());
             json.put("categoria", ldt.getCategoria());
             json.put("user_id", ldt.getIdUsuario());
             json.put("user_nick", udt.getNickname());
-            if(ldt.getFechaUV() != null) json.put("fecha", ldt.getFechaUV().toString());
-            else json.put("fecha", "1990-01-01"); //no tiene videos lo mando bien para el fondo
+            if(ldt.getFechaUV() != null) json.put("fechaPublicacion", ldt.getFechaUV());
+            else json.put("fechaPublicacion", "1990-01-01"); //no tiene videos lo mando bien para el fondo
         } catch (Exception e) {
         }
         return json;

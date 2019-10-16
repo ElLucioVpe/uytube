@@ -34,7 +34,7 @@
                     json1.put("thumbnail", (String)list.get(i).getThumbnail());
                     json1.put("url", (String)list.get(i).getUrl());
                     json1.put("descripcion", (String)list.get(i).getDescripcion());
-                    json1.put("fechaPublicacion", (Date)list.get(i).getFechaPublicacion());
+                    json1.put("fechaPublicacion", list.get(i).getFechaPublicacion());
                     json1.put("privacidad", (Boolean)list.get(i).getPrivacidad());
                     json1.put("categoria", list.get(i).getCategoria());
                     json1.put("canal_user_id", (int)list.get(i).getIdCanal());
@@ -43,7 +43,7 @@
                     json1.put("dislikes", (int)list.get(i).getDislikes());
                     
                     if(cat == null || cat == "") jarr.put(json1);
-                    else if(cat == list.get(i).getCategoria()) jarr.put(json1);
+                    else if(cat.equals(list.get(i).getCategoria())) jarr.put(json1);
                 }
                 
                 out.println(jarr);
@@ -56,7 +56,7 @@
                 json1.put("thumbnail", (String)_video.getThumbnail());
                 json1.put("url", (String)_video.getUrl());
                 json1.put("descripcion", (String)_video.getDescripcion());
-                json1.put("fechaPublicacion", (Date)_video.getFechaPublicacion());
+                json1.put("fecha", (Date)_video.getFechaPublicacion());
                 json1.put("privacidad", (Boolean)_video.getPrivacidad());
                 json1.put("canal_user_id", (int)_video.getIdCanal());
                 json1.put("user", _user.getNickname());

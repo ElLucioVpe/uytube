@@ -8,9 +8,9 @@
 <script src="js/jquery.min.js"></script>
 
 <!-- Font Awesome -->
-<link href="css/font-awesome.min.css" rel="stylesheet">
+<link href="css/fontawesome.min.css" rel="stylesheet">
 <script defer src="js/solid.js"></script>
-<script defer src="js/font-awesome.js"></script>
+<script defer src="js/fontawesome.js"></script>
 
 <%@page import = "logica.controladores.Fabrica"%>
 <%@page import = "logica.controladores.IControladorUsuario"%>
@@ -25,7 +25,6 @@
         if(header_u.getImagen() != null) header_user_img = "http://localhost:8080/images/"+header_u.getImagen();
     }
 %>
-<script>.dropdown-menu.pull-left {left:0;}</script>
 <header>
     <div class="pos-f-t">
         <nav class="navbar navbar-light bg-light">
