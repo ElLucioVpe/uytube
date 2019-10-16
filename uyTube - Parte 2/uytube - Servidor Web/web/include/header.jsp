@@ -60,6 +60,7 @@
                   <!-- dropdown menu links -->
                   <%if(session.getAttribute("userid") == null) {%>
                   <li><a tabindex="-1" href="http://localhost:8080/WebApplication/login.jsp"><i class="fas fa-sign-in-alt"></i> Iniciar Sesion</a></li>
+                  <li><a tabindex="-1" href="http://localhost:8080/WebApplication/altaUser.jsp"><i class="fas fa-sign-in-alt"></i> Registrarse</a></li>
                   <%}else{%>
                   <li><a tabindex="-1" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Cerrar Sesion</a></li>
                   <%}%>

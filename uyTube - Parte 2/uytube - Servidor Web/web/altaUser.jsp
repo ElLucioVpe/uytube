@@ -1,8 +1,7 @@
-<%-- 
-    Document   : altaUser
-    Created on : Sep 28, 2019, 5:28:28 PM
-    Author     : pagol
---%>
+<%@page import="logica.dt.CategoriaDt"%>
+<%@page import="logica.Categoria"%>
+<%@page import="logica.controladores.IControladorCategoria"%>
+<%@page import="logica.controladores.IControladorVideo"%>
 <%@page import="javax.servlet.annotation.MultipartConfig"%>
 <%@page import="javax.servlet.annotation.WebServlet"%>
 <%@page import="java.io.InputStream"%>
@@ -79,14 +78,10 @@
                 }
                 
             %>
-            
-            
-  
-  
         <title>Crear usuario</title>
-            
     </head>
     <body>
+        <%@include file="include/header.jsp" %>
         <main class="login-form">
             <div class="cotainer">
                 <div class="row justify-content-center">
@@ -147,6 +142,58 @@
                                         </div>
                                     </div>
                                     
+                                    
+                                    <div class="card-body">
+                                        <div class="card-body">Canal</div>
+                                        
+                                    <div class="form-group row">
+                                        <label for="desc" class="col-md-4 col-form-label text-md-right">Descripcion</label>
+                                        <div class="col-md-6">
+                                            <textarea class="form-control" id="desc" name="desc" rows="3" placeholder="Descripcion del canal" required></textarea>
+                                        </div>
+                                    </div>
+                                        
+                                    <div class="form-group row">
+                                        <label for="Visibilidad" class="col-md-4 col-form-label text-md-right">Visibilidad</label>
+                                        <div class="col-md-6">
+                                            <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="visibilidad" value="privado" checked>
+                                            <label class="form-check-label" for="visibilidad1">
+                                              Privado
+                                            </label>
+                                          </div>
+                                          <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="visibilidad" value="publico">
+                                            <label class="form-check-label" for="visibilidad2">
+                                              Publico
+                                            </label>
+                                          </div>
+                                        </div>
+                                    </div>
+                                        
+                                        
+                                   <div class="form-group row">
+                                    <label for="exampleFormControlSelect1">Categoria del canal</label>
+                                    <select class="form-control" id="categoria" name="categoria">
+                                        <option selected value="Ninguna"> Ninguna </option>
+                                        <%
+                                            Fabrica f = Fabrica.getInstance();
+                                            IControladorCategoria cat = f.getIControladorCategoria();
+                                            List<CategoriaDt> catArray = cat.ListarCategorias();
+                                            
+                                        %>
+                                        
+                                        <%
+                                            for (CategoriaDt c : catArray) {
+                                        %>
+                                            <option value="<%=c.getNombre()%>"><%=c.getNombre()%></option>
+                                        <%}%>
+                                            
+                                    </select>
+                                  </div>
+                                        
+                                        
+                                    </div>
 
                                     <div class="col-md-6 offset-md-4">
                                         <button type="submit" class="btn btn-primary">
@@ -178,5 +225,6 @@
             </div>
 
         </main>
+        <%@include file="include/footer.jsp" %>
     </body>
 </html>

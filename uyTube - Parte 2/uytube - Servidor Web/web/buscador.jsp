@@ -71,7 +71,7 @@
                             html += '<div id="'+datos[i].nombre+datos[i].id+'" class="media">';
                             html += '<a href="video.jsp?id='+datos[i].id+'" class="pull-left mr-2">';
                             if(datos[i].thumbnail !== "") html += '<img src="'+datos[i].thumbnail+'" class="img-thumbnail" alt="Thumbnail"></a>';
-                            else html += '<img src="img/no-thumbnail.jpg" class="img-thumbnail" alt="Thumbnail"></a>';
+                            else html += '<img src="img/no-thumbnail.jpg" width=120 height=90 class="img-thumbnail" alt="Thumbnail"></a>';
                             
                             html += '<div class="media-body"><h5 class="media-heading"><a href="video.jsp?id='+datos[i].id+'">'+datos[i].nombre+'</a></h5><a>'+datos[i].descripcion+'</a>';
                             html += '<p class="text-secondary"> '+datos[i].user+'</p></div></div>';

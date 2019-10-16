@@ -36,13 +36,15 @@
             int video_id = Integer.parseInt(request.getParameter("id"));
             session.setAttribute("videoid", video_id);
             VideoDt dt = video.obtenerVideoDtPorID(video_id);
-            UsuarioDt u = user.ConsultarUsuario(dt.getId());
+            UsuarioDt u = user.ConsultarUsuario(dt.getIdCanal());
             List<String> seguidores = user.ListarSeguidores(dt.getId());
             
             DefaultMutableTreeNode root = video.obtenerComentariosVideo(dt.getId());
             //Valoraciones
-            List<valoracionDt> list = video.obtenerValoracionVideo(dt.getId());
-          
+            //List<valoracionDt> list = video.obtenerValoracionVideo(dt.getId());
+            String imagenUser = "img/user.png";
+            if(u.getImagen() != null) imagenUser = "http://localhost:8080/images/"+u.getImagen();
+            
             Boolean estaSuscripto = false; //inicializo
             if(session.getAttribute("userid") != null) estaSuscripto = user.estaSuscripto((int)session.getAttribute("userid"), u.getId());
         %>
@@ -58,7 +60,7 @@
             
             <div class="row">
                 <div class="col-sm-3">
-                    <img id="user-pic" src="http://localhost:8080/images/<%=u.getImagen()%>" height="30px" width="30px" alt="Profile de Usuario"/>
+                    <img id="user-pic" src="<%=imagenUser%>" height="30px" width="30px" alt="Profile de Usuario"/>
                     <span id="user-nick"><%=u.getNickname()%></span>
                     <button class="btn btn-primary" onclick="suscripcion(<%=u.getId()%>)">
                         <%if(!estaSuscripto){%>
@@ -116,31 +118,8 @@
             </div>
             <hr>
             <div class="row">
-                <div class="col-sm-3">
-                    <table class="table" id="tblValoraciones">
-                      <thead>
-                        <tr>
-                          <th class="thumbnail">Usuario</th>
-                          <th class="titulo" scope="col">Valoracion</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <%
-                            if(list != null) for(int i = 0; i < list.size(); i++) {
-                                String gustar = "Me gusta";
-                                if(!list.get(i).getGusto()) gustar = "No me gusta";
-                                %>
-                                <tr>
-                                    <td><%= list.get(i).getUser() %></td>
-                                    <td> <%= gustar %> </td>
-                                </tr>
-                                <%
-                            }
-                        %>
-                      </tbody>
-                    </table>
-                </div>
                 <div class="col-sm-6">
+                    <h5> Descripción</h5>
                     <p id="video-desc"><%=dt.getDescripcion()%></p>
                 </div>
                 <div class="col-sm-3">
