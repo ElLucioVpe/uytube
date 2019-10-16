@@ -67,6 +67,8 @@
                  
                 //El nick no va a cambiar
                 String nick = user.obtenerNickUsuario(_id);
+                session.setAttribute("nickx",nick);
+                session.setAttribute("imagex",userx.getImagen()); 
                      
                 //user.AltaCanal("asd", true, IdUsuarioCreate, "");
                      
