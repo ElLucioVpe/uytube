@@ -1,4 +1,4 @@
-<%-- 
+A<%-- 
     Document   : video
     Created on : Oct 8, 2019, 12:48:34 AM
     Author     : Luciano
@@ -29,7 +29,12 @@
         <link rel="stylesheet" type="text/css" href="css/video.css">
         <script src="js/bootstrap.min.js"></script>
         <script src="js/jquery.min.js"></script>
-
+        
+        <!-- Font Awesome -->
+        <link href="css/fontawesome.min.css" rel="stylesheet">
+        <script defer src="js/solid.js"></script>
+        <script defer src="js/fontawesome.js"></script>
+        
         <title>uyTube - Transmite tú mismo</title>
     </head>
     <body>
@@ -42,8 +47,8 @@
             session.setAttribute("videoid", video_id);
             List<String> seguidores = user.ListarSeguidores(dt.getId());
             
-            DefaultMutableTreeNode root = video.obtenerComentariosVideo(dt.getId());
-            List<valoracionDt> list = video.obtenerValoracionVideo(dt.getId());
+            String imagenUser = "img/user.png";
+            if(u.getImagen() != null) imagenUser = "http://localhost:8080/images/"+u.getImagen();
             
             Boolean estaSuscripto = false;
             if(session.getAttribute("userid") != null) estaSuscripto = user.estaSuscripto((int)session.getAttribute("userid"), u.getId());
@@ -51,40 +56,48 @@
         
         <%@ include file="include/header.jsp" %>
 
+        <script>var video_id="<%=video_id%>";</script>
         <script>
-            var video_id="<%=video_id%>";
-            function conectate() {
-                alert("Por favor, para realizar esta acción inicie sesion.");
-            }
-            function suscripcion(seguido) {
-                var seguidor = '<%=session.getAttribute("userid")%>';
-                if(seguidor === null) conectate();
-                else{
+            $(document).ready(function(){
+                cargarComentarios();
+            });
+            
+            function cargarComentarios() {
                 $.ajax({
-                url: "/WebApplication/api/suscripcion.jsp?seguidor="+seguidor+"&seguido="+seguido,
-                success: function() {
-                alert("Suscripción/Desuscripción exitosa");
-                },
-                error: function () { alert("Error en la suscripción");}
+                    url: "http://localhost:8080/WebApplication/api/obtenerComentariosVideo.jsp?id_v="+'<%=video_id%>', 
+                   success: function (result) {
+                       var html = result;
+                       $('#comentarios').html(html);
+                   },
+                   error: function (xhr, ajaxOptions, thrownError) {
+                      console.log(xhr.status);
+                      console.log(thrownError);
+                   } 
                 });
-                }
             }
-            function gustar(g) {
-                var user = '<%=session.getAttribute("userid")%>';
-                var video = '<%=video_id%>';
-                var v = '<%=video%>';
-
-                if(user === null) conectate();
-                else{
-                $.ajax({
-                    url: "/WebApplication/api/valoracion.jsp?user_id="+user+"&video_id="+video+"&gusta="+g,
-                    success: function() {
-                        alert("Valoración exitosa");
-                    },
-                    error: function () { alert("Error en la valoración del video");}
+            
+            function comentarVideo(id_padre) {
+                //-1 = no padre
+                var id_u = '<%=session.getAttribute("userid")%>';
+                var id_v = '<%=video_id%>';   
+                var text = $('#textArea'+id_p).val();
+                var id_p = id_padre; console.log(id_p);
+                if(id_u !== null && id_u !== "null") {
+                    $.ajax({
+                        url: "http://localhost:8080/WebApplication/api/comentarVideo.jsp?id_u="+id_u+"&id_v="+id_v+"&id_p"+id_p+"&text="+text, 
+                        success: function (result) {
+                            alert(result);
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            console.log(xhr.status);
+                            console.log(thrownError);
+                        } 
                     });
+                } else {
+                    alert("Por favor inicie sesión para comentar el video");
                 }
             }
+            
         </script>
         
 
@@ -125,28 +138,22 @@
                     <p id="video-fecha"><b>Fecha:</b> <%=dt.getFechaPublicacion().toString()%></p>
                 </div>
             </div>
-            <hr>
             <div class="row">
-                <div class="col-sm-6">
-                    <table class="table">
-                        <thead>
-                          <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">First</th>
-                            <th scope="col">Last</th>
-                            <th scope="col">Handle</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                            <%
-                                //getComentario(root);
-                            %>
-                        </tbody>
-                      </table>
+                <div class="col">
+                        <h5> Comentarios </h5>
+                    <div class="form-group row">
+                        <div class="col-sm-6">
+                            <textarea class="form-control" rows="2" placeholder="Agregue un comentario..." required></textarea>
+                        </div>
+                        <button type="button" class="btn btn-success" onclick="comentarVideo(-1)">Comentar</button>
+                    </div>
+                    <div class="card">
+                        <div id="comentarios" class="card-body">
+                            <%-- Muchos comentarios --%>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        </div>
         <%@ include file="include/footer.jsp" %>
     </body>
 </html>
