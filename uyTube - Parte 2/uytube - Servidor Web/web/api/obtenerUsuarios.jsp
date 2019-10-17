@@ -10,9 +10,7 @@
 <%@page import = "logica.controladores.Fabrica" %>
 <%@page import = "logica.controladores.IControladorUsuario"%>
 <%@page import = "logica.dt.UsuarioDt" %>
-<%@page import = "logica.Usuario" %>
 <%@page import = "java.util.List" %>
-<%@page import = "java.util.Collection" %>
 <%@page import = "java.util.Date" %>
 <%@page import="logica.dt.CanalDt"%>
         <%
@@ -50,11 +48,10 @@
                 if(cdt.getFechaUV() != null) json1.put("fechaPublicacion", cdt.getFechaUV());
                 else json1.put("fechaPublicacion", "1990-01-01"); //no tiene videos lo mando bien para el fondo
                 json1.put("canal", jsonC);
+                
                 if(cat == null || cat == "") jarr.put(json1);
                 else if(cat.equals(cdt.getCategoria())) jarr.put(json1);
-                //Cant Subscriptores
-                 json1.put("Subcriptores", cdt.getSeguidores().size());
-              
+            }
             
             out.println(jarr);
         %>

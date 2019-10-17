@@ -25,9 +25,6 @@
         <script src="js/bootstrap.min.js"></script>
         <script src="js/jquery.min.js"></script>
         
-        <%-- Bootstrap Toggle --%>
-        
-        
         <title>uyTube - Transmite tú mismo</title>
     </head>
     <body>
@@ -97,7 +94,7 @@
                             html += '<a href="consultarLista.jsp?user_id='+datos[i].user_id+'&nom='+datos[i].nombre+'" class="pull-left mr-2">';
                             html += '<img src="img/playlist.png" class="rounded" width=120 height=90 alt="List Picture"></a>';
 
-                            html += '<div class="media-body"><h5 class="media-heading"><a href="consultarLista.jsp?user_id='+datos[i].user_id+'&nom='+datos[i].nombre+'">'+datos[i].nombre+'</a></h5><a> Categoria: '+datos[i].categoria+'</a>';
+                            html += '<div class="media-body"><h5 class="media-heading"><a href="consultarListaDR.jsp?user_id='+datos[i].user_id+'&nom='+datos[i].nombre+'">'+datos[i].nombre+'</a></h5><a> Categoria: '+datos[i].categoria+'</a>';
                             html += '<p class="text-secondary"> '+datos[i].user_nick+'</p></div></div>';
                             resultados++;
                         }

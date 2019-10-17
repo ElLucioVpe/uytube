@@ -29,7 +29,7 @@
     <div class="pos-f-t">
         <nav class="navbar navbar-light bg-light">
             <form class="form-inline">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="http://localhost:8080/WebApplication/index.jsp">
               <img src="img/logo.png" width="60" height="40" alt="Logo">
               uyTube
             </a>
