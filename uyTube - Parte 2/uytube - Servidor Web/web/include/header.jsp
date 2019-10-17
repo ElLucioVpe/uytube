@@ -19,7 +19,7 @@
     //Nombres con "header_" para evitar posibles conflictos de nombres con donde se agregue el header 
     String header_user_nick = "Anonimo";
     String header_user_img = "img/user.png";
-    if(session.getAttribute("userid") != null) {
+    if(session.getAttribute("user_dt") != null) {
         UsuarioDt header_u = (UsuarioDt) session.getAttribute("user_dt");
         header_user_nick = header_u.getNickname();
         if(header_u.getImagen() != null) header_user_img = "http://localhost:8080/images/"+header_u.getImagen();
@@ -29,7 +29,7 @@
     <div class="pos-f-t">
         <nav class="navbar navbar-light bg-light">
             <form class="form-inline">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="http://localhost:8080/WebApplication/index.jsp">
               <img src="img/logo.png" width="60" height="40" alt="Logo">
               uyTube
             </a>
@@ -60,6 +60,7 @@
                   <!-- dropdown menu links -->
                   <%if(session.getAttribute("userid") == null) {%>
                   <li><a tabindex="-1" href="http://localhost:8080/WebApplication/login.jsp"><i class="fas fa-sign-in-alt"></i> Iniciar Sesion</a></li>
+                  <li><a tabindex="-1" href="http://localhost:8080/WebApplication/altaUser.jsp"><i class="fas fa-sign-in-alt"></i> Registrarse</a></li>
                   <%}else{%>
                   <li><a tabindex="-1" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Cerrar Sesion</a></li>
                   <%}%>

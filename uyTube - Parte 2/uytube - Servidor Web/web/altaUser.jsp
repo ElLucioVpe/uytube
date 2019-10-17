@@ -83,14 +83,10 @@
                 }
                 
             %>
-            
-            
-  
-  
         <title>Crear usuario</title>
-            
     </head>
     <body>
+        <%@include file="include/header.jsp" %>
         <main class="login-form">
             <div class="cotainer">
                 <div class="row justify-content-center">
@@ -263,5 +259,6 @@
             </div>
 
         </main>
+        <%@include file="include/footer.jsp" %>
     </body>
 </html>

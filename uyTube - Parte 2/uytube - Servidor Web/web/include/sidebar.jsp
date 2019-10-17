@@ -75,7 +75,7 @@
                                 if(listas[i].nombre === "Ver mas tarde" || listas[i].nombre === "Ver más tarde") icono = "fas fa-redo-alt";
                                 if(listas[i].nombre === "Favoritos") icono = "fas fa-redo-alt";
 
-                                html += '<li><a href="http://localhost:8080/WebApplication/consultarLista.jsp?user_id='+listas[i].user_id+'&nom='+listas[i].nombre+'"><i class="'+icono+'"></i> '+listas[i].nombre+'</a></li>';
+                                html += '<li><a href="http://localhost:8080/WebApplication/consultarListaDR.jsp?user_id='+listas[i].user_id+'&nom='+listas[i].nombre+'"><i class="'+icono+'"></i> '+listas[i].nombre+'</a></li>';
                             }
                             lists.innerHTML += html;
                         },
