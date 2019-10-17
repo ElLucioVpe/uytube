@@ -74,21 +74,17 @@
 
          // Process the uploaded file items
          Iterator i = fileItems.iterator();
-            
+         Iterator iP = fileItems.iterator();
          
-         /*
-         out.println("<html>");
-         out.println("<head>");
-         out.println("<title>JSP File upload</title>");  
-         out.println("</head>");
-         out.println("<body>");
-         out.println(session.getAttribute("nombrecito"));
-         out.println("</br>");
-
-         */
+         FileItem fP = (FileItem)iP.next();
          
-         String fileName="";
-         
+         String fileName=null;
+        
+         if(fP.getName().isEmpty()){
+             
+         out.println("No Image");
+     
+         }else{
          while ( i.hasNext () ) {
             FileItem fi = (FileItem)i.next();
             if ( !fi.isFormField () ) {
@@ -112,6 +108,8 @@
                out.println("Uploaded Filename: " + filePath + 
                fileName + "<br>");
             }
+         }
+         
          }
          
                  
@@ -145,24 +143,24 @@
                     IControladorUsuario user = f.getIControladorUsuario();
               
               
-                     SimpleDateFormat sdf= new SimpleDateFormat("dd/MM/yyyy");
-                     java.util.Date fechaNacimiento = sdf.parse(fechaUp); 
-                      
-                        
-                        
-                 if(fileName!=""){
-                     user.AltaUsuario(userUp, pswdUp, nameUp,apellidoUp, mailUp, fechaNacimiento, fileName);
-                     
-                     IdUsuarioCreate = user.obtenerIdUsuario(userUp);
+                    SimpleDateFormat sdf= new SimpleDateFormat("dd/MM/yyyy");
+                    java.util.Date fechaNacimiento = sdf.parse(fechaUp); 
+                    
+                    if(fileName!=null){
+                    user.AltaUsuario(userUp, pswdUp, nameUp,apellidoUp, mailUp, fechaNacimiento, fileName);
+                    }else{
+                    user.AltaUsuario(userUp, pswdUp, nameUp,apellidoUp, mailUp, fechaNacimiento, "");
+
+                    }
+                    
+                    IdUsuarioCreate = user.obtenerIdUsuario(userUp);
                      
                      if(IdUsuarioCreate!=-1){
                         user.AltaCanal(userUp, visUp, catUp, IdUsuarioCreate, descUp);
                      }
-                     
-                 }
                  
            
-         /*
+         
          out.println(userUp); 
          out.println(pswdUp); 
          out.println(nameUp); 
@@ -178,7 +176,7 @@
          
          out.println(catUp);
          out.println(descUp);
-         */
+        
          
          out.println("</body>");
          out.println("</html>");

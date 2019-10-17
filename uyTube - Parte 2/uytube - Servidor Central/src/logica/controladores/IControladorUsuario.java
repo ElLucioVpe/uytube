@@ -39,6 +39,7 @@ public interface IControladorUsuario {
     public abstract List<VideoDt> listarVideosDeUsuario(String usernick);
     //Auxiliares
     public abstract int obtenerIdUsuario(String nick);
+    public abstract int obtenerIdUsuarioMail(String mail);
     public abstract String obtenerNickUsuario(int id);
     public abstract void EliminarUsuario(int id);
     public abstract List obtenerCategorias();

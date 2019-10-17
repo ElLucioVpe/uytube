@@ -48,6 +48,27 @@
                 }
              
              }
+             //Mail No Duplicado
+             int idUserM = -1;
+             idUserM = user.obtenerIdUsuarioMail(request.getParameter("mail"));
+             
+             if(idUserM!=-1){
+                 session.setAttribute("errorAltaUser","mail");
+                String redirectURL = "altaUser.jsp";
+                  if (!response.isCommitted()){
+                response.sendRedirect(redirectURL); 
+                }
+             
+             }
+             
+             //Pass correctas
+             if(!(request.getParameter("password").equals(request.getParameter("password2")))){
+               session.setAttribute("errorAltaUser","pass");
+               String redirectURL = "altaUser.jsp";
+                if (!response.isCommitted()){
+                response.sendRedirect(redirectURL); 
+                }
+             }
              
              
              //Verifico Email

@@ -534,6 +534,32 @@ public class ControladorUsuario implements IControladorUsuario {
         }
         return id;
     }
+    
+    @Override
+    public int obtenerIdUsuarioMail(String mail){
+    int id = -1;
+    
+    try {
+            EntityManager em = emFactory.createEntityManager();
+            em.getTransaction().begin();
+            
+            TypedQuery<Usuario> q = em.createNamedQuery("Usuario.findByMail", Usuario.class).setParameter("mail", mail);
+            //if (q.getResultList().isEmpty()) throw new Exception("El usuario no existe");
+            if (!q.getResultList().isEmpty()){ 
+                Usuario u = q.getSingleResult();
+                id = u.getId();
+            }
+            em.getTransaction().commit();
+            em.close();
+        } catch (Exception e) {
+            Throwable t = new Throwable();
+            StackTraceElement[] elements = t.getStackTrace();
+            String invocador = elements[1].getFileName();
+            exceptionAux(invocador, e);
+        }
+    
+    return id;
+    }
 
     @Override
     public String obtenerNickUsuario(int id) {

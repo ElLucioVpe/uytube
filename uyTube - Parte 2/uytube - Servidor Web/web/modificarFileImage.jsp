@@ -31,19 +31,15 @@
              
              //ErrorAltaUser seteo en null por si las dudas
              session.setAttribute("errorAltaUser","");
-             
-             
-             //Path Image
-                File contextBasePath = new File( request.getContextPath());
-                File path2 = new File(contextBasePath.getParent()).getParentFile();
-                //String pathFolder = path2.getParent();
-   
    
                //Verifica User
                     Fabrica f = Fabrica.getInstance();
                     IControladorUsuario user = f.getIControladorUsuario();
              
              
+            int _id = (Integer)session.getAttribute("userid");
+                    
+                    
              //Verifico Email
             String emailV = request.getParameter("mail");
             int posEmailV = emailV.indexOf("@");
@@ -58,6 +54,29 @@
                 }
               
             }
+            
+               //Mail No Duplicado que no sea de el
+             int idUserM = -1;
+             idUserM = user.obtenerIdUsuarioMail(request.getParameter("mail"));
+             
+             if((idUserM!=-1)&&(idUserM!=_id)){
+                 session.setAttribute("errorAltaUser","mail");
+                String redirectURL = "modificarUser.jsp";
+                  if (!response.isCommitted()){
+                response.sendRedirect(redirectURL); 
+                }
+             
+             }
+             
+              
+             //Pass correctas
+             if(!(request.getParameter("password").equals(request.getParameter("password2")))){
+               session.setAttribute("errorAltaUser","pass");
+               String redirectURL = "altaUser.jsp";
+                if (!response.isCommitted()){
+                response.sendRedirect(redirectURL); 
+                }
+             }
                  
                  
              //Setea sessions atributes para despues de el upload de img step 2
@@ -65,7 +84,10 @@
                session.setAttribute("namex",request.getParameter("name"));
                session.setAttribute("apellidox",request.getParameter("apellido"));
                session.setAttribute("mailx",request.getParameter("mail"));
+               
+               if(request.getParameter("datepicker")!=null){
                session.setAttribute("fechax",request.getParameter("datepicker"));
+               }
                
 
             //Canal Sessions
@@ -75,8 +97,6 @@
             
 
             //
-            int _id = (Integer)session.getAttribute("userid");
-                //int _id = 16;
             UsuarioDt userx = user.ConsultarUsuario(_id);
                
                
@@ -87,7 +107,6 @@
             
     </head>
     <body>
-        <% out.println(request.getContextPath()); %>
         <main class="login-form">
             <div class="cotainer">
                 <div class="row justify-content-center">
@@ -101,10 +120,11 @@
                             <div class="card-header">Modificar User - Parte 2</div>
                             <div class="card-body">
                                 
-                                <div>
-                                    <img src="C:\OLD\DiscoD\UyTube\uytube3\uytube\uyTube - Parte 2\data\imagenes<%out.print(userx.getImagen()); %>" />
-                                    <img src="C:\OLD\DiscoD\UyTube\uytube3\uytube\uyTube - Parte 2\data\imagenes\Luigi.jpg" />
-                                </div>
+                                  <div>
+                                      <center>
+                                        <img src="/images/<% out.print(userx.getImagen()); %>" width="100" height="auto" />
+                                        </center>
+                                    </div>
                                  <!-- <form action="UploadServlet" method="post" enctype = "multipart/form-data">-->
                                    <!--   <form action="altaFileImage.jsp" method="post" enctype = "multipart/form-data">-->
                                <form action="UploadModifyServlet" method="post" enctype = "multipart/form-data">
@@ -123,7 +143,7 @@
 
                                     <div class="col-md-6 offset-md-4">
                                         <button type="submit" class="btn btn-primary">
-                                            Modificar
+                                            Confirmar Modificaiones
                                         </button>
                                     </div>
                                     
@@ -136,9 +156,6 @@
             </div>
 
         </main>
-                                    <div>
-                                        <img src="../../data/imagenes/tonyp.jpg" />
-                                    </div>
     </body>
 </html>
 

@@ -120,6 +120,13 @@
                                         </div>
                                     </div>
                                     
+                                      <div class="form-group row">
+                                        <label for="password" class="col-md-4 col-form-label text-md-right">Confirmacion de Contraseña</label>
+                                        <div class="col-md-6">
+                                            <input type="password" id="password2" class="form-control" name="password2" required>
+                                        </div>
+                                    </div>
+                                    
                                     <div class="form-group row">
                                         <label for="name" class="col-md-4 col-form-label text-md-right">Nombre</label>
                                         <div class="col-md-6">
@@ -194,9 +201,9 @@
                                         <%
                                             for (CategoriaDt c : catArray) {
                                         %>
-                                            <option value=<% out.println(c.getNombre()); %>>
+                                            <option value="<% out.print(c.getNombre()); %>">
                                           <%
-                                               out.println(c.getNombre());
+                                               out.print(c.getNombre());
                                            %>
                                            </option>
                                       
@@ -228,6 +235,20 @@
                                     <% if (session.getAttribute("errorAltaUser")=="email") { %>
                                             <div class="alert alert-danger" role="alert">
                                                 No ingreso un email valido
+                                            </div>
+                                        <%}
+                                    %>
+                                    
+                                    <% if (session.getAttribute("errorAltaUser")=="pass") { %>
+                                            <div class="alert alert-danger" role="alert">
+                                                Los passwords no coinciden
+                                            </div>
+                                        <%}
+                                    %>
+                                    
+                                       <% if (session.getAttribute("errorAltaUser")=="mail") { %>
+                                            <div class="alert alert-danger" role="alert">
+                                                Ya existe un user con ese mail
                                             </div>
                                         <%}
                                     %>

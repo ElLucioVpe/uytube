@@ -4,6 +4,7 @@
     Author     : pagol
 --%>
 
+<%@page import="java.text.DateFormat"%>
 <%@page import="logica.dt.CanalDt"%>
 <%@page import="logica.dt.UsuarioDt"%>
 <%@page import="logica.dt.CategoriaDt"%>
@@ -44,13 +45,15 @@
             <link rel="stylesheet" href="/resources/demos/style.css">
             <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
             <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  
-          <script>
+            
+             <script>
                 $( function() {
-                 $( "#datepicker" ).datepicker();
+                 $( "#datepicker" ).datepicker({
+                     defaultDate: new Date()
+                 });
                 } );
             </script>
-            
+
             <%
                 
                 //Testing weas
@@ -67,15 +70,17 @@
                  
                 //El nick no va a cambiar
                 String nick = user.obtenerNickUsuario(_id);
-                session.setAttribute("nickx",nick);
-                session.setAttribute("imagex",userx.getImagen()); 
-                     
-                //user.AltaCanal("asd", true, IdUsuarioCreate, "");
-                     
+       
+                //Setea sessions atributes para despues de el upload de img step 2
+               session.setAttribute("userx",nick);
+            
+
+                  
+                    DateFormat fecha= new SimpleDateFormat("dd/MM/yyyy");
+                    String fechaNacimiento= fecha.format(userx.getFechanac());
                      
                 
             %>
-            
             
   
   
@@ -102,21 +107,28 @@
                                     <div class="form-group row">
                                         <label for="password" class="col-md-4 col-form-label text-md-right">Contraseña</label>
                                         <div class="col-md-6">
-                                            <input type="password" id="password" class="form-control" name="password" value="<%if(userx.getPassword()!=null){out.println(userx.getPassword());} %>" required>
+                                            <input type="password" id="password" class="form-control" name="password" required value="<%if(userx.getPassword()!=null){out.print(userx.getPassword());} %>">
+                                        </div>
+                                    </div>
+                                        
+                                    <div class="form-group row">
+                                        <label for="password" class="col-md-4 col-form-label text-md-right">Confirmacion de Contraseña</label>
+                                        <div class="col-md-6">
+                                            <input type="password" id="password2" class="form-control" name="password2" required value="<%if(userx.getPassword()!=null){out.print(userx.getPassword());} %>">
                                         </div>
                                     </div>
                                     
                                     <div class="form-group row">
                                         <label for="name" class="col-md-4 col-form-label text-md-right">Nombre</label>
                                         <div class="col-md-6">
-                                            <input type="text" id="name" class="form-control" name="name" value="<% if(userx.getPassword()!=null){out.println(userx.getNombre());} %>" required>
+                                            <input type="text" id="name" class="form-control" name="name" required value="<% if(userx.getPassword()!=null){out.print(userx.getNombre());} %>">
                                         </div>
                                     </div>
                                     
                                     <div class="form-group row">
                                         <label for="apellido" class="col-md-4 col-form-label text-md-right">Apellido</label>
                                         <div class="col-md-6">
-                                            <input type="text" id="apellido" class="form-control" name="apellido" value="<% out.println(userx.getApellido()); %>"  required>
+                                            <input type="text" id="apellido" class="form-control" name="apellido" required value="<%out.print(userx.getApellido()); %>">
                                         </div>
                                     </div>
                                     
@@ -124,7 +136,7 @@
                                     <div class="form-group row">
                                         <label for="mail" class="col-md-4 col-form-label text-md-right">Mail</label>
                                         <div class="col-md-6">
-                                            <input type="text" id="mail" class="form-control" name="mail" value="<% out.println(userx.getMail()); %>"  required>
+                                            <input type="text" id="mail" class="form-control" name="mail" required value="<%out.print(userx.getMail()); %>">
                                         </div>
                                     </div>
                                     
@@ -132,7 +144,7 @@
                                         <label for="fecha" class="col-md-4 col-form-label text-md-right">Fecha Nacimiento</label>
                                         <div class="col-md-6">
                                       <div class="md-form">
-                                       <input type="text" id="datepicker" class="form-control" name="datepicker" value="<% out.println(userx.getFechanac()); %>"  required>
+                                       <input type="text" id="datepicker" class="form-control" name="datepicker" required value="<%out.print(fechaNacimiento);%>" >
                                       </div>
                                         </div>
                                     </div>
@@ -144,7 +156,7 @@
                                     <div class="form-group row">
                                         <label for="desc" class="col-md-4 col-form-label text-md-right">Descripcion</label>
                                         <div class="col-md-6">
-                                            <textarea class="form-control" id="desc" name="desc" rows="3" placeholder="Descripcion del canal" required> <% out.print(canalx.getDescripcion()); %> </textarea>
+                                            <textarea class="form-control" id="desc" name="desc" rows="3" placeholder="Descripcion del canal"><%out.print(canalx.getDescripcion());%></textarea>
                                         </div>
                                     </div>
                                         
@@ -152,13 +164,13 @@
                                         <label for="Visibilidad" class="col-md-4 col-form-label text-md-right">Visibilidad</label>
                                         <div class="col-md-6">
                                             <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="visibilidad" value="privado" <%if(canalx.getPrivacidad()){out.println("checked");} %> >
+                                            <input class="form-check-input" type="radio" name="visibilidad" value="privado" <%if(canalx.getPrivacidad()){out.print("checked");} %> >
                                             <label class="form-check-label" for="visibilidad1">
                                               Privado
                                             </label>
                                           </div>
                                           <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="visibilidad" value="publico" <%if(!canalx.getPrivacidad()){out.println("checked");} %> >
+                                            <input class="form-check-input" type="radio" name="visibilidad" value="publico" <%if(!canalx.getPrivacidad()){out.print("checked");} %> >
                                             <label class="form-check-label" for="visibilidad2">
                                               Publico
                                             </label>
@@ -180,7 +192,7 @@
                                         <%
                                             for (CategoriaDt c : catArray) {
                                         %>
-                                            <option value=<% out.println(c.getNombre()); %> <% if(canalx.getCategoria().equals(c.getNombre())){out.println("selected");}  %> >
+                                            <option value="<% out.print(c.getNombre()); %>" <% if(canalx.getCategoria().equals(c.getNombre())){out.println("selected");}  %>>
                                           <%
                                                out.println(c.getNombre());
                                            %>
@@ -214,6 +226,20 @@
                                     <% if (session.getAttribute("errorAltaUser")=="email") { %>
                                             <div class="alert alert-danger" role="alert">
                                                 No ingreso un email valido
+                                            </div>
+                                        <%}
+                                    %>
+                                    
+                                      <% if (session.getAttribute("errorAltaUser")=="pass") { %>
+                                            <div class="alert alert-danger" role="alert">
+                                                Los passwords no coinciden
+                                            </div>
+                                        <%}
+                                    %>
+                                    
+                                         <% if (session.getAttribute("errorAltaUser")=="mail") { %>
+                                            <div class="alert alert-danger" role="alert">
+                                                Ya existe un user con ese mail
                                             </div>
                                         <%}
                                     %>
