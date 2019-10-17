@@ -4,6 +4,9 @@
     Author     : Luciano
 --%>
 
+<%@page import="javax.swing.tree.TreeNode"%>
+<%@page import="java.util.Enumeration"%>
+<%@page import="java.util.Vector"%>
 <%@page import="logica.dt.valoracionDt"%>
 <%@page import="java.util.List"%>
 <%@page import="javax.swing.tree.DefaultMutableTreeNode"%>
@@ -13,6 +16,7 @@
 <%@page import = "logica.controladores.IControladorVideo"%>
 <%@page import = "logica.dt.VideoDt" %>
 <%@page import = "logica.dt.UsuarioDt" %>
+<%@page import = "logica.Comentario" %>
 
 <%@page import="java.util.Date"%>
 
@@ -38,17 +42,42 @@
             IControladorUsuario user = f.getIControladorUsuario();
             IControladorVideo video = f.getIControladorVideo();
             int video_id = Integer.parseInt(request.getParameter("id"));
-            session.setAttribute("videoid", video_id);
             VideoDt dt = video.obtenerVideoDtPorID(video_id);
-            UsuarioDt u = user.ConsultarUsuario(dt.getIdCanal());
+            UsuarioDt u = user.ConsultarUsuario(dt.getId());
+            session.setAttribute("videoid", video_id);
             List<String> seguidores = user.ListarSeguidores(dt.getId());
             
             String imagenUser = "img/user.png";
             if(u.getImagen() != null) imagenUser = "http://localhost:8080/images/"+u.getImagen();
             
-            Boolean estaSuscripto = false; //inicializo
+            Boolean estaSuscripto = false;
             if(session.getAttribute("userid") != null) estaSuscripto = user.estaSuscripto((int)session.getAttribute("userid"), u.getId());
         %>
+        
+        <%!
+            public String[][] getComentario(DefaultMutableTreeNode root) {
+                String[][] comentarios = new String[5][];
+                if(root.children() != null) {
+                    Enumeration<TreeNode> vc = root.children();
+                    while(vc.hasMoreElements()) {
+                        TreeNode n = (TreeNode) vc.nextElement();
+                        getComentarioRec(n);
+                    }
+                }
+                return;
+            }
+
+            public Comentario getComentarioRec(TreeNode root) {
+                if(root.children() != null) {
+                    while(vc.hasMoreElements()) {
+                        TreeNode n = (TreeNode) vc.nextElement();
+                        n.toString();
+                    }
+                }
+                return new Comentario();
+            }
+        %>
+        
         <%@ include file="include/header.jsp" %>
 
         <script>var video_id="<%=video_id%>";</script>
@@ -95,75 +124,37 @@
             
         </script>
         
+
         <div id="video-show">
             <%=dt.getEmbedded()%>
         </div>
-        <div id="video-data">
+        <div class="container">
+            <div id="video-data">
             <h1 id="video-titulo"><%=dt.getNombre()%></h1>
-            
-            <div class="row">
-                <div class="col-sm-3">
-                    <img id="user-pic" src="<%=imagenUser%>" height="30px" width="30px" alt="Profile de Usuario"/>
-                    <span id="user-nick"><%=u.getNickname()%></span>
-                    <button class="btn btn-primary" onclick="suscripcion(<%=u.getId()%>)">
-                        <%if(!estaSuscripto){%>
-                        Suscribirse
-                        <%}else{%>
-                        Desuscribirse
-                        <%}%>
-                    </button>
-
-                    <script>
-                    function conectate() {
-                      alert("Por favor, para realizar esta acción inicie sesion.");
-                    }
-                    function suscripcion(seguido) {
-                      var seguidor = '<%=session.getAttribute("userid")%>';
-                      if(seguidor === null) conectate();
-                      else{
-			$.ajax({
-                            url: "/WebApplication/api/suscripcion.jsp?seguidor="+seguidor+"&seguido="+seguido,
-                            success: function() {
-                                alert("Suscripción/Desuscripción exitosa");
-                            },
-                            error: function () { alert("Error en la suscripción");}
-                        });
-                      }
-                    }
-                    </script>
-                    <span id="user-subs"><%=seguidores.size() %> seguidores</span>
-                </div>
-                <div class="col-sm-3"></div>
-                <div class="col-sm-3">
-                    <button class="btn btn-primary" onclick="gustar(true)"><i class="fa fa-thumbs-up"></i>
-                    <span><b></b> <%=dt.getLikes()%></span></button>
-                    <button class="btn btn-primary" onclick="gustar(false)"><i class="fa fa-thumbs-down"></i>
-                    <span><b></b> <%=dt.getDislikes()%></span></button>
-                    <script>
-                        function gustar(g) {
-                            var user = '<%=session.getAttribute("userid")%>';
-                            var video = '<%=video_id%>';
-                            var v = '<%=video%>';
-                            
-                            if(user === null) conectate();
-                            else{
-                                $.ajax({
-                                    url: "/WebApplication/api/valoracion.jsp?user_id="+user+"&video_id="+video+"&gusta="+g,
-                                    success: function() {
-                                        alert("Valoración exitosa");
-                                    },
-                                    error: function () { alert("Error en la valoración del video");}
-                                });
-                            }
-                        }
-                    </script>
-                </div>
+            <div>
+                <img id="user-pic" src="http://localhost:8080/images/<%=u.getImagen()%>" height="30px" width="30px" alt="Profile de Usuario"/>
+                <span id="user-nick"><%=u.getNickname()%></span>
+                <button class="btn btn-primary" onclick="suscripcion(<%=u.getId()%>)">
+                    <%if(!estaSuscripto){%>
+                    Suscribirse
+                    <%}else{%>
+                    Desuscribirse
+                    <%}%>
+                </button>
+                <span id="user-subs"><%=seguidores.size() %> seguidores</span>
             </div>
             <hr>
             <div class="row">
                 <div class="col-sm-6">
                     <h5> Descripción</h5>
                     <p id="video-desc"><%=dt.getDescripcion()%></p>
+
+                    <div>
+                        <button class="btn btn-primary" onclick="gustar(true)"><i class="fa fa-thumbs-up"></i>
+                        <span><b></b> <%=dt.getLikes()%></span></button>
+                        <button class="btn btn-primary" onclick="gustar(false)"><i class="fa fa-thumbs-down"></i>
+                        <span><b></b> <%=dt.getDislikes()%></span></button>
+                    </div>
                 </div>
                 <div class="col-sm-3">
                     <p id="video-cat"><b>Categoría:</b> <%=dt.getCategoria()%></p>

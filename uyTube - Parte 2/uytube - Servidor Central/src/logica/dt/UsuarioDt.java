@@ -98,5 +98,9 @@ public class UsuarioDt {
     public Canal getCanal() {
         return canal;
     }
+    
+      public String getPassword() {
+        return password;
+    }
    
 }
