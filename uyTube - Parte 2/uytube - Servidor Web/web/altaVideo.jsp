@@ -3,6 +3,7 @@
     Created on : 1 Oct 2019, 21:08:45
     Author     : Xavel
 --%>
+<%@page import="java.util.List"%>
 <%@page import="logica.dt.CategoriaDt"%>
 <%@page import="javax.servlet.annotation.MultipartConfig"%>
 <%@page import="javax.servlet.annotation.WebServlet"%>
@@ -44,6 +45,12 @@
                 IControladorUsuario usu = f.getIControladorUsuario();
                 IControladorCategoria cat = f.getIControladorCategoria();
                 
+                String nombre = request.getParameter("video");
+                String url = request.getParameter("url");
+                String descr = request.getParameter("desc");
+                String categoria = request.getParameter("categoria");
+                
+                
                 int idUser = -1;
                 //se fija si el user existe
                 idUser = usu.obtenerIdUsuario(request.getParameter("nombreusu"));
@@ -53,26 +60,25 @@
              
                 }
               
-                //chequea el formato de la duración
+                //Crea la variable de la duracion
+                String durat;
+                int segundosint = Integer.getInteger(request.getParameter("segundos")).intValue();
+                int minutosint = Integer.getInteger(request.getParameter("minutos")).intValue();
                 
-                String duraso = request.getParameter("duracion");
-                int posduraso = duraso.indexOf(":");
+                if(segundosint<10){
+                durat = minutosint+":0"+segundosint;
+                     }else{
+                    durat = minutosint+":"+segundosint;
+                 }
     
-            
-            if((posduraso==-1)){
-                session.setAttribute("errorAltaUser","duracion");
-            }
+
                 //se fija si la categoria existe
                if(request.getParameter("categoria")!=null){
                 CategoriaDt dtca = new CategoriaDt();
                 
-                dtca = cat.ConsultarCategorias(request.getParameter("categoria"));
-                 if(dtca==null){
-                session.setAttribute("errorAltaVideo","categoria");
-                }
-                }
                 
-                vid.AltaVideo(request.getParameter("video"), request.getParameter("duracion"), request.getParameter("url"), request.getParameter("desc"), idUser, request.getParameter("categoria"));
+                
+                vid.AltaVideo(nombre, durat, url, descr, idUser, categoria);
                     
             
             %>
@@ -91,18 +97,25 @@
                                             <div class="card-header">Alta Usuario</div>
                                                 <div class="card-body">
                                                     
-				<form action="altaFileImage.jsp" method="post" >
+			
                                     <div class="form-group row">
-                                        <label for="video" class="col-md-4 col-form-label text-md-right">Nombre Video</label>
+                                        <label for="v-ideo" class="col-md-4 col-form-label text-md-right">Nombre Video</label>
                                         <div class="col-md-6">
                                             <input type="text" id="video" class="form-control" name="video" required autofocus>
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
-                                        <label for="duracion" class="col-md-4 col-form-label text-md-right">Duracion</label>
+                                        <label for="minutos" class="col-md-4 col-form-label text-md-right">Duración (minutos)</label>
                                         <div class="col-md-6">
-                                            <input type="text" id="duracion" class="form-control" name="duracion" required>
+                                            <input type="number" id="minutos" class="form-control" name="minutos" requiered min="0" max="59">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group row">
+                                        <label for="segundos" class="col-md-4 col-form-label text-md-right">Duración (segundos)</label>
+                                        <div class="col-md-6">
+                                            <input type="number" id="segundos" class="form-control" name="segundos" requiered min="0" max="59">
                                         </div>
                                     </div>
                                     
@@ -129,11 +142,32 @@
                                     </div>
                                     
                                     <div class="form-group row">
-                                        <label for="categoria" class="col-md-4 col-form-label text-md-right">Categoria</label>
-                                        <div class="col-md-6">
-                                            <input type="text" id="categoria" class="form-control" name="categoria" required>
-                                        </div>
-                                    </div>
+                                    <label for="exampleFormControlSelect1">Categoría del video</label>
+                                    <select class="form-control" id="categoria" name="categoria">
+                                        <%
+                                          
+                                           
+                                            List<CategoriaDt> catArray = cat.ListarCategorias();
+                                            
+                                        %>
+                                        
+                                        <%
+                                            for (CategoriaDt c : catArray) {
+                                        %>
+                                            <option value="<% out.print(c.getNombre()); %>"
+                                          <%
+                                               out.println(c.getNombre());
+                                           %>
+                                           </option>
+                                      
+                                            <%
+                                                
+                                                }
+                                            
+                                            %>
+                                            
+                                    </select>
+                                  </div>
                                     
                                     
 				
@@ -147,20 +181,9 @@
                                             </div>
                                         <%}
                                     %>
+
                                     
-                                    <% if (session.getAttribute("errorAltaVideo")=="duracion") { %>
-                                            <div class="alert alert-danger" role="alert">
-                                                La duración debe ser ingresada en el siguiente formato "mm:ss".
-                                            </div>
-                                        <%}
-                                    %>
-                                    
-                                    <% if (session.getAttribute("errorAltaVideo")=="categoria") { %>
-                                            <div class="alert alert-danger" role="alert">
-                                                La categoria ingresada no existe.
-                                            </div>
-                                        <%}
-                                    %>
+                                  
                                     
 		</div>
                </div>
