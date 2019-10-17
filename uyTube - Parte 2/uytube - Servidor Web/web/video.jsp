@@ -1,4 +1,4 @@
-<%-- 
+A<%-- 
     Document   : video
     Created on : Oct 8, 2019, 12:48:34 AM
     Author     : Luciano
@@ -52,30 +52,6 @@
             
             Boolean estaSuscripto = false;
             if(session.getAttribute("userid") != null) estaSuscripto = user.estaSuscripto((int)session.getAttribute("userid"), u.getId());
-        %>
-        
-        <%!
-            public String[][] getComentario(DefaultMutableTreeNode root) {
-                String[][] comentarios = new String[5][];
-                if(root.children() != null) {
-                    Enumeration<TreeNode> vc = root.children();
-                    while(vc.hasMoreElements()) {
-                        TreeNode n = (TreeNode) vc.nextElement();
-                        getComentarioRec(n);
-                    }
-                }
-                return;
-            }
-
-            public Comentario getComentarioRec(TreeNode root) {
-                if(root.children() != null) {
-                    while(vc.hasMoreElements()) {
-                        TreeNode n = (TreeNode) vc.nextElement();
-                        n.toString();
-                    }
-                }
-                return new Comentario();
-            }
         %>
         
         <%@ include file="include/header.jsp" %>
