@@ -133,6 +133,7 @@
             <hr>
             <div class="row">
                 <div class="col-sm-6">
+                    <h5> Descripción</h5>
                     <p id="video-desc"><%=dt.getDescripcion()%></p>
 
                     <div>
