@@ -35,8 +35,8 @@
             String imagen = "img/user.png";
             if(c.getUsuarioDt().getImagen() != null) imagen = "http://localhost:8080/images/"+c.getUsuarioDt().getImagen();
             
-            html+= "<li class=\"media\"><a class=\"pull-left\" href=\"#\">";
-            html+= "<img class=\"rounded-circle\" width=60 height=60 img-circle\" src=\""+imagen+"\"></a>";
+            html+= "<li class=\"media\">";
+            html+= "<img class=\"rounded-circle\" width=60 height=60 src=\""+imagen+"\">";
             html+= "<div class=\"media-body\"> <div class=\"well well-lg\"";
             html+= "<h4>" + c.getUsuarioDt().getNickname() + "</h4>";
             html+= "<ul class=\"media-date text-uppercase reviews list-inline\"><li>"+c.getFecha()+"</li></ul>";

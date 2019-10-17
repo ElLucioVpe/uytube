@@ -108,7 +108,7 @@
                 var id_p = id_padre; console.log(id_p);
                 if(id_u !== null && id_u !== "null") {
                     $.ajax({
-                        url: "http://localhost:8080/WebApplication/api/comentarVideo.jsp?id_u="+id_u+"&id_v="+id_v+"&id_p"+id_p+"&text="+text, 
+                        url: "http://localhost:8080/WebApplication/api/comentarVideo.jsp?id_u="+id_u+"&id_v="+id_v+"&id_p="+id_p+"&text="+text, 
                         success: function (result) {
                             alert(result);
                         },
