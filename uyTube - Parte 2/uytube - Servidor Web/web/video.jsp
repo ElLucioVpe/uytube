@@ -23,9 +23,13 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="css/video.css">
-        <link href="css/font-awesome.min.css" rel="stylesheet">
         <script src="js/bootstrap.min.js"></script>
         <script src="js/jquery.min.js"></script>
+        
+        <!-- Font Awesome -->
+        <link href="css/fontawesome.min.css" rel="stylesheet">
+        <script defer src="js/solid.js"></script>
+        <script defer src="js/fontawesome.js"></script>
         
         <title>uyTube - Transmite tú mismo</title>
     </head>
@@ -39,9 +43,6 @@
             UsuarioDt u = user.ConsultarUsuario(dt.getIdCanal());
             List<String> seguidores = user.ListarSeguidores(dt.getId());
             
-            DefaultMutableTreeNode root = video.obtenerComentariosVideo(dt.getId());
-            //Valoraciones
-            //List<valoracionDt> list = video.obtenerValoracionVideo(dt.getId());
             String imagenUser = "img/user.png";
             if(u.getImagen() != null) imagenUser = "http://localhost:8080/images/"+u.getImagen();
             
@@ -51,6 +52,48 @@
         <%@ include file="include/header.jsp" %>
 
         <script>var video_id="<%=video_id%>";</script>
+        <script>
+            $(document).ready(function(){
+                cargarComentarios();
+            });
+            
+            function cargarComentarios() {
+                $.ajax({
+                    url: "http://localhost:8080/WebApplication/api/obtenerComentariosVideo.jsp?id_v="+'<%=video_id%>', 
+                   success: function (result) {
+                       var html = result;
+                       $('#comentarios').html(html);
+                   },
+                   error: function (xhr, ajaxOptions, thrownError) {
+                      console.log(xhr.status);
+                      console.log(thrownError);
+                   } 
+                });
+            }
+            
+            function comentarVideo(id_padre) {
+                //-1 = no padre
+                var id_u = '<%=session.getAttribute("userid")%>';
+                var id_v = '<%=video_id%>';   
+                var text = $('#textArea'+id_p).val();
+                var id_p = id_padre; console.log(id_p);
+                if(id_u !== null && id_u !== "null") {
+                    $.ajax({
+                        url: "http://localhost:8080/WebApplication/api/comentarVideo.jsp?id_u="+id_u+"&id_v="+id_v+"&id_p"+id_p+"&text="+text, 
+                        success: function (result) {
+                            alert(result);
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            console.log(xhr.status);
+                            console.log(thrownError);
+                        } 
+                    });
+                } else {
+                    alert("Por favor inicie sesión para comentar el video");
+                }
+            }
+            
+        </script>
         
         <div id="video-show">
             <%=dt.getEmbedded()%>
@@ -128,9 +171,22 @@
                     <p id="video-fecha"><b>Fecha:</b> <%=dt.getFechaPublicacion().toString()%></p>
                 </div>
             </div>
-            <hr>
-            
-        </div>
+            <div class="row">
+                <div class="col">
+                        <h5> Comentarios </h5>
+                    <div class="form-group row">
+                        <div class="col-sm-6">
+                            <textarea class="form-control" rows="2" placeholder="Agregue un comentario..." required></textarea>
+                        </div>
+                        <button type="button" class="btn btn-success" onclick="comentarVideo(-1)">Comentar</button>
+                    </div>
+                    <div class="card">
+                        <div id="comentarios" class="card-body">
+                            <%-- Muchos comentarios --%>
+                        </div>
+                    </div>
+                </div>
+            </div>
         <%@ include file="include/footer.jsp" %>
     </body>
 </html>
