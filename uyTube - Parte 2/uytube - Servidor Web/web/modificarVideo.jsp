@@ -60,59 +60,105 @@
                //ErrormodificarVideo seteado en null por las deudas
                 session.setAttribute("errormodificarVideo","");
              
-                
+                String entre = "0";
                 Fabrica f = Fabrica.getInstance();
                 IControladorUsuario user = f.getIControladorUsuario();
                 IControladorVideo vid = f.getIControladorVideo();
                 IControladorCategoria cat = f.getIControladorCategoria();
                 
-                 String nombreUp = request.getParameter("nombre");
-             
-                 String urlUp = request.getParameter("URL");
-                 String descripcionUp = request.getParameter("desc");
-                  String categoriaUp = request.getParameter("categoria");
-                 String fechaUp = request.getParameter("datepicker");
                 
-                 java.util.Date fechaSubida = null;
-                 if(fechaUp.contains("-")){
-                    fechaUp=fechaUp.replace("-", "/");
-                 
-                 }  
-                 
-                 SimpleDateFormat sdf= new SimpleDateFormat("dd/MM/yyyy");
-                 fechaSubida = sdf.parse(fechaUp);
-                
-                int _id = (Integer)session.getAttribute("vidid");
-                
-        
+                int _id = 1;
                 VideoDt vidx = vid.obtenerVideoDtPorID(_id);
                 int idcanal = vidx.getIdCanal();
                 
                 CanalDt canalx = user.obtenerCanalDt(idcanal);
+                 String nombreUp = vidx.getNombre();
+                 String urlUp = vidx.getUrl();
+                 String descripcionUp = vidx.getDescripcion();
+                 String categoriaUp = vidx.getCategoria();
+                 Boolean visUp = vidx.getPrivacidad();
                 
+                 float tiempo = vidx.getDuracion();
+                 
+                 
+
+                String str=Float.toString(tiempo);
+                String strarray[]=str.split("\\.");
+             
+                //StringArr[0]=(arr[0]);
+                //StringArr[1]=(arr[1]);
+             
+             
+                 String segundosint = strarray[1];
+                 String minutosint =  strarray[0];
+                 
+                 SimpleDateFormat sdf= new SimpleDateFormat("dd/MM/yyyy");
+                 java.util.Date fechaSubida = null;
+                 DateFormat fecha= new SimpleDateFormat("dd/MM/yyyy");
+                 String fechaUp= fecha.format(vidx.getFechaPublicacion());
+                 if(fechaUp.contains("-")){
+                    fechaUp=fechaUp.replace("-", "/");
+                 
+                 }  
+                 fechaSubida = sdf.parse(fechaUp);
+                 String fechasubidaog= sdf.format(vidx.getFechaPublicacion());
+                
+
+                //se fija si el user esta logged
+                int _userid=0;
+                if(session.getAttribute("userid")==null){
+                    _userid = -1; 
+                }else{
+                    _userid = (int)session.getAttribute("userid");
                     
-                    String fechasubidaog= sdf.format(vidx.getFechaPublicacion());
-                   
+               //int _id = (Integer)session.getAttribute("vidid");
+               
+                }
+               
+                //redirect a no loggeds
+                if(_userid==-1){
+                String redirectURL = "login.jsp";
+                //evitar intento de doble redirect
+                    if (!response.isCommitted()){
+                    response.sendRedirect(redirectURL); 
+                    }
+                }
+               
+                if((request.getParameter("nombre")!= null)&&(request.getParameter("url")!= null)&&(request.getParameter("desc")!= null)&&(request.getParameter("categoria")!= null)&&(request.getParameter("datepicker")!= null&&(request.getParameter("segundos")!= null&&(request.getParameter("minutos")!= null))))
+                {
+                entre = "1";
+                
+                nombreUp = request.getParameter("nombre");
+                urlUp = request.getParameter("url");
+                descripcionUp = request.getParameter("desc");
+                categoriaUp = request.getParameter("categoria");
+                fechaUp = request.getParameter("datepicker");
+
+                
+               
 
                 //Crea la variable de la duracion
                 String durat;
-                int segundosint = Integer.getInteger(request.getParameter("segundos")).intValue();
-                int minutosint = Integer.getInteger(request.getParameter("minutos")).intValue();
+                int nuevosegundosint = Integer.parseInt(request.getParameter("segundos"));
+                int nuevominutosint = Integer.parseInt(request.getParameter("minutos"));
                 
-                if(segundosint<10){
-                durat = minutosint+":0"+segundosint;
+                if(nuevosegundosint<10){
+                durat = nuevominutosint+":0"+nuevosegundosint;
                      }else{
-                    durat = minutosint+":"+segundosint;
+                    durat = nuevominutosint+":"+nuevosegundosint;
                  }
                 
                 //visibilidad thangs
-                String visibility = (String)session.getAttribute("visx");
-                Boolean visUp = true;
+                String nuevoVisibility="";
+                if(request.getAttribute("visibilidad")!=null){
+                  nuevoVisibility = (String)request.getAttribute("visibilidad");
+                }
                 
-                if(visibility.contains("privado")){
+                
+                if(nuevoVisibility.contains("privado")){
                  visUp=true;
                  }
-                 if (visibility.contains("publico")){
+                 if (nuevoVisibility.contains("publico")){
                  visUp=false;
                  }
  
@@ -121,8 +167,9 @@
                     session.setAttribute("errormodificarVideo","privacidad");
 
                     }
-                    
                     vid.ModificarVideo(_id, nombreUp, durat, urlUp, descripcionUp, fechaSubida, visUp, categoriaUp);
+                }
+                    
                      
                 
             %>
@@ -131,6 +178,16 @@
         <title>Modificar Video</title>
     </head>
     <body>
+        <% 
+           /*out.print(tiempo);
+           out.print("</br>");
+           out.print(strarray[0].toString());
+           out.print("</br>");
+           out.print(strarray[1].toString());
+           */
+            out.print(vidx.getPrivacidad());
+            out.print(request.getAttribute("visibilidad"));
+        %>
         <main class="login-form">
             <div class="cotainer">
                 <div class="row justify-content-center">
@@ -143,39 +200,39 @@
                         <div class="card">
                             <div class="card-header">Modificar Video</div>
                             <div class="card-body">
- 
+                                   <form action="" method="" >
                                     <div class="form-group row">
                                         <label for="nombre" class="col-md-4 col-form-label text-md-right">Nuevo Nombre:</label>
                                         <div class="col-md-6">
-                                            <input type="text" id="nombre" class="form-control" name="nombre">
+                                            <input type="text" id="nombre" class="form-control" name="nombre" required value="<%if(nombreUp!=null){out.print(nombreUp);} %>">
                                         </div>
                                     </div>
                                         
                                     <div class="form-group row">
                                         <label for="minutos" class="col-md-4 col-form-label text-md-right">Nueva duración (minutos)</label>
                                         <div class="col-md-6">
-                                            <input type="number" id="minutos" class="form-control" name="minutos" requiered min="0" max="59">
+                                            <input type="number" id="minutos" class="form-control" name="minutos" requiered min="0" max="59" required value="<%if(minutosint!=null){out.print(minutosint);} %>">
                                         </div>
                                     </div>
                                     
                                     <div class="form-group row">
                                         <label for="segundos" class="col-md-4 col-form-label text-md-right">Nueva duración (segundos)</label>
                                         <div class="col-md-6">
-                                            <input type="number" id="segundos" class="form-control" name="segundos" requiered min="0" max="59">
+                                            <input type="number" id="segundos" class="form-control" name="segundos" requiered min="0" max="59"  required value="<%if(segundosint!=null){out.print(segundosint);} %>">
                                         </div>
                                     </div>
                                     
                                     <div class="form-group row">
                                         <label for="url" class="col-md-4 col-form-label text-md-right">Nuevo URL</label>
                                         <div class="col-md-6">
-                                            <input type="text" id="url" class="form-control" name="url" required>
+                                            <input type="text" id="url" class="form-control" name="url" required required value="<%if(urlUp!=null){out.print(urlUp);} %>">
                                         </div>
                                     </div>
                                     
                                     <div class="form-group row">
                                         <label for="desc" class="col-md-4 col-form-label text-md-right"> Nueva Descripción</label>
                                         <div class="col-md-6">
-                                            <input type="text" id="desc" class="form-control" name="desc" required>
+                                            <input type="text" id="desc" class="form-control" name="desc" required value="<%if(descripcionUp!=null){out.print(descripcionUp);} %>">
                                         </div>
                                     </div>
                                     
@@ -185,25 +242,24 @@
                                         <label for="fecha" class="col-md-4 col-form-label text-md-right">Nueva Fecha de subida</label>
                                         <div class="col-md-6">
                                       <div class="md-form">
-                                       <input type="text" id="datepicker" class="form-control" name="datepicker" required value="<%out.print(fechasubidaog);%>" >
+                                       <input type="text" id="datepicker" class="form-control" name="datepicker"  required value="<%if(fechasubidaog!=null){out.print(fechasubidaog);} %>">
                                       </div>
                                         </div>
                                     </div>
                                     
                             
                                         
-                                    <div class="form-group row">
+                                  <div class="form-group row">
                                         <label for="Visibilidad" class="col-md-4 col-form-label text-md-right">Visibilidad</label>
                                         <div class="col-md-6">
                                             <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="visibilidad" value="privado" <%if(canalx.getPrivacidad()){out.print("checked");} %> >
+                                            <input class="form-check-input" type="radio" name="visibilidad" value="privado" <%if(vidx.getPrivacidad()){out.print("checked");} %> >
                                             <label class="form-check-label" for="visibilidad1">
                                               Privado
                                             </label>
                                           </div>
-                                            
                                           <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="visibilidad" value="publico" <%if(!canalx.getPrivacidad()){out.print("checked");} %> >
+                                            <input class="form-check-input" type="radio" name="visibilidad" value="publico" <%if(!vidx.getPrivacidad()){out.print("checked");} %> >
                                             <label class="form-check-label" for="visibilidad2">
                                               Publico
                                             </label>
@@ -212,7 +268,7 @@
                                     </div>
                                         
                                         
-                                   <div class="form-group row">
+                                 <div class="form-group row">
                                     <label for="exampleFormControlSelect1">Categoria del canal</label>
                                     <select class="form-control" id="categoria" name="categoria">
                                         <%
@@ -224,7 +280,7 @@
                                         <%
                                             for (CategoriaDt c : catArray) {
                                         %>
-                                            <option value="<% out.print(c.getNombre()); %>" <% if(canalx.getCategoria().equals(c.getNombre())){out.println("selected");}  %>>
+                                            <option value="<%out.print(c.getNombre());%>" <%if(vidx.getCategoria().equals(c.getNombre())){out.println("selected");}%>>
                                           <%
                                                out.println(c.getNombre());
                                            %>
@@ -240,7 +296,6 @@
                                   </div>
                                         
                                         
-                                    </div>
 
                                     <div class="col-md-6 offset-md-4">
                                         <button type="submit" class="btn btn-primary">
@@ -249,7 +304,7 @@
  
                                     </div>
                                   
-                                             <% if (session.getAttribute("errormodificarVideo")=="privacidad") { %>
+                                    <% if (session.getAttribute("errormodificarVideo")=="privacidad") { %>
                                             <div class="alert alert-danger" role="alert">
                                                 No se puede tener un video público en un canal privado.
                                             </div>
@@ -258,6 +313,8 @@
                                     
                             
                         </div>
+                      </form>
+
                     </div>
                 </div>
             </div>
