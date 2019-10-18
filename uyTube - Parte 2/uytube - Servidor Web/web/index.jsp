@@ -17,12 +17,17 @@
         <script src="js/bootstrap.min.js"></script>
         <script src="js/jquery.min.js"></script>
 
+        <!-- Font Awesome -->
+        <link href="css/fontawesome.min.css" rel="stylesheet">
+        <script defer src="js/solid.js"></script>
+        <script defer src="js/fontawesome.js"></script>
+
         <title>uyTube - Transmite tú mismo</title>
     </head>
     <body>
         <%! Fabrica f = Fabrica.getInstance();
             IControladorUsuario user = f.getIControladorUsuario(); %>
-        <%@ include file="include/header.jsp" %>  
+        <%@ include file="include/header.jsp" %>
         
         <table class="table" id="tblVideos">
           <thead>
@@ -60,7 +65,7 @@
                                     if(videos[i].thumbnail !== "") {
                                         html += '<th><img src="'+videos[i].thumbnail+'" alt="Thumbnail"></th>';
                                     } else {
-                                        html += '<th><img src="img/no-thumbnail.jpg" alt="Thumbnail"></th>';
+                                        html += '<th><img src="img/no-thumbnail.jpg" width=120 height=90 alt="Thumbnail"></th>';
                                     }
                                     html += '<td  scope="row"><a href="video.jsp?id='+ videos[i].id +'">'+videos[i].nombre+'</a></td>';
                                     html += '<td>'+videos[i].descripcion+'</td>';

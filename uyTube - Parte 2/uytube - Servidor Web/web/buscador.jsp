@@ -25,6 +25,11 @@
         <script src="js/bootstrap.min.js"></script>
         <script src="js/jquery.min.js"></script>
         
+        <!-- Font Awesome -->
+        <link href="css/fontawesome.min.css" rel="stylesheet">
+        <script defer src="js/solid.js"></script>
+        <script defer src="js/fontawesome.js"></script>
+        
         <title>uyTube - Transmite tú mismo</title>
     </head>
     <body>

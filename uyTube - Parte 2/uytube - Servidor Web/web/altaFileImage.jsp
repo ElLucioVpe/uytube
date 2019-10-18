@@ -11,7 +11,8 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        
+         <%@include file="include/header.jsp" %>
+         
           <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
         <script src="js/bootstrap.min.js"></script>
         <script src="js/jquery.min.js"></script>
@@ -85,7 +86,13 @@
                 }
               
             }
-                 
+            
+            //canalNombre
+                 if(request.getParameter("canalNombre").isEmpty()){
+                 session.setAttribute("canalx",request.getParameter("user"));
+                 }else{
+                 session.setAttribute("canalx",request.getParameter("canalNombre"));
+                 }
                  
              //Setea sessions atributes para despues de el upload de img step 2
                session.setAttribute("userx",request.getParameter("user"));
@@ -152,5 +159,6 @@
             </div>
 
         </main>
+           <%@include file="include/footer.jsp" %>
     </body>
 </html>

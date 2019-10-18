@@ -14,6 +14,8 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         
+          <%@include file="include/header.jsp" %>
+          
           <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
         <script src="js/bootstrap.min.js"></script>
         <script src="js/jquery.min.js"></script>
@@ -91,6 +93,7 @@
                
 
             //Canal Sessions
+            session.setAttribute("canalx",request.getParameter("canalNombre"));
             session.setAttribute("descx",request.getParameter("desc"));            
             session.setAttribute("visx",request.getParameter("visibilidad"));
             session.setAttribute("catx",request.getParameter("categoria"));
@@ -156,6 +159,7 @@
             </div>
 
         </main>
+        <%@include file="include/footer.jsp" %>
     </body>
 </html>
 

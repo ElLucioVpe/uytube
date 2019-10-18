@@ -21,7 +21,7 @@
 <%@page import="java.nio.file.Paths"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html"%>
 <%@page import = "logica.controladores.Fabrica" %>
 <%@page import = "logica.controladores.IControladorUsuario"%>
 
@@ -37,6 +37,8 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
+          <%@include file="include/header.jsp" %>
+          
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
         <script src="js/bootstrap.min.js"></script>
         <script src="js/jquery.min.js"></script>
@@ -105,14 +107,14 @@
                                 <form action="modificarFileImage.jsp" method="post" >
                                 
                                     <div class="form-group row">
-                                        <label for="password" class="col-md-4 col-form-label text-md-right">ContraseÃ±a</label>
+                                        <label for="password" class="col-md-4 col-form-label text-md-right">Contraseña</label>
                                         <div class="col-md-6">
                                             <input type="password" id="password" class="form-control" name="password" required value="<%if(userx.getPassword()!=null){out.print(userx.getPassword());} %>">
                                         </div>
                                     </div>
                                         
                                     <div class="form-group row">
-                                        <label for="password" class="col-md-4 col-form-label text-md-right">Confirmacion de ContraseÃ±a</label>
+                                        <label for="password" class="col-md-4 col-form-label text-md-right">Confirmacion de Contraseña</label>
                                         <div class="col-md-6">
                                             <input type="password" id="password2" class="form-control" name="password2" required value="<%if(userx.getPassword()!=null){out.print(userx.getPassword());} %>">
                                         </div>
@@ -153,6 +155,14 @@
                                     <div class="card-body">
                                         <div class="card-body">Canal</div>
                                         
+                                     <div class="form-group row">
+                                        <label for="apellido" class="col-md-4 col-form-label text-md-right">Nombre del canal</label>
+                                        <div class="col-md-6">
+                                            <input type="text" id="canalNombre" class="form-control" name="canalNombre" value="<%out.print(canalx.getNombre());%>">
+                                        </div>
+                                    </div>
+                                        
+                                        
                                     <div class="form-group row">
                                         <label for="desc" class="col-md-4 col-form-label text-md-right">Descripcion</label>
                                         <div class="col-md-6">
@@ -192,9 +202,9 @@
                                         <%
                                             for (CategoriaDt c : catArray) {
                                         %>
-                                            <option value="<% out.print(c.getNombre()); %>" <% if(canalx.getCategoria().equals(c.getNombre())){out.println("selected");}  %>>
+                                            <option value="<%out.print(c.getNombre());%>"<%if(canalx.getCategoria().equals(c.getNombre())){out.print("selected");}%>>
                                           <%
-                                               out.println(c.getNombre());
+                                               out.print(c.getNombre());
                                            %>
                                            </option>
                                       
@@ -254,5 +264,6 @@
             </div>
 
         </main>
+         <%@include file="include/footer.jsp" %>
     </body>
 </html>
