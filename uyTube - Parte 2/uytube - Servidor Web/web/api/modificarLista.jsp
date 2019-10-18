@@ -29,7 +29,7 @@
                         String nombre_video = request.getParameter("nomv");
 
                         user.AgregarVideoListaDeReproduccion(id_usuariovideo, id_propietario, nombre_video, nombre_lista);
-                        out.println("El video se elimino con exito de la lista");
+                        out.println("El video se agrego con exito a la lista");
                     } else out.println("Error: faltan parametros");
                 } else {
                     if(request.getParameter("accion").equals("modificar")) {
