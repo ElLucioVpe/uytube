@@ -24,6 +24,8 @@ import logica.Video;
 import logica.Categoria;
 import logica.Comentario;
 import logica.dt.VideoDt;
+import logica.dt.UsuarioDt;
+import logica.dt.ComentarioDt;
 import logica.dt.valoracionDt;
 
 /**
@@ -331,5 +333,60 @@ public class ControladorVideo implements IControladorVideo {
             } else {
                 System.out.println("Error: "+e.getMessage());
             }
+        }
+        
+        @Override
+        public List<ComentarioDt> obtenerComentariosDt(int id_video) {
+            List<ComentarioDt> comentariosDt = new ArrayList<>();
+            try { 
+                EntityManager em = emFactory.createEntityManager();
+                
+                Video v = em.find(Video.class, id_video);
+                if(v == null) throw new Exception("El video no existe");
+                Collection<Comentario> comentarios = v.getComentarios();
+                if(comentarios == null) throw new Exception("El video no tiene comentarios");
+                
+                Iterator<Comentario> it = comentarios.iterator();
+                while (it.hasNext()) {
+                    Comentario c = it.next();
+                    if(c.getPadre() == null) {
+                        comentariosDt.add(new ComentarioDt(
+                            c.getId(),
+                            -1,
+                            c.getContenido(),
+                            new UsuarioDt(c.getUsuario()),
+                            c.getFecha(),
+                            obtenerHijosDt(c)
+                        ));
+                    }
+                }
+                em.close();
+            } catch (Exception e) {
+                Throwable t = new Throwable();
+                StackTraceElement[] elements = t.getStackTrace();
+                String invocador = elements[1].getFileName();
+                exceptionAux(invocador, e);
+            }
+            return comentariosDt;
+        }
+        
+        protected List<ComentarioDt> obtenerHijosDt(Comentario c) {
+            List<ComentarioDt> hijosdt = new ArrayList<>();
+            if(c != null){
+                Collection<Comentario> hijos = c.getHijos();
+                Iterator<Comentario> it = hijos.iterator();
+                while(it.hasNext()) {
+                    Comentario hijo = it.next();
+                    hijosdt.add(new ComentarioDt(
+                        hijo.getId(),
+                        hijo.getPadre().getId(),
+                        hijo.getContenido(),
+                        new UsuarioDt(hijo.getUsuario()),
+                        hijo.getFecha(),
+                        obtenerHijosDt(hijo)
+                    ));
+                }
+            }
+            return hijosdt;
         }
 }
