@@ -56,7 +56,7 @@
             </script>
 
             <%
-                
+                        
                //ErrormodificarVideo seteado en null por las deudas
                 session.setAttribute("errormodificarVideo","");
              
@@ -76,7 +76,9 @@
                  String urlUp = vidx.getUrl();
                  String descripcionUp = vidx.getDescripcion();
                  String categoriaUp = vidx.getCategoria();
-                 Boolean visUp = vidx.getPrivacidad();
+                 boolean visUp = vidx.getPrivacidad();
+                 String visibility="AHRELOCO";
+                 
                 
                  float tiempo = vidx.getDuracion();
                  
@@ -148,19 +150,15 @@
                     durat = nuevominutosint+":"+nuevosegundosint;
                  }
                 
-                //visibilidad thangs
-                String nuevoVisibility="";
-                if(request.getAttribute("visibilidad")!=null){
-                  nuevoVisibility = (String)request.getAttribute("visibilidad");
-                }
                 
-                
-                if(nuevoVisibility.contains("privado")){
+                visibility = request.getParameter("visibilidad");
+                if(visibility.contains("privado")){
                  visUp=true;
                  }
-                 if (nuevoVisibility.contains("publico")){
+                 if (visibility.contains("publico")){
                  visUp=false;
-                 }
+                }
+                 
  
                  Boolean canalpriv = canalx.getPrivacidad();
                     if(canalpriv= true && !visUp) {
@@ -179,14 +177,12 @@
     </head>
     <body>
         <% 
-           /*out.print(tiempo);
-           out.print("</br>");
-           out.print(strarray[0].toString());
-           out.print("</br>");
-           out.print(strarray[1].toString());
-           */
             out.print(vidx.getPrivacidad());
-            out.print(request.getAttribute("visibilidad"));
+            out.print(request.getParameter("nombre"));
+            out.print(request.getParameter("visibilidad"));
+            out.print(visibility);
+            out.print(visUp);
+            
         %>
         <main class="login-form">
             <div class="cotainer">
@@ -200,125 +196,121 @@
                         <div class="card">
                             <div class="card-header">Modificar Video</div>
                             <div class="card-body">
-                                   <form action="" method="" >
-                                    <div class="form-group row">
-                                        <label for="nombre" class="col-md-4 col-form-label text-md-right">Nuevo Nombre:</label>
-                                        <div class="col-md-6">
-                                            <input type="text" id="nombre" class="form-control" name="nombre" required value="<%if(nombreUp!=null){out.print(nombreUp);} %>">
-                                        </div>
-                                    </div>
-                                        
-                                    <div class="form-group row">
-                                        <label for="minutos" class="col-md-4 col-form-label text-md-right">Nueva duración (minutos)</label>
-                                        <div class="col-md-6">
-                                            <input type="number" id="minutos" class="form-control" name="minutos" requiered min="0" max="59" required value="<%if(minutosint!=null){out.print(minutosint);} %>">
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="form-group row">
-                                        <label for="segundos" class="col-md-4 col-form-label text-md-right">Nueva duración (segundos)</label>
-                                        <div class="col-md-6">
-                                            <input type="number" id="segundos" class="form-control" name="segundos" requiered min="0" max="59"  required value="<%if(segundosint!=null){out.print(segundosint);} %>">
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="form-group row">
-                                        <label for="url" class="col-md-4 col-form-label text-md-right">Nuevo URL</label>
-                                        <div class="col-md-6">
-                                            <input type="text" id="url" class="form-control" name="url" required required value="<%if(urlUp!=null){out.print(urlUp);} %>">
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="form-group row">
-                                        <label for="desc" class="col-md-4 col-form-label text-md-right"> Nueva Descripción</label>
-                                        <div class="col-md-6">
-                                            <input type="text" id="desc" class="form-control" name="desc" required value="<%if(descripcionUp!=null){out.print(descripcionUp);} %>">
-                                        </div>
-                                    </div>
-                                    
-                                  
-                                    
-                                    <div class="form-group row">
-                                        <label for="fecha" class="col-md-4 col-form-label text-md-right">Nueva Fecha de subida</label>
-                                        <div class="col-md-6">
-                                      <div class="md-form">
-                                       <input type="text" id="datepicker" class="form-control" name="datepicker"  required value="<%if(fechasubidaog!=null){out.print(fechasubidaog);} %>">
-                                      </div>
-                                        </div>
-                                    </div>
-                                    
-                            
-                                        
-                                  <div class="form-group row">
-                                        <label for="Visibilidad" class="col-md-4 col-form-label text-md-right">Visibilidad</label>
-                                        <div class="col-md-6">
-                                            <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="visibilidad" value="privado" <%if(vidx.getPrivacidad()){out.print("checked");} %> >
-                                            <label class="form-check-label" for="visibilidad1">
-                                              Privado
-                                            </label>
-                                          </div>
-                                          <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="visibilidad" value="publico" <%if(!vidx.getPrivacidad()){out.print("checked");} %> >
-                                            <label class="form-check-label" for="visibilidad2">
-                                              Publico
-                                            </label>
-                                          </div>
-                                        </div>
-                                    </div>
-                                        
-                                        
-                                 <div class="form-group row">
-                                    <label for="exampleFormControlSelect1">Categoria del canal</label>
-                                    <select class="form-control" id="categoria" name="categoria">
-                                        <%
-  
-                                            List<CategoriaDt> catArray = cat.ListarCategorias();
-                                            
-                                        %>
-                                        
-                                        <%
-                                            for (CategoriaDt c : catArray) {
-                                        %>
-                                            <option value="<%out.print(c.getNombre());%>" <%if(vidx.getCategoria().equals(c.getNombre())){out.println("selected");}%>>
-                                          <%
-                                               out.println(c.getNombre());
-                                           %>
-                                           </option>
-                                      
-                                            <%
-                                                
-                                                }
-                                            
-                                            %>
-                                            
-                                    </select>
-                                  </div>
-                                        
-                                        
-
-                                    <div class="col-md-6 offset-md-4">
-                                        <button type="submit" class="btn btn-primary">
-                                            Modificar
-                                        </button>
- 
-                                    </div>
-                                  
-                                    <% if (session.getAttribute("errormodificarVideo")=="privacidad") { %>
-                                            <div class="alert alert-danger" role="alert">
-                                                No se puede tener un video público en un canal privado.
+                                   <form action="" method="post" >
+                                        <div class="form-group row">
+                                            <label for="nombre" class="col-md-4 col-form-label text-md-right">Nuevo Nombre:</label>
+                                            <div class="col-md-6">
+                                                <input type="text" id="nombre" class="form-control" name="nombre" required value="<%if(nombreUp!=null){out.print(nombreUp);} %>">
                                             </div>
-                                        <%}
-                                    %>
+                                        </div>
+                                        
+                                        <div class="form-group row">
+                                            <label for="minutos" class="col-md-4 col-form-label text-md-right">Nueva duración (minutos)</label>
+                                            <div class="col-md-6">
+                                                <input type="number" id="minutos" class="form-control" name="minutos" requiered min="0" max="59" required value="<%if(minutosint!=null){out.print(minutosint);} %>">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label for="segundos" class="col-md-4 col-form-label text-md-right">Nueva duración (segundos)</label>
+                                            <div class="col-md-6">
+                                                <input type="number" id="segundos" class="form-control" name="segundos" requiered min="0" max="59"  required value="<%if(segundosint!=null){out.print(segundosint);} %>">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label for="url" class="col-md-4 col-form-label text-md-right">Nuevo URL</label>
+                                            <div class="col-md-6">
+                                                <input type="text" id="url" class="form-control" name="url" required required value="<%if(urlUp!=null){out.print(urlUp);} %>">
+                                            </div>
+                                        </div>
+                                    
+                                        <div class="form-group row">
+                                            <label for="desc" class="col-md-4 col-form-label text-md-right"> Nueva Descripción</label>
+                                            <div class="col-md-6">
+                                                <input type="text" id="desc" class="form-control" name="desc" required value="<%if(descripcionUp!=null){out.print(descripcionUp);} %>">
+                                            </div>
+                                        </div>
+                                    
+                                  
+                                    
+                                        <div class="form-group row">
+                                            <label for="fecha" class="col-md-4 col-form-label text-md-right">Nueva Fecha de subida</label>
+                                            <div class="col-md-6">
+                                          <div class="md-form">
+                                           <input type="text" id="datepicker" class="form-control" name="datepicker"  required value="<%if(fechasubidaog!=null){out.print(fechasubidaog);} %>">
+                                          </div>
+                                            </div>
+                                        </div>
                                     
                             
+                                        
+                                    <div class="form-group row">
+                                          <label for="Visibilidad" class="col-md-4 col-form-label text-md-right">Visibilidad</label>
+                                          <div class="col-md-6">
+                                            <div class="form-check">
+                                              <input class="form-check-input" type="radio" name="visibilidad" value="privado"<%if(vidx.getPrivacidad()){out.print("checked");}%> >
+                                              <label class="form-check-label" for="visibilidad1">
+                                                Privado
+                                              </label>
+                                            </div>
+                                            <div class="form-check">
+                                              <input class="form-check-input" type="radio" name="visibilidad" value="publico"<%if(!vidx.getPrivacidad()){out.print("checked");}%> >
+                                              <label class="form-check-label" for="visibilidad2">
+                                                Publico
+                                              </label>
+                                            </div>
+                                          </div>
+                                      </div>
+                                        
+                                        
+                                        <div class="form-group row">
+                                           <label for="exampleFormControlSelect1">Categoria del canal</label>
+                                           <select class="form-control" id="categoria" name="categoria">
+                                               <%
+
+                                                   List<CategoriaDt> catArray = cat.ListarCategorias();
+
+                                               %>
+
+                                               <%
+                                                   for (CategoriaDt c : catArray) {
+                                               %>
+                                                   <option value="<%out.print(c.getNombre());%>" <%if(vidx.getCategoria().equals(c.getNombre())){out.println("selected");}%>>
+                                                 <%
+                                                      out.println(c.getNombre());
+                                                  %>
+                                                  </option>
+
+                                                   <%
+
+                                                       }
+
+                                                   %>
+
+                                           </select>
+                                         </div>
+                                                   
+                                        <div class="col-md-6 offset-md-4">
+                                            <button type="submit" class="btn btn-primary">
+                                                Modificar
+                                            </button>
+                                        </div>
+
+                                        <% if (session.getAttribute("errormodificarVideo")=="privacidad") { %>
+                                                <div class="alert alert-danger" role="alert">
+                                                    No se puede tener un video público en un canal privado.
+                                                </div>
+                                            <%}
+                                        %>
+                                    
+                            </form>  
                         </div>
-                      </form>
 
                     </div>
                 </div>
             </div>
-            
+            </div>
 
         </main>
     </body>

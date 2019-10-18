@@ -74,12 +74,12 @@
                 String nick = user.obtenerNickUsuario(_id);
        
                 //Setea sessions atributes para despues de el upload de img step 2
-               session.setAttribute("userx",nick);
+                session.setAttribute("userx",nick);
             
 
                   
-                    DateFormat fecha= new SimpleDateFormat("dd/MM/yyyy");
-                    String fechaNacimiento= fecha.format(userx.getFechanac());
+                DateFormat fecha= new SimpleDateFormat("dd/MM/yyyy");
+                String fechaNacimiento= fecha.format(userx.getFechanac());
                      
                 
             %>
