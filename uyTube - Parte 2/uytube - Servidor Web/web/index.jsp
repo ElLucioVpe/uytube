@@ -60,7 +60,7 @@
                                     if(videos[i].thumbnail !== "") {
                                         html += '<th><img src="'+videos[i].thumbnail+'" alt="Thumbnail"></th>';
                                     } else {
-                                        html += '<th><img src="img/no-thumbnail.jpg" alt="Thumbnail"></th>';
+                                        html += '<th><img src="img/no-thumbnail.jpg" width=120 height=90 alt="Thumbnail"></th>';
                                     }
                                     html += '<td  scope="row"><a href="video.jsp?id='+ videos[i].id +'">'+videos[i].nombre+'</a></td>';
                                     html += '<td>'+videos[i].descripcion+'</td>';
