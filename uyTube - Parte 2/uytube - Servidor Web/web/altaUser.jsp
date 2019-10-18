@@ -17,7 +17,7 @@
 <%@page import="java.nio.file.Paths"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html"%>
 <%@page import = "logica.controladores.Fabrica" %>
 <%@page import = "logica.controladores.IControladorUsuario"%>
 
@@ -33,6 +33,10 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
+        
+        <%@include file="include/header.jsp" %>
+        
+        
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
         <script src="js/bootstrap.min.js"></script>
         <script src="js/jquery.min.js"></script>
@@ -47,47 +51,9 @@
                  $( "#datepicker" ).datepicker();
                 } );
             </script>
-            
-            <%
-                
-                //Testing weas
-                /*
-                Fabrica f = Fabrica.getInstance();
-                IControladorUsuario user = f.getIControladorUsuario();
-              
-                     SimpleDateFormat sdf= new SimpleDateFormat("dd/MM/yyyy");
-                     java.util.Date fechaNacimiento = sdf.parse("11/11/1999"); 
-                     
-                user.AltaUsuario("asd", "123", "123","123", "123@123.com", fechaNacimiento, "Richard.jpg");
-                
-                int IdUsuarioCreate = user.obtenerIdUsuario("asd");
-                */   
-                     
-                //user.AltaCanal("asd", true, IdUsuarioCreate, "");
-                     
-                     
-                
-                
-                 if (request.getParameter("user") != null) {
-                    if (request.getParameter("file") != null) {
-                        
-               //session.setAttribute("myname","TULIOs");  
-               //session.setAttribute("myname",request.getParameter("name")); 
-               //session.setAttribute("file",request.getParameter("file")); 
-                //request.setAttribute("myname",login);
-                //equest.getRequestDispatcher("altaFileImage.jsp").forward(request, response);
-                //String redirectURL = "altaFileImage.jsp";
-                //response.sendRedirect(redirectURL);                
-                 }
-                
-                }
-                
-            %>
         <title>Crear usuario</title>
     </head>
     <body>
-        <%@include file="include/header.jsp" %>
-        <main class="login-form">
             <div class="cotainer">
                 <div class="row justify-content-center">
                     <div class="col-md-8">
@@ -110,14 +76,14 @@
                                     </div>
 
                                     <div class="form-group row">
-                                        <label for="password" class="col-md-4 col-form-label text-md-right">ContraseÃ±a</label>
+                                        <label for="password" class="col-md-4 col-form-label text-md-right">Contraseña</label>
                                         <div class="col-md-6">
                                             <input type="password" id="password" class="form-control" name="password" required>
                                         </div>
                                     </div>
                                     
                                       <div class="form-group row">
-                                        <label for="password" class="col-md-4 col-form-label text-md-right">Confirmacion de ContraseÃ±a</label>
+                                        <label for="password" class="col-md-4 col-form-label text-md-right">Confirmacion de Contraseña</label>
                                         <div class="col-md-6">
                                             <input type="password" id="password2" class="form-control" name="password2" required>
                                         </div>
@@ -158,10 +124,19 @@
                                     <div class="card-body">
                                         <div class="card-body">Canal</div>
                                         
+                                        
+                                    <div class="form-group row">
+                                        <label for="apellido" class="col-md-4 col-form-label text-md-right">Nombre del canal</label>
+                                        <div class="col-md-6">
+                                            <input type="text" id="canalNombre" class="form-control" name="canalNombre">
+                                        </div>
+                                    </div>
+                                        
+                                        
                                     <div class="form-group row">
                                         <label for="desc" class="col-md-4 col-form-label text-md-right">Descripcion</label>
                                         <div class="col-md-6">
-                                            <textarea class="form-control" id="desc" name="desc" rows="3" placeholder="Descripcion del canal" required></textarea>
+                                            <textarea class="form-control" id="desc" name="desc" rows="3" placeholder="Descripcion del canal"></textarea>
                                         </div>
                                     </div>
                                         
@@ -257,7 +232,6 @@
                 </div>
             </div>
             </div>
-
         </main>
         <%@include file="include/footer.jsp" %>
     </body>

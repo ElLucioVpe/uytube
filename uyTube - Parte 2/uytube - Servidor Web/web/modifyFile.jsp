@@ -26,6 +26,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+         <%@include file="include/header.jsp" %>
         <title>JSP Page</title>
 
         <%
@@ -34,18 +35,16 @@
    int maxMemSize = 5000 * 1024;
    
    
-    //User sets
+                 //User sets
                  String userUp = (String)session.getAttribute("userx");
                  String pswdUp = (String)session.getAttribute("pswdx");
                  String nameUp = (String)session.getAttribute("namex");
                  String apellidoUp = (String)session.getAttribute("apellidox");
                  String mailUp = (String)session.getAttribute("mailx");
                  String fechaUp = (String)session.getAttribute("fechax");
-                // Date FechaReal =(Date)session.getAttribute("fechax");
             
                  //Si viene directo de la bsd y no toco el datepicker puede estar en formato  - - - y si toco el datepicker / / /
                  //Entonces
-                
                  java.util.Date fechaNacimiento = null;
                  if(fechaUp.contains("-")){
                     fechaUp=fechaUp.replace("-", "/");
@@ -59,6 +58,7 @@
                  
                  
                  //Canal sets
+                 String canalUp = (String)session.getAttribute("canalx");
                  String descUp = (String)session.getAttribute("descx");
                  String visibility = (String)session.getAttribute("visx");
                  String catUp = (String)session.getAttribute("catx");
@@ -96,19 +96,12 @@
           
          out.println("<html>");
          out.println("<head>");
-         out.println("<title>JSP File upload</title>");  
+         out.println("<title>Modificar Usuario Finalizado</title>");  
          out.println("</head>");
          out.println("<body>");
          out.println("</br>");
           
-         out.println(fechaUp);
-         out.println("</br>");
-         out.println(fechaNacimiento);
-         out.println("</br>");
-         //out.println(FechaReal);
          
-         
-         //if(upload.par)
          // Parse the request to get file items.
          List fileItems = upload.parseRequest(request);
 
@@ -121,7 +114,7 @@
         
          if(fP.getName().isEmpty()){
              
-         out.println("No Image");
+         //out.println("No Image");
      
          }else{
          
@@ -146,12 +139,11 @@
                   fileName.substring(fileName.lastIndexOf("\\")+1)) ;
                }
                fi.write( file ) ;
-               out.println("Uploaded Filename: " + filePath + 
-               fileName + "<br>");
+               //out.println("Uploaded Filename: " + filePath + fileName + "<br>");
             }
          }
          
-         }
+        }
          
                
                 
@@ -166,17 +158,13 @@
                  //Alta User
                     Fabrica f = Fabrica.getInstance();
                     IControladorUsuario user = f.getIControladorUsuario();
-              
-              
-                  
-                         
-                     user.ModificarUsuario(_id,pswdUp, nameUp, apellidoUp, fechaNacimiento, catUp, descUp, visUp);
-                     
-                
+    
+                    user.ModificarUsuario(_id,pswdUp, nameUp, apellidoUp, fechaNacimiento,canalUp, catUp, descUp, visUp);                
                  
            
          
          
+         /*
          out.println(userUp);
          out.println(pswdUp);
          out.println(nameUp); 
@@ -189,8 +177,8 @@
          
          out.println(catUp);
          out.println(descUp);
-         
-         
+         */
+         out.println("Usuario modificado con exito!");
          out.println("</body>");
          out.println("</html>");
       } catch(Exception ex) {
@@ -210,9 +198,6 @@
 
             
     </head>
-    <body>
-        
-        User Modificado!
-                            
+    <body>                  
     </body>
 </html>

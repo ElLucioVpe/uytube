@@ -126,7 +126,7 @@ public class ControladorUsuario implements IControladorUsuario {
     }
 
     @Override
-    public void ModificarUsuario(int id, String nuevopass, String nuevonom, String nuevoapell, Date nuevafechaNac, String nuevonomC, String nuevadesC, boolean nuevaprivC){
+    public void ModificarUsuario(int id, String nuevopass, String nuevonom, String nuevoapell, Date nuevafechaNac, String nuevonomC, String nuevacatC, String nuevadesC, boolean nuevaprivC){
         //en su respectivo frame deberan antes ser utilizados
         //ListarUsuarios() y ConsultarUsuario(id)
         //los atributos que no se deseen modificar llegaran en blanco o null
@@ -144,6 +144,10 @@ public class ControladorUsuario implements IControladorUsuario {
             Canal c = em.find(Canal.class, u.getId()); //Por las dudas lo busco con find
             if(!nuevonomC.isBlank()) c.setNombre(nuevonomC);
             if(!nuevadesC.isBlank()) c.setDescripcion(nuevadesC);
+            if(!nuevacatC.isBlank()){
+                Categoria cat = em.find(Categoria.class, nuevacatC);
+                c.setCategoria(cat);
+            }
             c.setPrivacidad(nuevaprivC); //al no poder comparar a null si no hay nueva damos la misma
 
             em.merge(c);

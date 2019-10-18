@@ -25,6 +25,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+         <%@include file="include/header.jsp" %>
         <title>JSP Page</title>
 
         <%
@@ -63,7 +64,7 @@
           
          out.println("<html>");
          out.println("<head>");
-         out.println("<title>JSP File upload</title>");  
+         out.println("<title>Alta User Finalizado</title>");  
          out.println("</head>");
          out.println("<body>");
          out.println("</br>");
@@ -82,7 +83,7 @@
         
          if(fP.getName().isEmpty()){
              
-         out.println("No Image");
+         //out.println("No Image");
      
          }else{
          while ( i.hasNext () ) {
@@ -105,8 +106,7 @@
                   fileName.substring(fileName.lastIndexOf("\\")+1)) ;
                }
                fi.write( file ) ;
-               out.println("Uploaded Filename: " + filePath + 
-               fileName + "<br>");
+               //out.println("Uploaded Filename: " + filePath + fileName + "<br>");
             }
          }
          
@@ -124,6 +124,7 @@
                  
                  
                  //Canal sets
+                 String canalUp = (String)session.getAttribute("canalx");
                  String descUp = (String)session.getAttribute("descx");
                  String visibility = (String)session.getAttribute("visx");
                  String catUp = (String)session.getAttribute("catx");
@@ -156,13 +157,15 @@
                     IdUsuarioCreate = user.obtenerIdUsuario(userUp);
                      
                      if(IdUsuarioCreate!=-1){
-                        user.AltaCanal(userUp, visUp, catUp, IdUsuarioCreate, descUp);
+                        user.AltaCanal(canalUp, visUp, catUp, IdUsuarioCreate, descUp);
                      }
                  
            
          
+         /*
          out.println(userUp); 
-         out.println(pswdUp); 
+         out.println(pswdUp);
+         out.println(canalUp);
          out.println(nameUp); 
          out.println(apellidoUp); 
          out.println(mailUp); 
@@ -176,8 +179,9 @@
          
          out.println(catUp);
          out.println(descUp);
+        */
         
-         
+         out.println("User creado con exito!");
          out.println("</body>");
          out.println("</html>");
       } catch(Exception ex) {
@@ -186,10 +190,10 @@
    } else {
       out.println("<html>");
       out.println("<head>");
-      out.println("<title>Servlet upload</title>");  
+      out.println("<title>Alta User Error</title>");  
       out.println("</head>");
       out.println("<body>");
-      out.println("<p>No file uploaded</p>"); 
+      out.println("<p>Problema en el alta</p>"); 
       out.println("</body>");
       out.println("</html>");
    }
@@ -199,9 +203,5 @@
     </head>
     <body>
         
-        User Creado!
-        
-       
-                                    
     </body>
 </html>
