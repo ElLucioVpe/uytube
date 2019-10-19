@@ -126,7 +126,7 @@ public class ControladorUsuario implements IControladorUsuario {
     }
 
     @Override
-    public void ModificarUsuario(int id, String nuevonom, String nuevoapell, Date nuevafechaNac, String nuevonomC, String nuevadesC, boolean nuevaprivC){
+    public void ModificarUsuario(int id, String nuevopass, String nuevonom, String nuevoapell, Date nuevafechaNac, String nuevonomC, String nuevacatC, String nuevadesC, boolean nuevaprivC){
         //en su respectivo frame deberan antes ser utilizados
         //ListarUsuarios() y ConsultarUsuario(id)
         //los atributos que no se deseen modificar llegaran en blanco o null
@@ -138,11 +138,16 @@ public class ControladorUsuario implements IControladorUsuario {
             Usuario u = em.find(Usuario.class, id);
             if(!nuevonom.isBlank()) u.setNombre(nuevonom);
             if(!nuevoapell.isBlank()) u.setApellido(nuevoapell);
+            if(!nuevopass.isBlank()) u.setPassword(nuevopass);
             if(nuevafechaNac != null) u.setFechanac(nuevafechaNac);
 
             Canal c = em.find(Canal.class, u.getId()); //Por las dudas lo busco con find
             if(!nuevonomC.isBlank()) c.setNombre(nuevonomC);
             if(!nuevadesC.isBlank()) c.setDescripcion(nuevadesC);
+            if(!nuevacatC.isBlank()){
+                Categoria cat = em.find(Categoria.class, nuevacatC);
+                c.setCategoria(cat);
+            }
             c.setPrivacidad(nuevaprivC); //al no poder comparar a null si no hay nueva damos la misma
 
             em.merge(c);
@@ -192,7 +197,7 @@ public class ControladorUsuario implements IControladorUsuario {
 
     @Override
     public List<UsuarioDt> ListarUsuarios(){
-        List<UsuarioDt> list = new ArrayList<UsuarioDt>();
+        List<UsuarioDt> list = new ArrayList<>();
         try {
 
             //probablemente devuelve una lista de los nicks de los usuarios existentes
@@ -532,6 +537,32 @@ public class ControladorUsuario implements IControladorUsuario {
             exceptionAux(invocador, e);
         }
         return id;
+    }
+    
+    @Override
+    public int obtenerIdUsuarioMail(String mail){
+    int id = -1;
+    
+    try {
+            EntityManager em = emFactory.createEntityManager();
+            em.getTransaction().begin();
+            
+            TypedQuery<Usuario> q = em.createNamedQuery("Usuario.findByMail", Usuario.class).setParameter("mail", mail);
+            //if (q.getResultList().isEmpty()) throw new Exception("El usuario no existe");
+            if (!q.getResultList().isEmpty()){ 
+                Usuario u = q.getSingleResult();
+                id = u.getId();
+            }
+            em.getTransaction().commit();
+            em.close();
+        } catch (Exception e) {
+            Throwable t = new Throwable();
+            StackTraceElement[] elements = t.getStackTrace();
+            String invocador = elements[1].getFileName();
+            exceptionAux(invocador, e);
+        }
+    
+    return id;
     }
 
     @Override
@@ -955,7 +986,12 @@ public class ControladorUsuario implements IControladorUsuario {
                     if(aux.getFechaPublicacion().after(ultima)) ultima = aux.getFechaPublicacion();
                 }
                 retorno = ultima;
-            }catch(Exception e){}
+            }catch(Exception e){
+                Throwable t = new Throwable();
+                StackTraceElement[] elements = t.getStackTrace();
+                String invocador = elements[1].getFileName();
+                exceptionAux(invocador, e);
+            }
         }
         return retorno;
     }

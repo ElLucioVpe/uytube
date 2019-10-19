@@ -14,7 +14,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.TypedQuery;
 import javax.swing.JOptionPane;
 import logica.Categoria;
 import logica.ListaDeReproduccion;
@@ -82,7 +81,7 @@ public class ControladorCategoria implements IControladorCategoria {
     
      @Override
      public List<CategoriaDt> ListarCategorias(){
-         List<CategoriaDt> list = new ArrayList<CategoriaDt>();
+         List<CategoriaDt> list = new ArrayList<>();
         try {
           
             EntityManager em = emFactory.createEntityManager();
@@ -258,7 +257,12 @@ public class ControladorCategoria implements IControladorCategoria {
                     if(aux.getFechaPublicacion().after(ultima)) ultima = aux.getFechaPublicacion();
                 }
                 retorno = ultima;
-            }catch(Exception e){}
+            }catch(Exception e){
+                Throwable t = new Throwable();
+                StackTraceElement[] elements = t.getStackTrace();
+                String invocador = elements[1].getFileName();
+                exceptionAux(invocador, e);
+            }
         }
         return retorno;
     }

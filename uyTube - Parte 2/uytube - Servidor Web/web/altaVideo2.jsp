@@ -1,8 +1,9 @@
 <%-- 
-    Document   : altaVideo
-    Created on : 1 Oct 2019, 21:08:45
+    Document   : altaVideo2
+    Created on : 18 Oct 2019, 12:35:23
     Author     : Xavel
 --%>
+
 <%@page import="java.util.List"%>
 <%@page import="logica.dt.CategoriaDt"%>
 <%@page import="javax.servlet.annotation.MultipartConfig"%>
@@ -33,58 +34,70 @@
         <link rel="stylesheet" href="/resources/demos/style.css">
         <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  <script>
+        <script>
   $( function() {
     $( "#datepicker" ).datepicker();
   } );
   </script>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Alta Video</title>
-        <%
+         <%
+             
+             
                 Fabrica f = Fabrica.getInstance();
                 IControladorVideo vid = f.getIControladorVideo();
                 IControladorUsuario usu = f.getIControladorUsuario();
                 IControladorCategoria cat = f.getIControladorCategoria();
                 
+                
+                //se fija si el user esta logged
+                int _id=0;
+                if(session.getAttribute("userid")==null){
+                    _id = -1; 
+                }else{
+                    _id = (int)session.getAttribute("userid");
+                }
+               
+                //redirect a no loggeds
+                if(_id==-1){
+                String redirectURL = "login.jsp";
+                //evitar intento de doble redirect
+                    if (!response.isCommitted()){
+                    response.sendRedirect(redirectURL); 
+                    }
+                }
+               
+                if((request.getParameter("video")!= null)&&(request.getParameter("url")!= null)&&(request.getParameter("desc")!= null)&&(request.getParameter("categoria")!= null)&&(request.getParameter("segundos")!= null)&&(request.getParameter("minutos")!= null))
+                {
                 String nombre = request.getParameter("video");
                 String url = request.getParameter("url");
                 String descr = request.getParameter("desc");
                 String categoria = request.getParameter("categoria");
                 
-                
-                int idUser = -1;
-                //se fija si el user existe
-                idUser = usu.obtenerIdUsuario(request.getParameter("nombreusu"));
-                
-                if(idUser==-1){
-                session.setAttribute("errorAltaVideo","nombreusu");
-             
-                }
-              
                 //Crea la variable de la duracion
                 String durat;
-                int segundosint = Integer.getInteger(request.getParameter("segundos")).intValue();
-                int minutosint = Integer.getInteger(request.getParameter("minutos")).intValue();
+                int segundosint = Integer.parseInt(request.getParameter("segundos"));	
+                int minutosint = Integer.parseInt(request.getParameter("minutos"));	
                 
                 if(segundosint<10){
-                durat = minutosint+":0"+segundosint;
+                durat = minutosint+".0"+segundosint;
                      }else{
-                    durat = minutosint+":"+segundosint;
+                    durat = minutosint+"."+segundosint;
                  }
-    
-
-                //se fija si la categoria existe
-               if(request.getParameter("categoria")!=null){
-                CategoriaDt dtca = new CategoriaDt();
-                
-                
-                
-                vid.AltaVideo(nombre, durat, url, descr, idUser, categoria);
+                    vid.AltaVideo(nombre, durat, url, descr, _id, categoria);
+                }
                     
+    
+             
+           
+                
             
+             
             %>
     </head>
     <body>
-        <main class="altaVideo-form">
+        
+      <main class="altaVideo-form">
             <div class="row justify-content-center">
 		<div class="col-md-12">
                     <h1>uyTube</h1>
@@ -134,19 +147,13 @@
                                     </div>
                                     
                                     
-                                    <div class="form-group row">
-                                        <label for="nombreusu" class="col-md-4 col-form-label text-md-right">Nombre Usuario</label>
-                                        <div class="col-md-6">
-                                            <input type="text" id="nombreusu" class="form-control" name="nombreusu" required>
-                                        </div>
-                                    </div>
+                              
                                     
                                     <div class="form-group row">
-                                    <label for="exampleFormControlSelect1">Categoría del video</label>
+                                    <label for="exampleFormControlSelect1">Categoria del video</label>
                                     <select class="form-control" id="categoria" name="categoria">
                                         <%
-                                          
-                                           
+                                       
                                             List<CategoriaDt> catArray = cat.ListarCategorias();
                                             
                                         %>
@@ -154,10 +161,10 @@
                                         <%
                                             for (CategoriaDt c : catArray) {
                                         %>
-                                            <option value="<% out.print(c.getNombre()); %>"
+                                            <option value="<%out.print(c.getNombre());%>">
                                           <%
-                                               out.println(c.getNombre());
-                                           %>
+                                               out.print(c.getNombre());
+                                          %>
                                            </option>
                                       
                                             <%
@@ -168,6 +175,8 @@
                                             
                                     </select>
                                   </div>
+                                        
+                                        
                                     
                                     
 				
@@ -189,9 +198,10 @@
                </div>
 	</div>
 </div>
+                                
+                                    
        			</form>
 
     </body>
     
-</html>
-
+</html>   

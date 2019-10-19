@@ -20,7 +20,7 @@ public interface IControladorUsuario {
 
     public abstract void AltaUsuario(String nick, String pass, String nom, String apell, String mail, Date fnac, String img);
     public abstract void AltaCanal(String nombre, boolean privado, String categoria, int user_id, String descripcion);
-    public abstract void ModificarUsuario(int id, String nuevonom, String nuevoapell, Date nuevafechaNac, String nuevonomC, String nuevadesC, boolean nuevaprivC);
+    public abstract void ModificarUsuario(int id, String nuevopass, String nuevonom, String nuevoapell, Date nuevafechaNac, String nuevonomC, String nuevacatC, String nuevadesC, boolean nuevaprivC);
     public abstract List<UsuarioDt> ListarUsuarios();
     public abstract UsuarioDt ConsultarUsuario(int id);
 
@@ -39,6 +39,7 @@ public interface IControladorUsuario {
     public abstract List<VideoDt> listarVideosDeUsuario(String usernick);
     //Auxiliares
     public abstract int obtenerIdUsuario(String nick);
+    public abstract int obtenerIdUsuarioMail(String mail);
     public abstract String obtenerNickUsuario(int id);
     public abstract void EliminarUsuario(int id);
     public abstract List obtenerCategorias();

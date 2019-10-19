@@ -2,3 +2,11 @@
     background-color: black;
     text-align: center;
 }
+
+.navbar {
+    margin-bottom: 0 !important;
+}
+
+img#user-pic {
+    border-radius: 100%;
+}

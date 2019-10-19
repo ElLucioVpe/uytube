@@ -1,9 +1,10 @@
 <%-- 
-    Document   : uploadFile
+    Document   : ModifyFile
     Created on : Oct 4, 2019, 1:56:31 AM
     Author     : pagol
 --%>
 
+<%@page import="logica.dt.UsuarioDt"%>
 <%@page import="java.lang.System.Logger.Level"%>
 <%@page import="org.jboss.logging.Logger"%>
 <%@page import="java.text.ParseException"%>
@@ -32,6 +33,37 @@
    File file ;
    int maxFileSize = 5000 * 1024;
    int maxMemSize = 5000 * 1024;
+   
+   
+                 //User sets
+                 String userUp = (String)session.getAttribute("userx");
+                 String pswdUp = (String)session.getAttribute("pswdx");
+                 String nameUp = (String)session.getAttribute("namex");
+                 String apellidoUp = (String)session.getAttribute("apellidox");
+                 String mailUp = (String)session.getAttribute("mailx");
+                 String fechaUp = (String)session.getAttribute("fechax");
+            
+                 //Si viene directo de la bsd y no toco el datepicker puede estar en formato  - - - y si toco el datepicker / / /
+                 //Entonces
+                 java.util.Date fechaNacimiento = null;
+                 if(fechaUp.contains("-")){
+                    fechaUp=fechaUp.replace("-", "/");
+                 
+                 }  
+                 
+                 SimpleDateFormat sdf= new SimpleDateFormat("dd/MM/yyyy");
+                 fechaNacimiento = sdf.parse(fechaUp);
+                 
+                 int _id = (Integer)session.getAttribute("userid");
+                 
+                 
+                 //Canal sets
+                 String canalUp = (String)session.getAttribute("canalx");
+                 String descUp = (String)session.getAttribute("descx");
+                 String visibility = (String)session.getAttribute("visx");
+                 String catUp = (String)session.getAttribute("catx");
+                 Boolean visUp = true;
+                 
    
    //Relative Path
    ServletContext context = pageContext.getServletContext();
@@ -64,11 +96,11 @@
           
          out.println("<html>");
          out.println("<head>");
-         out.println("<title>Alta User Finalizado</title>");  
+         out.println("<title>Modificar Usuario Finalizado</title>");  
          out.println("</head>");
          out.println("<body>");
          out.println("</br>");
-         
+          
          
          // Parse the request to get file items.
          List fileItems = upload.parseRequest(request);
@@ -79,20 +111,21 @@
          
          FileItem fP = (FileItem)iP.next();
          
-         String fileName=null;
         
          if(fP.getName().isEmpty()){
              
          //out.println("No Image");
      
          }else{
+         
+         String fileName="";
+         fileName = (String)session.getAttribute("userx")+".jpg";
          while ( i.hasNext () ) {
+             
             FileItem fi = (FileItem)i.next();
             if ( !fi.isFormField () ) {
                // Get the uploaded file parameters
                String fieldName = fi.getFieldName();
-               //String fileName = fi.getName();
-               fileName = (String)session.getAttribute("userx")+".jpg";
                //String fileName = username;
                boolean isInMemory = fi.isInMemory();
                long sizeInBytes = fi.getSize();
@@ -110,25 +143,10 @@
             }
          }
          
-         }
+        }
          
-                 
-                 //User sets
-                 String userUp = (String)session.getAttribute("userx");
-                 String pswdUp = (String)session.getAttribute("pswdx");
-                 String nameUp = (String)session.getAttribute("namex");
-                 String apellidoUp = (String)session.getAttribute("apellidox");
-                 String mailUp = (String)session.getAttribute("mailx");
-                 String fechaUp = (String)session.getAttribute("fechax");
-                 int IdUsuarioCreate = -1;
-                 
-                 
-                 //Canal sets
-                 String canalUp = (String)session.getAttribute("canalx");
-                 String descUp = (String)session.getAttribute("descx");
-                 String visibility = (String)session.getAttribute("visx");
-                 String catUp = (String)session.getAttribute("catx");
-                 Boolean visUp = true;
+               
+                
                  
                  if(visibility.contains("privado")){
                  visUp=true;
@@ -136,42 +154,22 @@
                  if (visibility.contains("publico")){
                  visUp=false;
                  }
-                 
-                 
-                 
+
                  //Alta User
                     Fabrica f = Fabrica.getInstance();
                     IControladorUsuario user = f.getIControladorUsuario();
-              
-              
-                    SimpleDateFormat sdf= new SimpleDateFormat("dd/MM/yyyy");
-                    java.util.Date fechaNacimiento = sdf.parse(fechaUp); 
-                    
-                    if(fileName!=null){
-                    user.AltaUsuario(userUp, pswdUp, nameUp,apellidoUp, mailUp, fechaNacimiento, fileName);
-                    }else{
-                    user.AltaUsuario(userUp, pswdUp, nameUp,apellidoUp, mailUp, fechaNacimiento, "");
-
-                    }
-                    
-                    IdUsuarioCreate = user.obtenerIdUsuario(userUp);
-                     
-                     if(IdUsuarioCreate!=-1){
-                        user.AltaCanal(canalUp, visUp, catUp, IdUsuarioCreate, descUp);
-                     }
+    
+                    user.ModificarUsuario(_id,pswdUp, nameUp, apellidoUp, fechaNacimiento,canalUp, catUp, descUp, visUp);                
                  
            
          
+         
          /*
-         out.println(userUp); 
+         out.println(userUp);
          out.println(pswdUp);
-         out.println(canalUp);
          out.println(nameUp); 
          out.println(apellidoUp); 
          out.println(mailUp); 
-         out.println(fechaNacimiento.toString()); 
-         out.println(fileName); 
-         out.println(IdUsuarioCreate); 
          
          out.println(visUp);
          out.println(visibility);
@@ -179,9 +177,8 @@
          
          out.println(catUp);
          out.println(descUp);
-        */
-        
-         out.println("User creado con exito!");
+         */
+         out.println("Usuario modificado con exito!");
          out.println("</body>");
          out.println("</html>");
       } catch(Exception ex) {
@@ -190,10 +187,10 @@
    } else {
       out.println("<html>");
       out.println("<head>");
-      out.println("<title>Alta User Error</title>");  
+      out.println("<title>Servlet upload</title>");  
       out.println("</head>");
       out.println("<body>");
-      out.println("<p>Problema en el alta</p>"); 
+      out.println("<p>No file uploaded</p>"); 
       out.println("</body>");
       out.println("</html>");
    }
@@ -201,7 +198,6 @@
 
             
     </head>
-    <body>
-        
+    <body>                  
     </body>
 </html>

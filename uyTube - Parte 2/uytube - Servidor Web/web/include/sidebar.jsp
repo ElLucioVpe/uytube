@@ -21,7 +21,12 @@
 
                 <ul class="list-unstyled components">
                     <ul>
-                      <li><a href="http://localhost:8080/WebApplication/consultarUser.jsp"><i class="fa fa-user"></i> Mi Canal</a></li>
+                      <% if(session.getAttribute("userid") != null) {%>
+                      <li><a href="http://localhost:8080/WebApplication/consultarUser.jsp?id=<%=session.getAttribute("userid")%>"><i class="fa fa-user"></i> Mi Canal</a></li>
+                      <li><a href="http://localhost:8080/WebApplication/modificarUser.jsp"><i class="fas fa-edit"></i> Editar Perfil</a></li>
+                      <%} else {%>
+                      <li><a href="http://localhost:8080/WebApplication/login.jsp"><i class="fa fa-user"></i> Mi Canal</a></li>
+                      <%}%>
                     </ul>
                     <ul id="videos">
                       <li class="title">VIDEOS</li>
@@ -75,7 +80,7 @@
                                 if(listas[i].nombre === "Ver mas tarde" || listas[i].nombre === "Ver más tarde") icono = "fas fa-redo-alt";
                                 if(listas[i].nombre === "Favoritos") icono = "fas fa-redo-alt";
 
-                                html += '<li><a href="http://localhost:8080/WebApplication/consultarLista.jsp?user_id='+listas[i].user_id+'&nom='+listas[i].nombre+'"><i class="'+icono+'"></i> '+listas[i].nombre+'</a></li>';
+                                html += '<li><a href="http://localhost:8080/WebApplication/consultarListaDR.jsp?user_id='+listas[i].user_id+'&nom='+listas[i].nombre+'"><i class="'+icono+'"></i> '+listas[i].nombre+'</a></li>';
                             }
                             lists.innerHTML += html;
                         },
