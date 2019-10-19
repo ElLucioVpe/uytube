@@ -80,7 +80,8 @@
                   
                 DateFormat fecha= new SimpleDateFormat("dd/MM/yyyy");
                 String fechaNacimiento= fecha.format(userx.getFechanac());
-                     
+                UsuarioDt imm = user.ConsultarUsuario(_id);
+                
                 
             %>
             
@@ -90,6 +91,7 @@
             
     </head>
     <body>
+        <%out.print(imm.getImagen());%>
         <main class="login-form">
             <div class="cotainer">
                 <div class="row justify-content-center">

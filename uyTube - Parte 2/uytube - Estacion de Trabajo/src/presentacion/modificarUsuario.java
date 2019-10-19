@@ -299,6 +299,7 @@ public class modificarUsuario extends javax.swing.JInternalFrame {
             File f = fc.getSelectedFile();
             String fpath = "";
             String fnewpath = "";
+            String imagen = "";
             if(f != null){
                 fpath = f.getPath();
                 String extension = "";
@@ -308,7 +309,7 @@ public class modificarUsuario extends javax.swing.JInternalFrame {
                 if (!extension.equals("jpg") && !extension.equals("png"))
                     throw new Exception(extension+" Imagen con extension invalida, por favor suba una imagen .jpg o .png");
 
-                String imagen = u_nick + "." + extension;
+                imagen = u_nick + "." + extension;
                 fnewpath = "data/imagenes/" + imagen;
             }
             
@@ -325,7 +326,8 @@ public class modificarUsuario extends javax.swing.JInternalFrame {
                     nombreCanalField.getText(),
                     jComboBox1.getSelectedItem().toString(),
                     descCanalField.getText(),
-                    privado
+                    privado,
+                    imagen
             );
             
             //Copio el archivo al directorio de imagenes, lo hago luego por si el nick ya existe

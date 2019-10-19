@@ -111,14 +111,15 @@
          
          FileItem fP = (FileItem)iP.next();
          
-        
+         String fileName=null;
+         
          if(fP.getName().isEmpty()){
              
          //out.println("No Image");
      
          }else{
          
-         String fileName="";
+         //fileName="";
          fileName = (String)session.getAttribute("userx")+".jpg";
          while ( i.hasNext () ) {
              
@@ -159,12 +160,12 @@
                     Fabrica f = Fabrica.getInstance();
                     IControladorUsuario user = f.getIControladorUsuario();
     
-                    user.ModificarUsuario(_id,pswdUp, nameUp, apellidoUp, fechaNacimiento,canalUp, catUp, descUp, visUp);                
+                    user.ModificarUsuario(_id,pswdUp, nameUp, apellidoUp, fechaNacimiento,canalUp, catUp, descUp, visUp,fileName);                
                  
            
          
          
-         /*
+         
          out.println(userUp);
          out.println(pswdUp);
          out.println(nameUp); 
@@ -177,7 +178,7 @@
          
          out.println(catUp);
          out.println(descUp);
-         */
+         
          out.println("Usuario modificado con exito!");
          out.println("</body>");
          out.println("</html>");

@@ -61,7 +61,7 @@ public class ControladorUsuario implements IControladorUsuario {
                 throw new Exception("El mail no es valido");
             
             Usuario u = new Usuario(nick, pass, nom, apell, mail, fnac);
-            if(!img.isEmpty()) u.setImagen(img);
+            if(!img.isBlank()) u.setImagen(img);
 
             em.persist(u);
             em.getTransaction().commit();
@@ -126,7 +126,7 @@ public class ControladorUsuario implements IControladorUsuario {
     }
 
     @Override
-    public void ModificarUsuario(int id, String nuevopass, String nuevonom, String nuevoapell, Date nuevafechaNac, String nuevonomC, String nuevacatC, String nuevadesC, boolean nuevaprivC){
+    public void ModificarUsuario(int id, String nuevopass, String nuevonom, String nuevoapell, Date nuevafechaNac, String nuevonomC, String nuevacatC, String nuevadesC, boolean nuevaprivC, String nuevaImg){
         //en su respectivo frame deberan antes ser utilizados
         //ListarUsuarios() y ConsultarUsuario(id)
         //los atributos que no se deseen modificar llegaran en blanco o null
@@ -140,6 +140,7 @@ public class ControladorUsuario implements IControladorUsuario {
             if(!nuevoapell.isBlank()) u.setApellido(nuevoapell);
             if(!nuevopass.isBlank()) u.setPassword(nuevopass);
             if(nuevafechaNac != null) u.setFechanac(nuevafechaNac);
+            if(!nuevaImg.isBlank()) u.setImagen(nuevaImg);
 
             Canal c = em.find(Canal.class, u.getId()); //Por las dudas lo busco con find
             if(!nuevonomC.isBlank()) c.setNombre(nuevonomC);
@@ -148,6 +149,7 @@ public class ControladorUsuario implements IControladorUsuario {
                 Categoria cat = em.find(Categoria.class, nuevacatC);
                 c.setCategoria(cat);
             }
+          
             c.setPrivacidad(nuevaprivC); //al no poder comparar a null si no hay nueva damos la misma
 
             em.merge(c);
