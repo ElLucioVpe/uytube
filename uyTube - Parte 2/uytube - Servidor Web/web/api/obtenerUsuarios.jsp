@@ -53,8 +53,9 @@
                 if(cat == null || cat == "") jarr.put(json1);
                 else if(cat.equals(cdt.getCategoria())) jarr.put(json1);
                 //Cant Subscriptores
-                 json1.put("Subcriptores", cdt.getSeguidores().size());
-              
-            
+                List<String> list2 = user.ListarSeguidores((Integer)list.get(i).getId());               
+                json1.put("Subcriptores", list2.size());
+
+            }
             out.println(jarr);
         %>
