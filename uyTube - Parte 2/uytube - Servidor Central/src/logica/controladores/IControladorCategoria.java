@@ -6,8 +6,6 @@
 package logica.controladores;
 
 import java.util.List;
-import javax.swing.JTable;
-import logica.Categoria;
 import logica.ListaDeReproduccion;
 import logica.Video;
 import logica.dt.CategoriaDt;

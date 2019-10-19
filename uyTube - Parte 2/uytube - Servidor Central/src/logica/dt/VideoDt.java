@@ -7,8 +7,6 @@ package logica.dt;
 
 import java.util.Collection;
 import java.util.Date;
-import java.util.Iterator;
-import logica.Comentario;
 import logica.Valoracion;
 import logica.Video;
 

@@ -69,6 +69,14 @@ public class Valoracion implements Serializable {
         return valoracionPK;
     }
 
+    public Integer getUsuarioID() {
+        return user_id;
+    }
+    
+    public Integer getVideoID() {
+        return video_id;
+    }
+    
     public void setValoracionPK(ValoracionPK valoracionPK) {
         this.valoracionPK = valoracionPK;
     }

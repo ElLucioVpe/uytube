@@ -5,14 +5,9 @@
  */
 package logica.dt;
 
-import java.util.Collection;
 import java.util.Date;
-import java.util.Iterator;
 import logica.Canal;
-import logica.ListaDeReproduccion;
 import logica.Usuario;
-import logica.Valoracion;
-import java.util.ArrayList;
 import java.util.List;
 
 /**

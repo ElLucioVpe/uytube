@@ -197,7 +197,7 @@ public class ControladorUsuario implements IControladorUsuario {
 
     @Override
     public List<UsuarioDt> ListarUsuarios(){
-        List<UsuarioDt> list = new ArrayList<UsuarioDt>();
+        List<UsuarioDt> list = new ArrayList<>();
         try {
 
             //probablemente devuelve una lista de los nicks de los usuarios existentes
@@ -986,7 +986,12 @@ public class ControladorUsuario implements IControladorUsuario {
                     if(aux.getFechaPublicacion().after(ultima)) ultima = aux.getFechaPublicacion();
                 }
                 retorno = ultima;
-            }catch(Exception e){}
+            }catch(Exception e){
+                Throwable t = new Throwable();
+                StackTraceElement[] elements = t.getStackTrace();
+                String invocador = elements[1].getFileName();
+                exceptionAux(invocador, e);
+            }
         }
         return retorno;
     }
