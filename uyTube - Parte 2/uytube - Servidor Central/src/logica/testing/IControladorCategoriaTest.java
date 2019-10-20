@@ -7,7 +7,7 @@ import java.util.List;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
-import org.junit.After;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 
 import logica.controladores.IControladorCategoria;
@@ -15,12 +15,13 @@ import logica.controladores.Fabrica;
 import logica.dt.CategoriaDt;
 
 @TestMethodOrder(OrderAnnotation.class)
-class IControladorCategoriaTest {
+public class IControladorCategoriaTest {
 
 	IControladorCategoria cat = Fabrica.getInstance().getIControladorCategoria();
 	
-	@Test @Order(1)
-	void testAltaConsultar() {
+	@Test 
+	@Order(1)
+	public void testAltaConsultar() {
 		System.out.println("AltaConsultar");
 		String testnombre = "_-_categoriaTest_-_";
 		cat.AltaCategoria(testnombre);
@@ -29,8 +30,9 @@ class IControladorCategoriaTest {
 		assertEquals(testnombre, testdt.getNombre());
 	}
 	
-	@Test @Order(2)
-	void testListarCategorias() {
+	@Test 
+	@Order(2)
+	public void testListarCategorias() {
 		System.out.println("Listar");
 		String testnombre = "_-_categoriaTest_-_";
 		int cantCategorias = cat.ListarCategorias().size();
@@ -40,8 +42,9 @@ class IControladorCategoriaTest {
 		assertEquals(cantCategorias+1, cantCategorias2);
 	}
 	
-	@Test @Order(3)
-	void testobtenerListasCategoria() {
+	@Test 
+	@Order(3)
+	public void testobtenerListasCategoria() {
 		System.out.println("obtenerListasCategoria");
 
 		assertEquals(0, cat.obtenerListasCategoria("_-_categoriaTest_-_").size());
@@ -55,17 +58,15 @@ class IControladorCategoriaTest {
 			CategoriaDt catdt = categorias.get(i);
 			if(!catdt.getNombre().contains("_-_categoriaTest_-_")) {
 				//Esto es meramente para recorrer el codigo de obtener las listas
-				System.out.println(catdt.getNombre());
-				System.out.println(cat.obtenerListasCategoria(catdt.getNombre()).size());
-				System.out.println(cat.obtenerListasDtCategoria(catdt.getNombre()).size());
 				assertEquals(cat.obtenerListasCategoria(catdt.getNombre()).size(), cat.obtenerListasDtCategoria(catdt.getNombre()).size());
 				//El listaDt recorre lista normal ya que la utiliza
 			}
 		}
 	}
 	
-	@Test @Order(4)
-	void testobtenerVideosCategoria() {
+	@Test 
+	@Order(4)
+	public void testobtenerVideosCategoria() {
 		System.out.println("obtenerVideosCategoria");
 		assertEquals(0, cat.obtenerVideosCategoria("_-_categoriaTest_-_").size());
 		assertNull(cat.obtenerVideosCategoria("_-_categoriaTest_-_QueNoExiste"));
@@ -83,8 +84,9 @@ class IControladorCategoriaTest {
 		}
 	}
 	
-	@Test @Order(5)
-	void testEliminarCategoria() {
+	@Test 
+	@Order(5)
+	public void testEliminarCategoria() {
 		System.out.println("Eliminar");
 		int esperado = cat.ListarCategorias().size();
 		
@@ -95,10 +97,11 @@ class IControladorCategoriaTest {
 		assertEquals(esperado-2, resultado);
 	}
 	
-	@After
-	void EliminacionPreviendoFallo() {
-		cat.EliminarCategoria("_-_categoriaTest_-_");
-		cat.EliminarCategoria("_-_categoriaTest_-_2");
+	@AfterAll
+	public static void EliminacionPreviendoFallo() {
+		IControladorCategoria cat1 = Fabrica.getInstance().getIControladorCategoria();
+		cat1.EliminarCategoria("_-_categoriaTest_-_");
+		cat1.EliminarCategoria("_-_categoriaTest_-_2");
 	}
 	
 }

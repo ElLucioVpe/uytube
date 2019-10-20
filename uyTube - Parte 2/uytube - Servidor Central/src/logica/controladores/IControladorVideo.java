@@ -30,4 +30,7 @@ public interface IControladorVideo {
     public abstract List<valoracionDt>  obtenerValoracionVideo(int id_video);
     public abstract List<VideoDt> obtenerVideos();
     public abstract List<ComentarioDt> obtenerComentariosDt(int id_video);
+    
+    //Para testing
+    public abstract void EliminarVideo(int id_user, String vid_nom);
 }
