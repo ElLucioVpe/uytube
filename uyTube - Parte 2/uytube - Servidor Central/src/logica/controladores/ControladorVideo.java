@@ -13,7 +13,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.TypedQuery;
 import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultMutableTreeNode;
 import logica.Canal;
@@ -53,33 +52,33 @@ public class ControladorVideo implements IControladorVideo {
     public void AltaVideo(String nombre, String duracion, String url, String desc, int user, String categoria){
           try {
             
-            EntityManager em = emFactory.createEntityManager();
-            em.getTransaction().begin();
+            EntityManager emanager = emFactory.createEntityManager();
+            emanager.getTransaction().begin();
             
-            Usuario u = em.find(Usuario.class, user); 
-            if(u == null) throw new Exception("El usuario no existe");
-            Canal c =  u.getCanal();
-            if(c.obtenerVideo(nombre) != null) throw new Exception("El video ya esta registrado en ese user");
+            Usuario usr = emanager.find(Usuario.class, user); 
+            if(usr == null) throw new Exception("El usuario no existe");
+            Canal cnl =  usr.getCanal();
+            if(cnl.obtenerVideo(nombre) != null) throw new Exception("El video ya esta registrado en ese user");
             
             java.util.Date fecha = new Date();
-            Video v = new Video(nombre, Float.parseFloat(duracion), url, desc, fecha,true,user);
+            Video vid = new Video(nombre, Float.parseFloat(duracion), url, desc, fecha,true,user);
             
             if(!categoria.equals("Ninguna")){
-                Categoria cat = em.find(Categoria.class, categoria);
+                Categoria cat = emanager.find(Categoria.class, categoria);
                 if(cat == null) throw new Exception("La categoria no existe");
-                v.setCategoria(categoria);
+                vid.setCategoria(categoria);
             }
             
-            c.agregarVideo(v);
-            em.persist(v);
-            em.merge(c);
-            em.getTransaction().commit();
-            em.close();
-        } catch (Exception e) {
-            Throwable t = new Throwable();
-            StackTraceElement[] elements = t.getStackTrace();
+            cnl.agregarVideo(vid);
+            emanager.persist(vid);
+            emanager.merge(cnl);
+            emanager.getTransaction().commit();
+            emanager.close();
+        } catch (Exception exc) {
+            Throwable _throwable = new Throwable();
+            StackTraceElement[] elements = _throwable.getStackTrace();
             String invocador = elements[1].getFileName();
-            exceptionAux(invocador, e);
+            exceptionAux(invocador, exc);
         }
     }
     
@@ -87,33 +86,33 @@ public class ControladorVideo implements IControladorVideo {
     public void ModificarVideo(int id, String nuevoNom, String nuevaDur, String nuevaUrl, String nuevaDesc, Date nuevaFpub, boolean nuevaPriv, String nuevaCat){
         try {
 
-            EntityManager em = emFactory.createEntityManager();
-            em.getTransaction().begin();
+            EntityManager emanager = emFactory.createEntityManager();
+            emanager.getTransaction().begin();
             java.util.Date fecha = new Date();
 
-            Video v = em.find(Video.class, id);
-            if(!nuevoNom.isBlank()) v.setNombre(nuevoNom);
-            if(!nuevaDur.isBlank()) v.setDuracion(Float.parseFloat(nuevaDur));
-            if(!nuevaUrl.isBlank()) v.setUrl(nuevaUrl);
-            if(!nuevaDesc.isBlank()) v.setDescripcion(nuevaDesc);
+            Video vid = emanager.find(Video.class, id);
+            if(!nuevoNom.isBlank()) vid.setNombre(nuevoNom);
+            if(!nuevaDur.isBlank()) vid.setDuracion(Float.parseFloat(nuevaDur));
+            if(!nuevaUrl.isBlank()) vid.setUrl(nuevaUrl);
+            if(!nuevaDesc.isBlank()) vid.setDescripcion(nuevaDesc);
             if(nuevaFpub != null){
                 if(nuevaFpub.after(fecha)) throw new Exception("Fecha Imposible aun no estamos en esa fecha");
-                v.setFechaPublicacion(nuevaFpub);
+                vid.setFechaPublicacion(nuevaFpub);
             }
             //Priv cambiar chanc
-            Canal cv = em.find(Canal.class, v.getIdUsuario());
-            if(cv.getPrivacidad() && !nuevaPriv) throw new Exception("El video no puede ser publico ya que el canal es privado");
-            v.setPrivacidad(nuevaPriv);
-            if(!nuevaCat.equals("Ninguna")) v.setCategoria(nuevaCat);
+            Canal cnlv = emanager.find(Canal.class, vid.getIdUsuario());
+            if(cnlv.getPrivacidad() && !nuevaPriv) throw new Exception("El video no puede ser publico ya que el canal es privado");
+            vid.setPrivacidad(nuevaPriv);
+            if(!nuevaCat.equals("Ninguna")) vid.setCategoria(nuevaCat);
             
-            em.merge(v);
-            em.getTransaction().commit();
-            em.close();
-        } catch (Exception e) {
-            Throwable t = new Throwable();
-            StackTraceElement[] elements = t.getStackTrace();
+            emanager.merge(vid);
+            emanager.getTransaction().commit();
+            emanager.close();
+        } catch (Exception exc) {
+            Throwable _throwable = new Throwable();
+            StackTraceElement[] elements = _throwable.getStackTrace();
             String invocador = elements[1].getFileName();
-            exceptionAux(invocador, e);
+            exceptionAux(invocador, exc);
         }
     }
         
@@ -121,35 +120,35 @@ public class ControladorVideo implements IControladorVideo {
         public void ValorarVideo(int user_valoracion, int id_video, boolean gusta) {
             try {
 
-                EntityManager em = emFactory.createEntityManager();
-                em.getTransaction().begin();
+                EntityManager emanager = emFactory.createEntityManager();
+                emanager.getTransaction().begin();
 
-                Video video = em.find(Video.class, id_video);
+                Video video = emanager.find(Video.class, id_video);
                 if(video == null) throw new Exception("El video no existe");
-                Usuario user = em.find(Usuario.class, user_valoracion);
+                Usuario user = emanager.find(Usuario.class, user_valoracion);
                 if(user == null) throw new Exception("El usuario no existe");
                 
-                Valoracion v = em.find(Valoracion.class, new ValoracionPK(user_valoracion, id_video));
-                if(v == null){ 
-                    v = new Valoracion(user_valoracion, id_video, gusta);
-                    em.persist(v);
-                    user.agregarValoracion(v);
-                    video.agregarValoracion(v);
+                Valoracion vid = emanager.find(Valoracion.class, new ValoracionPK(user_valoracion, id_video));
+                if(vid == null){ 
+                    vid = new Valoracion(user_valoracion, id_video, gusta);
+                    emanager.persist(vid);
+                    user.agregarValoracion(vid);
+                    video.agregarValoracion(vid);
                 } else {
-                    v.setGustar(gusta);
-                    em.merge(v);
+                    vid.setGustar(gusta);
+                    emanager.merge(vid);
                 }
                 
-                em.merge(video);
-                em.merge(user);
-                em.getTransaction().commit();
-                em.close();
+                emanager.merge(video);
+                emanager.merge(user);
+                emanager.getTransaction().commit();
+                emanager.close();
                 
-            } catch (Exception e) {
-                Throwable t = new Throwable();
-                StackTraceElement[] elements = t.getStackTrace();
+            } catch (Exception exc) {
+                Throwable _throwable = new Throwable();
+                StackTraceElement[] elements = _throwable.getStackTrace();
                 String invocador = elements[1].getFileName();
-                exceptionAux(invocador, e);
+                exceptionAux(invocador, exc);
             }
         }
         
@@ -157,112 +156,112 @@ public class ControladorVideo implements IControladorVideo {
         public void ComentarVideo(int user_id, int video_id, long id_padre, String texto, Date fecha) {
             try {
 
-                EntityManager em = emFactory.createEntityManager();
-                em.getTransaction().begin();
+                EntityManager emanager = emFactory.createEntityManager();
+                emanager.getTransaction().begin();
 
-                Video video = em.find(Video.class, video_id);
+                Video video = emanager.find(Video.class, video_id);
                 if(video == null) throw new Exception("El video no existe");
-                Usuario user = em.find(Usuario.class, user_id);
+                Usuario user = emanager.find(Usuario.class, user_id);
                 if(user == null) throw new Exception("El usuario no existe");
 
-                Comentario c = new Comentario(user_id, video_id, texto, fecha);
-                em.persist(c);
+                Comentario com = new Comentario(user_id, video_id, texto, fecha);
+                emanager.persist(com);
                 
                 if (id_padre >= 0) {
-                    Comentario cp = em.find(Comentario.class, id_padre);
-                    if(cp == null) throw new Exception("El comentario padre no existe");
-                    c.setPadre(cp);
-                    cp.agregarHijo(c);
-                    em.merge(cp);
-                    em.merge(c);
+                    Comentario comp = emanager.find(Comentario.class, id_padre);
+                    if(comp == null) throw new Exception("El comentario padre no existe");
+                    com.setPadre(comp);
+                    comp.agregarHijo(com);
+                    emanager.merge(comp);
+                    emanager.merge(com);
                 }
                 else {
                     //lo agrego al video solo si no tiene padre, para facilitar su uso en funciones recursivas
                     //si tiene padre el padre ya estara en la coleccion del video
-                    video.agregarComentario(c); 
-                    em.merge(video);
+                    video.agregarComentario(com); 
+                    emanager.merge(video);
                 }
-                em.getTransaction().commit();
-                em.close();
+                emanager.getTransaction().commit();
+                emanager.close();
 
-            } catch (Exception e) {
-                Throwable t = new Throwable();
-                StackTraceElement[] elements = t.getStackTrace();
+            } catch (Exception exc) {
+                Throwable _throwable = new Throwable();
+                StackTraceElement[] elements = _throwable.getStackTrace();
                 String invocador = elements[1].getFileName();
-                exceptionAux(invocador, e);
+                exceptionAux(invocador, exc);
             }
         }
         
         //Auxiliares
         @Override
         public VideoDt obtenerVideoDt(String nom, Integer user) {
-            VideoDt dt = null;
+            VideoDt vdt = null;
             try {
-                EntityManager em = emFactory.createEntityManager();
-                em.getTransaction().begin();
+                EntityManager emanager = emFactory.createEntityManager();
+                emanager.getTransaction().begin();
                 
-                Canal c = em.find(Canal.class, user);
-                if(c == null) throw new Exception("El usuario no existe");
+                Canal cnl = emanager.find(Canal.class, user);
+                if(cnl == null) throw new Exception("El usuario no existe");
                 
                 
-                var querry = em.createQuery("SELECT v FROM Video v WHERE v.nombre = :nombre AND v.canal_user_id = :canal_user_id", Video.class);
+                var querry = emanager.createQuery("SELECT v FROM Video v WHERE v.nombre = :nombre AND v.canal_user_id = :canal_user_id", Video.class);
                 
                 Video video = querry.setParameter("nombre", nom).setParameter("canal_user_id", user).getSingleResult();
                 if(video == null) throw new Exception("El video no existe");
                 
-                dt = new VideoDt(video);
-                em.getTransaction().commit();
-                em.close();
+                vdt = new VideoDt(video);
+                emanager.getTransaction().commit();
+                emanager.close();
 
-            } catch (Exception e) {
-                Throwable t = new Throwable();
-                StackTraceElement[] elements = t.getStackTrace();
+            } catch (Exception exc) {
+                Throwable _throwable = new Throwable();
+                StackTraceElement[] elements = _throwable.getStackTrace();
                 String invocador = elements[1].getFileName();
-                exceptionAux(invocador, e);
+                exceptionAux(invocador, exc);
             }
-            return dt;
+            return vdt;
         }
         
         @Override
         public DefaultMutableTreeNode obtenerComentariosVideo(int id_video) {
             DefaultMutableTreeNode root = null;
             try {
-                EntityManager em = emFactory.createEntityManager();
-                em.getTransaction().begin();
+                EntityManager emanager = emFactory.createEntityManager();
+                emanager.getTransaction().begin();
 
-                Video video = em.find(Video.class, id_video);
+                Video video = emanager.find(Video.class, id_video);
                 if(video == null) throw new Exception("El video no existe");
                 
-                Collection<Comentario> cs = video.getComentarios();
-                Iterator<Comentario> it = cs.iterator();
+                Collection<Comentario> comentarios = video.getComentarios();
+                Iterator<Comentario> iter = comentarios.iterator();
                 root = new DefaultMutableTreeNode(video.getNombre() + " :: Comentarios");
-                while(it.hasNext()) {
-                    Comentario c = it.next();
-                    if(c.getPadre() == null) obtenerHijosRecursivo(root, c);
+                while(iter.hasNext()) {
+                    Comentario com = iter.next();
+                    if(com.getPadre() == null) obtenerHijosRecursivo(root, com);
                 }
                 
-                em.getTransaction().commit();
-                em.close();
+                emanager.getTransaction().commit();
+                emanager.close();
 
-            } catch (Exception e) {
-                Throwable t = new Throwable();
-                StackTraceElement[] elements = t.getStackTrace();
+            } catch (Exception exc) {
+                Throwable _throwable = new Throwable();
+                StackTraceElement[] elements = _throwable.getStackTrace();
                 String invocador = elements[1].getFileName();
-                exceptionAux(invocador, e);
+                exceptionAux(invocador, exc);
             }
             return root;
         }
         
-        protected void obtenerHijosRecursivo(DefaultMutableTreeNode nodo, Comentario c) {
+        protected void obtenerHijosRecursivo(DefaultMutableTreeNode nodo, Comentario com) {
             if(nodo != null){
-                DefaultMutableTreeNode nuevoNodo= new DefaultMutableTreeNode("(" + c.getUsuario().getNickname() + ") " + c.getContenido());
+                DefaultMutableTreeNode nuevoNodo= new DefaultMutableTreeNode("(" + com.getUsuario().getNickname() + ") " + com.getContenido());
                 nodo.add(nuevoNodo);
                 
-                Collection<Comentario> hijos = c.getHijos();
-                Iterator<Comentario> it = hijos.iterator();
+                Collection<Comentario> hijos = com.getHijos();
+                Iterator<Comentario> iter = hijos.iterator();
                 
-                while(it.hasNext()) {
-                    Comentario hijo = it.next();
+                while(iter.hasNext()) {
+                    Comentario hijo = iter.next();
                     obtenerHijosRecursivo(nuevoNodo, hijo);
                 }
             }
@@ -271,21 +270,21 @@ public class ControladorVideo implements IControladorVideo {
         public List<valoracionDt> obtenerValoracionVideo(int id_video){
             List<valoracionDt> list = new ArrayList<valoracionDt>();
             try {
-                EntityManager em = emFactory.createEntityManager();
+                EntityManager emanager = emFactory.createEntityManager();
 
-                Video vid = em.find(Video.class, id_video);
+                Video vid = emanager.find(Video.class, id_video);
                 if(vid == null) throw new Exception("El video no existe");
                 Collection<Valoracion> vals = vid.getValoraciones();
-                Iterator<Valoracion> it = vals.iterator();
-                while(it.hasNext()) {
-                    list.add(new valoracionDt(it.next()));
+                Iterator<Valoracion> iter = vals.iterator();
+                while(iter.hasNext()) {
+                    list.add(new valoracionDt(iter.next()));
                 }
-                em.close();
-           } catch (Exception e) {
-               Throwable t = new Throwable();
-               StackTraceElement[] elements = t.getStackTrace();
+                emanager.close();
+           } catch (Exception exc) {
+               Throwable _throwable = new Throwable();
+               StackTraceElement[] elements = _throwable.getStackTrace();
                String invocador = elements[1].getFileName();
-               exceptionAux(invocador, e);
+               exceptionAux(invocador, exc);
            }
            return list;
         }
@@ -294,44 +293,44 @@ public class ControladorVideo implements IControladorVideo {
         public List<VideoDt> obtenerVideos() {
                 List<VideoDt> list = new ArrayList<VideoDt>();
                 try {
-                EntityManager em = emFactory.createEntityManager();
-                List<Video> videos = em.createQuery("SELECT v FROM Video v", Video.class).getResultList();
+                EntityManager emanager = emFactory.createEntityManager();
+                List<Video> videos = emanager.createQuery("SELECT v FROM Video v", Video.class).getResultList();
                 for(int i=0;i < videos.size(); i++) {
                     list.add(new VideoDt(videos.get(i)));
                 }
-                em.close();
-           } catch (Exception e) {
-               Throwable t = new Throwable();
-               StackTraceElement[] elements = t.getStackTrace();
+                emanager.close();
+           } catch (Exception exc) {
+               Throwable _throwable = new Throwable();
+               StackTraceElement[] elements = _throwable.getStackTrace();
                String invocador = elements[1].getFileName();
-               exceptionAux(invocador, e);
+               exceptionAux(invocador, exc);
            }
            return list;
         }
         
         @Override
-        public VideoDt obtenerVideoDtPorID(int id){
+        public VideoDt obtenerVideoDtPorID(int id_video){
             VideoDt video = new VideoDt();
             try {
-                EntityManager em = emFactory.createEntityManager();
-                Video v = em.find(Video.class, id);
+                EntityManager emanager = emFactory.createEntityManager();
+                Video vid = emanager.find(Video.class, id_video);
                 //List<Video> videos = em.createQuery("SELECT v FROM Video v WHERE id = ", Video.class).getResultList();
-                video = new VideoDt(v);
-                em.close();
-            } catch (Exception e) {
-               Throwable t = new Throwable();
-               StackTraceElement[] elements = t.getStackTrace();
-               String invocador = elements[1].getFileName();
-               exceptionAux(invocador, e);
+                video = new VideoDt(vid);
+                emanager.close();
+            } catch (Exception exc) {
+                Throwable _throwable = new Throwable();
+                StackTraceElement[] elements = _throwable.getStackTrace();
+                String invocador = elements[1].getFileName();
+                exceptionAux(invocador, exc);
             }
             return video;
         }
         
-        private void exceptionAux(String inv, Exception e){
+        private void exceptionAux(String inv, Exception exc){
             if(!inv.endsWith("_jsp.java")){
-                JOptionPane.showMessageDialog(null," Error: "+e.getMessage());
+                JOptionPane.showMessageDialog(null," Error: "+exc.getMessage());
             } else {
-                System.out.println("Error: "+e.getMessage());
+                System.out.println("Error: "+exc.getMessage());
             }
         }
         
@@ -339,44 +338,44 @@ public class ControladorVideo implements IControladorVideo {
         public List<ComentarioDt> obtenerComentariosDt(int id_video) {
             List<ComentarioDt> comentariosDt = new ArrayList<>();
             try { 
-                EntityManager em = emFactory.createEntityManager();
+                EntityManager emanager = emFactory.createEntityManager();
                 
-                Video v = em.find(Video.class, id_video);
-                if(v == null) throw new Exception("El video no existe");
-                Collection<Comentario> comentarios = v.getComentarios();
+                Video vid = emanager.find(Video.class, id_video);
+                if(vid == null) throw new Exception("El video no existe");
+                Collection<Comentario> comentarios = vid.getComentarios();
                 if(comentarios == null) throw new Exception("El video no tiene comentarios");
                 
-                Iterator<Comentario> it = comentarios.iterator();
-                while (it.hasNext()) {
-                    Comentario c = it.next();
-                    if(c.getPadre() == null) {
+                Iterator<Comentario> iter = comentarios.iterator();
+                while (iter.hasNext()) {
+                    Comentario com = iter.next();
+                    if(com.getPadre() == null) {
                         comentariosDt.add(new ComentarioDt(
-                            c.getId(),
+                            com.getId(),
                             -1,
-                            c.getContenido(),
-                            new UsuarioDt(c.getUsuario()),
-                            c.getFecha(),
-                            obtenerHijosDt(c)
+                            com.getContenido(),
+                            new UsuarioDt(com.getUsuario()),
+                            com.getFecha(),
+                            obtenerHijosDt(com)
                         ));
                     }
                 }
-                em.close();
-            } catch (Exception e) {
-                Throwable t = new Throwable();
-                StackTraceElement[] elements = t.getStackTrace();
+                emanager.close();
+            } catch (Exception exc) {
+                Throwable _throwable = new Throwable();
+                StackTraceElement[] elements = _throwable.getStackTrace();
                 String invocador = elements[1].getFileName();
-                exceptionAux(invocador, e);
+                exceptionAux(invocador, exc);
             }
             return comentariosDt;
         }
         
-        protected List<ComentarioDt> obtenerHijosDt(Comentario c) {
+        protected List<ComentarioDt> obtenerHijosDt(Comentario com) {
             List<ComentarioDt> hijosdt = new ArrayList<>();
-            if(c != null){
-                Collection<Comentario> hijos = c.getHijos();
-                Iterator<Comentario> it = hijos.iterator();
-                while(it.hasNext()) {
-                    Comentario hijo = it.next();
+            if(com != null){
+                Collection<Comentario> hijos = com.getHijos();
+                Iterator<Comentario> iter = hijos.iterator();
+                while(iter.hasNext()) {
+                    Comentario hijo = iter.next();
                     hijosdt.add(new ComentarioDt(
                         hijo.getId(),
                         hijo.getPadre().getId(),

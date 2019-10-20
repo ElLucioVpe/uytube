@@ -46,16 +46,16 @@ public class UsuarioDt {
         this.canal = canal;
     }
     
-    public UsuarioDt(Usuario u) {
-        this.id = u.getId();
-        this.nickname = u.getNickname();
-        this.nombre = u.getNombre();
-        this.password = u.getPassword();
-        this.apellido = u.getApellido();
-        this.mail = u.getMail();
-        this.imagen = u.getImagen();
-        this.fechanac = u.getFechanac();
-        this.canal = u.getCanal();
+    public UsuarioDt(Usuario user) {
+        this.id = user.getId();
+        this.nickname = user.getNickname();
+        this.nombre = user.getNombre();
+        this.password = user.getPassword();
+        this.apellido = user.getApellido();
+        this.mail = user.getMail();
+        this.imagen = user.getImagen();
+        this.fechanac = user.getFechanac();
+        this.canal = user.getCanal();
     }
     
     public Integer getId() {
