@@ -22,7 +22,7 @@
 <%@page import = "logica.controladores.IControladorCategoria"%>
 
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -119,14 +119,14 @@
                                     </div>
 
                                     <div class="form-group row">
-                                        <label for="minutos" class="col-md-4 col-form-label text-md-right">DuraciÃ³n (minutos)</label>
+                                        <label for="minutos" class="col-md-4 col-form-label text-md-right">Duración (minutos)</label>
                                         <div class="col-md-6">
                                             <input type="number" id="minutos" class="form-control" name="minutos" requiered min="0" max="59">
                                         </div>
                                     </div>
                                     
                                     <div class="form-group row">
-                                        <label for="segundos" class="col-md-4 col-form-label text-md-right">DuraciÃ³n (segundos)</label>
+                                        <label for="segundos" class="col-md-4 col-form-label text-md-right">Duración (segundos)</label>
                                         <div class="col-md-6">
                                             <input type="number" id="segundos" class="form-control" name="segundos" requiered min="0" max="59">
                                         </div>

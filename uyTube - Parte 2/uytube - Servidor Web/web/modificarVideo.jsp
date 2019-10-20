@@ -32,7 +32,7 @@
 <%@ page import = "org.apache.commons.fileupload.servlet.*" %>
 <%@ page import = "org.apache.commons.io.output.*" %>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -176,14 +176,6 @@
         <title>Modificar Video</title>
     </head>
     <body>
-        <% 
-            out.print(vidx.getPrivacidad());
-            out.print(request.getParameter("nombre"));
-            out.print(request.getParameter("visibilidad"));
-            out.print(visibility);
-            out.print(visUp);
-            
-        %>
         <main class="login-form">
             <div class="cotainer">
                 <div class="row justify-content-center">
@@ -205,14 +197,14 @@
                                         </div>
                                         
                                         <div class="form-group row">
-                                            <label for="minutos" class="col-md-4 col-form-label text-md-right">Nueva duraciÃ³n (minutos)</label>
+                                            <label for="minutos" class="col-md-4 col-form-label text-md-right">Nueva duración (minutos)</label>
                                             <div class="col-md-6">
                                                 <input type="number" id="minutos" class="form-control" name="minutos" requiered min="0" max="59" required value="<%if(minutosint!=null){out.print(minutosint);} %>">
                                             </div>
                                         </div>
 
                                         <div class="form-group row">
-                                            <label for="segundos" class="col-md-4 col-form-label text-md-right">Nueva duraciÃ³n (segundos)</label>
+                                            <label for="segundos" class="col-md-4 col-form-label text-md-right">Nueva duración (segundos)</label>
                                             <div class="col-md-6">
                                                 <input type="number" id="segundos" class="form-control" name="segundos" requiered min="0" max="59"  required value="<%if(segundosint!=null){out.print(segundosint);} %>">
                                             </div>
@@ -226,7 +218,7 @@
                                         </div>
                                     
                                         <div class="form-group row">
-                                            <label for="desc" class="col-md-4 col-form-label text-md-right"> Nueva DescripciÃ³n</label>
+                                            <label for="desc" class="col-md-4 col-form-label text-md-right"> Nueva Descripción</label>
                                             <div class="col-md-6">
                                                 <input type="text" id="desc" class="form-control" name="desc" required value="<%if(descripcionUp!=null){out.print(descripcionUp);} %>">
                                             </div>
@@ -299,7 +291,7 @@
 
                                         <% if (session.getAttribute("errormodificarVideo")=="privacidad") { %>
                                                 <div class="alert alert-danger" role="alert">
-                                                    No se puede tener un video pÃºblico en un canal privado.
+                                                    No se puede tener un video público en un canal privado.
                                                 </div>
                                             <%}
                                         %>
