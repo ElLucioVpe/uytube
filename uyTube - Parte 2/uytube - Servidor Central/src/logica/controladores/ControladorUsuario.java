@@ -777,7 +777,7 @@ public class ControladorUsuario implements IControladorUsuario {
     }
     
     private void exceptionAux(String inv, Exception exc){
-        if(!inv.endsWith("_jsp.java")){
+        if(!inv.endsWith("_jsp.java") && !inv.endsWith("Test.java")){
             JOptionPane.showMessageDialog(null," Error: "+exc.getMessage());
         } else {
             System.out.println("Error: "+exc.getMessage());
@@ -972,7 +972,7 @@ public class ControladorUsuario implements IControladorUsuario {
         return cdt;
     }
     
-    private Date fechaUltimoVideo(Collection<Video> videos) {
+    protected Date fechaUltimoVideo(Collection<Video> videos) {
         Date retorno = null;
         
         if(videos != null) {

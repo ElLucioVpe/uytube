@@ -42,23 +42,11 @@ public class ControladorCategoria implements IControladorCategoria {
             instancia = new ControladorCategoria();
         }
         return instancia;
-    } 
-    
-    public List<Categoria> findCategoriaEntities(){
-        return findCategoriaEntities(true, -1, -1);
-    }
-    
-    public List<Categoria> findCategoriaEntities(int maxResults, int firstResult) {
-        return findCategoriaEntities(false, -1, -1);
     }
      
-    public List<Categoria> findCategoriaEntities(boolean all, int maxResults, int firstResult) {
-        return findCategoriaEntities(all, -1, -1);
-    }
-     
-     @Override
-     public void AltaCategoria(String nombre){
-          try {
+    @Override
+    public void AltaCategoria(String nombre){
+    	try {
             
             EntityManager emanager = emFactory.createEntityManager();
             emanager.getTransaction().begin();
@@ -68,8 +56,6 @@ public class ControladorCategoria implements IControladorCategoria {
             emanager.persist(cat);
             emanager.getTransaction().commit();
             emanager.close();
-            
-            JOptionPane.showMessageDialog(null,"La categoría se registro con exito");
         } catch (Exception exc) {
             Throwable _throwable = new Throwable();
             StackTraceElement[] elements = _throwable.getStackTrace();
@@ -167,7 +153,7 @@ public class ControladorCategoria implements IControladorCategoria {
      }
      
     private void exceptionAux(String inv, Exception exc){
-        if(!inv.endsWith("_jsp.java")){
+        if(!inv.endsWith("_jsp.java") && !inv.endsWith("Test.java")) {
             JOptionPane.showMessageDialog(null," Error: "+exc.getMessage());
         } else {
             System.out.println("Error: "+exc.getMessage());
@@ -181,11 +167,13 @@ public class ControladorCategoria implements IControladorCategoria {
         List<ListaDeReproduccionDt> retorno = new ArrayList<>();
         try {
             EntityManager emanager = emFactory.createEntityManager();
+            emanager.getTransaction().begin();
             
             Categoria cat = emanager.find(Categoria.class, nom);
+            
             if(cat == null) throw new Exception("La categoria no existe");
             
-            List<ListaDeReproduccion> lista = this.obtenerListasCategoria(nom);
+            List<ListaDeReproduccion> lista = emanager.createNamedQuery("ListaDeReproduccion.findByCategoria",ListaDeReproduccion.class).setParameter("categoria", cat).getResultList();
             
             for(int i=0; i < lista.size(); i++) {
                 ListaDeReproduccion lst = lista.get(i);
@@ -208,6 +196,8 @@ public class ControladorCategoria implements IControladorCategoria {
                     _date
                 ));
             }
+            
+            emanager.getTransaction().commit();
             emanager.close();
         } catch (Exception exc) {
             Throwable _throwable = new Throwable();
@@ -227,7 +217,7 @@ public class ControladorCategoria implements IControladorCategoria {
             Categoria cat = emanager.find(Categoria.class, nom);
             if(cat == null) throw new Exception("La categoria no existe");
             
-            List<Video> lista = this.obtenerVideosCategoria(nom);
+            List<Video> lista = emanager.createNamedQuery("Video.findByCategoria",Video.class).setParameter("categoria", nom).getResultList();
 
             for(int i=0; i < lista.size(); i++) {
                 retorno.add(new VideoDt(lista.get(i)));
@@ -242,29 +232,55 @@ public class ControladorCategoria implements IControladorCategoria {
         return retorno;
     }
     
-    private Date fechaUltimoVideo(Collection<Video> videos) {
+    protected Date fechaUltimoVideo(Collection<Video> videos) {
         Date retorno = null;
         
         if(videos != null) {
-            Iterator<Video> iter = videos.iterator();
-            
-            try {
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                Date ultima = sdf.parse("1990-01-01");
-                
-                while(iter.hasNext()) {
-                    Video aux = iter.next();
-                    if(aux.getFechaPublicacion().after(ultima)) ultima = aux.getFechaPublicacion();
-                }
-                retorno = ultima;
-            } catch (Exception exc) {
-                Throwable _throwable = new Throwable();
-                StackTraceElement[] elements = _throwable.getStackTrace();
-                String invocador = elements[1].getFileName();
-                exceptionAux(invocador, exc);
-            }
+        	if(!videos.isEmpty()) {
+	            try {
+	            	Iterator<Video> iter = videos.iterator();
+	                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	                Date ultima = sdf.parse("1990-01-01");
+	                
+	                while(iter.hasNext()) {
+	                    Video aux = iter.next();
+	                    if(aux.getFechaPublicacion().after(ultima)) ultima = aux.getFechaPublicacion();
+	                }
+	                retorno = ultima;
+	            } catch (Exception exc) {
+	                Throwable _throwable = new Throwable();
+	                StackTraceElement[] elements = _throwable.getStackTrace();
+	                String invocador = elements[1].getFileName();
+	                exceptionAux(invocador, exc);
+	            }
+        	}
         }
         return retorno;
+    }
+    
+    //Auxiliar de pruebas
+    @Override
+    public void EliminarCategoria(String nom) {
+    	try {
+    		
+            EntityManager emanager = emFactory.createEntityManager();
+            emanager.getTransaction().begin();
+            
+            Categoria cat = emanager.find(Categoria.class, nom);
+            if(cat == null) throw new Exception("La categoria no existe");
+            emanager.remove(cat);
+            //Ya que es una funcion hecha para testeo y se eliminaran categorias sin videos ni listas
+            //no es necesario encargarse de estas en el codigo
+            emanager.getTransaction().commit();
+            emanager.close();
+            
+        } catch (Exception exc) {
+            Throwable _throwable = new Throwable();
+            StackTraceElement[] elements = _throwable.getStackTrace();
+            String invocador = elements[1].getFileName();
+            exceptionAux(invocador, exc);
+        }
+    	
     }
 }
 

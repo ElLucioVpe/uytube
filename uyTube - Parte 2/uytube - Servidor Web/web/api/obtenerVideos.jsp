@@ -62,7 +62,12 @@
                 json1.put("user", _user.getNickname());
                 json1.put("likes", (int)_video.getLikes());
                 json1.put("dislikes", (int)_video.getDislikes());                
+                int segundos = (int)((_video.getDuracion() % 1)*100);
+                json1.put("segundos",segundos);
+                int dur= (int)_video.getDuracion();
+                json1.put("minutos", (dur));
 
+                
                 out.println(json1);
             }
         %>
