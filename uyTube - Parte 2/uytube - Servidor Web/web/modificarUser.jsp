@@ -91,7 +91,6 @@
             
     </head>
     <body>
-        <%out.print(imm.getImagen());%>
         <main class="login-form">
             <div class="cotainer">
                 <div class="row justify-content-center">

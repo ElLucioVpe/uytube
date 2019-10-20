@@ -19,10 +19,18 @@
     //Nombres con "header_" para evitar posibles conflictos de nombres con donde se agregue el header 
     String header_user_nick = "Anonimo";
     String header_user_img = "img/user.png";
-    if(session.getAttribute("user_dt") != null) {
-        UsuarioDt header_u = (UsuarioDt) session.getAttribute("user_dt");
+    Fabrica f_Header = Fabrica.getInstance();
+    IControladorUsuario user_header = f_Header.getIControladorUsuario();
+    
+    if(session.getAttribute("userid") != null) {
+         int sessionId = (int)session.getAttribute("userid");
+          UsuarioDt header_u = user_header.ConsultarUsuario(sessionId);
+          
         header_user_nick = header_u.getNickname();
-        if(header_u.getImagen() != null) header_user_img = "http://localhost:8080/images/"+header_u.getImagen();
+        
+        if(header_u.getImagen() != null){
+            header_user_img = "http://localhost:8080/images/"+header_u.getImagen();
+        }
     }
 %>
 <header>
