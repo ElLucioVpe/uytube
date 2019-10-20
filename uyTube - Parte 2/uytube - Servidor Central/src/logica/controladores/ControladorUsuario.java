@@ -817,7 +817,7 @@ public class ControladorUsuario implements IControladorUsuario {
             Usuario usr = emanager.find(Usuario.class, suscripto);
             if(usr == null) throw new Exception("No se encontro el usuario suscriptor");
             Canal cnl = emanager.find(Canal.class, pcanal);
-            if(usr == null) throw new Exception("No se encontro al propietario del canal");
+            if(cnl == null) throw new Exception("No se encontro al propietario del canal");
             
             if(cnl.getSeguidores().contains(usr)) _si = true;
             
