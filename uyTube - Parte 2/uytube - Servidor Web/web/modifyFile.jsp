@@ -165,7 +165,7 @@
            
          
          
-         
+         /*
          out.println(userUp);
          out.println(pswdUp);
          out.println(nameUp); 
@@ -178,7 +178,7 @@
          
          out.println(catUp);
          out.println(descUp);
-         
+         */
          out.println("Usuario modificado con exito!");
          out.println("</body>");
          out.println("</html>");

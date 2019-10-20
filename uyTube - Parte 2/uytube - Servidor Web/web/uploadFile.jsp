@@ -161,7 +161,7 @@
                  
            
          
-         
+         /*
          out.println(userUp); 
          out.println(pswdUp);
          out.println(canalUp);
@@ -178,7 +178,7 @@
          
          out.println(catUp);
          out.println(descUp);
-        
+        */
         
          out.println("User creado con exito!");
          out.println("</body>");
