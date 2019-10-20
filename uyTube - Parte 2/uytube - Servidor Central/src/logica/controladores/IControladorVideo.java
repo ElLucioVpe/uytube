@@ -19,13 +19,13 @@ import logica.dt.valoracionDt;
 public interface IControladorVideo {
 
     public abstract void AltaVideo(String nombre, String duracion, String url, String desc, int user, String categoria);
-    public abstract void ModificarVideo(int id, String nuevoNom, String nuevaDur, String nuevaUrl, String nuevaDesc, Date nuevaFpub, boolean nuevaPriv, String nuevaCat);
+    public abstract void ModificarVideo(int id_vid, String nuevoNom, String nuevaDur, String nuevaUrl, String nuevaDesc, Date nuevaFpub, boolean nuevaPriv, String nuevaCat);
     public abstract void ValorarVideo(int user_valoracion, int id_video, boolean gusta);
     public abstract void ComentarVideo(int user_id, int video_id, long id_padre, String texto, Date fecha);
 
     //Auxiliares
     public abstract VideoDt obtenerVideoDt(String video, Integer user);
-    public abstract VideoDt obtenerVideoDtPorID(int id);
+    public abstract VideoDt obtenerVideoDtPorID(int id_video);
     public abstract DefaultMutableTreeNode obtenerComentariosVideo(int id_video);
     public abstract List<valoracionDt>  obtenerValoracionVideo(int id_video);
     public abstract List<VideoDt> obtenerVideos();
