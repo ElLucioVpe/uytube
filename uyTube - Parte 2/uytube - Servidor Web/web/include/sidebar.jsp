@@ -22,7 +22,7 @@
                 <ul class="list-unstyled components">
                     <ul>
                       <% if(session.getAttribute("userid") != null) {%>
-                      <li><a href="http://localhost:8080/WebApplication/consultarUser.jsp?id=<%=session.getAttribute("userid")%>"><i class="fa fa-user"></i> Mi Canal</a></li>
+                      <li><a href="http://localhost:8080/WebApplication/consultaUser.jsp?id=<%=session.getAttribute("userid")%>"><i class="fa fa-user"></i> Mi Canal</a></li>
                       <li><a href="http://localhost:8080/WebApplication/modificarUser.jsp"><i class="fas fa-edit"></i> Editar Perfil</a></li>
                       <%} else {%>
                       <li><a href="http://localhost:8080/WebApplication/login.jsp"><i class="fa fa-user"></i> Mi Canal</a></li>
