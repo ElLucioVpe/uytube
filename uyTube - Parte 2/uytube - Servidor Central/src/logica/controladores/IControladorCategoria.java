@@ -27,4 +27,7 @@ public interface IControladorCategoria {
     //Para la web
     public abstract List<ListaDeReproduccionDt> obtenerListasDtCategoria(String nom);
     public abstract List<VideoDt> obtenerVideosDtCategoria(String nom);
+    
+    //Auxiliar de pruebas
+    public abstract void EliminarCategoria(String nom);
 }

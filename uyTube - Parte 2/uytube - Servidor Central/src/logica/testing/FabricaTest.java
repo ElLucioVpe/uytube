@@ -1,37 +1,36 @@
 package logica.testing;
 
+
+
+import static org.junit.jupiter.api.Assertions.*;
 import logica.controladores.Fabrica;
 import logica.controladores.IControladorUsuario;
 import logica.controladores.IControladorVideo;
 import logica.controladores.IControladorCategoria;
-
-import static org.junit.jupiter.api.Assertions.*;
-
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+import org.junit.jupiter.api.Order;
 
+@TestMethodOrder(OrderAnnotation.class)
 class FabricaTest {
-
-    /**
-     * Test of getInstance method, of class Fabrica.
-     */
     
-    @BeforeAll
+	Fabrica fab = Fabrica.getInstance();
+	
+	@Test @Order(1)
     public void testGetInstance() {
         System.out.println("getInstance");
-        Fabrica instance1 = Fabrica.getInstance();
-        assertNotNull(instance1);
+        assertNotNull(fab);
         Fabrica instance2 = Fabrica.getInstance();
-        assertSame(instance1, instance2);
+        assertSame(fab, instance2);
     }
 
     @Test
     public void testGetIControladorUsuario() {
         System.out.println("getIControladorUsuario");
-        Fabrica instance = Fabrica.getInstance();
-        IControladorUsuario instance1 = instance.getIControladorUsuario();
+        IControladorUsuario instance1 = fab.getIControladorUsuario();
         assertNotNull(instance1);
-        IControladorUsuario instance2 = instance.getIControladorUsuario();
+        IControladorUsuario instance2 = fab.getIControladorUsuario();
         assertSame(instance1, instance2);
     }
 
@@ -39,20 +38,18 @@ class FabricaTest {
     @Test
     public void testGetIControladorVideo() {
         System.out.println("getIControladorVideo");
-        Fabrica instance = Fabrica.getInstance();
-        IControladorVideo instance1 = instance.getIControladorVideo();
+        IControladorVideo instance1 = fab.getIControladorVideo();
         assertNotNull(instance1);
-        IControladorVideo instance2 = instance.getIControladorVideo();
+        IControladorVideo instance2 = fab.getIControladorVideo();
         assertSame(instance1, instance2);
     }
 
     @Test
     public void testGetIControladorCategoria() {
         System.out.println("getIControladorCategoria");
-        Fabrica instance = Fabrica.getInstance();
-        IControladorCategoria instance1 = instance.getIControladorCategoria();
+        IControladorCategoria instance1 = fab.getIControladorCategoria();
         assertNotNull(instance1);
-        IControladorCategoria instance2 = instance.getIControladorCategoria();
+        IControladorCategoria instance2 = fab.getIControladorCategoria();
         assertSame(instance1, instance2);
     }
 }
