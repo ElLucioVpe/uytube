@@ -20,9 +20,9 @@ public interface IControladorUsuario {
 
     public abstract void AltaUsuario(String nick, String pass, String nom, String apell, String mail, Date fnac, String img);
     public abstract void AltaCanal(String nombre, boolean privado, String categoria, int user_id, String descripcion);
-    public abstract void ModificarUsuario(int id, String nuevopass, String nuevonom, String nuevoapell, Date nuevafechaNac, String nuevonomC, String nuevacatC, String nuevadesC, boolean nuevaprivC);
+    public abstract void ModificarUsuario(int id_user, String nuevopass, String nuevonom, String nuevoapell, Date nuevafechaNac, String nuevonomC, String nuevacatC, String nuevadesC, boolean nuevaprivC, String nuevaImg);
     public abstract List<UsuarioDt> ListarUsuarios();
-    public abstract UsuarioDt ConsultarUsuario(int id);
+    public abstract UsuarioDt ConsultarUsuario(int id_user);
 
     //Listas de Reproduccion
     public abstract void AltaListaDeReproduccionPorDefecto(String nombre);
@@ -40,13 +40,13 @@ public interface IControladorUsuario {
     //Auxiliares
     public abstract int obtenerIdUsuario(String nick);
     public abstract int obtenerIdUsuarioMail(String mail);
-    public abstract String obtenerNickUsuario(int id);
-    public abstract void EliminarUsuario(int id);
+    public abstract String obtenerNickUsuario(int id_user);
+    public abstract void EliminarUsuario(int id_user);
     public abstract List obtenerCategorias();
     public abstract String obtenerTipoLista(int propietario, String lista);
-    public abstract List<String> obtenerListasUsuario(int id);
-    public abstract List<VideoDt> obtenerVideosLista(int id, String lista);
-    public abstract ListaDeReproduccionDt obtenerListaDt(int id, String lista);
+    public abstract List<String> obtenerListasUsuario(int id_user);
+    public abstract List<VideoDt> obtenerVideosLista(int id_user, String lista);
+    public abstract ListaDeReproduccionDt obtenerListaDt(int id_user, String lista);
     
     public abstract List<String> ListarSeguidores(int userId);
     public abstract List<String> ListarSiguiendo(int userId);
@@ -55,8 +55,8 @@ public interface IControladorUsuario {
     // Para servidor web
     public abstract Integer LoginUsuario(String _user, String _password);
     public abstract boolean estaSuscripto(int suscripto, int pcanal);
-    public abstract List<ListaDeReproduccionDt> obtenerListasDtPorUsuario(int id);
+    public abstract List<ListaDeReproduccionDt> obtenerListasDtPorUsuario(int id_user);
     public abstract List<ListaDeReproduccionDt> obtenerListas();
-    public abstract ListaDeReproduccionDt obtenerListaDtPorId(int id); //Creo esto porque es mas conveniente a nivel de web pero obtenerListaDt(id_user, nombre) es mas conveniente en la estacion
-    public abstract CanalDt obtenerCanalDt(int id);
+    public abstract ListaDeReproduccionDt obtenerListaDtPorId(int id_lista); //Creo esto porque es mas conveniente a nivel de web pero obtenerListaDt(id_user, nombre) es mas conveniente en la estacion
+    public abstract CanalDt obtenerCanalDt(int id_canal);
 }

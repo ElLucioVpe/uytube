@@ -80,7 +80,8 @@
                   
                 DateFormat fecha= new SimpleDateFormat("dd/MM/yyyy");
                 String fechaNacimiento= fecha.format(userx.getFechanac());
-                     
+                UsuarioDt imm = user.ConsultarUsuario(_id);
+                
                 
             %>
             

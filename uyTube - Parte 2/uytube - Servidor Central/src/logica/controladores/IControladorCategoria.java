@@ -20,11 +20,14 @@ public interface IControladorCategoria {
     
     public abstract void AltaCategoria(String nombre);
     public abstract List<CategoriaDt> ListarCategorias();
-    public abstract CategoriaDt ConsultarCategorias(String c);
+    public abstract CategoriaDt ConsultarCategorias(String nombre);
     public abstract List<ListaDeReproduccion> obtenerListasCategoria(String nom);
     public abstract List<Video> obtenerVideosCategoria(String nom);
     
     //Para la web
     public abstract List<ListaDeReproduccionDt> obtenerListasDtCategoria(String nom);
     public abstract List<VideoDt> obtenerVideosDtCategoria(String nom);
+    
+    //Auxiliar de pruebas
+    public abstract void EliminarCategoria(String nom);
 }

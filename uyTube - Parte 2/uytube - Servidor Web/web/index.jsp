@@ -28,7 +28,6 @@
         <%! Fabrica f = Fabrica.getInstance();
             IControladorUsuario user = f.getIControladorUsuario(); %>
         <%@ include file="include/header.jsp" %>
-        
         <table class="table" id="tblVideos">
           <thead>
             <tr>

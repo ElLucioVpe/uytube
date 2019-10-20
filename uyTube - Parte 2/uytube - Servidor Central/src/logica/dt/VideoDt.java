@@ -35,20 +35,20 @@ public class VideoDt {
         this.id = id;
     }
     
-    public VideoDt(Video v){
-        this.id= v.getId();
-        this.nombre = v.getNombre();
-        this.duracion = v.getDuracion();
-        this.url = v.getUrl();
-        this.descripcion = v.getDescripcion();
-        this.fechaPublicacion = v.getFechaPublicacion();
-        this.privacidad  = v.getPrivacidad();
-        this.valoraciones = v.getValoraciones();
-        this.canal_user_id = v.getIdUsuario();
-        this.categoria = v.getCategoria();
+    public VideoDt(Video video){
+        this.id= video.getId();
+        this.nombre = video.getNombre();
+        this.duracion = video.getDuracion();
+        this.url = video.getUrl();
+        this.descripcion = video.getDescripcion();
+        this.fechaPublicacion = video.getFechaPublicacion();
+        this.privacidad  = video.getPrivacidad();
+        this.valoraciones = video.getValoraciones();
+        this.canal_user_id = video.getIdUsuario();
+        this.categoria = video.getCategoria();
         //por cosas de la vida asi se queda
-        this.likes = v.getLikes();
-        this.dislikes = v.getDislikes();
+        this.likes = video.getLikes();
+        this.dislikes = video.getDislikes();
     }
 
     public Integer getId() {

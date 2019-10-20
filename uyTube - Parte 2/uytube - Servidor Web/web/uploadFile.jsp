@@ -148,10 +148,9 @@
                     java.util.Date fechaNacimiento = sdf.parse(fechaUp); 
                     
                     if(fileName!=null){
-                    user.AltaUsuario(userUp, pswdUp, nameUp,apellidoUp, mailUp, fechaNacimiento, fileName);
+                    user.AltaUsuario(userUp, pswdUp, nameUp,apellidoUp, mailUp, fechaNacimiento, fileName);  
                     }else{
                     user.AltaUsuario(userUp, pswdUp, nameUp,apellidoUp, mailUp, fechaNacimiento, "");
-
                     }
                     
                     IdUsuarioCreate = user.obtenerIdUsuario(userUp);
@@ -170,7 +169,7 @@
          out.println(apellidoUp); 
          out.println(mailUp); 
          out.println(fechaNacimiento.toString()); 
-         out.println(fileName); 
+         out.println(fileName);  
          out.println(IdUsuarioCreate); 
          
          out.println(visUp);
