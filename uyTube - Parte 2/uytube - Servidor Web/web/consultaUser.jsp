@@ -46,16 +46,19 @@
        if(user.obtenerCanalDt(canalUser_id).getPrivacidad()) privacidad = true; 
 %>
 <script>var canalUser_id="<%=canalUser_id%>";
-            privacidad= "<%=privacidad%>";
-            userid = "<%=userid%>";
+        var privacidad= "<%=privacidad%>";
+        var userid = "<%=userid%>";
+        
 </script>     
 <script>
         myData = [];
         idUsr = 0; 
         console.log("prueba1");
         $( document ).ready(function() {
-            console.log("prueba2");          
-              //cargarBuscador();
+            console.log("prueba2"); 
+           if(privacidad==false)
+           {console.log("false");}else{console.log("true");}
+
               console.log("prueba2");          
                listarDatosUsuario();
                listarListas();
@@ -353,20 +356,12 @@
                                             <div id="categoriaw" style="float: right; width: 150px;">CATEGORIA</div>
                                             <div style="float: left;">
                                             <form id="pirvacity">    
-                                            <li class="nav-item px-2"> Privacidad: 
-                                              <input id="toggle-privacidad" type="checkbox" data-toggle="toggle" data-onstyle="dark" data-on="Público" data-off="Privado" data-width="150">
+                                            <li class="nav-item px-2"> <a href="http://localhost:8080/WebApplication/modificarUser.jsp"> Privacidad: 
+                                             <input id="toggle-privacidad" type="checkbox" data-toggle="toggle" data-onstyle="dark" data-on="Público" data-off="Privado" data-width="150"><button class="fas fa-edit" ></button></a>
                                                <script>
                                                $('#toggle-privacidad').prop('checked', privacidad).change();  
 
-                                                $(function() {
-                                                  $('#toggle-privacidad').change(function() {
-                                                     $.ajax({
-                                                     url:"http://localhost:8080/WebApplication/api/modificarPrivacidadCanal.jsp?id="+'<%=canalUser_id%>',
-                                                     
-                                                });
-                                                })}
-                                                )
-
+                                               
                                                </script>                                             
                                             </li>
                                             </form>
