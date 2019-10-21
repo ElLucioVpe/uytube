@@ -59,4 +59,9 @@ public interface IControladorUsuario {
     public abstract List<ListaDeReproduccionDt> obtenerListas();
     public abstract ListaDeReproduccionDt obtenerListaDtPorId(int id_lista); //Creo esto porque es mas conveniente a nivel de web pero obtenerListaDt(id_user, nombre) es mas conveniente en la estacion
     public abstract CanalDt obtenerCanalDt(int id_canal);
+    
+    
+    //Para pruebas
+    public abstract void EliminarListaDeReproduccionPorDefecto(String nombre);
+    public abstract void EliminarListaDeReproduccionParticular(int id_user, String nombre);
 }

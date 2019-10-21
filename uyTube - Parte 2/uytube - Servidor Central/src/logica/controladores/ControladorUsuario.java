@@ -278,9 +278,9 @@ public class ControladorUsuario implements IControladorUsuario {
             Iterator itr = users.iterator();
             while(itr.hasNext()) {
                 Canal cnl = (Canal) itr.next();
-                ListaDeReproduccion l = new ListaDeReproduccion(nombre, cnl.getUsuario(), true);
-                emanager.persist(l);
-                cnl.addLista(l);
+                ListaDeReproduccion lst = new ListaDeReproduccion(nombre, cnl.getUsuario(), true);
+                emanager.persist(lst);
+                cnl.addLista(lst);
                 emanager.merge(cnl);
             }
             emanager.getTransaction().commit();
@@ -346,11 +346,11 @@ public class ControladorUsuario implements IControladorUsuario {
             emanager.merge(propietario);
             emanager.getTransaction().commit();
             emanager.close();
-        } catch (Exception e) {
-            Throwable t = new Throwable();
-            StackTraceElement[] elements = t.getStackTrace();
+        } catch (Exception exc) {
+            Throwable _throwable = new Throwable();
+            StackTraceElement[] elements = _throwable.getStackTrace();
             String invocador = elements[1].getFileName();
-            exceptionAux(invocador, e);
+            exceptionAux(invocador, exc);
         }
     }
 
@@ -1000,5 +1000,60 @@ public class ControladorUsuario implements IControladorUsuario {
             }
         }
         return retorno;
+    }
+    
+    //Para pruebas
+    @Override
+    public void EliminarListaDeReproduccionPorDefecto(String nombre) {
+        try {
+
+            EntityManager emanager = emFactory.createEntityManager();
+            emanager.getTransaction().begin();
+
+            ListaDeReproduccion_PorDefecto list_pordefecto = emanager.find(ListaDeReproduccion_PorDefecto.class, nombre);
+            if(list_pordefecto == null) throw new Exception("La lista no existe");
+            
+            List<Canal> canales = emanager.createQuery("SELECT c FROM Canal c", Canal.class).getResultList();
+            for(int i=0; i < canales.size(); i++) {
+            	Canal cnl = canales.get(i);
+                ListaDeReproduccion lst = cnl.getLista(nombre);
+                if(lst != null) emanager.remove(lst);
+                emanager.merge(cnl);
+            }
+            emanager.remove(list_pordefecto);
+            emanager.getTransaction().commit();
+            emanager.close();
+        } catch (Exception exc) {
+            Throwable _throwable = new Throwable();
+            StackTraceElement[] elements = _throwable.getStackTrace();
+            String invocador = elements[1].getFileName();
+            exceptionAux(invocador, exc);
+        }
+    }
+    
+    @Override
+    public void EliminarListaDeReproduccionParticular(int id_user, String nombre) {
+        try {
+
+            EntityManager emanager = emFactory.createEntityManager();
+            emanager.getTransaction().begin();
+
+            Canal cnl = emanager.find(Canal.class, nombre);
+            if(cnl == null) throw new Exception("El canal no existe");
+            
+            ListaDeReproduccion lst = cnl.getLista(nombre);
+            Collection<Video> videos = lst.getVideos();
+            Iterator<Video> iter = videos.iterator();
+            while(iter.hasNext()) { lst.quitarVideo(iter.next().getId());}
+            
+            emanager.remove(lst);
+            emanager.getTransaction().commit();
+            emanager.close();
+        } catch (Exception exc) {
+            Throwable _throwable = new Throwable();
+            StackTraceElement[] elements = _throwable.getStackTrace();
+            String invocador = elements[1].getFileName();
+            exceptionAux(invocador, exc);
+        }
     }
 }
