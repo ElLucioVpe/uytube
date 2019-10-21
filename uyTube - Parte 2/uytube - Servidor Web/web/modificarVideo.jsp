@@ -36,6 +36,8 @@
 <!DOCTYPE html>
 <html>
     <head>
+         <%@ include file="include/header.jsp" %>
+
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
@@ -59,16 +61,26 @@
                         
                //ErrormodificarVideo seteado en null por las deudas
                 session.setAttribute("errormodificarVideo","");
-             
+
                 String entre = "0";
                 Fabrica f = Fabrica.getInstance();
                 IControladorUsuario user = f.getIControladorUsuario();
                 IControladorVideo vid = f.getIControladorVideo();
                 IControladorCategoria cat = f.getIControladorCategoria();
                 
-                
-                int _id = 1;
+     
+                int _id = -1;
+                _id = Integer.parseInt(request.getParameter("iddelvideo"));
+                out.println("<script>console.log('videito "+_id+"');</script>");
+
                 VideoDt vidx = vid.obtenerVideoDtPorID(_id);
+                if(_id == -1 ){
+                    String redirectURL = "index.jsp";
+            
+                    if (!response.isCommitted()){
+                    response.sendRedirect(redirectURL); 
+                    }
+                }
                 int idcanal = vidx.getIdCanal();
                 
                 CanalDt canalx = user.obtenerCanalDt(idcanal);
@@ -145,9 +157,9 @@
                 int nuevominutosint = Integer.parseInt(request.getParameter("minutos"));
                 
                 if(nuevosegundosint<10){
-                durat = nuevominutosint+":0"+nuevosegundosint;
-                     }else{
-                    durat = nuevominutosint+":"+nuevosegundosint;
+                    durat = nuevominutosint+".0"+nuevosegundosint;
+                    }else{
+                    durat = nuevominutosint+"."+nuevosegundosint;
                  }
                 
                 
@@ -165,7 +177,10 @@
                     session.setAttribute("errormodificarVideo","privacidad");
 
                     }
-                    vid.ModificarVideo(_id, nombreUp, durat, urlUp, descripcionUp, fechaSubida, visUp, categoriaUp);
+              
+                  // vid.ModificarVideo(1, "locuritaeeeeea", "4.20", "asdads", "coño", fechaSubida, true, "Carnaval");
+                   vid.ModificarVideo(_id, nombreUp, durat, urlUp, descripcionUp, fechaSubida, visUp, categoriaUp);
+
                 }
                     
                      
@@ -176,7 +191,18 @@
         <title>Modificar Video</title>
     </head>
     <body>
+    <%  out.print(nombreUp);
+
+    out.print(_id);
+    out.print(urlUp);
+    out.print(descripcionUp);;
+    out.print(fechaSubida);
+    out.print(visUp);
+    out.print(categoriaUp);
+    
+    %>
         <main class="login-form">
+            
             <div class="cotainer">
                 <div class="row justify-content-center">
                     <div class="col-md-8">
@@ -305,5 +331,6 @@
             </div>
 
         </main>
+   <%@include file="include/footer.jsp" %>
     </body>
 </html>
