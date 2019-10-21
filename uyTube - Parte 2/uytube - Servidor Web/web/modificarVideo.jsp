@@ -191,22 +191,11 @@
         <title>Modificar Video</title>
     </head>
     <body>
-    <%  out.print(nombreUp);
-
-    out.print(_id);
-    out.print(urlUp);
-    out.print(descripcionUp);;
-    out.print(fechaSubida);
-    out.print(visUp);
-    out.print(categoriaUp);
-
-    %>
         <main class="login-form">
 
             <div class="cotainer">
                 <div class="row justify-content-center">
                     <div class="col-md-8">
-                        <h1>uyTube</h1>
                     </div>
                 </div>
                 <div class="row justify-content-center">

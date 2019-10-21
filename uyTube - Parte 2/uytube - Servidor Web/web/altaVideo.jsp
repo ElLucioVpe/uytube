@@ -87,12 +87,7 @@
                  }
                     vid.AltaVideo(nombre, durat, url, descr, _id, categoria);
                 }
-                    
-    
-             
-           
-                
-            
+        
              
             %>
     </head>
@@ -102,7 +97,7 @@
       <main class="altaVideo-form">
             <div class="row justify-content-center">
 		<div class="col-md-12">
-                    <h1>uyTube</h1>
+
                     </div>
                          </div>
 			<form role="form">
@@ -177,11 +172,7 @@
                                             
                                     </select>
                                   </div>
-                                        
-                                        
-                                    
-                                    
-				
+
 				<button type="submit" class="btn btn-primary">
 					Submit
 				</button>
@@ -192,10 +183,7 @@
                                             </div>
                                         <%}
                                     %>
-
-                                    
-                                  
-                                    
+                     
 		</div>
                </div>
 	</div>
