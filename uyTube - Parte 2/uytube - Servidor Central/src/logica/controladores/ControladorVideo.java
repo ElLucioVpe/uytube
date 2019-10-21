@@ -103,7 +103,12 @@ public class ControladorVideo implements IControladorVideo {
             Canal cnlv = emanager.find(Canal.class, vid.getIdUsuario());
             if(cnlv.getPrivacidad() && !nuevaPriv) throw new Exception("El video no puede ser publico ya que el canal es privado");
             vid.setPrivacidad(nuevaPriv);
-            if(!nuevaCat.equals("Ninguna")) vid.setCategoria(nuevaCat);
+            
+            if(!nuevaCat.equals("Ninguna")){
+                Categoria cat = emanager.find(Categoria.class, nuevaCat);
+                if(cat == null) throw new Exception("La categoria no existe");
+                vid.setCategoria(nuevaCat);
+            }
             
             emanager.merge(vid);
             emanager.getTransaction().commit();
@@ -291,7 +296,7 @@ public class ControladorVideo implements IControladorVideo {
         
         @Override
         public List<VideoDt> obtenerVideos() {
-                List<VideoDt> list = new ArrayList<VideoDt>();
+                List<VideoDt> list = new ArrayList<>();
                 try {
                 EntityManager emanager = emFactory.createEntityManager();
                 List<Video> videos = emanager.createQuery("SELECT v FROM Video v", Video.class).getResultList();
@@ -314,7 +319,8 @@ public class ControladorVideo implements IControladorVideo {
             try {
                 EntityManager emanager = emFactory.createEntityManager();
                 Video vid = emanager.find(Video.class, id_video);
-                //List<Video> videos = em.createQuery("SELECT v FROM Video v WHERE id = ", Video.class).getResultList();
+                if(vid == null) throw new Exception("El video no existe");
+                
                 video = new VideoDt(vid);
                 emanager.close();
             } catch (Exception exc) {
@@ -387,5 +393,41 @@ public class ControladorVideo implements IControladorVideo {
                 }
             }
             return hijosdt;
+      }
+        
+      @Override
+      public void EliminarVideo(int id_user, String vid_nom) {
+    	  try {
+    		  EntityManager emanager = emFactory.createEntityManager();
+    		  emanager.getTransaction().begin();
+    		  
+              Canal cnl =  emanager.find(Canal.class, id_user);
+              if(cnl == null) throw new Exception("El usuario/canal no existe");
+              
+              Video vid = cnl.obtenerVideo(vid_nom);
+              if(vid == null) throw new Exception("El video no esta registrado en ese usuario");
+              
+              //Remuevo sus comentarios y valoraciones
+              Collection<Comentario> comentarios = vid.getComentarios();
+              if(comentarios != null) {
+	              Iterator<Comentario> iter = comentarios.iterator();
+	              while (iter.hasNext()) { emanager.remove(iter.next()); }
+              }
+              
+              Collection<Valoracion> valoraciones = vid.getValoraciones();
+              if(valoraciones != null) {
+	              Iterator<Valoracion> iterv = valoraciones.iterator();
+	              while (iterv.hasNext()) { emanager.remove(iterv.next());} 
+              }
+              
+              emanager.remove(vid);
+              emanager.getTransaction().commit();
+    		  emanager.close();
+    	  } catch (Exception exc) {
+              Throwable _throwable = new Throwable();
+              StackTraceElement[] elements = _throwable.getStackTrace();
+              String invocador = elements[1].getFileName();
+              exceptionAux(invocador, exc);
+          }
       }
 }

@@ -598,6 +598,11 @@ public class ControladorUsuario implements IControladorUsuario {
             emanager.getTransaction().begin();
 
             Usuario user = emanager.find(Usuario.class, id_user);
+            if(user == null) throw new Exception("El usuario no existe");
+            
+            Canal cnl = emanager.find(Canal.class, id_user);
+            
+            emanager.remove(cnl);
             emanager.remove(user);
             emanager.getTransaction().commit();
             emanager.close();

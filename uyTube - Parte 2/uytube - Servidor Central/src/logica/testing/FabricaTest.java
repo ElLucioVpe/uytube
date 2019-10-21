@@ -13,11 +13,12 @@ import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 
 @TestMethodOrder(OrderAnnotation.class)
-class FabricaTest {
+public class FabricaTest {
     
 	Fabrica fab = Fabrica.getInstance();
 	
-	@Test @Order(1)
+	@Test 
+	@Order(1)
     public void testGetInstance() {
         System.out.println("getInstance");
         assertNotNull(fab);
