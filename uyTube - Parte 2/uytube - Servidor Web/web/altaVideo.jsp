@@ -26,6 +26,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <%@ include file="include/header.jsp" %>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
         <script src="js/bootstrap.min.js"></script>
@@ -95,6 +96,7 @@
              
             %>
     </head>
+    
     <body>
         
       <main class="altaVideo-form">
@@ -107,7 +109,7 @@
                              <div class="row justify-content-center">
                                     <div class="col-md-8">
                                             <div class="card">
-                                            <div class="card-header">Alta Usuario</div>
+                                            <div class="card-header">Alta Video</div>
                                                 <div class="card-body">
                                                     
 			
@@ -201,7 +203,7 @@
                                 
                                     
        			</form>
-
+<%@include file="include/footer.jsp" %>
     </body>
     
 </html>   
