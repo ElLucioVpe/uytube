@@ -62,7 +62,8 @@
                listarVideos();
                listarSeguidores();
                 listarSeguidos();
-toggleOn();          /*$( "#btnBuscarUsuario" ).click(function() {
+                myFunction();
+       /*$( "#btnBuscarUsuario" ).click(function() {
              
               listarVideos();
               listarListas();
@@ -110,7 +111,7 @@ toggleOn();          /*$( "#btnBuscarUsuario" ).click(function() {
                     
                     for (let i = 0; i < usuarios.length; i++) {
                         if ( usrid == usuarios[i].id){
-                             window.idUsr = usuarios[i].id;
+                             //window.idUsr = usuarios[i].id;
                         html += "<tr>";
                         html += '<th scope="row">'+usuarios[i].nombre+ ' '+usuarios[i].apellido+'</th>';
                       
@@ -124,9 +125,11 @@ toggleOn();          /*$( "#btnBuscarUsuario" ).click(function() {
                         img.height = "100";
                         img.alt="User Picture";
                         var src = document.getElementById("usrImg");
-                        document.getElementById("usrNmb").innerHTML = usuarios[i].nickname;
+                        document.getElementById("usrNmb").innerHTML ="<h1>"+usuarios[i].nickname+"</h1>";
                         src.appendChild(img);
-                        
+                        var src2 = document.getElementById("categoriaw");
+                         var html2= document.createTextNode(" "+usuarios[i].canal.categoria);
+                        src2.appendChild(html2);
                         
                        
                     }
@@ -184,7 +187,7 @@ toggleOn();          /*$( "#btnBuscarUsuario" ).click(function() {
                            });
         }
         
-     
+        
         function listarListas() {
             
                            $.ajax({
@@ -254,6 +257,7 @@ toggleOn();          /*$( "#btnBuscarUsuario" ).click(function() {
                                        html += "</tr>";                                                                             
                                    }
                                    $('.table5 tbody').html(html);
+                                  
                                 },
                                error: function (xhr, ajaxOptions, thrownError) {
                                  console.log(xhr.status);
@@ -264,9 +268,16 @@ toggleOn();          /*$( "#btnBuscarUsuario" ).click(function() {
                                 
                            });
         }
-         function toggleOn() {
-                                                     $('#toggle-privacidad').prop('checked', false).change();
-                                                }
+         function myFunction() {
+          var usrid = '<%=canalUser_id%>';
+        if((userid !== -1)&&(userid ==usrid)){
+         console.log("esta loguin si");   
+        $('#pirvacity').removeAttr("style").show();
+        }else{ $('#pirvacity').removeAttr("style").hide();
+                 console.log("esta loguin no");   
+
+        }
+        }
     </script>
     
    <main class="comentar-form">
@@ -339,14 +350,28 @@ toggleOn();          /*$( "#btnBuscarUsuario" ).click(function() {
                                                 <%}%>
                                             </button>
                                             </div>
+                                            <div id="categoriaw" style="float: right; width: 150px;">CATEGORIA</div>
                                             <div style="float: left;">
+                                            <form id="pirvacity">    
                                             <li class="nav-item px-2"> Privacidad: 
                                               <input id="toggle-privacidad" type="checkbox" data-toggle="toggle" data-onstyle="dark" data-on="Público" data-off="Privado" data-width="150">
-                                               <script>                                                   
-                                                $('#toggle-privacidad').prop('checked', privacidad).change();  
+                                               <script>
+                                               $('#toggle-privacidad').prop('checked', privacidad).change();  
+
+                                                $(function() {
+                                                  $('#toggle-privacidad').change(function() {
+                                                     $.ajax({
+                                                     url:"http://localhost:8080/WebApplication/api/modificarPrivacidadCanal.jsp?id="+'<%=canalUser_id%>',
+                                                     
+                                                });
+                                                })}
+                                                )
+
                                                </script>                                             
                                             </li>
+                                            </form>
                                             </div>
+                                            
                                             </div>
                                             </div>
                              
