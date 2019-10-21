@@ -359,46 +359,47 @@ public class UyTubeFrame extends javax.swing.JFrame {
         cate.AltaCategoria("Gente y blogs");
         cate.AltaCategoria("Mascotas y animales");
         cate.AltaCategoria("Viajes y eventos");
-
+		JOptionPane.showMessageDialog(null,"Categorias agregadas");
         //USUARIOS
         SimpleDateFormat dateformat = new SimpleDateFormat("dd/M/yyyy");
         try {
-        user.AltaUsuario("hrubino", "123", "Horacio", "Rubino", "horacio.rubino@guambia.com.uy", dateformat.parse("25/02/1962") , "hrubino.jpg");
-        user.AltaUsuario("mbusca", "123", "Martín", "Buscaglia", "Martin.bus@agadu.org.uy", dateformat.parse("14/06/1972") , "mbusca.jpg");
-        user.AltaUsuario("hectorg", "123", "Héctor", "Guido", "hector.gui@elgalpon.org.uy",dateformat.parse("07/01/1954") , "");
-        user.AltaUsuario("tabarec", "123", "Tabaré", "Cardozo", "tabare.car@agadu.org.uy", dateformat.parse("24/07/1971"), "tabarec.jpg");
-        user.AltaUsuario("cachilas", "123", "Waldemar \"Cachila\"", "Silva", "Cachila.sil@c1080.org.uy", dateformat.parse("01/01/1947") , "cachilas.jpg");
-        user.AltaUsuario("juliob", "123", "Julio", "Bocca", "juliobocca@sodre.com.uy", dateformat.parse("16/03/1967") , "");
-        user.AltaUsuario("diegop", "123", "Diego", "Parodi", "diego@efectocine.com", dateformat.parse("01/01/1975") , "");
-        user.AltaUsuario("kairoh", "123", "Kairo", "Herrera", "kairoher@pilsenrock.com.uy", dateformat.parse("25/04/1840") , "kairoh.jpg");
-        user.AltaUsuario("robinh", "123", "Robin", "Henderson", "Robin.h@tinglesa.com.uy", dateformat.parse("03/08/1940") , "");
-        user.AltaUsuario("marcelot", "123", "Marcelo", "Tinelli", "marcelot@ideasdelsur.com.ar", dateformat.parse("01/04/1960") , "");
-        user.AltaUsuario("novick", "123", "Edgardo", "Novick", "edgardo@novick.com.uy", dateformat.parse("17/07/1952") , "");
-        user.AltaUsuario("sergiop", "123", "Sergio", "Puglia", "puglia@alpanpan.com.uy", dateformat.parse("28/01/1950") , "");
-        user.AltaUsuario("chino", "123", "Alvaro", "Recoba", "chino@trico.org.uy", dateformat.parse("17/03/1976") , "chino.jpg");
-        user.AltaUsuario("tonyp", "123", "Antonio", "Pacheco", "eltony@manya.org.uy", dateformat.parse("14/02/1955") , "tonyp.jpg");
-        user.AltaUsuario("nicoJ", "123", "Nicolás", "Jodal", "jodal@artech.com.uy", dateformat.parse("09/08/1960") , "");
+        user.AltaUsuario("hrubino", "Rufus123", "Horacio", "Rubino", "horacio.rubino@guambia.com.uy", dateformat.parse("25/02/1962") , "hrubino.jpg");
+        user.AltaUsuario("mbusca", "Cookie234", "Martín", "Buscaglia", "Martin.bus@agadu.org.uy", dateformat.parse("14/06/1972") , "mbusca.jpg");
+        user.AltaUsuario("hectorg", "Poncho345", "Héctor", "Guido", "hector.gui@elgalpon.org.uy",dateformat.parse("07/01/1954") , "");
+        user.AltaUsuario("tabarec", "Ketchup1", "Tabaré", "Cardozo", "tabare.car@agadu.org.uy", dateformat.parse("24/07/1971"), "tabarec.jpg");
+        user.AltaUsuario("cachilas", "Sancho456", "Waldemar 'Cachila'", "Silva", "Cachila.sil@c1080.org.uy", dateformat.parse("01/01/1947") , "cachilas.jpg");
+        user.AltaUsuario("juliob", "Salome56", "Julio", "Bocca", "juliobocca@sodre.com.uy", dateformat.parse("16/03/1967") , "");
+        user.AltaUsuario("diegop", "Ruffo678", "Diego", "Parodi", "diego@efectocine.com", dateformat.parse("01/01/1975") , "");
+        user.AltaUsuario("kairoh", "Corbata15", "Kairo", "Herrera", "kairoher@pilsenrock.com.uy", dateformat.parse("25/04/1840") , "kairoh.jpg");
+        user.AltaUsuario("robinh", "Aquiles67", "Robin", "Henderson", "Robin.h@tinglesa.com.uy", dateformat.parse("03/08/1940") , "");
+        user.AltaUsuario("marcelot", "Mancha890", "Marcelo", "Tinelli", "marcelot@ideasdelsur.com.ar", dateformat.parse("01/04/1960") , "");
+        user.AltaUsuario("novick", "Xenon987", "Edgardo", "Novick", "edgardo@novick.com.uy", dateformat.parse("17/07/1952") , "");
+        user.AltaUsuario("sergiop", "Sultan876", "Sergio", "Puglia", "puglia@alpanpan.com.uy", dateformat.parse("28/01/1950") , "");
+        user.AltaUsuario("chino", "Laika765", "Alvaro", "Recoba", "chino@trico.org.uy", dateformat.parse("17/03/1976") , "chino.jpg");
+        user.AltaUsuario("tonyp", "Kitty543", "Antonio", "Pacheco", "eltony@manya.org.uy", dateformat.parse("14/02/1955") , "tonyp.jpg");
+        user.AltaUsuario("nicoJ", "Albino80", "Nicolás", "Jodal", "jodal@artech.com.uy", dateformat.parse("09/08/1960") , "");
         } catch (ParseException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
        //CANALES
-       user.AltaCanal("Canal Horacio", false, "Ninguna", 1, "El canal Horacio es para publicar contenido divertido");
+       user.AltaCanal("Canal Horacio", false, "Entretenimiento", 1, "El canal Horacio es para publicar contenido divertido");
        user.AltaCanal("El bocha", false, "Ninguna", 2, "Mi canal para colgar cosas");
-       user.AltaCanal("Canal Héctor", false, "Ninguna", 3, "Canal HG");
+       user.AltaCanal("hectorg", false, "Ninguna", 3, "Canal HG");
        user.AltaCanal("Tabaré", false, "Ninguna", 4, "Mi música e ainda mais");
        user.AltaCanal("El Cachila", true, "Ninguna", 5, "Para juntar cosas");
-       user.AltaCanal("Canal Julio", false, "Ninguna", 6, "Canal de JB");
-       user.AltaCanal("Canal Diego", false, "Ninguna", 7, "Canal de DP");
-       user.AltaCanal("Kairo música", false, "Ninguna", 8, "Videos de grandes canciones de hoy y siempre");
-       user.AltaCanal("Canal Robin", false, "Ninguna", 9, "Henderson");
+       user.AltaCanal("juliob", false, "Ninguna", 6, "Canal de JB");
+       user.AltaCanal("diegop", false, "Ninguna", 7, "Canal de DP");
+       user.AltaCanal("Kairo música", false, "Música", 8, "Videos de grandes canciones de hoy y siempre");
+       user.AltaCanal("robinh", false, "Ninguna", 9, "Henderson");
        user.AltaCanal("Tinelli total", false, "Ninguna", 10, "Todo lo que querías y más !");
        user.AltaCanal("Con la gente", false, "Ninguna", 11, "Preparando las elecciones");
-       user.AltaCanal("Puglia invita", false, "Ninguna", 12, "Programas del ciclo y videos de cocina masterchef");
-       user.AltaCanal("Chino Recoba", true, "Ninguna", 13, "Canal de goles con Nacional");
-       user.AltaCanal("Tony Pacheco", true, "Ninguna", 14, "Todos los goles con Peñarol");
-       user.AltaCanal("Desde Genexus", false, "Ninguna", 15, "Canal información C y T");
-       //SEGUIDORES
+       user.AltaCanal("Puglia invita", false, "Comida", 12, "Programas del ciclo y videos de cocina masterchef");
+       user.AltaCanal("Chino Recoba", true, "Deporte", 13, "Canal de goles con Nacional");
+       user.AltaCanal("Tony Pacheco", true, "Deporte", 14, "Todos los goles con Peñarol");
+       user.AltaCanal("Desde Genexus", false, "Ciencia y Tecnología", 15, "Canal información C y T");
+       JOptionPane.showMessageDialog(null,"Usuarios y canales agregados");
+	   //SEGUIDORES
        user.seguirUsuario("hrubino", "hectorg");
        user.seguirUsuario("hrubino", "diegop");
        user.seguirUsuario("mbusca", "tabarec");
@@ -428,6 +429,7 @@ public class UyTubeFrame extends javax.swing.JFrame {
        user.seguirUsuario("chino", "tonyp");
        user.seguirUsuario("tonyp", "sergiop");
        user.seguirUsuario("nicoJ", "diegop");
+	   JOptionPane.showMessageDialog(null,"Suscripciones agregadas");
         //VIDEO
         vid.AltaVideo("Locura celeste", "3.04", "https://youtu.be/PAfbzKcePx0", "Una cancion de fubol", 4, "Música");
         vid.AltaVideo("Niño payaso", "4.18", "https://youtu.be/K-uEIUnyZPg", "la emocion explota", 4 , "Música");
@@ -455,6 +457,7 @@ public class UyTubeFrame extends javax.swing.JFrame {
         vid.ModificarVideo(13, "", "", "", "", null, false, "Ninguna");
         vid.AltaVideo("Ventana al futuro Uruguay y déficit de ingenieros", "19.21", "https://youtu.be/zBR2pnASlQE", "Muy complicado este tema, hicimos un video para aclarar", 15 , "Ciencia y Tecnología");
         vid.ModificarVideo(13, "", "", "", "", null, false, "Ninguna");
+		JOptionPane.showMessageDialog(null,"Videos agregados");
         // lista de reproduccion
         //por defecto
         user.AltaListaDeReproduccionPorDefecto("Escuchar más tarde");
@@ -467,6 +470,7 @@ public class UyTubeFrame extends javax.swing.JFrame {
         user.AltaListaDeReproduccionParticular("De todo un poco", 5, true, "Ninguna"); //MUS, DEP y CAR
         user.AltaListaDeReproduccionParticular("Noticias y CYT", 15, false, "Ciencia y Tecnología"); //NOT y CYT
         user.AltaListaDeReproduccionParticular("Solo deportes", 6, false, "Deporte");
+		JOptionPane.showMessageDialog(null,"Listas agregadas");
         //videos en las listas
         user.AgregarVideoListaDeReproduccion(6, 8, "Sweet child'o mine", "Nostalgia");
         user.AgregarVideoListaDeReproduccion(8, 8, "Dancing in the Dark", "Nostalgia");
@@ -486,18 +490,19 @@ public class UyTubeFrame extends javax.swing.JFrame {
         user.AgregarVideoListaDeReproduccion(15, 15, "Ventana al futuro Uruguay y déficit de ingenieros", "Noticias y CYT");
         user.AgregarVideoListaDeReproduccion(6, 6, "Show de goles", "Solo deportes");
         user.AgregarVideoListaDeReproduccion(6, 6, "Inauguración Estadio Peñarol", "Solo deportes");
+		JOptionPane.showMessageDialog(null,"Videos agregados a listas");
         SimpleDateFormat dateformat2 = new SimpleDateFormat("dd/M/yyyy HH:mm");
         try {
             vid.ComentarVideo(15, 7, -1 ,"Fue un gran evento" , dateformat2.parse("05/12/17 14:35"));
-            vid.ComentarVideo(1, 7, 1 ,"Para el próximo aniversario ofrezco vamo’ con los Momo" , dateformat2.parse("05/12/17 14:35"));
-            vid.ComentarVideo(4, 7, 2 ,"Yo ofrezco a la banda tb" , dateformat2.parse("05/12/2017 14:35"));
-            vid.ComentarVideo(15, 6, -1 ,"Felicitaciones FING!!!" , dateformat2.parse("05/12/2017 14:35"));
-            vid.ComentarVideo(8, 8, -1 ,"Un gusto cubrir eventos como este." , dateformat2.parse("05/12/2017 14:35"));
-            vid.ComentarVideo(8, 13, -1 ,"Peñarol peñarol!!!" , dateformat2.parse("05/12/2017 14:35"));
-            vid.ComentarVideo(10, 3, -1 ,"Rock and Rolllll" , dateformat2.parse("05/12/2017 14:35"));
-            vid.ComentarVideo(10, 4, -1 ,"Anoche explotó!!!" , dateformat2.parse("05/12/2017 14:35"));
-            vid.ComentarVideo(10, 1, -1 ,"Me encanta este tema" , dateformat2.parse("05/12/2017 14:35"));
-            vid.ComentarVideo(4, 1, 9 ,"Gracias Marce" , dateformat2.parse("05/12/2017 14:35"));
+            vid.ComentarVideo(1, 7, 1 ,"Para el próximo aniversario ofrezco vamo’ con los Momo" , dateformat2.parse("08/12/2017 01:47"));
+            vid.ComentarVideo(4, 7, 2 ,"Yo ofrezco a la banda tb" , dateformat2.parse("10/12/2017 17:09"));
+            vid.ComentarVideo(15, 6, -1 ,"Felicitaciones FING!!!" , dateformat2.parse("07/09/2017 04:56"));
+            vid.ComentarVideo(8, 8, -1 ,"Un gusto cubrir eventos como este." , dateformat2.parse("23/10/2017 12:58"));
+            vid.ComentarVideo(8, 13, -1 ,"Peñarol peñarol!!!" , dateformat2.parse("14/11/2016 05:34"));
+            vid.ComentarVideo(10, 3, -1 ,"Rock and Rolllll" , dateformat2.parse("30/10/2017 02:17"));
+            vid.ComentarVideo(10, 4, -1 ,"Anoche explotó!!!" , dateformat2.parse("25/08/2018 18:00"));
+            vid.ComentarVideo(10, 1, 5 ,"Se viene la edición 2018" , dateformat2.parse("11/09/2018 03:45"));
+            vid.ComentarVideo(4, 1, -1 ,"Mi preferido por lejos!!" , dateformat2.parse("15/09/2017 12:29"));
             JOptionPane.showMessageDialog(null,"Comentarios agregados");
         } catch (ParseException e) {
             e.printStackTrace();
@@ -506,11 +511,11 @@ public class UyTubeFrame extends javax.swing.JFrame {
         vid.ValorarVideo(12, 7, false);
         vid.ValorarVideo(12, 8, true);
         vid.ValorarVideo(12, 11, true);
-        vid.ValorarVideo(15, 1, false);
+        vid.ValorarVideo(15, 4, false);
         vid.ValorarVideo(15, 7, true);
         vid.ValorarVideo(8, 7, true);
         vid.ValorarVideo(8, 13, true);
-        vid.ValorarVideo(10, 1, true);
+        vid.ValorarVideo(10, 8, true);
         vid.ValorarVideo(10, 4, true);
         JOptionPane.showMessageDialog(null,"Valoraciones agregadas");
         JOptionPane.showMessageDialog(null,"Datos cargados");
