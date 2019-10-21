@@ -68,6 +68,7 @@
                 
                 
                 int _id = 1;
+                _id = Integer.parseInt(request.getParameter("iddelvideo"));
                 VideoDt vidx = vid.obtenerVideoDtPorID(_id);
                 int idcanal = vidx.getIdCanal();
                 
@@ -197,14 +198,14 @@
                                         </div>
                                         
                                         <div class="form-group row">
-                                            <label for="minutos" class="col-md-4 col-form-label text-md-right">Nueva duración (minutos)</label>
+                                            <label for="minutos" class="col-md-4 col-form-label text-md-right">Nueva duraci?n (minutos)</label>
                                             <div class="col-md-6">
                                                 <input type="number" id="minutos" class="form-control" name="minutos" requiered min="0" max="59" required value="<%if(minutosint!=null){out.print(minutosint);} %>">
                                             </div>
                                         </div>
 
                                         <div class="form-group row">
-                                            <label for="segundos" class="col-md-4 col-form-label text-md-right">Nueva duración (segundos)</label>
+                                            <label for="segundos" class="col-md-4 col-form-label text-md-right">Nueva duraci?n (segundos)</label>
                                             <div class="col-md-6">
                                                 <input type="number" id="segundos" class="form-control" name="segundos" requiered min="0" max="59"  required value="<%if(segundosint!=null){out.print(segundosint);} %>">
                                             </div>
@@ -218,7 +219,7 @@
                                         </div>
                                     
                                         <div class="form-group row">
-                                            <label for="desc" class="col-md-4 col-form-label text-md-right"> Nueva Descripción</label>
+                                            <label for="desc" class="col-md-4 col-form-label text-md-right"> Nueva Descripci?n</label>
                                             <div class="col-md-6">
                                                 <input type="text" id="desc" class="form-control" name="desc" required value="<%if(descripcionUp!=null){out.print(descripcionUp);} %>">
                                             </div>
@@ -291,7 +292,7 @@
 
                                         <% if (session.getAttribute("errormodificarVideo")=="privacidad") { %>
                                                 <div class="alert alert-danger" role="alert">
-                                                    No se puede tener un video público en un canal privado.
+                                                    No se puede tener un video p?blico en un canal privado.
                                                 </div>
                                             <%}
                                         %>
