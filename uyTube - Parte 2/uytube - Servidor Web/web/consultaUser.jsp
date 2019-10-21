@@ -37,10 +37,18 @@
         UsuarioDt u = user.ConsultarUsuario(canalUser_id);
             Boolean estaSuscripto2 = false; 
              List<String> seguidores = user.ListarSeguidores(canalUser_id);
-            if(session.getAttribute("userid") != null) estaSuscripto2 = user.estaSuscripto((int)session.getAttribute("userid"), u.getId());
-            
+             int userid=-1;
+            if(session.getAttribute("userid") != null){ 
+                estaSuscripto2 = user.estaSuscripto((int)session.getAttribute("userid"), u.getId());
+                userid =(int)session.getAttribute("userid");
+            }
+            boolean privacidad = false;
+       if(user.obtenerCanalDt(canalUser_id).getPrivacidad()) privacidad = true; 
 %>
-<script>var canalUser_id="<%=canalUser_id%>";</script>     
+<script>var canalUser_id="<%=canalUser_id%>";
+            privacidad= "<%=privacidad%>";
+            userid = "<%=userid%>";
+</script>     
 <script>
         myData = [];
         idUsr = 0; 
@@ -54,7 +62,7 @@
                listarVideos();
                listarSeguidores();
                 listarSeguidos();
-          /*$( "#btnBuscarUsuario" ).click(function() {
+toggleOn();          /*$( "#btnBuscarUsuario" ).click(function() {
              
               listarVideos();
               listarListas();
@@ -84,7 +92,9 @@
                 }
             });
         }*/
-          
+        function modificarPrivacidad(){
+            
+        }  
         
         function listarDatosUsuario() {
             $.ajax({
@@ -109,9 +119,9 @@
                         html += "</tr>";
                      $('.table tbody').html(html);
                         var img = document.getElementById("imgU");
-                        img.src = usuarios[i].imagen; //aca va img.src = usuarios[i].imagen;
-                        img.width = "30";
-                        img.height = "30";
+                        img.src = "http://localhost:8080/images/"+usuarios[i].imagen; //aca va img.src = usuarios[i].imagen;
+                        img.width = "100";
+                        img.height = "100";
                         img.alt="User Picture";
                         var src = document.getElementById("usrImg");
                         document.getElementById("usrNmb").innerHTML = usuarios[i].nickname;
@@ -154,7 +164,12 @@
                                        
                                        html += '<td>'+videos[i].descripcion+'</td>';
                                        html += '<td>'+videos[i].user+'</td>';
-/*aca esta el boton de modifica video*/html += '<td> <a href=http://localhost:8080/WebApplication/modificarVideo.jsp?nombre='+videos[i].nombre+'&desc='+videos[i].descripcion+'&url='+ videos[i].url+'&categoria='+videos[i].categoria +'&datepicker='+ videos[i].fecha+'&minutos='+ videos[i].minutos+'&segundos='+ videos[i].minutos+'"><button class="fas fa-edit" ></button></a></td>';
+                                        var usrid = '<%=canalUser_id%>';
+                                         
+/*aca esta el boton de modifica video*/if((userid !== -1)&&(userid ==usrid)){
+    html += '<td> <a href=http://localhost:8080/WebApplication/modificarVideo.jsp?iddelvideo='+videos[i].id+'><button class="fas fa-edit" ></button></a></td>';
+}else{html += '<td></td>';}
+
                                        //href=http://localhost:8080/WebApplication/modificarVideo.jsp?nombre='+videos[i].id +'&desc='+videos[i].descripcion+'&url='+ videos[i].url+'&categoria='+videos[i].categoria +'&datepicker='+ videos[i].fecha+'&minutos='+ videos[i].minutos+'&segundos='+ videos[i].minutos+'"
                                        html += "</tr>";
                                   }
@@ -223,6 +238,7 @@
                                 
                            });
         }
+        
          function listarSeguidos() {
             
                            $.ajax({
@@ -248,7 +264,9 @@
                                 
                            });
         }
-        
+         function toggleOn() {
+                                                     $('#toggle-privacidad').prop('checked', false).change();
+                                                }
     </script>
     
    <main class="comentar-form">
@@ -324,6 +342,9 @@
                                             <div style="float: left;">
                                             <li class="nav-item px-2"> Privacidad: 
                                               <input id="toggle-privacidad" type="checkbox" data-toggle="toggle" data-onstyle="dark" data-on="Público" data-off="Privado" data-width="150">
+                                               <script>                                                   
+                                                $('#toggle-privacidad').prop('checked', privacidad).change();  
+                                               </script>                                             
                                             </li>
                                             </div>
                                             </div>
