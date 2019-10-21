@@ -13,6 +13,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultMutableTreeNode;
 import logica.Canal;
@@ -91,10 +92,10 @@ public class ControladorVideo implements IControladorVideo {
             java.util.Date fecha = new Date();
 
             Video vid = emanager.find(Video.class, id);
-            if(!nuevoNom.isBlank()) vid.setNombre(nuevoNom);
-            if(!nuevaDur.isBlank()) vid.setDuracion(Float.parseFloat(nuevaDur));
-            if(!nuevaUrl.isBlank()) vid.setUrl(nuevaUrl);
-            if(!nuevaDesc.isBlank()) vid.setDescripcion(nuevaDesc);
+            if(!nuevoNom.isEmpty()) vid.setNombre(nuevoNom);
+            if(!nuevaDur.isEmpty()) vid.setDuracion(Float.parseFloat(nuevaDur));
+            if(!nuevaUrl.isEmpty()) vid.setUrl(nuevaUrl);
+            if(!nuevaDesc.isEmpty()) vid.setDescripcion(nuevaDesc);
             if(nuevaFpub != null){
                 if(nuevaFpub.after(fecha)) throw new Exception("Fecha Imposible aun no estamos en esa fecha");
                 vid.setFechaPublicacion(nuevaFpub);
@@ -209,7 +210,7 @@ public class ControladorVideo implements IControladorVideo {
                 if(cnl == null) throw new Exception("El usuario no existe");
                 
                 
-                var querry = emanager.createQuery("SELECT v FROM Video v WHERE v.nombre = :nombre AND v.canal_user_id = :canal_user_id", Video.class);
+                TypedQuery<Video> querry = emanager.createQuery("SELECT v FROM Video v WHERE v.nombre = :nombre AND v.canal_user_id = :canal_user_id", Video.class);
                 
                 Video video = querry.setParameter("nombre", nom).setParameter("canal_user_id", user).getSingleResult();
                 if(video == null) throw new Exception("El video no existe");

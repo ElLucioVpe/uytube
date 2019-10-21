@@ -3,6 +3,7 @@ package logica.testing;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -102,6 +103,9 @@ public class IControladorCategoriaTest {
 		IControladorCategoria cat1 = Fabrica.getInstance().getIControladorCategoria();
 		cat1.EliminarCategoria("_-_categoriaTest_-_");
 		cat1.EliminarCategoria("_-_categoriaTest_-_2");
+
+		   
 	}
+	
 	
 }

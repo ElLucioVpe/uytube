@@ -35,20 +35,20 @@ public class VideoDt {
         this.id = id;
     }
     
-    public VideoDt(Video video){
-        this.id= video.getId();
-        this.nombre = video.getNombre();
-        this.duracion = video.getDuracion();
-        this.url = video.getUrl();
-        this.descripcion = video.getDescripcion();
-        this.fechaPublicacion = video.getFechaPublicacion();
-        this.privacidad  = video.getPrivacidad();
-        this.valoraciones = video.getValoraciones();
-        this.canal_user_id = video.getIdUsuario();
-        this.categoria = video.getCategoria();
+    public VideoDt(Video v){
+        this.id= v.getId();
+        this.nombre = v.getNombre();
+        this.duracion = v.getDuracion();
+        this.url = v.getUrl();
+        this.descripcion = v.getDescripcion();
+        this.fechaPublicacion = v.getFechaPublicacion();
+        this.privacidad  = v.getPrivacidad();
+        this.valoraciones = v.getValoraciones();
+        this.canal_user_id = v.getIdUsuario();
+        this.categoria = v.getCategoria();
         //por cosas de la vida asi se queda
-        this.likes = video.getLikes();
-        this.dislikes = video.getDislikes();
+        this.likes = v.getLikes();
+        this.dislikes = v.getDislikes();
     }
 
     public Integer getId() {
@@ -84,13 +84,13 @@ public class VideoDt {
     }
     
     public String getThumbnail() {
-        var _url = "";
+        String _url = "";
         if(this.url.length() > 17) {
             if(this.url.contains("https://youtu.be/")) {
-                var video_id = url.substring(17);
+            	String video_id = url.substring(17);
                 _url = "https://img.youtube.com/vi/" + video_id + "/3.jpg";
             } else if (this.url.contains("https://www.youtube.com/")) {
-                var video_id = url.substring(24);
+            	String video_id = url.substring(24);
                 _url = "https://img.youtube.com/vi/" + video_id + "/3.jpg";
             }
         }
@@ -98,8 +98,8 @@ public class VideoDt {
     }
     
     public String getEmbedded() {
-        var _url = "";
-        var video_id = "";
+    	String _url = "";
+    	String video_id = "";
         if(this.url.length() > 17) {
             if(this.url.contains("https://youtu.be/")) {
                 video_id = url.substring(17);

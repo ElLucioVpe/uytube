@@ -61,7 +61,7 @@ public class ControladorUsuario implements IControladorUsuario {
                 throw new Exception("El mail no es valido");
             
             Usuario user = new Usuario(nick, pass, nom, apell, mail, fnac);
-            if(!img.isBlank()) user.setImagen(img);
+            if(!img.isEmpty()) user.setImagen(img);
 
             emanager.persist(user);
             emanager.getTransaction().commit();
@@ -86,7 +86,7 @@ public class ControladorUsuario implements IControladorUsuario {
                 throw new Exception("El nombre del canal ya existe");
 
             Usuario user = emanager.find(Usuario.class, user_id);
-            if(nombre.isBlank()) nombre = user.getNickname();
+            if(nombre.isEmpty()) nombre = user.getNickname();
             
             Canal cnl = new Canal(user_id, nombre, privado);
             if(!descripcion.isEmpty()) cnl.setDescripcion(descripcion);
@@ -136,16 +136,16 @@ public class ControladorUsuario implements IControladorUsuario {
             emanager.getTransaction().begin();
 
             Usuario user = emanager.find(Usuario.class, id_user);
-            if(!nuevonom.isBlank()) user.setNombre(nuevonom);
-            if(!nuevoapell.isBlank()) user.setApellido(nuevoapell);
-            if(!nuevopass.isBlank()) user.setPassword(nuevopass);
+            if(!nuevonom.isEmpty()) user.setNombre(nuevonom);
+            if(!nuevoapell.isEmpty()) user.setApellido(nuevoapell);
+            if(!nuevopass.isEmpty()) user.setPassword(nuevopass);
             if(nuevafechaNac != null) user.setFechanac(nuevafechaNac);
-            if(!nuevaImg.isBlank()) user.setImagen(nuevaImg);
+            if(!nuevaImg.isEmpty()) user.setImagen(nuevaImg);
 
             Canal cnl = emanager.find(Canal.class, user.getId()); //Por las dudas lo busco con find
-            if(!nuevonomC.isBlank()) cnl.setNombre(nuevonomC);
-            if(!nuevadesC.isBlank()) cnl.setDescripcion(nuevadesC);
-            if(!nuevacatC.isBlank()){
+            if(!nuevonomC.isEmpty()) cnl.setNombre(nuevonomC);
+            if(!nuevadesC.isEmpty()) cnl.setDescripcion(nuevadesC);
+            if(!nuevacatC.isEmpty()){
                 Categoria cat = emanager.find(Categoria.class, nuevacatC);
                 cnl.setCategoria(cat);
             }
@@ -412,10 +412,15 @@ public class ControladorUsuario implements IControladorUsuario {
             EntityManager emanager = emFactory.createEntityManager();
             emanager.getTransaction().begin();
 
-            Canal cnl = emanager.find(Canal.class, obtenerIdUsuario(seguido));
+            int idSeguido = obtenerIdUsuario(seguido);
+            Canal cnl = emanager.find(Canal.class, idSeguido);
             if(cnl == null) throw new Exception("Ese usuario al que quiere seguir no existe o no tiene canal");
-            Usuario uSeguidor = emanager.find(Usuario.class, obtenerIdUsuario(seguidor));
+            
+            int idSeguidor = obtenerIdUsuario(seguidor);
+            Usuario uSeguidor = emanager.find(Usuario.class, idSeguidor);
+            //System.out.println("--"+seguidor+"--"+obtenerIdUsuario(seguidor));
             if(uSeguidor == null) throw new Exception("El usuario seguidor no existe");
+            
             if(cnl.getSeguidores().contains(uSeguidor)) throw new Exception("El usuario ya es seguidor del canal");
             
             cnl.agregarSeguidor(uSeguidor);
@@ -493,12 +498,16 @@ public class ControladorUsuario implements IControladorUsuario {
       try {
             EntityManager emanager = emFactory.createEntityManager();
             emanager.getTransaction().begin();
-            Canal cnl = emanager.find(Canal.class, obtenerIdUsuario(seguido));
-            if(cnl == null)
-                throw new Exception("Ese usuario al que quiere seguir no existe o no tiene canal");
-            Usuario uSeguidor = emanager.find(Usuario.class, obtenerIdUsuario(seguidor));
-            if(uSeguidor == null)
-                throw new Exception("El usuario seguidor no existe");
+            
+            int idSeguido = obtenerIdUsuario(seguido);
+            Canal cnl = emanager.find(Canal.class, idSeguido);
+            if(cnl == null) throw new Exception("Ese usuario al que quiere dejar de seguir no existe o no tiene canal");
+            
+            int idSeguidor = obtenerIdUsuario(seguidor);
+            Usuario uSeguidor = emanager.find(Usuario.class, idSeguidor);
+            //System.out.println("--"+seguidor+"--"+obtenerIdUsuario(seguidor));
+            if(uSeguidor == null) throw new Exception("El usuario seguidor no existe");
+            
             //con asegurarnos de uno de los lados de la relacion basta
             if(!cnl.getSeguidores().contains(uSeguidor)) throw new Exception("El usuario no es seguidor del canal");
             

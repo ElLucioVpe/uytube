@@ -18,9 +18,9 @@ public class valoracionDt {
     public valoracionDt() {     
     }
     
-    public valoracionDt(Valoracion val) {
-        this.user=val.getUsuario().getNickname();
-        this.like=val.getGustar();
+    public valoracionDt(Valoracion v) {
+        this.user=v.getUsuario().getNickname();
+        this.like=v.getGustar();
     }
      
     public String getUser() {

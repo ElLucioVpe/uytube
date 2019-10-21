@@ -84,13 +84,13 @@ public class VideoDt {
     }
     
     public String getThumbnail() {
-        var _url = "";
+        String _url = "";
         if(this.url.length() > 17) {
             if(this.url.contains("https://youtu.be/")) {
-                var video_id = url.substring(17);
+            	String video_id = url.substring(17);
                 _url = "https://img.youtube.com/vi/" + video_id + "/3.jpg";
             } else if (this.url.contains("https://www.youtube.com/")) {
-                var video_id = url.substring(24);
+            	String video_id = url.substring(24);
                 _url = "https://img.youtube.com/vi/" + video_id + "/3.jpg";
             }
         }
@@ -98,8 +98,8 @@ public class VideoDt {
     }
     
     public String getEmbedded() {
-        var _url = "";
-        var video_id = "";
+    	String _url = "";
+    	String video_id = "";
         if(this.url.length() > 17) {
             if(this.url.contains("https://youtu.be/")) {
                 video_id = url.substring(17);

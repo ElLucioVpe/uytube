@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -94,7 +95,8 @@ class IControladorUsuarioTest {
 		int FallaPorMail = controladorU.obtenerIdUsuario("FallaPorMail");
 		UsuarioDt userFallaPorMail = controladorU.ConsultarUsuario(FallaPorMail);
 		
-		
+		int idUserEliminar = controladorU.obtenerIdUsuario("_-usuarioTest-_");
+		controladorU.EliminarUsuario(idUserEliminar);
 		
 	}
 	
@@ -221,35 +223,6 @@ class IControladorUsuarioTest {
 	
 	
 	
-	public void altaListaReporudccionTest() {
-		controladorU.AltaListaDeReproduccionPorDefecto("_ListaTest_");
-		
-		List<UsuarioDt> ListaUsers = controladorU.ListarUsuarios();
-		List<ListaDeReproduccionDt> ListaReproduccion = controladorU.obtenerListas();
-		int usersCount=ListaUsers.size();
-		int  ListasConNombre=0;
-		
-		for (ListaDeReproduccionDt temp : ListaReproduccion) {
-			
-			if(temp.getNombre().contains("_ListaTest_")) {
-				ListasConNombre++;
-			}
-		}
-		
-		
-		assertEquals(usersCount,ListasConNombre);
-		
-		//Forzando Catch
-		int OldUserCounts = ListaReproduccion.size();
-		controladorU.AltaListaDeReproduccionPorDefecto(null);
-		List<UsuarioDt> ListaUsersNueva = controladorU.ListarUsuarios();
-		int newUsersCounts = ListaUsersNueva.size();
-		
-		assertEquals(OldUserCounts,newUsersCounts);
-		
-	}
-	
-	
 	@Test
 	@Order(4)
 	public void obtenerIdUsuarioMailTest() {
@@ -264,6 +237,7 @@ class IControladorUsuarioTest {
 		 
 		 
 		 //llamando catch
+		 controladorU.obtenerIdUsuarioMail(null);
 		 int idObtenidaError = controladorU.obtenerIdUsuarioMail("");
 		 assertEquals(-1,idObtenidaError);
 	}
@@ -272,6 +246,11 @@ class IControladorUsuarioTest {
 	@Test
 	@Order(5)
     public void AltaListaDeReproduccionParticularTest() {
+		int idUser = controladorU.obtenerIdUsuario("UsuarioParticular");
+
+        controladorU.AltaListaDeReproduccionParticular("rock2", idUser, false, "Carnaval");
+		
+		
 		int idUserPropietario = controladorU.obtenerIdUsuario("Luigi");
 		controladorU.AltaListaDeReproduccionParticular("rock", idUserPropietario, false, "Carnaval");
 		List<String> listasUser = controladorU.obtenerListasUsuario(idUserPropietario);
@@ -305,7 +284,6 @@ class IControladorUsuarioTest {
 	@Order(7)
 	public void AgregarVideoListaDeReproduccionTest() {
 		int idUserPropietario = controladorU.obtenerIdUsuario("Luigi");
-		controladorV.AltaVideo("tsunami", "12.30", "https://youtu.be/vo7iZIjTM6g", "trueno", idUserPropietario, "Entretenimiento");
 		controladorU.AgregarVideoListaDeReproduccion(idUserPropietario, idUserPropietario, "tsunami", "rock");
 		
 		ListaDeReproduccionDt listaObtenida = controladorU.obtenerListaDt(idUserPropietario, "rock");
@@ -362,7 +340,7 @@ class IControladorUsuarioTest {
 				}
 		}
 		
-		assertEquals(true,encontrado);
+		assertEquals(false,encontrado);
 		
 		
 		//Catch
@@ -420,11 +398,13 @@ class IControladorUsuarioTest {
 		controladorU.obtenerListas();
 		
 		int idUserVerificado = controladorU.obtenerIdUsuario("Luigi");
+		controladorU.AltaListaDeReproduccionParticular("listaMagicaRd", idUserVerificado, false, "Carnaval");
+
 		List<ListaDeReproduccionDt> listaDeUser = controladorU.obtenerListasDtPorUsuario(idUserVerificado);
 		boolean encontrado = false;
 		for (ListaDeReproduccionDt l : listaDeUser) {
 			
-			if((l.getPrivada()==false)&&(l.getCategoria().equals("Carnaval"))&&(l.getNombre().equals("listaMagica"))&&(l.getIdUsuario()==idUserVerificado)) {
+			if((l.getPrivada()==false)&&(l.getCategoria().equals("Carnaval"))&&(l.getNombre().equals("listaMagicaRd"))&&(l.getIdUsuario()==idUserVerificado)) {
 				encontrado=true;
 			}
 		}
@@ -479,6 +459,7 @@ class IControladorUsuarioTest {
 	public void obtenerListasPorIdTest() {
         ListaDeReproduccionDt _lista = controladorU.obtenerListaDtPorId(1);
         assertEquals(1,_lista.getId());
+        
         assertEquals("Escuchar más tarde",_lista.getNombre());
 	}
 	
@@ -486,30 +467,47 @@ class IControladorUsuarioTest {
 	@Test
     @Order(17)
     public void testListarVideosDeUsuario() {
+		  try {
+				TimeUnit.SECONDS.sleep(60);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	        
+		  
         int iduser = controladorU.obtenerIdUsuario("Luigi");
+        assertFalse(controladorU.listarVideosDeUsuario("Luigi").isEmpty());
         //Fuerzo catch
         controladorU.listarVideosDeUsuario("-userTest-_QueNoExiste");
-
-        //
-        assertFalse(controladorU.listarVideosDeUsuario("Luigi").isEmpty());
+        
     }
 
-		@Test
-		@Order(18)
+	@Test
+    @Order(18)
 		public void testListarUsuarios() {
+
 			int antes = controladorU.ListarUsuarios().size();
+			int UserListar = controladorU.obtenerIdUsuario("UserListar");
+			 
+			 if(UserListar==-1) {
+				 controladorU.AltaUsuario("UserListar", "123", "1", "2", "UserListar@test.com", new Date(21/11/1999), "");
+				int id_user = controladorU.obtenerIdUsuario("UserListar");
+				controladorU.AltaCanal("UserListarCanal", false, "Carvanal", UserListar, "");
+				
+				int despues = controladorU.ListarUsuarios().size();
+				assertEquals(antes+1, despues);
+			 }else {
+				 int despues = controladorU.ListarUsuarios().size(); 
+				 assertEquals(antes, despues);
+			 }	
+			 
 			
-			controladorU.AltaUsuario("_-_usuarioTestListar_-_", "123", "1", "2", "_-_Testeo_-_@test.com", new Date(), "");
-			int id_user = controladorU.obtenerIdUsuario("_-_usuarioTestListar_-_");
-			controladorU.AltaCanal("_-_canalTestListar_-_", false, "Ninguna", id_user, "");
-			
-			int despues = controladorU.ListarUsuarios().size();
-			assertEquals(antes+1, despues);
 		}
 		
-		@Test
-		@Order(19)
+	@Test
+    @Order(19)
 		public void testListarSeguidoresYseguidos() {
+		   
 			int id_user = controladorU.obtenerIdUsuario("_-usuarioTest-_");
 			
 			//Fuerzo catch
@@ -521,38 +519,69 @@ class IControladorUsuarioTest {
 		}
 		
 		
+
 		@Test
-		@Order(20)
+	    @Order(20)
 		public void testSeguirUsuario() {
+			  
 			System.out.println("seguirUsuario");
-			//Creo un usuario de prueba
-			controladorU.AltaUsuario("_-_usuarioTestSeguidor_-_", "123", "1", "2", "3@gmail.com", new Date(), "");
-			controladorU.AltaUsuario("_-_usuarioTestSeguir_-_", "123", "1", "2", "555@gmail.com", new Date(), "");
-			
-			int id_user = controladorU.obtenerIdUsuario("_-_usuarioTestSeguidor_-_");
-			int id_user2 = controladorU.obtenerIdUsuario("_-_usuarioTestSeguir_-_");
-			controladorU.AltaCanal("_-_canalTestSeguido_-_", false, "Ninguna", id_user, "");
-			controladorU.AltaCanal("_-_canalTestSeguir_-_", false, "Ninguna", id_user2, "");
+			  try {
+					TimeUnit.MINUTES.sleep(1);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			  
+			 int id_user = controladorU.obtenerIdUsuario("seguidor");
+			 int id_user2 = controladorU.obtenerIdUsuario("seguir");
+			 
+		
+			 
+			 if(id_user==-1) {
+				//Creo un usuario de prueba
+					controladorU.AltaUsuario("seguidor", "123", "1", "2", "seguidor@gmail.com", new Date(22/11/1999), "");
+					 id_user = controladorU.obtenerIdUsuario("seguidor");
+					controladorU.AltaCanal("seguidorCanal", false, "Carnaval", id_user, "");
+				 
+			 }
+			 
+			 if(id_user2==-1) {
+					controladorU.AltaUsuario("seguir", "123", "1", "2", "seguir@gmail.com", new Date(22/11/1999), "");
+					id_user2 = controladorU.obtenerIdUsuario("seguir");
+					controladorU.AltaCanal("seguirCanal", false, "Carnaval", id_user2, "");	 
+			 }
+			 
 			
 			System.out.println(id_user+"---"+id_user2); //EL SYSTEM.OUT
-			controladorU.seguirUsuario("_-_usuarioTestSeguidor_-_", "_-_usuarioTestSeguir_-_");
+			controladorU.seguirUsuario("seguidor", "seguir");
+			
 			List<String> seguidores_user2 = controladorU.ListarSeguidores(id_user2);
+			 
+			 try {
+					TimeUnit.SECONDS.sleep(60);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			 
 			assertEquals(1, seguidores_user2.size());
-			assertEquals("_-_usuarioTestSeguidor_-_", seguidores_user2.get(0));
+			assertEquals("seguidor", seguidores_user2.get(0));
 			List<String> seguidos_user1 = controladorU.ListarSiguiendo(id_user);
 			assertEquals(1, seguidos_user1.size());
-			assertEquals("_-_usuarioTestSeguir_-_", seguidos_user1.get(0));
+			assertEquals("seguir", seguidos_user1.get(0));
 			
 			//Fuerzo catch
-			controladorU.seguirUsuario("_-_usuarioTestSeguidor_-_", "_-_usuarioTestSeguirQueNoExiste_-_");
-			controladorU.seguirUsuario("_-_usuarioTestSeguidorQueNoExiste_-_", "_-_usuarioTestSeguir_-_");
+			//controladorU.seguirUsuario("_-_usuarioTestSeguidor_-_", "_-_usuarioTestSeguirQueNoExiste_-_");
+			//controladorU.seguirUsuario("_-_usuarioTestSeguidorQueNoExiste_-_", "_-_usuarioTestSeguir_-_");
 		}
 		
+	
+
 		@Test
-		@Order(21)
+	    @Order(21)
 		public void testEstaSuscripto() {
-			int id_user1 = controladorU.obtenerIdUsuario("_-_usuarioTestSeguidor_-_");
-			int id_user2 = controladorU.obtenerIdUsuario("_-_usuarioTestSeguir_-_");
+			int id_user1 = controladorU.obtenerIdUsuario("seguidor");
+			int id_user2 = controladorU.obtenerIdUsuario("seguir");
 			
 			assertTrue(controladorU.estaSuscripto(id_user1, id_user2));
 			assertFalse(controladorU.estaSuscripto(id_user2, id_user1));
@@ -560,14 +589,17 @@ class IControladorUsuarioTest {
 			assertFalse(controladorU.estaSuscripto(-1, id_user1));
 		}
 		
+	
 		@Test
-		@Order(22)
+	    @Order(22)
 		public void testDejarDeSeguirUsuario() {
 			System.out.println("dejarDeseguirUsuario");
-			int id_user = controladorU.obtenerIdUsuario("_-_usuarioTestSeguidor_-_");
-			int id_user2 = controladorU.obtenerIdUsuario("_-_usuarioTestSeguir_-_");
+	
+			 
+			int id_user = controladorU.obtenerIdUsuario("seguidor");
+			int id_user2 = controladorU.obtenerIdUsuario("seguir");
 			
-			controladorU.dejarDeSeguirUsuario("_-_usuarioTestSeguidor_-_", "_-_usuarioTestSeguir_-_");
+			controladorU.dejarDeSeguirUsuario("seguidor", "seguir");
 			List<String> seguidores_user2 = controladorU.ListarSeguidores(id_user2);
 			assertEquals(0, seguidores_user2.size());
 			List<String> seguidos_user1 = controladorU.ListarSiguiendo(id_user);
@@ -575,22 +607,116 @@ class IControladorUsuarioTest {
 		}
 		
 		@Test
-		@Order(23)
+	    @Order(23)
 		public void testEliminarUsuario() {
+			 
+			 
 			int id_user1 = controladorU.obtenerIdUsuario("_-usuarioTest-_");
-			int id_user2 = controladorU.obtenerIdUsuario("_-_usuarioTestSeguir_-_");
+			int id_user2 = controladorU.obtenerIdUsuario("seguir");
 			
-			controladorU.EliminarUsuario(-1); //Fuerzo catch
+			if(id_user1==-1) {
+				controladorU.AltaUsuario("_-usuarioTest-_", "Cookie234", "userTester", "Buscaglia", "_-usuarioTest-_@testing.com", new Date(14/06/1972), "_-usuarioTest-_.jpg");
+		    	id_user1 = controladorU.obtenerIdUsuario("_-usuarioTest-_");
+		    	
+		        controladorU.AltaCanal("Canal userTester5", true, "Carnaval", id_user1, "El canal userTester es para publicar contenido divertido");
+				
+			}
+			if(id_user2==-1) {
+				controladorU.AltaUsuario("seguir", "123", "1", "2", "seguir@gmail.com", new Date(22/11/1999), "");
+		    	id_user2 = controladorU.obtenerIdUsuario("seguir");
+		    	controladorU.AltaCanal("seguirCanal", false, "Carnaval", id_user2, "");
+				
+			}
+			
+			
+			
 			controladorU.EliminarUsuario(id_user1);
 			controladorU.EliminarUsuario(id_user2);
 			
-			id_user1 = controladorU.obtenerIdUsuario("_-usuarioTest-_");
-			id_user2 = controladorU.obtenerIdUsuario("_-_usuarioTestSeguir_-_");
 			
+			 try {
+					TimeUnit.SECONDS.sleep(10);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			
+			id_user1 = controladorU.obtenerIdUsuario("_-usuarioTest-_");
+			id_user2 = controladorU.obtenerIdUsuario("seguir");
+			
+		
+			 
 			assertEquals(-1, id_user1);
 			assertEquals(-1, id_user2);
+			
+			controladorU.EliminarUsuario(-1); //Fuerzo catch
+		
 		}
 		
+		
+		@Test
+	    @Order(24)
+		public void EliminarListaDeReproduccionParticular() {
+			int idUserVerificado = controladorU.obtenerIdUsuario("Luigi");
+			controladorU.EliminarListaDeReproduccionParticular(idUserVerificado, "listaMagicaRd");
+			
+			List<ListaDeReproduccionDt> listaDeUser = controladorU.obtenerListasDtPorUsuario(idUserVerificado);
+			boolean encontrado = false;
+			
+			try {
+				TimeUnit.SECONDS.sleep(10);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+			for (ListaDeReproduccionDt l : listaDeUser) {
+				
+				if(l.getNombre().equals("listaMagicaRd")) {
+					encontrado=true;
+				}
+			}
+		
+		
+			assertEquals(false,encontrado);
+			
+			//llamo catch
+			controladorU.EliminarListaDeReproduccionParticular(idUserVerificado, "NoExisteEstaLista");
+
+		}
+		
+		
+		@Test
+	    @Order(25)
+		public void altaListaReporudccionTest() {
+			controladorU.AltaListaDeReproduccionPorDefecto("_ListaTest_");
+			
+			
+			List<UsuarioDt> ListaUsers = controladorU.ListarUsuarios();
+			List<ListaDeReproduccionDt> ListaReproduccion = controladorU.obtenerListas();
+			int usersCount=ListaUsers.size();
+			int  ListasConNombre=0;
+			
+			for (ListaDeReproduccionDt temp : ListaReproduccion) {
+				
+				if(temp.getNombre().contains("_ListaTest_")) {
+					ListasConNombre++;
+				}
+			}
+			
+			
+			assertEquals(usersCount,ListasConNombre);
+			
+			//Forzando Catch
+			int OldUserCounts = ListaReproduccion.size();
+			controladorU.AltaListaDeReproduccionPorDefecto(null);
+			List<ListaDeReproduccionDt> ListaUsersNueva = controladorU.obtenerListas();
+			int newUsersCounts = ListaUsersNueva.size();
+			
+			assertEquals(OldUserCounts,newUsersCounts);
+			
+		}
 		
 	
 	@AfterAll
@@ -600,16 +726,19 @@ class IControladorUsuarioTest {
 		
 		int idUserEliminar = usr1.obtenerIdUsuario("_-usuarioTest-_");
 		usr1.EliminarUsuario(idUserEliminar);
-		
+		 int UsuarioParticular = usr1.obtenerIdUsuario("UsuarioParticular");
+		 int id_user2 = usr1.obtenerIdUsuario("seguidor");
+		 int id_user3 = usr1.obtenerIdUsuario("seguir");
+		 int id_user4 = usr1.obtenerIdUsuario("UserListar");
+		 
 		
 		int id_user1 = usr1.obtenerIdUsuario("_-usuarioTest-_");
-		int id_user2 = usr1.obtenerIdUsuario("_-_usuarioTestSeguir_-_");
-		int id_user3 = usr1.obtenerIdUsuario("_-_usuarioTestSeguidor_-_");
-		int id_user5 = usr1.obtenerIdUsuario("_-_usuarioTestListar_-_");
+	
 		usr1.EliminarUsuario(id_user1);
 		usr1.EliminarUsuario(id_user2);
 		usr1.EliminarUsuario(id_user3);
-		usr1.EliminarUsuario(id_user5);
+		usr1.EliminarUsuario(id_user4);
+		usr1.EliminarUsuario(UsuarioParticular);
 		usr1.EliminarListaDeReproduccionPorDefecto("_-_ListaTest_-_");
 		vid.EliminarVideo(id_user1, "_-_videoTest_-_");
 	}
@@ -617,6 +746,7 @@ class IControladorUsuarioTest {
 	@BeforeAll
 	public static void agregarAntiFallo() {
 		IControladorUsuario usr1 = Fabrica.getInstance().getIControladorUsuario();
+		IControladorVideo vid1 = Fabrica.getInstance().getIControladorVideo();
 		
 		 int idUserPrueba = usr1.obtenerIdUsuario("Luigi");
 		 
@@ -628,7 +758,36 @@ class IControladorUsuarioTest {
 			 usr1.AltaCanal("Canal Luigi", true, categ, idUserAltaCanal, "El canal Luigi es para publicar contenido divertido");
 
 		 }
-		
+		 
+		 
+			int idUserPropietario = usr1.obtenerIdUsuario("Luigi");
+			if(idUserPropietario!=-1) {
+			vid1.AltaVideo("tsunami", "12.30", "https://youtu.be/vo7iZIjTM6g", "trueno", idUserPropietario, "Entretenimiento");
+			}
+		 
+		 //
+		 
+		 //
+		 int UsuarioParticular = usr1.obtenerIdUsuario("UsuarioParticular");
+		 
+		 if(UsuarioParticular==-1) {
+			 usr1.AltaUsuario("UsuarioParticular", "Cookie234", "userTester", "Buscaglia", "UsuarioParticular@testing.com", new Date(14/06/1972), "UsuarioParticular.jpg");
+			int idUser = usr1.obtenerIdUsuario("UsuarioParticular");
+			usr1.AltaCanal("UsuarioParticularCanal", true, "Carnaval", UsuarioParticular, "El canal userTester es para publicar contenido divertido");
+		 }
+		 
+		 usr1.EliminarListaDeReproduccionParticular(idUserPrueba, "rock");
+		 usr1.EliminarListaDeReproduccionParticular(idUserPrueba, "rock2");
+		 usr1.EliminarListaDeReproduccionParticular(idUserPrueba, "listaMagica");
+		 
+		 
+		 try {
+				TimeUnit.MINUTES.sleep(1);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		 
 	}
 	
 

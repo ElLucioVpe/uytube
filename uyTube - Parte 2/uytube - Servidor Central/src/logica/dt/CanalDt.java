@@ -47,16 +47,16 @@ public class CanalDt {
         this.seguidores = new ArrayList<>();
     }
     
-    public CanalDt(Canal cat) {
-        this.userId = cat.getUserId();
-        this.nombre = cat.getNombre();
-        this.privacidad = cat.getPrivacidad();
+    public CanalDt(Canal c) {
+        this.userId = c.getUserId();
+        this.nombre = c.getNombre();
+        this.privacidad = c.getPrivacidad();
         this.categoria = "Ninguna";
-        if(cat.getCategoria() != null) this.categoria = cat.getCategoria().getNombre();
-        this.videos = cat.getVideos();
-        this.listas = cat.getListas();
-        this.seguidores = cat.getSeguidores();
-        this.descripcion  = cat.getDescripcion();
+        if(c.getCategoria() != null) this.categoria = c.getCategoria().getNombre();
+        this.videos = c.getVideos();
+        this.listas = c.getListas();
+        this.seguidores = c.getSeguidores();
+        this.descripcion  = c.getDescripcion();
         this.fechaUV = fechaUltimoVideo();
     }
 
@@ -75,9 +75,7 @@ public class CanalDt {
                     if(aux.getFechaPublicacion().after(ultima)) ultima = aux.getFechaPublicacion();
                 }
                 retorno = ultima;
-            }catch(Exception e){
-            	System.out.println(e);
-            }
+            }catch(Exception e){}
         }
         return retorno;
     }
@@ -133,8 +131,8 @@ public class CanalDt {
         return seguidores;
     }
     
-    public void setSeguidores(Collection<Usuario> _seguidores){
-        seguidores = _seguidores;
+    public void setSeguidores(Collection<Usuario> s){
+        seguidores = s;
     
 }
  public Collection<Video> getVideos() {
@@ -153,8 +151,8 @@ public class CanalDt {
         this.listas.add(nuevalista);
     }
     
-    public void setVideos(Collection<Video> _videos){
-        videos = _videos;
+    public void setVideos(Collection<Video> v){
+        videos = v;
     
 }
    
