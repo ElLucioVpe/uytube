@@ -130,7 +130,7 @@
                                     </div>
                                  <!-- <form action="UploadServlet" method="post" enctype = "multipart/form-data">-->
                                    <!--   <form action="altaFileImage.jsp" method="post" enctype = "multipart/form-data">-->
-                               <form action="UploadModifyServlet" method="post" enctype = "multipart/form-data">
+                               <form action="modifyFile.jsp" method="post" enctype = "multipart/form-data">
                                     
                                        <div class="form-group row">
                                         <label for="Imagen" class="col-md-4 col-form-label text-md-right">Imagen</label>

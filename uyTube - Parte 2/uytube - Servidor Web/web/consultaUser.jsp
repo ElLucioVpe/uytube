@@ -121,9 +121,11 @@
                         html += '<td>'+usuarios[i].Subcriptores+ '  subscriptores</td>';
                      
                         html += "</tr>";
-                     $('.table tbody').html(html);
+                     $('.table tbody').html(html);console.log(usuarios[i].imagen);
                         var img = document.getElementById("imgU");
-                        img.src = "http://localhost:8080/images/"+usuarios[i].imagen; //aca va img.src = usuarios[i].imagen;
+                        img.src = "img/user.png";
+                        if(usuarios[i].imagen !== "")img.src = "http://localhost:8080/images/"+usuarios[i].imagen; //aca va img.src = usuarios[i].imagen;
+                        console.log(img.src);
                         img.width = "100";
                         img.height = "100";
                         img.alt="User Picture";
