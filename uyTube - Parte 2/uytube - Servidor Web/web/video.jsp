@@ -45,8 +45,9 @@
             UsuarioDt u = user.ConsultarUsuario(dt.getIdCanal());
             List<String> seguidores = user.ListarSeguidores(dt.getId());
             
+            String path = request.getContextPath();
             String imagenUser = "img/user.png";
-            if(u.getImagen() != null) imagenUser = "http://localhost:8080/images/"+u.getImagen();
+            if(u.getImagen() != null) imagenUser = path+"/images/"+u.getImagen();
             
             Boolean estaSuscripto = false; //inicializo
             if(session.getAttribute("userid") != null) estaSuscripto = user.estaSuscripto((int)session.getAttribute("userid"), u.getId());
@@ -62,7 +63,7 @@
             
             function cargarComentarios() {
                 $.ajax({
-                    url: "http://localhost:8080/WebApplication/api/obtenerComentariosVideo.jsp?id_v="+'<%=video_id%>', 
+                    url: "<%=path%>/api/obtenerComentariosVideo.jsp?id_v="+'<%=video_id%>', 
                    success: function (result) {
                        var html = result;
                        $('#comentarios').html(html);
@@ -81,7 +82,7 @@
                 var text = $('#textArea'+id_p).val();
                 if(id_u !== null && id_u !== "null") {
                     $.ajax({
-                        url: "http://localhost:8080/WebApplication/api/comentarVideo.jsp?id_u="+id_u+"&id_v="+id_v+"&id_p="+id_p+"&text="+text, 
+                        url: "<%=path%>/api/comentarVideo.jsp?id_u="+id_u+"&id_v="+id_v+"&id_p="+id_p+"&text="+text, 
                         success: function (result) {
                             alert(result);
                         },
@@ -101,7 +102,7 @@
                 if(usuario_actual !== null && usuario_actual !== "null") {
                     var listasDropdown = document.getElementById('listas-menu');
                     $.ajax({
-                        url:'http://localhost:8080/WebApplication/api/obtenerListas.jsp?user_id='+usuario_actual,
+                        url:'<%=path%>/api/obtenerListas.jsp?user_id='+usuario_actual,
                         success: function (data) {
                             let listas = jQuery.parseJSON(data);
                             let html = "";
@@ -130,7 +131,7 @@
                 if(id_propietario !== null && id_propietario !== "") {
                     if(nom_lista !== null && nom_lista !== "") {
                         $.ajax({
-                            url:'http://localhost:8080/WebApplication/api/modificarLista.jsp?accion=agregar&id_p='+id_propietario+'&nom='+nom_lista+'&id_uv='+'<%=dt.getIdCanal()%>'+'&nomv='+'<%=dt.getNombre()%>',
+                            url:'<%=path%>/api/modificarLista.jsp?accion=agregar&id_p='+id_propietario+'&nom='+nom_lista+'&id_uv='+'<%=dt.getIdCanal()%>'+'&nomv='+'<%=dt.getNombre()%>',
                             success: function (result) {
                                 alert(result);
                             },
@@ -171,7 +172,7 @@
                       if(seguidor === null) conectate();
                       else{
 			$.ajax({
-                            url: "/WebApplication/api/suscripcion.jsp?seguidor="+seguidor+"&seguido="+seguido,
+                            url: "<%=path%>/api/suscripcion.jsp?seguidor="+seguidor+"&seguido="+seguido,
                             success: function() {
                                 alert("Suscripción/Desuscripción exitosa");
                             },
@@ -203,7 +204,7 @@
                             if(user === null) conectate();
                             else{
                                 $.ajax({
-                                    url: "/WebApplication/api/valoracion.jsp?user_id="+user+"&video_id="+video+"&gusta="+g,
+                                    url: "<%=path%>/api/valoracion.jsp?user_id="+user+"&video_id="+video+"&gusta="+g,
                                     success: function() {
                                         alert("Valoración exitosa");
                                     },

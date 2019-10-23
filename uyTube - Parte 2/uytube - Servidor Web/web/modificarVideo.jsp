@@ -306,7 +306,7 @@
 
                                         <% if (session.getAttribute("errormodificarVideo")=="privacidad") { %>
                                                 <div class="alert alert-danger" role="alert">
-                                                    No se puede tener un video p?blico en un canal privado.
+                                                    No se puede tener un video público en un canal privado.
                                                 </div>
                                             <%}
                                         %>

@@ -22,6 +22,7 @@
     Fabrica f_Header = Fabrica.getInstance();
     IControladorUsuario user_header = f_Header.getIControladorUsuario();
     
+    String header_path = request.getContextPath();System.out.println("header_path:"+header_path);
     if(session.getAttribute("userid") != null) {
          int sessionId = (int)session.getAttribute("userid");
           UsuarioDt header_u = user_header.ConsultarUsuario(sessionId);
@@ -29,7 +30,7 @@
         header_user_nick = header_u.getNickname();
         
         if(header_u.getImagen() != null){
-            header_user_img = "http://localhost:8080/images/"+header_u.getImagen();
+            header_user_img = header_path+"/images/"+header_u.getImagen();
         }
     }
 %>
@@ -37,7 +38,7 @@
     <div class="pos-f-t">
         <nav class="navbar navbar-light bg-light">
             <form class="form-inline">
-            <a class="navbar-brand" href="http://localhost:8080/WebApplication/index.jsp">
+            <a class="navbar-brand" href="<%=header_path%>/index.jsp">
               <img src="img/logo.png" width="60" height="40" alt="Logo">
               uyTube
             </a>
@@ -52,8 +53,8 @@
             <script>
                 function buscar() {
                     var contenido = $('#search-text').val();
-                    if(contenido !== null) window.location.replace("http://localhost:8080/WebApplication/buscador.jsp?video=true&channel=true&list=true&text="+contenido);
-                    else window.location.replace("http://localhost:8080/WebApplication/buscador.jsp?video=true&channel=true&list=true");
+                    if(contenido !== null) window.location.replace("<%=header_path%>/buscador.jsp?video=true&channel=true&list=true&text="+contenido);
+                    else window.location.replace("<%=header_path%>buscador.jsp?video=true&channel=true&list=true");
                 }
             </script>
             
@@ -67,8 +68,8 @@
                 <ul class="dropdown-menu dropdown-menu-right" role="menu">
                   <!-- dropdown menu links -->
                   <%if(session.getAttribute("userid") == null) {%>
-                  <li><a tabindex="-1" href="http://localhost:8080/WebApplication/login.jsp"><i class="fas fa-sign-in-alt"></i> Iniciar Sesion</a></li>
-                  <li><a tabindex="-1" href="http://localhost:8080/WebApplication/altaUser.jsp"><i class="fas fa-sign-in-alt"></i> Registrarse</a></li>
+                  <li><a tabindex="-1" href="<%=header_path%>/login.jsp"><i class="fas fa-sign-in-alt"></i> Iniciar Sesion</a></li>
+                  <li><a tabindex="-1" href="<%=header_path%>/altaUser.jsp"><i class="fas fa-sign-in-alt"></i> Registrarse</a></li>
                   <%}else{%>
                   <li><a tabindex="-1" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Cerrar Sesion</a></li>
                   <%}%>
@@ -76,7 +77,7 @@
                 <script>
                   function logout() {
                       $.ajax({
-                          url: "http://localhost:8080/WebApplication/api/logout.jsp",
+                          url: "<%=header_path%>/api/logout.jsp",
                           success: function(){ 
                               alert("Se cerro la sesión");
                               location.reload();

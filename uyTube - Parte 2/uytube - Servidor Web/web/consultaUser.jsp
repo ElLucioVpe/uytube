@@ -30,6 +30,7 @@
      <% 
         Fabrica f = Fabrica.getInstance();
         IControladorUsuario user = f.getIControladorUsuario();
+        String path = request.getContextPath();
         
         Boolean estaSuscripto = false; //inicializo
         int canalUser_id = Integer.parseInt(request.getParameter("id"));
@@ -74,35 +75,14 @@
               // alert("button was clicked");
             });*/ 
         });
-        
-      /*  function cargarBuscador() {
-            $.ajax({
 
-                url:"http://localhost:8080/WebApplication/api/obtenerUsuarios.jsp",
-                
-                success:function(response){   
-                    console.log(response);
-                    let usuarios = jQuery.parseJSON(response);
-                    //let html = "";
-                    //console.log(usuarios);
-                    console.log(usuarios[0].mail);
-                                        console.log("prueba4");          
-
-                    for (let i = 0; i < usuarios.length; i++) {
-                    myData.push({"id":1,"name":usuarios[i].nickname,"ignore":false});
-
-                    }
-                            $('.demo').autocomplete({nameProperty:'name',valueField:'#hidden-field',dataSource: myData});
-                }
-            });
-        }*/
         function modificarPrivacidad(){
             
         }  
         
         function listarDatosUsuario() {
             $.ajax({
-                url:"http://localhost:8080/WebApplication/api/obtenerUsuarios.jsp",
+                url:"<%=path%>/api/obtenerUsuarios.jsp",
                 success:function(response){   
                     //console.log(response);
                     let usuarios = jQuery.parseJSON(response);
@@ -124,7 +104,7 @@
                      $('.table tbody').html(html);console.log(usuarios[i].imagen);
                         var img = document.getElementById("imgU");
                         img.src = "img/user.png";
-                        if(usuarios[i].imagen !== "")img.src = "http://localhost:8080/images/"+usuarios[i].imagen; //aca va img.src = usuarios[i].imagen;
+                        if(usuarios[i].imagen !== "")img.src = "<%=path%>/images/"+usuarios[i].imagen; //aca va img.src = usuarios[i].imagen;
                         console.log(img.src);
                         img.width = "100";
                         img.height = "100";
@@ -132,7 +112,7 @@
                         var src = document.getElementById("usrImg");
                         document.getElementById("usrNmb").innerHTML ="<h1>"+usuarios[i].nickname+"</h1>";
                         src.appendChild(img);
-                        var src2 = document.getElementById("categoriaw");
+                        var src2 = document.getElementById("categoria");
                          var html2= document.createTextNode(" "+usuarios[i].canal.categoria);
                         src2.appendChild(html2);
                         
@@ -145,143 +125,140 @@
                 
        
         function listarVideos() {
-                           $.ajax({
-                               url:"http://localhost:8080/WebApplication/api/obtenerVideos.jsp",
-                               success:function(response){   
-                                   //console.log(response);
-                                   let videos = jQuery.parseJSON(response);
-                                   let html = "";
-                                   //console.log(usuarios);
-                                   //console.log(videos[0].mail);
-                                    var usrid = '<%=canalUser_id%>'; 
-                                     console.log("la id es:")
-                                     
-                                     
-                                    for (let i = 0; i < videos.length; i++) {
-                                    if ( videos[i].canal_user_id == usrid ){
-                                           console.log("la id es:");
+            $.ajax({
+                url:"<%=path%>/api/obtenerVideos.jsp",
+                success:function(response){   
+                   //console.log(response);
+                   let videos = jQuery.parseJSON(response);
+                   let html = "";
+                   //console.log(usuarios);
+                   //console.log(videos[0].mail);
+                    var usrid = '<%=canalUser_id%>'; 
+                     console.log("la id es:")
 
-                                        console.log(videos[i].canal_user_id);        
-                                       html += "<tr>";
-                                       if(videos[i].thumbnail != "") {
-                                           html += '<th><img src="'+videos[i].thumbnail+'" alt="Thumbnail"></th>';
-                                       } else {
-                                           html += '<th><img src="img/no-thumbnail.jpg" alt="Thumbnail"></th>';
-                                       }
-                                       html += '<td  scope="row"> <a href="video.jsp?id='+ videos[i].id +'">'+videos[i].nombre+'</a></td>';
-                                       
-                                       html += '<td>'+videos[i].descripcion+'</td>';
-                                       html += '<td>'+videos[i].user+'</td>';
-                                        var usrid = '<%=canalUser_id%>';
-                                         
-/*aca esta el boton de modifica video*/if((userid !== -1)&&(userid ==usrid)){
-    html += '<td> <a href=http://localhost:8080/WebApplication/modificarVideo.jsp?iddelvideo='+videos[i].id+'><button class="fas fa-edit" ></button></a></td>';
-}else{html += '<td></td>';}
 
-                                       //href=http://localhost:8080/WebApplication/modificarVideo.jsp?nombre='+videos[i].id +'&desc='+videos[i].descripcion+'&url='+ videos[i].url+'&categoria='+videos[i].categoria +'&datepicker='+ videos[i].fecha+'&minutos='+ videos[i].minutos+'&segundos='+ videos[i].minutos+'"
-                                       html += "</tr>";
-                                  }
-                               }
-                                   $('.table2 tbody').html(html);
-                               },
-                               error: function (xhr, ajaxOptions, thrownError) {
-                                 console.log(xhr.status);
-                                 console.log(thrownError);
-                                 $('.table2 tbody').html('<span style="color:red">obtenerVideos.jsp esta tirando error 500 cabeza. pa mi que te falto importar la libreria de json.</span>');
-                               }
-                           });
+                    for (let i = 0; i < videos.length; i++) {
+                        if ( videos[i].canal_user_id == usrid ){
+                           //console.log("la id es:");
+                           //console.log(videos[i].canal_user_id);        
+                           html += "<tr>";
+                           if(videos[i].thumbnail != "") {
+                               html += '<th><img src="'+videos[i].thumbnail+'" alt="Thumbnail"></th>';
+                           } else {
+                               html += '<th><img src="img/no-thumbnail.jpg" alt="Thumbnail"></th>';
+                           }
+                           html += '<td  scope="row"> <a href="video.jsp?id='+ videos[i].id +'">'+videos[i].nombre+'</a></td>';
+
+                           html += '<td>'+videos[i].descripcion+'</td>';
+                           html += '<td>'+videos[i].user+'</td>';
+                           var usrid = '<%=canalUser_id%>';
+
+                            /*aca esta el boton de modifica video*/
+                            if((userid !== -1)&&(userid ==usrid)){
+                                html += '<td> <a href="<%=path%>/modificarVideo.jsp?iddelvideo='+videos[i].id+'"><button class="fas fa-edit" ></button></a></td>';
+                            }else{html += '<td></td>';}
+                            
+                            //href=http://localhost:8080/WebApplication/modificarVideo.jsp?nombre='+videos[i].id +'&desc='+videos[i].descripcion+'&url='+ videos[i].url+'&categoria='+videos[i].categoria +'&datepicker='+ videos[i].fecha+'&minutos='+ videos[i].minutos+'&segundos='+ videos[i].minutos+'"
+                            html += "</tr>";
+                        }
+                    }
+                    $('.table2 tbody').html(html);
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(thrownError);
+                    $('.table2 tbody').html('<span style="color:red">obtenerVideos.jsp esta tirando error 500 cabeza. pa mi que te falto importar la libreria de json.</span>');
+                }
+           });
         }
         
         
         function listarListas() {
-            
-                           $.ajax({
-                               url:"http://localhost:8080/WebApplication/api/obtenerListas.jsp?user_id="+'<%=canalUser_id%>',
-                               success:function(response){   
-                                   //console.log(response);
-                                   let listas = jQuery.parseJSON(response);
-                                   let html = "";
-                                   console.log(listas[0].nombre);
-                                   for (let i = 0; i < listas.length; i++) {
-                                       html += "<tr>";
-                                       html += '<td scope="row"<a href="http://localhost:8080/WebApplication/consultarListaDR.jsp?user_id='+listas[i].user_id +'&nom='+listas[i].nombre+'">'+listas[i].nombre+'</a></td>';
-                                       html += '<td><a href="http://localhost:8080/WebApplication/consultarListaDR.jsp?user_id='+listas[i].user_id +'&nom='+listas[i].nombre+'">'+listas[i].categoria+'</td>';                                      
-                                       html += "</tr>";
-                                        
-                                        
-                                   }
-                                   $('.table3 tbody').html(html);
-                                },
-                               error: function (xhr, ajaxOptions, thrownError) {
-                                 console.log(xhr.status);
-                                 console.log(thrownError);
-                                 console.log(window.idUsr);
-                                 $('.table3 tbody').html('<span style="color:red">obtenerListas.jsp esta tirando error 500 cabeza. pa mi que te falto importar la libreria de json.</span>');
-                               }
-                                
-                           });
+           $.ajax({
+               url:"<%=path%>/api/obtenerListas.jsp?user_id="+'<%=canalUser_id%>',
+               success:function(response){   
+                   //console.log(response);
+                   let listas = jQuery.parseJSON(response);
+                   let html = "";
+                   console.log(listas[0].nombre);
+                   for (let i = 0; i < listas.length; i++) {
+                       html += "<tr>";
+                       html += '<td scope="row"<a href="<%=path%>/consultarListaDR.jsp?user_id='+listas[i].user_id +'&nom='+listas[i].nombre+'">'+listas[i].nombre+'</a></td>';
+                       html += '<td><a href="<%=path%>/consultarListaDR.jsp?user_id='+listas[i].user_id +'&nom='+listas[i].nombre+'">'+listas[i].categoria+'</td>';                                      
+                       html += "</tr>";
+                   }
+                   $('.table3 tbody').html(html);
+                },
+               error: function (xhr, ajaxOptions, thrownError) {
+                 console.log(xhr.status);
+                 console.log(thrownError);
+                 console.log(window.idUsr);
+                 $('.table3 tbody').html('<span style="color:red">obtenerListas.jsp esta tirando error 500 cabeza. pa mi que te falto importar la libreria de json.</span>');
+               }
+
+           });
         }
           function listarSeguidores() {
-            
-                           $.ajax({
-                               url:"http://localhost:8080/WebApplication/api/obtenerSeguidores.jsp?id="+'<%=canalUser_id%>',
-                               success:function(response){   
-                                   //console.log(response);
-                                   let listas = jQuery.parseJSON(response);
-                                   let html = "";
-                                   console.log(listas[0].nombre);
-                                   for (let i = 0; i < listas.length; i++) {
-                                       html += "<tr>";
-                                       html += '<td scope="row">'+listas[i].nickname+'</td>';                                                                 
-                                       html += "</tr>";                                                                             
-                                   }
-                                   $('.table4 tbody').html(html);
-                                },
-                               error: function (xhr, ajaxOptions, thrownError) {
-                                 console.log(xhr.status);
-                                 console.log(thrownError);
-                                 console.log(window.idUsr);
-                                 $('.table4 tbody').html('<span style="color:red">obtenerListas.jsp esta tirando error 500 cabeza. pa mi que te falto importar la libreria de json.</span>');
-                               }
-                                
-                           });
+
+               $.ajax({
+                   url:"<%=path%>/api/obtenerSeguidores.jsp?id="+'<%=canalUser_id%>',
+                   success:function(response){   
+                       //console.log(response);
+                       let listas = jQuery.parseJSON(response);
+                       let html = "";
+                       console.log(listas[0].nombre);
+                       for (let i = 0; i < listas.length; i++) {
+                           html += "<tr>";
+                           html += '<td scope="row">'+listas[i].nickname+'</td>';                                                                 
+                           html += "</tr>";                                                                             
+                       }
+                       $('.table4 tbody').html(html);
+                    },
+                   error: function (xhr, ajaxOptions, thrownError) {
+                     console.log(xhr.status);
+                     console.log(thrownError);
+                     console.log(window.idUsr);
+                     $('.table4 tbody').html('<span style="color:red">obtenerListas.jsp esta tirando error 500 cabeza. pa mi que te falto importar la libreria de json.</span>');
+                   }
+
+               });
         }
         
          function listarSeguidos() {
-            
-                           $.ajax({
-                               url:"http://localhost:8080/WebApplication/api/obtenerSeguidos.jsp?id="+'<%=canalUser_id%>',
-                               success:function(response){   
-                                   //console.log(response);
-                                   let listas = jQuery.parseJSON(response);
-                                   let html = "";
-                                   console.log(listas[0].nombre);
-                                   for (let i = 0; i < listas.length; i++) {
-                                       html += "<tr>";
-                                       html += '<td scope="row">'+listas[i].nickname+'</td>';                                                                 
-                                       html += "</tr>";                                                                             
-                                   }
-                                   $('.table5 tbody').html(html);
-                                  
-                                },
-                               error: function (xhr, ajaxOptions, thrownError) {
-                                 console.log(xhr.status);
-                                 console.log(thrownError);
-                                 console.log(window.idUsr);
-                                 $('.table5 tbody').html('<span style="color:red">obtenerListas.jsp esta tirando error 500 cabeza. pa mi que te falto importar la libreria de json.</span>');
-                               }
-                                
-                           });
-        }
-         function myFunction() {
-          var usrid = '<%=canalUser_id%>';
-        if((userid !== -1)&&(userid ==usrid)){
-         console.log("esta loguin si");   
-        $('#pirvacity').removeAttr("style").show();
-        }else{ $('#pirvacity').removeAttr("style").hide();
-                 console.log("esta loguin no");   
+               $.ajax({
+                   url:"<%=path%>/api/obtenerSeguidos.jsp?id="+'<%=canalUser_id%>',
+                   success:function(response){   
+                       //console.log(response);
+                       let listas = jQuery.parseJSON(response);
+                       let html = "";
+                       console.log(listas[0].nombre);
+                       for (let i = 0; i < listas.length; i++) {
+                           html += "<tr>";
+                           html += '<td scope="row">'+listas[i].nickname+'</td>';                                                                 
+                           html += "</tr>";                                                                             
+                       }
+                       $('.table5 tbody').html(html);
 
+                    },
+                   error: function (xhr, ajaxOptions, thrownError) {
+                     console.log(xhr.status);
+                     console.log(thrownError);
+                     console.log(window.idUsr);
+                     $('.table5 tbody').html('<span style="color:red">obtenerListas.jsp esta tirando error 500 cabeza. pa mi que te falto importar la libreria de json.</span>');
+                   }
+
+               });
         }
+        
+        function myFunction() {
+            var usrid = '<%=canalUser_id%>';
+            if((userid !== -1)&&(userid === usrid)){
+                //console.log("esta loguin si");   
+                $('#pirvacity').removeAttr("style").show();
+            }else{ 
+                $('#pirvacity').removeAttr("style").hide();
+                //console.log("esta loguin no");   
+            }
         }
     </script>
     
@@ -310,7 +287,7 @@
                                                  if(seguidor === null) conectate();
                                                  else{
                                                    $.ajax({
-                                                       url: "/WebApplication/api/suscripcion.jsp?seguidor="+seguidor+"&seguido="+seguido,
+                                                       url: "<%=path%>api/suscripcion.jsp?seguidor="+seguidor+"&seguido="+seguido,
                                                        success: function() {
                                                            alert("Suscripción/Desuscripción exitosa");
                                                        },
@@ -338,8 +315,6 @@
                                                 <tr>
                                                   <th scope="col"></th>
                                                   <th scope="col"></th>
-
-
                                                 </tr>
                                               </thead>
                                               <tbody>
@@ -355,15 +330,13 @@
                                                 <%}%>
                                             </button>
                                             </div>
-                                            <div id="categoriaw" style="float: right; width: 150px;">CATEGORIA</div>
+                                            <div id="categoria" style="float: right; width: 150px;">CATEGORIA</div>
                                             <div style="float: left;">
                                             <form id="pirvacity">    
-                                            <li class="nav-item px-2"> <a href="http://localhost:8080/WebApplication/modificarUser.jsp"> Privacidad: 
+                                            <li class="nav-item px-2"> <a href="<%=path%>/modificarUser.jsp"> Privacidad: 
                                              <input id="toggle-privacidad" type="checkbox" data-toggle="toggle" data-onstyle="dark" data-on="Público" data-off="Privado" data-width="150"><button class="fas fa-edit" ></button></a>
                                                <script>
-                                               $('#toggle-privacidad').prop('checked', privacidad).change();  
-
-                                               
+                                                    $('#toggle-privacidad').prop('checked', privacidad).change();
                                                </script>                                             
                                             </li>
                                             </form>

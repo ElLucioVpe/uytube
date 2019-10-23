@@ -18,6 +18,7 @@
     <%
         Fabrica f = Fabrica.getInstance();
         IControladorUsuario user = f.getIControladorUsuario();
+        String path = request.getContextPath();
         
         int user_id = -1;
         ListaDeReproduccionDt lista = null; 
@@ -37,7 +38,7 @@
                 var nueva_categoria = $('#categoria').val();
                 var nueva_privacidad = $('#visibilidad').val();
                 $.ajax({
-                    url:'http://localhost:8080/WebApplication/api/modificarLista.jsp?accion=modificar&id_p='+id_propietario+'&nom='+nom_lista+'&nCat='+nueva_categoria+'&nPri='+nueva_privacidad,
+                    url:'<%=path%>/api/modificarLista.jsp?accion=modificar&id_p='+id_propietario+'&nom='+nom_lista+'&nCat='+nueva_categoria+'&nPri='+nueva_privacidad,
                     success: function (result) {
                         alert(result);
                     },
@@ -52,7 +53,7 @@
         function quitarVideo(id_propietario, nom_lista, id_video) {
             if (confirm('¿Desea eliminar este video de la lista?')) {
                 $.ajax({
-                    url:'http://localhost:8080/WebApplication/api/modificarLista.jsp?accion=quitar&id_p='+id_propietario+'&nom='+nom_lista+'&id_v='+id_video,
+                    url:'<%=path%>/api/modificarLista.jsp?accion=quitar&id_p='+id_propietario+'&nom='+nom_lista+'&id_v='+id_video,
                     success: function (result) {
                         alert(result);
                     },

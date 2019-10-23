@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="css/sidebar.css">
 <!-- Scrollbar Custom CSS -->
 <link rel="stylesheet" href="css/jquery.mCustomScrollbar.min.css">
+<% String sidebar_path = request.getContextPath(); %>
         <div class="wrapper">
             <!-- Sidebar Holder -->
             <nav id="sidebar">
@@ -22,16 +23,16 @@
                 <ul class="list-unstyled components">
                     <ul>
                       <% if(session.getAttribute("userid") != null) {%>
-                      <li><a href="http://localhost:8080/WebApplication/consultaUser.jsp?id=<%=session.getAttribute("userid")%>"><i class="fa fa-user"></i> Mi Canal</a></li>
-                      <li><a href="http://localhost:8080/WebApplication/modificarUser.jsp"><i class="fas fa-edit"></i> Editar Perfil</a></li>
+                      <li><a href="<%=sidebar_path%>/consultaUser.jsp?id=<%=session.getAttribute("userid")%>"><i class="fa fa-user"></i> Mi Canal</a></li>
+                      <li><a href="<%=sidebar_path%>/modificarUser.jsp"><i class="fas fa-edit"></i> Editar Perfil</a></li>
                       <%} else {%>
-                      <li><a href="http://localhost:8080/WebApplication/login.jsp"><i class="fa fa-user"></i> Mi Canal</a></li>
+                      <li><a href="<%=sidebar_path%>/login.jsp"><i class="fa fa-user"></i> Mi Canal</a></li>
                       <%}%>
                     </ul>
                     <ul id="videos">
                       <li class="title">VIDEOS</li>
-                      <li><a href="http://localhost:8080/WebApplication/altaVideo.jsp"><i class="fa fa-plus"></i> Subir video</a></li>
-                      <li><a href="http://localhost:8080/WebApplication/"><i class="fa fa-film"></i> Ver videos</a></li>
+                      <li><a href="<%=sidebar_path%>/altaVideo.jsp"><i class="fa fa-plus"></i> Subir video</a></li>
+                      <li><a href="<%=sidebar_path%>/"><i class="fa fa-film"></i> Ver videos</a></li>
                     </ul>
                     <ul id="playlists">
                       <li class="title">LISTAS</li>
@@ -66,12 +67,12 @@
                 var sidebar_user_id = '<%=session.getAttribute("userid")%>';
                 
                 if(sidebar_user_id === null  || sidebar_user_id === "null")
-                    lists.innerHTML += '<li><a href="http://localhost:8080/WebApplication/login.jsp">Inicie sesión para ver sus listas</a></li>';
+                    lists.innerHTML += '<li><a href="<%=sidebar_path%>/login.jsp">Inicie sesión para ver sus listas</a></li>';
                 else { 
-                    lists.innerHTML += '<li><a href="http://localhost:8080/WebApplication/crearListaDR.jsp"><i class="fa fa-plus"></i> Crear Lista</a></li>';
+                    lists.innerHTML += '<li><a href="<%=sidebar_path%>/crearListaDR.jsp"><i class="fa fa-plus"></i> Crear Lista</a></li>';
                 
                     $.ajax({
-                        url:"http://localhost:8080/WebApplication/api/obtenerListas.jsp?user_id="+sidebar_user_id,
+                        url:"<%=sidebar_path%>/api/obtenerListas.jsp?user_id="+sidebar_user_id,
                         success:function(data){   
                             let listas = jQuery.parseJSON(data);
                             let html = "";
@@ -80,7 +81,7 @@
                                 if(listas[i].nombre === "Ver mas tarde" || listas[i].nombre === "Ver más tarde") icono = "fas fa-redo-alt";
                                 if(listas[i].nombre === "Favoritos") icono = "fas fa-redo-alt";
 
-                                html += '<li><a href="http://localhost:8080/WebApplication/consultarListaDR.jsp?user_id='+listas[i].user_id+'&nom='+listas[i].nombre+'"><i class="'+icono+'"></i> '+listas[i].nombre+'</a></li>';
+                                html += '<li><a href="<%=sidebar_path%>/consultarListaDR.jsp?user_id='+listas[i].user_id+'&nom='+listas[i].nombre+'"><i class="'+icono+'"></i> '+listas[i].nombre+'</a></li>';
                             }
                             lists.innerHTML += html;
                         },
@@ -95,12 +96,12 @@
             function listarCategorias() {
                 var cats = document.getElementById("cat");
                 $.ajax({
-                    url:"http://localhost:8080/WebApplication/api/obtenerCategorias.jsp",
+                    url:"<%=sidebar_path%>/api/obtenerCategorias.jsp",
                     success:function(data){   
                         let categorias = jQuery.parseJSON(data);
                         let html = "";
                         for (let i = 0; i < categorias.length; i++) {
-                            html += '<li><a href="http://localhost:8080/WebApplication/buscador.jsp?video=true&channel=true&list=true&cat='+categorias[i].nombre+'"><i class="fas fa-circle"></i> '+categorias[i].nombre+'</a></li>';
+                            html += '<li><a href="<%=sidebar_path%>/buscador.jsp?video=true&channel=true&list=true&cat='+categorias[i].nombre+'"><i class="fas fa-circle"></i> '+categorias[i].nombre+'</a></li>';
                         }
                         cats.innerHTML += html;
                     },

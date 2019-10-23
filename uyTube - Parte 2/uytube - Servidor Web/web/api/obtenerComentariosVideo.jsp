@@ -14,13 +14,14 @@
     IControladorVideo vid = f.getIControladorVideo();
     int video_id = -1;
     
-    if(request.getParameter("id_v") != null){ 
+    if(request.getParameter("id_v") != null){
+        String path = request.getContextPath();
         video_id = Integer.parseInt(request.getParameter("id_v"));
         String html = "";
         List<ComentarioDt> comentarios = vid.obtenerComentariosDt(video_id);
         if(!comentarios.isEmpty()) {
             for(int i = 0; i < comentarios.size(); i++) {
-                html += comentariosRecursivo(comentarios.get(i));
+                html += comentariosRecursivo(comentarios.get(i), path);
             }
         }
         out.println(html);
@@ -28,12 +29,12 @@
 %>
 
 <%!
-    String comentariosRecursivo(ComentarioDt c) {
+    String comentariosRecursivo(ComentarioDt c, String path) {
         String html = "";
         
         if(html != null){
             String imagen = "img/user.png";
-            if(c.getUsuarioDt().getImagen() != null) imagen = "http://localhost:8080/images/"+c.getUsuarioDt().getImagen();
+            if(c.getUsuarioDt().getImagen() != null) imagen = path+"/images/"+c.getUsuarioDt().getImagen();
             
             html+= "<li class=\"media\">";
             html+= "<img class=\"rounded-circle\" width=60 height=60 src=\""+imagen+"\">";
@@ -50,7 +51,7 @@
 
             List<ComentarioDt> hijos = c.getHijos();
             for(int i = 0; i < hijos.size(); i++) {
-                html += comentariosRecursivo(hijos.get(i));
+                html += comentariosRecursivo(hijos.get(i), path);
             }
             html += "</div></li>";
         }

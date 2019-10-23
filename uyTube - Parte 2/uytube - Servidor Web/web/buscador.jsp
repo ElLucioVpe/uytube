@@ -10,6 +10,7 @@
 <html>
     <%
         String text = "", video = "", channel = "", list = "", cat = "", order = "asc"; 
+        String path = request.getContextPath();
         
         //Por las dudas
         if(request.getParameter("text") != null) text = request.getParameter("text");
@@ -85,7 +86,7 @@
                         if(datos[i].canal.privacidad === false) {
                             html += '<div id="'+datos[i].canal.nombre+datos[i].id+'" class="media">';
                             html += '<a href="consultarUser.jsp?id='+datos[i].id+'" class="pull-left mr-2">';
-                            if(datos[i].imagen !== "") html += '<img src="http://localhost:8080/images/'+datos[i].imagen+'" width=90 height=90 class="rounded-circle" alt="User Picture"></a>';
+                            if(datos[i].imagen !== "") html += '<img src="<%=path%>/images/'+datos[i].imagen+'" width=90 height=90 class="rounded-circle" alt="User Picture"></a>';
                             else html += '<img src="img/user.png" class="rounded-circle" width=90 height=90 alt="User Picture"></a>';
 
                             html += '<div class="media-body"><h5 class="media-heading"><a href="consultarUser.jsp?id='+datos[i].id+'">'+datos[i].canal.nombre+'</a></h5><a>'+datos[i].canal.descripcion+'</a></div></div>';
@@ -142,7 +143,7 @@
             
             function cargarDatos(cat, text) {console.log(cat);
                 var listarVideos = $.ajax({
-                    url:"http://localhost:8080/WebApplication/api/obtenerVideos.jsp?cat="+cat,
+                    url:"<%=path%>/api/obtenerVideos.jsp?cat="+cat,
                     success: function (result) {},
                     error: function (xhr, ajaxOptions, thrownError) {
                       console.log(xhr.status);
@@ -151,7 +152,7 @@
                 });
                 
                 var listarListasDR = $.ajax({
-                    url:'http://localhost:8080/WebApplication/api/obtenerListas.jsp?cat='+cat,
+                    url:'<%=path%>/api/obtenerListas.jsp?cat='+cat,
                     success: function (result) {},
                     error: function (xhr, ajaxOptions, thrownError) {
                       console.log(xhr.status);
@@ -160,7 +161,7 @@
                 });
                 
                 var listarUsuarios = $.ajax({
-                    url:'http://localhost:8080/WebApplication/api/obtenerUsuarios.jsp?cat='+cat,
+                    url:'<%=path%>/api/obtenerUsuarios.jsp?cat='+cat,
                     success: function (result) {},
                     error: function (xhr, ajaxOptions, thrownError) {
                       console.log(xhr.status);
@@ -212,7 +213,7 @@
                 var canales = ($('#toggle-canales').prop('checked'));
                 var orden = ($('input[name="hidden-order"]').val());
                 
-                redirectURL = "http://localhost:8080/WebApplication/buscador.jsp?";
+                redirectURL = "<%=path%>/buscador.jsp?";
                 redirectURL += "video="+videos;
                 redirectURL += "&list="+listas;
                 redirectURL += "&channel="+canales;

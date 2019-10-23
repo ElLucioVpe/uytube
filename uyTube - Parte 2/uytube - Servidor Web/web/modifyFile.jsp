@@ -66,14 +66,14 @@
                  
    
    //Relative Path
-   ServletContext context = pageContext.getServletContext();
+   /*ServletContext context = pageContext.getServletContext();
    File contextBasePath = new File(getServletContext().getRealPath(""));
    File path2 = new File(contextBasePath.getParent()).getParentFile();
    String pathFolder = path2.getParent();
-
+   */
    //Adding Path
    //String filePath = context.getInitParameter("file-upload");
-   String filePath = pathFolder+"\\data\\imagenes\\";
+   String filePath = request.getContextPath()+"\\images\\";
 
    // Verify the content type
    String contentType = request.getContentType();
@@ -111,7 +111,7 @@
          
          FileItem fP = (FileItem)iP.next();
          
-         String fileName=null;
+         String fileName="";
          
          if(fP.getName().isEmpty()){
              
