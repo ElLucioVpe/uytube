@@ -20,6 +20,11 @@
 <%@page import="logica.controladores.Fabrica"%>
 <%@page import="java.nio.file.Paths"%>
 <%@page import="java.io.InputStream"%>
+<%@page import="java.util.ResourceBundle"%>
+<%@page import="java.net.URL"%>
+<%@page import="java.net.URLClassLoader"%>
+<%@page import="java.util.Locale"%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -32,34 +37,36 @@
    File file ;
    int maxFileSize = 5000 * 1024;
    int maxMemSize = 5000 * 1024;
-   
+
    //Relative Path
-   /*ServletContext context = pageContext.getServletContext();
+   ServletContext context = pageContext.getServletContext();
    File contextBasePath = new File(getServletContext().getRealPath(""));
    File path2 = new File(contextBasePath.getParent()).getParentFile();
    String pathFolder = path2.getParent();
-   */
    //Adding Path
    //String filePath = context.getInitParameter("file-upload");
-   String filePath = request.getContextPath()+"\\images\\";;
-
+   File properties = new File(System.getProperty("catalina.home")+"/conf");
+   URL[] urls = {properties.toURI().toURL()};
+   ClassLoader loader = new URLClassLoader(urls);
+   ResourceBundle bundle = ResourceBundle.getBundle("uytube_conf", Locale.getDefault(), loader);
+   
+   String filePath = bundle.getString("data")+"//imagenes//";
+   
    // Verify the content type
    String contentType = request.getContentType();
-   
    if ((contentType.indexOf("multipart/form-data") >= 0)) {
       DiskFileItemFactory factory = new DiskFileItemFactory();
       // maximum size that will be stored in memory
       factory.setSizeThreshold(maxMemSize);
       
       // Location to save data that is larger than maxMemSize.
-      factory.setRepository(new File("c:\\temp"));
+       factory.setRepository(new File("//temp"));
 
       // Create a new file upload handler
       ServletFileUpload upload = new ServletFileUpload(factory);
       
       // maximum file size to be uploaded.
       upload.setSizeMax( maxFileSize );
-      
       try { 
           
          out.println("<html>");
@@ -98,12 +105,12 @@
                long sizeInBytes = fi.getSize();
             
                // Write the file
-               if( fileName.lastIndexOf("\\") >= 0 ) {
+               if( fileName.lastIndexOf("//") >= 0 ) {
                   file = new File( filePath + 
-                  fileName.substring( fileName.lastIndexOf("\\"))) ;
+                  fileName.substring( fileName.lastIndexOf("//"))) ;
                } else {
                   file = new File( filePath + 
-                  fileName.substring(fileName.lastIndexOf("\\")+1)) ;
+                  fileName.substring(fileName.lastIndexOf("//")+1)) ;
                }
                fi.write( file ) ;
                //out.println("Uploaded Filename: " + filePath + fileName + "<br>");
@@ -140,24 +147,19 @@
                  
                  
                  //Alta User
-                    Fabrica f = Fabrica.getInstance();
-                    IControladorUsuario user = f.getIControladorUsuario();
+                 Fabrica f = Fabrica.getInstance();
+                 IControladorUsuario user = f.getIControladorUsuario();
               
-              
-                    SimpleDateFormat sdf= new SimpleDateFormat("dd/MM/yyyy");
-                    java.util.Date fechaNacimiento = sdf.parse(fechaUp); 
+                 SimpleDateFormat sdf= new SimpleDateFormat("dd/MM/yyyy");
+                 java.util.Date fechaNacimiento = sdf.parse(fechaUp); 
                     
-                    if(fileName!=null){
-                    user.AltaUsuario(userUp, pswdUp, nameUp,apellidoUp, mailUp, fechaNacimiento, fileName);  
-                    }else{
-                    user.AltaUsuario(userUp, pswdUp, nameUp,apellidoUp, mailUp, fechaNacimiento, "");
-                    }
+                 user.AltaUsuario(userUp, pswdUp, nameUp,apellidoUp, mailUp, fechaNacimiento, fileName);  
                     
-                    IdUsuarioCreate = user.obtenerIdUsuario(userUp);
+                 IdUsuarioCreate = user.obtenerIdUsuario(userUp);
                      
-                     if(IdUsuarioCreate!=-1){
-                        user.AltaCanal(canalUp, visUp, catUp, IdUsuarioCreate, descUp);
-                     }
+                 if(IdUsuarioCreate!=-1){
+                 	user.AltaCanal(canalUp, visUp, catUp, IdUsuarioCreate, descUp);
+                 }
                  
            
          
@@ -178,7 +180,9 @@
          
          out.println(catUp);
          out.println(descUp);
-        */
+         out.println(filePath);
+         */
+        
         
          out.println("User creado con exito!");
          out.println("</body>");

@@ -214,14 +214,14 @@
                                         <div class="form-group row">
                                             <label for="minutos" class="col-md-4 col-form-label text-md-right">Nueva duraci?n (minutos)</label>
                                             <div class="col-md-6">
-                                                <input type="number" id="minutos" class="form-control" name="minutos" requiered min="0" max="59" required value="<%if(minutosint!=null){out.print(minutosint);} %>">
+                                                <input type="number" id="minutos" class="form-control" name="minutos" required min="0" max="59" required value="<%if(minutosint!=null){out.print(minutosint);} %>">
                                             </div>
                                         </div>
 
                                         <div class="form-group row">
                                             <label for="segundos" class="col-md-4 col-form-label text-md-right">Nueva duraci?n (segundos)</label>
                                             <div class="col-md-6">
-                                                <input type="number" id="segundos" class="form-control" name="segundos" requiered min="0" max="59"  required value="<%if(segundosint!=null){out.print(segundosint);} %>">
+                                                <input type="number" id="segundos" class="form-control" name="segundos" required min="0" max="59"  required value="<%if(segundosint!=null){out.print(segundosint);} %>">
                                             </div>
                                         </div>
 

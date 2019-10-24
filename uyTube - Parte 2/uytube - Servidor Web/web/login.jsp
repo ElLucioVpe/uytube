@@ -51,7 +51,7 @@
                         <div class="card">
                             <div class="card-header">Iniciar sesion</div>
                             <div class="card-body">
-                                <form action="" method="">
+                                <form action="">
                                     <div class="form-group row">
                                         <label for="user" class="col-md-4 col-form-label text-md-right">Usuario</label>
                                         <div class="col-md-6">
@@ -78,14 +78,12 @@
                                             </div>
                                         <%}
                                     %>
+                                </form>
                             </div>
-                            </form>
                         </div>
                     </div>
                 </div>
             </div>
-            </div>
-
         </main>
         <%@include file="include/footer.jsp" %>
     </body>

@@ -51,7 +51,7 @@
 
                 function listarVideos() {
                     $.ajax({
-                        url:"<%=request.getContextPath()%>/WebApplication/api/obtenerVideos.jsp",
+                        url:"<%=request.getContextPath()%>/api/obtenerVideos.jsp",
                         success:function(response){   
                             //console.log(response);
                             let videos = jQuery.parseJSON(response);

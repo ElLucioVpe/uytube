@@ -21,6 +21,10 @@
 <%@page import="logica.controladores.Fabrica"%>
 <%@page import="java.nio.file.Paths"%>
 <%@page import="java.io.InputStream"%>
+<%@page import="java.util.ResourceBundle"%>
+<%@page import="java.net.URL"%>
+<%@page import="java.net.URLClassLoader"%>
+<%@page import="java.util.Locale"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -66,14 +70,19 @@
                  
    
    //Relative Path
-   /*ServletContext context = pageContext.getServletContext();
+   ServletContext context = pageContext.getServletContext();
    File contextBasePath = new File(getServletContext().getRealPath(""));
    File path2 = new File(contextBasePath.getParent()).getParentFile();
    String pathFolder = path2.getParent();
-   */
+
    //Adding Path
    //String filePath = context.getInitParameter("file-upload");
-   String filePath = request.getContextPath()+"\\images\\";
+   File properties = new File(System.getProperty("catalina.home")+"/conf");
+   URL[] urls = {properties.toURI().toURL()};
+   ClassLoader loader = new URLClassLoader(urls);
+   ResourceBundle bundle = ResourceBundle.getBundle("uytube_conf", Locale.getDefault(), loader);
+   
+   String filePath = bundle.getString("data")+"//imagenes//";
 
    // Verify the content type
    String contentType = request.getContentType();
@@ -84,7 +93,7 @@
       factory.setSizeThreshold(maxMemSize);
       
       // Location to save data that is larger than maxMemSize.
-      factory.setRepository(new File("c:\\temp"));
+      factory.setRepository(new File("\\temp"));
 
       // Create a new file upload handler
       ServletFileUpload upload = new ServletFileUpload(factory);
@@ -156,11 +165,11 @@
                  visUp=false;
                  }
 
-                 //Alta User
-                    Fabrica f = Fabrica.getInstance();
-                    IControladorUsuario user = f.getIControladorUsuario();
+                 //Modificar User
+                 Fabrica f = Fabrica.getInstance();
+                 IControladorUsuario user = f.getIControladorUsuario();
     
-                    user.ModificarUsuario(_id,pswdUp, nameUp, apellidoUp, fechaNacimiento,canalUp, catUp, descUp, visUp,fileName);                
+                 user.ModificarUsuario(_id,pswdUp, nameUp, apellidoUp, fechaNacimiento,canalUp, catUp, descUp, visUp,fileName);                
                  
            
          

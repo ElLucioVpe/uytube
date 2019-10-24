@@ -244,7 +244,7 @@
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item"> Ordenar:
                         <select id="tipos-de-orden" class="form-control">
-                            <option selected="">Seleccione una opción</option>
+                            <option selected>Seleccione una opción</option>
                             <option value="asc">Alfabéticamente (A-Z a-z)</option>
                             <option value="date">Fecha de publicación (descendente)</option>
                         </select>

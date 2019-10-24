@@ -6,14 +6,6 @@
 
 <%@page import="java.util.List"%>
 <%@page import="logica.dt.CategoriaDt"%>
-<%@page import="javax.servlet.annotation.MultipartConfig"%>
-<%@page import="javax.servlet.annotation.WebServlet"%>
-<%@page import="java.io.InputStream"%>
-<%@page import="org.apache.tomcat.util.http.fileupload.FileItem"%>
-<%@page import="org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload"%>
-<%@page import="org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory"%>
-<%@page import="java.io.File"%>
-<%@page import="java.nio.file.Paths"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import = "logica.controladores.Fabrica" %>
@@ -118,14 +110,14 @@
                                     <div class="form-group row">
                                         <label for="minutos" class="col-md-4 col-form-label text-md-right">Duración (minutos)</label>
                                         <div class="col-md-6">
-                                            <input type="number" id="minutos" class="form-control" name="minutos" requiered min="0" max="59">
+                                            <input type="number" id="minutos" class="form-control" name="minutos" required min="0" max="59">
                                         </div>
                                     </div>
                                     
                                     <div class="form-group row">
                                         <label for="segundos" class="col-md-4 col-form-label text-md-right">Duración (segundos)</label>
                                         <div class="col-md-6">
-                                            <input type="number" id="segundos" class="form-control" name="segundos" requiered min="0" max="59">
+                                            <input type="number" id="segundos" class="form-control" name="segundos" required min="0" max="59">
                                         </div>
                                     </div>
                                     

@@ -14,7 +14,7 @@
   <head>
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
         <script src="js/jquery.min.js"></script>
-        <input type="hidden" value="asc" name="hidden-order">
+        <%-- <input type="hidden" value="asc" name="hidden-order">--%>
         <link rel="stylesheet" href="css/bootstrap4-toggle.min.css">
         <script src="js/bootstrap4-toggle.min.js"></script> 
          <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -322,34 +322,33 @@
                                             </table>
                                             <div>
                                                 <div style="float: right;">
-                                            <button class="btn btn-outline-dark" onclick="suscripcion(<%=u.getId()%>)">
-                                                <%if(!estaSuscripto2){%>
-                                                Suscribirse
-                                                <%}else{%>
-                                                Desuscribirse
-                                                <%}%>
-                                            </button>
-                                            </div>
-                                            <div id="categoria" style="float: right; width: 150px;">CATEGORIA</div>
-                                            <div style="float: left;">
-                                            <form id="pirvacity">    
-                                            <li class="nav-item px-2"> <a href="<%=path%>/modificarUser.jsp"> Privacidad: 
-                                             <input id="toggle-privacidad" type="checkbox" data-toggle="toggle" data-onstyle="dark" data-on="Público" data-off="Privado" data-width="150"><button class="fas fa-edit" ></button></a>
-                                               <script>
-                                                    $('#toggle-privacidad').prop('checked', privacidad).change();
-                                               </script>                                             
-                                            </li>
-                                            </form>
-                                            </div>
+	                                            <button class="btn btn-outline-dark" onclick="suscripcion(<%=u.getId()%>)">
+	                                                <%if(!estaSuscripto2){%>
+	                                                Suscribirse
+	                                                <%}else{%>
+	                                                Desuscribirse
+	                                                <%}%>
+	                                            </button>
+	                                            </div>
+	                                            <div id="categoria" style="float: right; width: 150px;">CATEGORIA</div>
+		                                        <div style="float: left;">
+		                                            <form id="pirvacity">    
+		                                            <li class="nav-item px-2"> <a href="<%=path%>/modificarUser.jsp"> Privacidad: 
+		                                             <input id="toggle-privacidad" type="checkbox" data-toggle="toggle" data-onstyle="dark" data-on="Público" data-off="Privado" data-width="150"><button class="fas fa-edit" ></button></a>
+		                                               <script>
+		                                                    $('#toggle-privacidad').prop('checked', privacidad).change();
+		                                               </script>                                             
+		                                            </li>
+		                                            </form>
+	                                            </div>
                                             
                                             </div>
-                                            </div>
+                                        </div>
                              
-            </div> 
+            				</div> 
+                    	</div> 
                     </div> 
-                            </div> 
-                
-                                    </div>
+               </div>
                         
       <ul class="nav nav-tabs" id="myTab" role="tablist">
   <li class="nav-item">
@@ -421,7 +420,7 @@
     </div>
 </div>             
                  
-   
+</div>
 </main>
       <%@include file="include/footer.jsp" %>
 </body>

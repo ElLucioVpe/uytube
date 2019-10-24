@@ -185,7 +185,7 @@
                 
                 <div class="col">
                     <button class="btn btn-outline-secondary" type="button" id="listaDropdownbtn" data-toggle="dropdown" data-target="listas-menu" aria-haspopup="true" aria-expanded="false">
-                        <a class="fas fa-plus"> </a> Lista de Reproducción
+                        <i class="fas fa-plus"> </i> Lista de Reproducción
                     </button>
                     <div id="listas-menu" class="dropdown-menu" aria-labelledby="listaDropdownbtn">
                         <%-- Aca van las listas --%>
@@ -243,6 +243,7 @@
                     </div>
                 </div>
             </div>
+        </div>
         <%@ include file="include/footer.jsp" %>
     </body>
 </html>

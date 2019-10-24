@@ -224,15 +224,12 @@
                                         <%}
                                     %>
                                     
-                                    
+                              </form>      
                             </div>
-                            </form>
                         </div>
                     </div>
                 </div>
             </div>
-            </div>
-        </main>
         <%@include file="include/footer.jsp" %>
     </body>
 </html>
