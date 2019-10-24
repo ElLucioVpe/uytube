@@ -48,9 +48,9 @@ public class ControladorUsuario implements IControladorUsuario {
 
     @Override
     public void AltaUsuario(String nick, String pass, String nom, String apell, String mail, Date fnac, String img) {
-        try {
+    	EntityManager emanager = emFactory.createEntityManager();
+    	try {
 
-            EntityManager emanager = emFactory.createEntityManager();
             emanager.getTransaction().begin();
 
             if(emanager.createNamedQuery("Usuario.findByNickname", Usuario.class).setParameter("nickname", nick).getResultList().size() > 0)
@@ -64,22 +64,21 @@ public class ControladorUsuario implements IControladorUsuario {
             if(!img.isEmpty()) user.setImagen(img);
 
             emanager.persist(user);
-            emanager.getTransaction().commit();
-            emanager.close();
-
+            
         } catch (Exception exc) {
             Throwable _throwable = new Throwable();
             StackTraceElement[] elements = _throwable.getStackTrace();
             String invocador = elements[1].getFileName();
             exceptionAux(invocador, exc);
         }
+    	emanager.getTransaction().commit();
+        emanager.close();
     }
 
     @Override
     public void AltaCanal(String nombre, boolean privado, String categoria, int user_id, String descripcion) {
-        try {
-
-            EntityManager emanager = emFactory.createEntityManager();
+    	EntityManager emanager = emFactory.createEntityManager();
+    	try {
             emanager.getTransaction().begin();
 
             if(emanager.createNamedQuery("Canal.findByNombre", Canal.class).setParameter("nombre", nombre).getResultList().size() > 0)
@@ -114,8 +113,7 @@ public class ControladorUsuario implements IControladorUsuario {
                 emanager.merge(cnl);
             }
             //
-            emanager.getTransaction().commit();
-            emanager.close();
+            
         } catch (Exception exc) {
             EliminarUsuario(user_id); //Elimino ya que no se completo correctamente todo el proceso
             Throwable _throwable = new Throwable();
@@ -123,6 +121,8 @@ public class ControladorUsuario implements IControladorUsuario {
             String invocador = elements[1].getFileName();
             exceptionAux(invocador, exc);
         }
+    	emanager.getTransaction().commit();
+        emanager.close();
     }
 
     @Override
@@ -130,9 +130,8 @@ public class ControladorUsuario implements IControladorUsuario {
         //en su respectivo frame deberan antes ser utilizados
         //ListarUsuarios() y ConsultarUsuario(id)
         //los atributos que no se deseen modificar llegaran en blanco o null
+    	EntityManager emanager = emFactory.createEntityManager();
         try {
-
-            EntityManager emanager = emFactory.createEntityManager();
             emanager.getTransaction().begin();
 
             Usuario user = emanager.find(Usuario.class, id_user);
@@ -154,14 +153,15 @@ public class ControladorUsuario implements IControladorUsuario {
 
             emanager.merge(cnl);
             emanager.merge(user);
-            emanager.getTransaction().commit();
-            emanager.close();
+            
         } catch (Exception exc) {
             Throwable _throwable = new Throwable();
             StackTraceElement[] elements = _throwable.getStackTrace();
             String invocador = elements[1].getFileName();
             exceptionAux(invocador, exc);
         }
+        emanager.getTransaction().commit();
+        emanager.close();
         //Posteriormente en su respectivo frame se podra seleccionar para editar datos
         //de los videos o listas de reproduccion del usuario
         //ademas la imagen al llamarse igual ya que su nombre es el nick del usuario
@@ -171,9 +171,9 @@ public class ControladorUsuario implements IControladorUsuario {
     @Override
     public List<VideoDt> listarVideosDeUsuario(String usernick){
         List<VideoDt> list = new ArrayList<>();
+        EntityManager emanager = emFactory.createEntityManager();
         try {
             int idUser= obtenerIdUsuario(usernick);
-            EntityManager emanager = emFactory.createEntityManager();
             emanager.getTransaction().begin();
             
             Canal cnl = emanager.find(Canal.class, idUser);
@@ -185,31 +185,31 @@ public class ControladorUsuario implements IControladorUsuario {
             while(iter.hasNext()) {
                 list.add(new VideoDt(iter.next()));
             }
-            emanager.getTransaction().commit();
-            emanager.close();
+            
         }catch (Exception exc) {
             Throwable _throwable = new Throwable();
             StackTraceElement[] elements = _throwable.getStackTrace();
             String invocador = elements[1].getFileName();
             exceptionAux(invocador, exc);
         }
+        emanager.getTransaction().commit();
+        emanager.close();
         return list;
-
     }
 
     @Override
     public List<UsuarioDt> ListarUsuarios(){
         List<UsuarioDt> list = new ArrayList<>();
+        EntityManager emanager = emFactory.createEntityManager();
         try {
-
+        	emanager.getTransaction().begin();
             //probablemente devuelve una lista de los nicks de los usuarios existentes
             //esa lista luego es mostrada en su respectivo frameS
-            EntityManager emanager = emFactory.createEntityManager();
+            
             List<Usuario> users = emanager.createQuery("SELECT u FROM Usuario u", Usuario.class).getResultList();
             for(int i=0;i < users.size(); i++) {
                 list.add(new UsuarioDt(users.get(i)));
             }
-            emanager.close();
 
         } catch (Exception exc) {
             Throwable _throwable = new Throwable();
@@ -217,14 +217,17 @@ public class ControladorUsuario implements IControladorUsuario {
             String invocador = elements[1].getFileName();
             exceptionAux(invocador, exc);
         }
+        emanager.getTransaction().commit();
+        emanager.close();
         return list;
     }
 
     @Override
     public UsuarioDt ConsultarUsuario(int id_user){
         UsuarioDt udt = null;
+        EntityManager emanager = emFactory.createEntityManager();
         try {
-            EntityManager emanager = emFactory.createEntityManager();
+            
             emanager.getTransaction().begin();
             Usuario user = emanager.find(Usuario.class, id_user);
             
@@ -250,23 +253,24 @@ public class ControladorUsuario implements IControladorUsuario {
                     user.getCanal(),
                     suscripciones
             );
-            emanager.getTransaction().commit();
-            emanager.close();
+            
         } catch (Exception exc) {
             Throwable _throwable = new Throwable();
             StackTraceElement[] elements = _throwable.getStackTrace();
             String invocador = elements[1].getFileName();
             exceptionAux(invocador, exc);
         }
+        emanager.getTransaction().commit();
+        emanager.close();
         return udt;
     }
 
     //Listas de Reproduccion
     @Override
     public void AltaListaDeReproduccionPorDefecto(String nombre) {
+    	EntityManager emanager = emFactory.createEntityManager();
         try {
 
-            EntityManager emanager = emFactory.createEntityManager();
             emanager.getTransaction().begin();
 
             if(emanager.find(ListaDeReproduccion_PorDefecto.class, nombre) != null)
@@ -283,22 +287,23 @@ public class ControladorUsuario implements IControladorUsuario {
                 cnl.addLista(lst);
                 emanager.merge(cnl);
             }
-            emanager.getTransaction().commit();
-            emanager.close();
+            
         } catch (Exception exc) {
             Throwable _throwable = new Throwable();
             StackTraceElement[] elements = _throwable.getStackTrace();
             String invocador = elements[1].getFileName();
             exceptionAux(invocador, exc);
         }
+        emanager.getTransaction().commit();
+        emanager.close();
     }
 
 
     @Override
     public void AltaListaDeReproduccionParticular(String nombre, int id_propietario, boolean privacidad, String categoria) {
-        try {
+    	EntityManager emanager = emFactory.createEntityManager();
+    	try {
 
-            EntityManager emanager = emFactory.createEntityManager();
             emanager.getTransaction().begin();
 
             Canal propietario = emanager.find(Canal.class, id_propietario);
@@ -314,21 +319,22 @@ public class ControladorUsuario implements IControladorUsuario {
             emanager.persist(lista);
             propietario.addLista(lista);
             emanager.merge(propietario);
-            emanager.getTransaction().commit();
-            emanager.close();
+            
         } catch (Exception exc) {
             Throwable _throwable = new Throwable();
             StackTraceElement[] elements = _throwable.getStackTrace();
             String invocador = elements[1].getFileName();
             exceptionAux(invocador, exc);
         }
+    	emanager.getTransaction().commit();
+        emanager.close();
     }
 
     @Override
     public void ModificarListaDeReproduccion(int usuario, String lista, String nuevaCat, boolean nuevaPri) {
-        try {
+    	EntityManager emanager = emFactory.createEntityManager();
+    	try {
 
-            EntityManager emanager = emFactory.createEntityManager();
             emanager.getTransaction().begin();
 
             Canal propietario = emanager.find(Canal.class, usuario);
@@ -344,21 +350,22 @@ public class ControladorUsuario implements IControladorUsuario {
             emanager.merge(_list);
             //propietario.modificarLista(l); //no deberia ser necesario
             emanager.merge(propietario);
-            emanager.getTransaction().commit();
-            emanager.close();
+            
         } catch (Exception exc) {
             Throwable _throwable = new Throwable();
             StackTraceElement[] elements = _throwable.getStackTrace();
             String invocador = elements[1].getFileName();
             exceptionAux(invocador, exc);
         }
+    	emanager.getTransaction().commit();
+        emanager.close();
     }
 
     @Override
     public void AgregarVideoListaDeReproduccion(int usuarioVideo, int usuarioLista, String video, String lista) {
-        try {
+    	EntityManager emanager = emFactory.createEntityManager();
+    	try {
 
-            EntityManager emanager = emFactory.createEntityManager();
             emanager.getTransaction().begin();
 
             Usuario user_video = emanager.find(Usuario.class, usuarioVideo);
@@ -373,21 +380,22 @@ public class ControladorUsuario implements IControladorUsuario {
             canal_lista.agregarVideoLista(vid, lista);
             
             emanager.merge(canal_lista);
-            emanager.getTransaction().commit();
-            emanager.close();
+            
         } catch (Exception exc) {
             Throwable _throwable = new Throwable();
             StackTraceElement[] elements = _throwable.getStackTrace();
             String invocador = elements[1].getFileName();
             exceptionAux(invocador, exc);
         }
+    	emanager.getTransaction().commit();
+        emanager.close();
     }
 
     @Override
     public void QuitarVideoListaDeReproduccion(int usuariolista, String lista, int video) {
-        try {
+    	EntityManager emanager = emFactory.createEntityManager();
+    	try {
 
-            EntityManager emanager = emFactory.createEntityManager();
             emanager.getTransaction().begin();
 
             Canal canal_lista = emanager.find(Canal.class, usuariolista);
@@ -396,20 +404,22 @@ public class ControladorUsuario implements IControladorUsuario {
             canal_lista.quitarVideoLista(video, lista);
 
             emanager.merge(canal_lista);
-            emanager.getTransaction().commit();
-            emanager.close();
+            
         } catch (Exception exc) {
             Throwable _throwable = new Throwable();
             StackTraceElement[] elements = _throwable.getStackTrace();
             String invocador = elements[1].getFileName();
             exceptionAux(invocador, exc);
         }
+    	emanager.getTransaction().commit();
+        emanager.close();
     }
 
     @Override
     public void seguirUsuario(String seguidor, String seguido){
+    	EntityManager emanager = emFactory.createEntityManager();
         try {
-            EntityManager emanager = emFactory.createEntityManager();
+            
             emanager.getTransaction().begin();
 
             int idSeguido = obtenerIdUsuario(seguido);
@@ -427,22 +437,24 @@ public class ControladorUsuario implements IControladorUsuario {
             uSeguidor.agregarSuscripcion(cnl);
             emanager.merge(cnl);
             emanager.merge(uSeguidor);
-            emanager.getTransaction().commit();
-            emanager.close();
+            
        } catch (Exception exc) {
            Throwable _throwable = new Throwable();
            StackTraceElement[] elements = _throwable.getStackTrace();
            String invocador = elements[1].getFileName();
            exceptionAux(invocador, exc);
        }
+       emanager.getTransaction().commit();
+       emanager.close();
 
     }
 
     @Override
     public List<String> ListarSeguidores(int userId){
         List<String> seguidores = new ArrayList<>();
+        EntityManager emanager = emFactory.createEntityManager();
         try {
-            EntityManager emanager = emFactory.createEntityManager();
+            
             emanager.getTransaction().begin();
             
             Canal cnl = emanager.find(Canal.class, userId);
@@ -454,22 +466,22 @@ public class ControladorUsuario implements IControladorUsuario {
                 seguidores.add(iter.next().getNickname());
             }
             
-            emanager.getTransaction().commit();
-            emanager.close();
         } catch (Exception exc) {
             Throwable _throwable = new Throwable();
             StackTraceElement[] elements = _throwable.getStackTrace();
             String invocador = elements[1].getFileName();
             exceptionAux(invocador, exc);
         }
+        emanager.getTransaction().commit();
+        emanager.close();
         return seguidores;
     }
 
     @Override
     public List<String> ListarSiguiendo(int userId){
         List<String> suscripciones = new ArrayList<>();
+        EntityManager emanager = emFactory.createEntityManager();
         try {
-            EntityManager emanager = emFactory.createEntityManager();
             emanager.getTransaction().begin();
             
             Usuario user = emanager.find(Usuario.class, userId);
@@ -481,22 +493,23 @@ public class ControladorUsuario implements IControladorUsuario {
                 Usuario userc = iter.next().getUsuario();
                 suscripciones.add(userc.getNickname());
             }
-            
-            emanager.getTransaction().commit();
-            emanager.close();
+
         } catch (Exception exc) {
             Throwable _throwable = new Throwable();
             StackTraceElement[] elements = _throwable.getStackTrace();
             String invocador = elements[1].getFileName();
             exceptionAux(invocador, exc);
         }
+        emanager.getTransaction().commit();
+        emanager.close();
         return suscripciones;
     }
 
     @Override
     public void dejarDeSeguirUsuario(String seguidor, String seguido){
-      try {
-            EntityManager emanager = emFactory.createEntityManager();
+    	EntityManager emanager = emFactory.createEntityManager();
+    	try {
+            
             emanager.getTransaction().begin();
             
             int idSeguido = obtenerIdUsuario(seguido);
@@ -515,22 +528,22 @@ public class ControladorUsuario implements IControladorUsuario {
             uSeguidor.eliminarSuscripcion(cnl);
             emanager.merge(cnl);
             emanager.merge(uSeguidor);
-            emanager.getTransaction().commit();
-            emanager.close();
-       } catch (Exception exc) {
+            
+    	} catch (Exception exc) {
            Throwable _throwable = new Throwable();
            StackTraceElement[] elements = _throwable.getStackTrace();
            String invocador = elements[1].getFileName();
            exceptionAux(invocador, exc);
-       }
+    	}
+    	emanager.getTransaction().commit();
+        emanager.close();
     }
     //Auxiliares
     @Override
     public int obtenerIdUsuario(String nick) {
         int id_user = -1;
+        EntityManager emanager = emFactory.createEntityManager();
         try {
-
-            EntityManager emanager = emFactory.createEntityManager();
             emanager.getTransaction().begin();
             
             TypedQuery<Usuario> query = emanager.createNamedQuery("Usuario.findByNickname", Usuario.class).setParameter("nickname", nick);
@@ -539,63 +552,68 @@ public class ControladorUsuario implements IControladorUsuario {
                 Usuario usr = query.getSingleResult();
                 id_user = usr.getId();
             }
-            emanager.getTransaction().commit();
-            emanager.close();
+            
+            if (id_user == -1) throw new Exception("El usuario no existe");//puto catch
         } catch (Exception exc) {
             Throwable _throwable = new Throwable();
             StackTraceElement[] elements = _throwable.getStackTrace();
             String invocador = elements[1].getFileName();
             exceptionAux(invocador, exc);
         }
+        emanager.getTransaction().commit();
+        emanager.close();
         return id_user;
     }
     
     @Override
     public int obtenerIdUsuarioMail(String mail){
-    int id_user = -1;
-    
-    try {
-            EntityManager emanager = emFactory.createEntityManager();
+	    int id_user = -1;
+	    EntityManager emanager = emFactory.createEntityManager();
+	    try {
+            
             emanager.getTransaction().begin();
             
             TypedQuery<Usuario> query = emanager.createNamedQuery("Usuario.findByMail", Usuario.class).setParameter("mail", mail);
+            
             //if (q.getResultList().isEmpty()) throw new Exception("El usuario no existe");
             if (!query.getResultList().isEmpty()){ 
                 Usuario usr = query.getSingleResult();
                 id_user = usr.getId();
             }
-            emanager.getTransaction().commit();
-            emanager.close();
+            if (id_user == -1) throw new Exception("El usuario con ese mail no existe");
+
         } catch (Exception exc) {
             Throwable _throwable = new Throwable();
             StackTraceElement[] elements = _throwable.getStackTrace();
             String invocador = elements[1].getFileName();
             exceptionAux(invocador, exc);
         }
-    
-    return id_user;
+	    emanager.getTransaction().commit();
+        emanager.close();
+        return id_user;
     }
 
     @Override
     public String obtenerNickUsuario(int id_user) {
         String nick = "";
+        EntityManager emanager = emFactory.createEntityManager();
         try {
 
-            EntityManager emanager = emFactory.createEntityManager();
             emanager.getTransaction().begin();
             
             Usuario user = emanager.find(Usuario.class, id_user);
             if (user == null) throw new Exception("El usuario no existe");
 
             nick = user.getNickname();
-            emanager.getTransaction().commit();
-            emanager.close();
+            
         } catch (Exception exc) {
             Throwable _throwable = new Throwable();
             StackTraceElement[] elements = _throwable.getStackTrace();
             String invocador = elements[1].getFileName();
             exceptionAux(invocador, exc);
         }
+        emanager.getTransaction().commit();
+        emanager.close();
         return nick;
     }
     
@@ -674,8 +692,8 @@ public class ControladorUsuario implements IControladorUsuario {
     @Override
     public List<VideoDt> obtenerVideosLista(int id_user, String lista) {
         List<VideoDt> lretorno = new ArrayList<>();
+        EntityManager em = emFactory.createEntityManager();
         try {
-            EntityManager em = emFactory.createEntityManager();
             em.getTransaction().begin();
 
             Canal cnl = em.find(Canal.class, id_user);
@@ -688,14 +706,14 @@ public class ControladorUsuario implements IControladorUsuario {
                 lretorno.add(new VideoDt(vid));
             }
 
-            em.getTransaction().commit();
-            em.close();
         } catch (Exception exc) {
             Throwable _throwable = new Throwable();
             StackTraceElement[] elements = _throwable.getStackTrace();
             String invocador = elements[1].getFileName();
             exceptionAux(invocador, exc);
         }
+        em.getTransaction().commit();
+        em.close();
         return lretorno;
     }
     
@@ -727,8 +745,9 @@ public class ControladorUsuario implements IControladorUsuario {
     @Override
     public ListaDeReproduccionDt obtenerListaDt(int id, String lista) {
         ListaDeReproduccionDt ldt = null;
+        EntityManager emanager = emFactory.createEntityManager();
         try {
-            EntityManager emanager = emFactory.createEntityManager();
+            
             emanager.getTransaction().begin();
 
             Canal cnl = emanager.find(Canal.class, id);
@@ -754,22 +773,24 @@ public class ControladorUsuario implements IControladorUsuario {
                 id,
                 _date
             );
-            emanager.getTransaction().commit();
-            emanager.close();
         } catch (Exception exc) {
             Throwable _throwable = new Throwable();
             StackTraceElement[] elements = _throwable.getStackTrace();
             String invocador = elements[1].getFileName();
             exceptionAux(invocador, exc);
         }
+        emanager.getTransaction().commit();
+        emanager.close();
         return ldt;
     }
 
     @Override
     public List<String> ListarVideos(int userId) {
         List<String> lista = new ArrayList<>();
+        EntityManager emanager = emFactory.createEntityManager();
         try {
-            EntityManager emanager = emFactory.createEntityManager();
+            emanager.getTransaction().begin();
+            
             Canal cnl = emanager.find(Canal.class, userId);
             if(cnl == null) throw new Exception("El usuario no existe");
            
@@ -787,6 +808,8 @@ public class ControladorUsuario implements IControladorUsuario {
             String invocador = elements[1].getFileName();
             exceptionAux(invocador, exc);
         }
+        emanager.getTransaction().commit();
+        emanager.close();
         return lista;
     }
     
@@ -802,8 +825,9 @@ public class ControladorUsuario implements IControladorUsuario {
     @Override
     public Integer LoginUsuario(String _user, String _password) {
         Integer userId = null;
+        EntityManager emanager = emFactory.createEntityManager();
         try {
-            EntityManager emanager = emFactory.createEntityManager();
+            emanager.getTransaction().begin();
             
             int _id = obtenerIdUsuario(_user);
             Usuario usr = emanager.find(Usuario.class, _id);
@@ -812,21 +836,23 @@ public class ControladorUsuario implements IControladorUsuario {
                     userId = _id;
                 }
             }
-            emanager.close();
         } catch (Exception exc) {
             Throwable _throwable = new Throwable();
             StackTraceElement[] elements = _throwable.getStackTrace();
             String invocador = elements[1].getFileName();
             exceptionAux(invocador, exc);
         }
+        emanager.getTransaction().commit();
+        emanager.close();
         return userId;
     }
     
     @Override
     public boolean estaSuscripto(int suscripto, int pcanal) {
         boolean _si = false;
+        EntityManager emanager = emFactory.createEntityManager();
         try{
-            EntityManager emanager = emFactory.createEntityManager();
+            emanager.getTransaction().begin();
             
             Usuario usr = emanager.find(Usuario.class, suscripto);
             if(usr == null) throw new Exception("No se encontro el usuario suscriptor");
@@ -834,23 +860,25 @@ public class ControladorUsuario implements IControladorUsuario {
             if(cnl == null) throw new Exception("No se encontro al propietario del canal");
             
             if(cnl.getSeguidores().contains(usr)) _si = true;
-            
-            emanager.close();
+
         } catch (Exception exc) {
             Throwable _throwable = new Throwable();
             StackTraceElement[] elements = _throwable.getStackTrace();
             String invocador = elements[1].getFileName();
             exceptionAux(invocador, exc);
         }
+        emanager.getTransaction().commit();
+        emanager.close();
         return _si;
     }
     
     @Override
     public List<ListaDeReproduccionDt> obtenerListasDtPorUsuario(int id_user) {
             List<ListaDeReproduccionDt> list = new ArrayList<>();
+            EntityManager emanager = emFactory.createEntityManager();
             try {
-                EntityManager emanager = emFactory.createEntityManager();
-                
+                emanager.getTransaction().begin();
+            	
                 Canal cnl = emanager.find(Canal.class, id_user);
                 if(cnl == null) throw new Exception("El usuario no existe");
                 
@@ -877,21 +905,24 @@ public class ControladorUsuario implements IControladorUsuario {
                         _date
                     ));
                 }
-                emanager.close();
+                
        } catch (Exception exc) {
            Throwable _throwable = new Throwable();
            StackTraceElement[] elements = _throwable.getStackTrace();
            String invocador = elements[1].getFileName();
            exceptionAux(invocador, exc);
        }
+       emanager.getTransaction().commit();
+       emanager.close();
        return list;
     }
     
     @Override
     public List<ListaDeReproduccionDt> obtenerListas() {
             List<ListaDeReproduccionDt> list = new ArrayList<>();
+            EntityManager emanager = emFactory.createEntityManager();
             try {
-                EntityManager emanager = emFactory.createEntityManager();
+                emanager.getTransaction().begin();
                 
                 List<ListaDeReproduccion> listas = emanager.createQuery("SELECT l FROM ListaDeReproduccion l", ListaDeReproduccion.class).getResultList();
                 Iterator<ListaDeReproduccion> iter = listas.iterator();
@@ -917,21 +948,23 @@ public class ControladorUsuario implements IControladorUsuario {
                         _date
                     ));
                 }
-                emanager.close();
-       } catch (Exception exc) {
-           Throwable _throwable = new Throwable();
-           StackTraceElement[] elements = _throwable.getStackTrace();
-           String invocador = elements[1].getFileName();
-           exceptionAux(invocador, exc);
-       }
-       return list;
+	       } catch (Exception exc) {
+	           Throwable _throwable = new Throwable();
+	           StackTraceElement[] elements = _throwable.getStackTrace();
+	           String invocador = elements[1].getFileName();
+	           exceptionAux(invocador, exc);
+	       }
+	       emanager.getTransaction().commit();
+	       emanager.close();
+	       return list;
     }
     
     @Override
     public ListaDeReproduccionDt obtenerListaDtPorId(int id_lista) {
         ListaDeReproduccionDt ldt = null;
+        EntityManager emanager = emFactory.createEntityManager();
         try {
-            EntityManager emanager = emFactory.createEntityManager();
+            
             emanager.getTransaction().begin();
             
             ListaDeReproduccion lst = emanager.find(ListaDeReproduccion.class, id_lista);
@@ -955,34 +988,38 @@ public class ControladorUsuario implements IControladorUsuario {
                 id_lista,
                 _date
             );
-            emanager.getTransaction().commit();
-            emanager.close();
+            
         } catch (Exception exc) {
             Throwable _throwable = new Throwable();
             StackTraceElement[] elements = _throwable.getStackTrace();
             String invocador = elements[1].getFileName();
             exceptionAux(invocador, exc);
         }
+        emanager.getTransaction().commit();
+        emanager.close();
         return ldt;
     }
     
     @Override
     public CanalDt obtenerCanalDt(int id) {
         CanalDt cdt = null;
+        EntityManager emanager = emFactory.createEntityManager();
         try {
-            EntityManager emanager = emFactory.createEntityManager();
+            emanager.getTransaction().begin();
             
             Canal cnl = emanager.find(Canal.class, id);
             if(cnl == null) throw new Exception("El canal no existe");
             
             cdt = new CanalDt(cnl);
-            emanager.close();
+            
         } catch (Exception exc) {
             Throwable _throwable = new Throwable();
             StackTraceElement[] elements = _throwable.getStackTrace();
             String invocador = elements[1].getFileName();
             exceptionAux(invocador, exc);
         }
+        emanager.getTransaction().commit();
+        emanager.close();
         return cdt;
     }
     
@@ -1014,9 +1051,8 @@ public class ControladorUsuario implements IControladorUsuario {
     //Para pruebas
     @Override
     public void EliminarListaDeReproduccionPorDefecto(String nombre) {
+    	EntityManager emanager = emFactory.createEntityManager();
         try {
-
-            EntityManager emanager = emFactory.createEntityManager();
             emanager.getTransaction().begin();
 
             ListaDeReproduccion_PorDefecto list_pordefecto = emanager.find(ListaDeReproduccion_PorDefecto.class, nombre);
@@ -1027,27 +1063,27 @@ public class ControladorUsuario implements IControladorUsuario {
             	Canal cnl = canales.get(i);
                 ListaDeReproduccion lst = cnl.getLista(nombre);
                 if(lst != null) emanager.remove(lst);
-                emanager.merge(cnl);
+                //emanager.merge(cnl);
             }
             emanager.remove(list_pordefecto);
-            emanager.getTransaction().commit();
-            emanager.close();
+            
         } catch (Exception exc) {
             Throwable _throwable = new Throwable();
             StackTraceElement[] elements = _throwable.getStackTrace();
             String invocador = elements[1].getFileName();
             exceptionAux(invocador, exc);
         }
+        emanager.getTransaction().commit();
+        emanager.close();
     }
     
     @Override
     public void EliminarListaDeReproduccionParticular(int id_user, String nombre) {
-        try {
-
-            EntityManager emanager = emFactory.createEntityManager();
+    	EntityManager emanager = emFactory.createEntityManager();
+    	try {
             emanager.getTransaction().begin();
 
-            Canal cnl = emanager.find(Canal.class, nombre);
+            Canal cnl = emanager.find(Canal.class, id_user);
             if(cnl == null) throw new Exception("El canal no existe");
             
             ListaDeReproduccion lst = cnl.getLista(nombre);
@@ -1056,13 +1092,14 @@ public class ControladorUsuario implements IControladorUsuario {
             while(iter.hasNext()) { lst.quitarVideo(iter.next().getId());}
             
             emanager.remove(lst);
-            emanager.getTransaction().commit();
-            emanager.close();
+            
         } catch (Exception exc) {
             Throwable _throwable = new Throwable();
             StackTraceElement[] elements = _throwable.getStackTrace();
             String invocador = elements[1].getFileName();
             exceptionAux(invocador, exc);
         }
+    	emanager.getTransaction().commit();
+        emanager.close();
     }
 }

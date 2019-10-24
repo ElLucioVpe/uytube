@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="css/sidebar.css">
 <!-- Scrollbar Custom CSS -->
 <link rel="stylesheet" href="css/jquery.mCustomScrollbar.min.css">
+
 <% String sidebar_path = request.getContextPath(); %>
         <div class="wrapper">
             <!-- Sidebar Holder -->

@@ -46,53 +46,55 @@ public class ControladorCategoria implements IControladorCategoria {
      
     @Override
     public void AltaCategoria(String nombre){
+    	EntityManager emanager = emFactory.createEntityManager();
     	try {
-            
-            EntityManager emanager = emFactory.createEntityManager();
             emanager.getTransaction().begin();
             
             if(emanager.find(Categoria.class, nombre) != null) throw new Exception("La categoria ya existe");
             Categoria cat = new Categoria(nombre);
             emanager.persist(cat);
-            emanager.getTransaction().commit();
-            emanager.close();
+            
         } catch (Exception exc) {
             Throwable _throwable = new Throwable();
             StackTraceElement[] elements = _throwable.getStackTrace();
             String invocador = elements[1].getFileName();
             exceptionAux(invocador, exc);
         }
+    	emanager.getTransaction().commit();
+        emanager.close();
     }
      
     
      @Override
      public List<CategoriaDt> ListarCategorias(){
          List<CategoriaDt> list = new ArrayList<>();
-        try {
-          
-            EntityManager emanager = emFactory.createEntityManager();
-            List<Categoria> categorias = emanager.createQuery("SELECT c FROM Categoria c", Categoria.class).getResultList();
-            for(int i=0;i < categorias.size(); i++) {
-                list.add(new CategoriaDt(categorias.get(i)));
-            }
-            emanager.close();
-
-        } catch (Exception exc) {
+         EntityManager emanager = emFactory.createEntityManager();
+         try {
+        	 emanager.getTransaction().begin();
+        	 List<Categoria> categorias = emanager.createQuery("SELECT c FROM Categoria c", Categoria.class).getResultList();
+        	 for(int i=0;i < categorias.size(); i++) {
+        		 list.add(new CategoriaDt(categorias.get(i)));
+        	 }
+        	 
+         } catch (Exception exc) {
             Throwable _throwable = new Throwable();
             StackTraceElement[] elements = _throwable.getStackTrace();
             String invocador = elements[1].getFileName();
             exceptionAux(invocador, exc);
-        }
-        return list;
+         }
+         emanager.getTransaction().commit();
+         emanager.close();
+         return list;
 }
      
      
      @Override
      public CategoriaDt ConsultarCategorias(String Nombre){
         CategoriaDt cdt = null;
+        EntityManager emanager = emFactory.createEntityManager();
         try {
-            EntityManager emanager = emFactory.createEntityManager();
             
+            emanager.getTransaction().begin();
             Categoria cat = emanager.find(Categoria.class, Nombre);
             if(cat == null) throw new Exception("La categoria no existe");
             
@@ -103,37 +105,40 @@ public class ControladorCategoria implements IControladorCategoria {
             String invocador = elements[1].getFileName();
             exceptionAux(invocador, exc);
         }
+        emanager.getTransaction().commit();
+        emanager.close();
         return cdt;
      }
      
      @Override
      public List<ListaDeReproduccion> obtenerListasCategoria(String nom){
         List<ListaDeReproduccion> query = null;
+        EntityManager emanager = emFactory.createEntityManager();
         try {
-            EntityManager emanager = emFactory.createEntityManager();
             emanager.getTransaction().begin();
 
             Categoria cat = emanager.find(Categoria.class, nom);
             if(cat == null) throw new Exception("La categoria no existe");
             
             query = emanager.createNamedQuery("ListaDeReproduccion.findByCategoria",ListaDeReproduccion.class).setParameter("categoria", cat).getResultList();
-            
-            emanager.getTransaction().commit();
-            emanager.close();
+
         } catch (Exception exc) {
             Throwable _throwable = new Throwable();
             StackTraceElement[] elements = _throwable.getStackTrace();
             String invocador = elements[1].getFileName();
             exceptionAux(invocador, exc);
         }
+        emanager.getTransaction().commit();
+        emanager.close();
         return query;
      }
      
      @Override
      public List<Video> obtenerVideosCategoria(String nom){
         List<Video> query = null;
+        EntityManager emanager = emFactory.createEntityManager();
         try {
-            EntityManager emanager = emFactory.createEntityManager();
+            
             emanager.getTransaction().begin();
 
             Categoria cat = emanager.find(Categoria.class, nom);
@@ -141,14 +146,15 @@ public class ControladorCategoria implements IControladorCategoria {
             
             query = emanager.createNamedQuery("Video.findByCategoria",Video.class).setParameter("categoria", nom).getResultList();
 
-            emanager.getTransaction().commit();
-            emanager.close();
+            
         } catch (Exception exc) {
             Throwable _throwable = new Throwable();
             StackTraceElement[] elements = _throwable.getStackTrace();
             String invocador = elements[1].getFileName();
             exceptionAux(invocador, exc);
         }
+        emanager.getTransaction().commit();
+        emanager.close();
         return query;
      }
      
@@ -165,8 +171,9 @@ public class ControladorCategoria implements IControladorCategoria {
     @Override
     public List<ListaDeReproduccionDt> obtenerListasDtCategoria(String nom){
         List<ListaDeReproduccionDt> retorno = new ArrayList<>();
+        EntityManager emanager = emFactory.createEntityManager();
         try {
-            EntityManager emanager = emFactory.createEntityManager();
+            
             emanager.getTransaction().begin();
             
             Categoria cat = emanager.find(Categoria.class, nom);
@@ -196,23 +203,24 @@ public class ControladorCategoria implements IControladorCategoria {
                     _date
                 ));
             }
-            
-            emanager.getTransaction().commit();
-            emanager.close();
+                        
         } catch (Exception exc) {
             Throwable _throwable = new Throwable();
             StackTraceElement[] elements = _throwable.getStackTrace();
             String invocador = elements[1].getFileName();
             exceptionAux(invocador, exc);
         }
+        emanager.getTransaction().commit();
+        emanager.close();
         return retorno;
     }
     
     @Override
     public List<VideoDt> obtenerVideosDtCategoria(String nom) {
         List<VideoDt> retorno = new ArrayList<>();
+        EntityManager emanager = emFactory.createEntityManager();
         try {
-            EntityManager emanager = emFactory.createEntityManager();
+            emanager.getTransaction().begin();
             
             Categoria cat = emanager.find(Categoria.class, nom);
             if(cat == null) throw new Exception("La categoria no existe");
@@ -222,13 +230,15 @@ public class ControladorCategoria implements IControladorCategoria {
             for(int i=0; i < lista.size(); i++) {
                 retorno.add(new VideoDt(lista.get(i)));
             }
-            emanager.close();
+            
         } catch (Exception exc) {
             Throwable _throwable = new Throwable();
             StackTraceElement[] elements = _throwable.getStackTrace();
             String invocador = elements[1].getFileName();
             exceptionAux(invocador, exc);
         }
+        emanager.getTransaction().commit();
+        emanager.close();
         return retorno;
     }
     
@@ -261,9 +271,9 @@ public class ControladorCategoria implements IControladorCategoria {
     //Auxiliar de pruebas
     @Override
     public void EliminarCategoria(String nom) {
+    	EntityManager emanager = emFactory.createEntityManager();
     	try {
     		
-            EntityManager emanager = emFactory.createEntityManager();
             emanager.getTransaction().begin();
             
             Categoria cat = emanager.find(Categoria.class, nom);
@@ -271,8 +281,7 @@ public class ControladorCategoria implements IControladorCategoria {
             emanager.remove(cat);
             //Ya que es una funcion hecha para testeo y se eliminaran categorias sin videos ni listas
             //no es necesario encargarse de estas en el codigo
-            emanager.getTransaction().commit();
-            emanager.close();
+            
             
         } catch (Exception exc) {
             Throwable _throwable = new Throwable();
@@ -280,7 +289,8 @@ public class ControladorCategoria implements IControladorCategoria {
             String invocador = elements[1].getFileName();
             exceptionAux(invocador, exc);
         }
-    	
+    	emanager.getTransaction().commit();
+        emanager.close();
     }
 }
 

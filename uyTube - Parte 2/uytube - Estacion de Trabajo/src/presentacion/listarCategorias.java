@@ -2,7 +2,6 @@ package presentacion;
 
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
-import logica.Categoria;
 import logica.controladores.Fabrica;
 import logica.controladores.IControladorCategoria;
 import logica.controladores.IControladorUsuario;

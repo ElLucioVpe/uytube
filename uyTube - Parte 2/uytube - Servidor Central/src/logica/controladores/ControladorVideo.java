@@ -51,9 +51,8 @@ public class ControladorVideo implements IControladorVideo {
     
     @Override
     public void AltaVideo(String nombre, String duracion, String url, String desc, int user, String categoria){
-          try {
-            
-            EntityManager emanager = emFactory.createEntityManager();
+    	EntityManager emanager = emFactory.createEntityManager();
+    	try {
             emanager.getTransaction().begin();
             
             Usuario usr = emanager.find(Usuario.class, user); 
@@ -73,21 +72,22 @@ public class ControladorVideo implements IControladorVideo {
             cnl.agregarVideo(vid);
             emanager.persist(vid);
             emanager.merge(cnl);
-            emanager.getTransaction().commit();
-            emanager.close();
+           
         } catch (Exception exc) {
             Throwable _throwable = new Throwable();
             StackTraceElement[] elements = _throwable.getStackTrace();
             String invocador = elements[1].getFileName();
             exceptionAux(invocador, exc);
         }
+    	emanager.getTransaction().commit();
+        emanager.close();
     }
     
     @Override
     public void ModificarVideo(int id, String nuevoNom, String nuevaDur, String nuevaUrl, String nuevaDesc, Date nuevaFpub, boolean nuevaPriv, String nuevaCat){
-        try {
+    	EntityManager emanager = emFactory.createEntityManager();
+    	try {
 
-            EntityManager emanager = emFactory.createEntityManager();
             emanager.getTransaction().begin();
             java.util.Date fecha = new Date();
 
@@ -101,6 +101,7 @@ public class ControladorVideo implements IControladorVideo {
                 vid.setFechaPublicacion(nuevaFpub);
             }
             //Priv cambiar chanc
+            
             Canal cnlv = emanager.find(Canal.class, vid.getIdUsuario());
             if(cnlv.getPrivacidad() && !nuevaPriv) throw new Exception("El video no puede ser publico ya que el canal es privado");
             vid.setPrivacidad(nuevaPriv);
@@ -112,21 +113,21 @@ public class ControladorVideo implements IControladorVideo {
             }
             
             emanager.merge(vid);
-            emanager.getTransaction().commit();
-            emanager.close();
+            
         } catch (Exception exc) {
             Throwable _throwable = new Throwable();
             StackTraceElement[] elements = _throwable.getStackTrace();
             String invocador = elements[1].getFileName();
             exceptionAux(invocador, exc);
         }
+    	emanager.getTransaction().commit();
+        emanager.close();
     }
         
         @Override
         public void ValorarVideo(int user_valoracion, int id_video, boolean gusta) {
-            try {
-
-                EntityManager emanager = emFactory.createEntityManager();
+        	EntityManager emanager = emFactory.createEntityManager();
+        	try {
                 emanager.getTransaction().begin();
 
                 Video video = emanager.find(Video.class, id_video);
@@ -147,8 +148,7 @@ public class ControladorVideo implements IControladorVideo {
                 
                 emanager.merge(video);
                 emanager.merge(user);
-                emanager.getTransaction().commit();
-                emanager.close();
+                
                 
             } catch (Exception exc) {
                 Throwable _throwable = new Throwable();
@@ -156,13 +156,15 @@ public class ControladorVideo implements IControladorVideo {
                 String invocador = elements[1].getFileName();
                 exceptionAux(invocador, exc);
             }
+        	emanager.getTransaction().commit();
+            emanager.close();
         }
         
         @Override
         public void ComentarVideo(int user_id, int video_id, long id_padre, String texto, Date fecha) {
-            try {
+        	EntityManager emanager = emFactory.createEntityManager();
+        	try {
 
-                EntityManager emanager = emFactory.createEntityManager();
                 emanager.getTransaction().begin();
 
                 Video video = emanager.find(Video.class, video_id);
@@ -187,8 +189,7 @@ public class ControladorVideo implements IControladorVideo {
                     video.agregarComentario(com); 
                     emanager.merge(video);
                 }
-                emanager.getTransaction().commit();
-                emanager.close();
+               
 
             } catch (Exception exc) {
                 Throwable _throwable = new Throwable();
@@ -196,14 +197,17 @@ public class ControladorVideo implements IControladorVideo {
                 String invocador = elements[1].getFileName();
                 exceptionAux(invocador, exc);
             }
+        	emanager.getTransaction().commit();
+            emanager.close();
         }
         
         //Auxiliares
         @Override
         public VideoDt obtenerVideoDt(String nom, Integer user) {
             VideoDt vdt = null;
+            EntityManager emanager = emFactory.createEntityManager();
             try {
-                EntityManager emanager = emFactory.createEntityManager();
+                
                 emanager.getTransaction().begin();
                 
                 Canal cnl = emanager.find(Canal.class, user);
@@ -216,8 +220,6 @@ public class ControladorVideo implements IControladorVideo {
                 if(video == null) throw new Exception("El video no existe");
                 
                 vdt = new VideoDt(video);
-                emanager.getTransaction().commit();
-                emanager.close();
 
             } catch (Exception exc) {
                 Throwable _throwable = new Throwable();
@@ -225,14 +227,17 @@ public class ControladorVideo implements IControladorVideo {
                 String invocador = elements[1].getFileName();
                 exceptionAux(invocador, exc);
             }
+            emanager.getTransaction().commit();
+            emanager.close();
             return vdt;
         }
         
         @Override
         public DefaultMutableTreeNode obtenerComentariosVideo(int id_video) {
             DefaultMutableTreeNode root = null;
+            EntityManager emanager = emFactory.createEntityManager();
             try {
-                EntityManager emanager = emFactory.createEntityManager();
+                
                 emanager.getTransaction().begin();
 
                 Video video = emanager.find(Video.class, id_video);
@@ -245,9 +250,6 @@ public class ControladorVideo implements IControladorVideo {
                     Comentario com = iter.next();
                     if(com.getPadre() == null) obtenerHijosRecursivo(root, com);
                 }
-                
-                emanager.getTransaction().commit();
-                emanager.close();
 
             } catch (Exception exc) {
                 Throwable _throwable = new Throwable();
@@ -255,6 +257,8 @@ public class ControladorVideo implements IControladorVideo {
                 String invocador = elements[1].getFileName();
                 exceptionAux(invocador, exc);
             }
+            emanager.getTransaction().commit();
+            emanager.close();
             return root;
         }
         
@@ -275,8 +279,9 @@ public class ControladorVideo implements IControladorVideo {
         
         public List<valoracionDt> obtenerValoracionVideo(int id_video){
             List<valoracionDt> list = new ArrayList<valoracionDt>();
+            EntityManager emanager = emFactory.createEntityManager();
             try {
-                EntityManager emanager = emFactory.createEntityManager();
+                emanager.getTransaction().begin();
 
                 Video vid = emanager.find(Video.class, id_video);
                 if(vid == null) throw new Exception("El video no existe");
@@ -285,51 +290,59 @@ public class ControladorVideo implements IControladorVideo {
                 while(iter.hasNext()) {
                     list.add(new valoracionDt(iter.next()));
                 }
-                emanager.close();
-           } catch (Exception exc) {
+                
+            } catch (Exception exc) {
                Throwable _throwable = new Throwable();
                StackTraceElement[] elements = _throwable.getStackTrace();
                String invocador = elements[1].getFileName();
                exceptionAux(invocador, exc);
-           }
-           return list;
+           	}
+            emanager.getTransaction().commit();
+            emanager.close();
+           	return list;
         }
         
         @Override
         public List<VideoDt> obtenerVideos() {
-                List<VideoDt> list = new ArrayList<>();
-                try {
-                EntityManager emanager = emFactory.createEntityManager();
+           List<VideoDt> list = new ArrayList<>();
+           EntityManager emanager = emFactory.createEntityManager();
+           try {
+                emanager.getTransaction().begin();
+                
                 List<Video> videos = emanager.createQuery("SELECT v FROM Video v", Video.class).getResultList();
                 for(int i=0;i < videos.size(); i++) {
                     list.add(new VideoDt(videos.get(i)));
                 }
-                emanager.close();
+               
            } catch (Exception exc) {
                Throwable _throwable = new Throwable();
                StackTraceElement[] elements = _throwable.getStackTrace();
                String invocador = elements[1].getFileName();
                exceptionAux(invocador, exc);
            }
+           emanager.getTransaction().commit();
+           emanager.close();
            return list;
         }
         
         @Override
         public VideoDt obtenerVideoDtPorID(int id_video){
             VideoDt video = new VideoDt();
+            EntityManager emanager = emFactory.createEntityManager();
             try {
-                EntityManager emanager = emFactory.createEntityManager();
+                emanager.getTransaction().begin();
                 Video vid = emanager.find(Video.class, id_video);
                 if(vid == null) throw new Exception("El video no existe");
                 
                 video = new VideoDt(vid);
-                emanager.close();
             } catch (Exception exc) {
                 Throwable _throwable = new Throwable();
                 StackTraceElement[] elements = _throwable.getStackTrace();
                 String invocador = elements[1].getFileName();
                 exceptionAux(invocador, exc);
             }
+            emanager.getTransaction().commit();
+            emanager.close();
             return video;
         }
         
@@ -344,8 +357,9 @@ public class ControladorVideo implements IControladorVideo {
         @Override
         public List<ComentarioDt> obtenerComentariosDt(int id_video) {
             List<ComentarioDt> comentariosDt = new ArrayList<>();
+            EntityManager emanager = emFactory.createEntityManager();
             try { 
-                EntityManager emanager = emFactory.createEntityManager();
+                emanager.getTransaction().begin();
                 
                 Video vid = emanager.find(Video.class, id_video);
                 if(vid == null) throw new Exception("El video no existe");
@@ -366,13 +380,15 @@ public class ControladorVideo implements IControladorVideo {
                         ));
                     }
                 }
-                emanager.close();
+                
             } catch (Exception exc) {
                 Throwable _throwable = new Throwable();
                 StackTraceElement[] elements = _throwable.getStackTrace();
                 String invocador = elements[1].getFileName();
                 exceptionAux(invocador, exc);
             }
+            emanager.getTransaction().commit();
+            emanager.close();
             return comentariosDt;
         }
         
@@ -398,8 +414,9 @@ public class ControladorVideo implements IControladorVideo {
         
       @Override
       public void EliminarVideo(int id_user, String vid_nom) {
+    	  EntityManager emanager = emFactory.createEntityManager();
     	  try {
-    		  EntityManager emanager = emFactory.createEntityManager();
+    		  
     		  emanager.getTransaction().begin();
     		  
               Canal cnl =  emanager.find(Canal.class, id_user);
@@ -422,13 +439,14 @@ public class ControladorVideo implements IControladorVideo {
               }
               
               emanager.remove(vid);
-              emanager.getTransaction().commit();
-    		  emanager.close();
+              
     	  } catch (Exception exc) {
               Throwable _throwable = new Throwable();
               StackTraceElement[] elements = _throwable.getStackTrace();
               String invocador = elements[1].getFileName();
               exceptionAux(invocador, exc);
           }
+    	  emanager.getTransaction().commit();
+		  emanager.close();
       }
 }

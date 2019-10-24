@@ -4,10 +4,6 @@ package logica.testing;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.concurrent.TimeUnit;
-
-import org.junit.jupiter.api.AfterAll;
-
 import logica.controladores.Fabrica;
 import logica.controladores.IControladorUsuario;
 import logica.controladores.IControladorVideo;

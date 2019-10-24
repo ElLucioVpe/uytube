@@ -125,7 +125,7 @@
                                 
                                   <div>
                                       <center>
-                                        <img src="/images/<% out.print(userx.getImagen()); %>" width="100" height="auto" />
+                                        <img src="<%=request.getContextPath()%>/images/<% out.print(userx.getImagen()); %>" width="100" height="auto" />
                                         </center>
                                     </div>
                                  <!-- <form action="UploadServlet" method="post" enctype = "multipart/form-data">-->

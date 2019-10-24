@@ -13,7 +13,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -59,7 +58,8 @@ public class IControladorVideoTest {
 		assertEquals("www.testing.com/testvideo", videodt.getUrl());
 		assertEquals("desc", videodt.getDescripcion());
 		assertEquals(id_testuser, videodt.getIdCanal());
-		assertEquals(categoria, videodt.getCategoria());
+		if(categoria == "Ninguna") assertNull(videodt.getCategoria());
+		else assertEquals(categoria, videodt.getCategoria());
 	}
 
 	@Test 
@@ -89,9 +89,11 @@ public class IControladorVideoTest {
 		SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
 		Date fecha = dateformat.parse("2019-01-01");
 		//Fuerzo catch
-		vid.ModificarVideo(-1, "_-_videoTestModificado_-_", "10.20", "www.testing.com/videomodificado", "desc modificada", fecha, false, "Ninguna");
+		//vid.ModificarVideo(-1, "_-_videoTestModificado_-_", "10.20", "www.testing.com/videomodificado", "desc modificada", fecha, false, "Ninguna");
 		//Modifico
-		vid.ModificarVideo(videodtAntes.getId(), "_-_videoTestModificado_-_", "10.20", "www.testing.com/videomodificado", "desc modificada", fecha, false, videodtAntes.getCategoria());
+		String categoria = "Ninguna";
+		if(videodtAntes.getCategoria() != null) categoria = videodtAntes.getCategoria();
+		vid.ModificarVideo(videodtAntes.getId(), "_-_videoTestModificado_-_", "10.20", "www.testing.com/videomodificado", "desc modificada", fecha, false, categoria);
 		//No modifico
 		vid.ModificarVideo(videodtAntes.getId(), "", "", "", "", null, false, "Ninguna");
 		
@@ -105,7 +107,7 @@ public class IControladorVideoTest {
 		assertEquals(videodtAntes.getCategoria(), videodtModificado.getCategoria());
 		
 		//Lo vuelvo a dejar como antes para no tener que contar con que esta prueba sea exitoso para otras pruebas
-		vid.ModificarVideo(videodtAntes.getId(), videodtAntes.getNombre(), "10.01", videodtAntes.getDescripcion(), "desc", videodtAntes.getFechaPublicacion(), true, videodtAntes.getCategoria());
+		vid.ModificarVideo(videodtAntes.getId(), videodtAntes.getNombre(), "10.01", videodtAntes.getDescripcion(), "desc", videodtAntes.getFechaPublicacion(), true, categoria);
 	}
 	
 	@Test
@@ -180,6 +182,12 @@ public class IControladorVideoTest {
 	@Test 
 	@Order(9)
 	public void testEliminarVideo() {
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		VideoDt test1 = vid.obtenerVideoDt("_-_videoTest1_-_", id_testuser);
 		VideoDt test2 = vid.obtenerVideoDt("_-_videoTest2_-_", id_testuser);
 		assertNotNull(test1);

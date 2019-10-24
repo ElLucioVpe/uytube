@@ -30,15 +30,15 @@
         <link href="css/fontawesome.min.css" rel="stylesheet">
         <script defer src="js/solid.js"></script>
         <script defer src="js/fontawesome.js"></script>
-        
-        <!-- Bootstrap Toggle -->
-        <link rel="stylesheet" href="css/bootstrap4-toggle.min.css">
-        <script src="js/bootstrap4-toggle.min.js"></script>
-        
+
         <title>uyTube - Transmite tú mismo</title>
     </head>
     <body>
         <%@ include file="include/header.jsp" %>
+	<!-- Bootstrap Toggle -->
+        <link rel="stylesheet" href="css/bootstrap4-toggle.min.css">
+        <script src="js/bootstrap4-toggle.min.js"></script>
+
         <input type="hidden" value="asc" name="hidden-order">
         <script>
             $( document ).ready(function() {

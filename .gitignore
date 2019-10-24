@@ -1,44 +1,44 @@
 *.xml
-build/
-build\
-nbproject/private/private.xml
-nbbuild/
-dist/
-nbdist/
-.nb-gradle/
-/build
-/dist
-/hsqldb
-/lib
-/nbproject
-/test
-build.xml
-derby.log
+uyTube - Parte 1/build/
+uyTube - Parte 1/build\
+uyTube - Parte 1/nbproject/private/private.xml
+uyTube - Parte 1/nbbuild/
+uyTube - Parte 1/dist/
+uyTube - Parte 1/nbdist/
+uyTube - Parte 1/.nb-gradle/
+uyTube - Parte 1/build
+uyTube - Parte 1/dist
+uyTube - Parte 1/hsqldb
+uyTube - Parte 1/lib
+uyTube - Parte 1/nbproject
+uyTube - Parte 1/test
+uyTube - Parte 1/build.xml
+uyTube - Parte 1/derby.log
 LICENSE
 manifest.mf
-build/built-jar.properties
-dist/UyTube.jar
+uyTube - Parte 1/build/built-jar.properties
+uyTube - Parte 1/dist/UyTube.jar
 *.xml
-build/built-jar.properties
-nbproject/private/private.properties
-build/built-jar.properties
-nbproject/private/private.properties
-nbproject/project.properties
+uyTube - Parte 1/build/built-jar.properties
+uyTube - Parte 1/nbproject/private/private.properties
+uyTube - Parte 1/build/built-jar.properties
+uyTube - Parte 1/nbproject/private/private.properties
+uyTube - Parte 1/nbproject/project.properties
 *.properties
-build/built-jar.properties
-data/uytubedb.lck
-nbproject/build-impl.xml
-nbproject/genfiles.properties
-nbproject/private/private.properties
-nbproject/private/private.xml
-nbproject/project.properties
-nbproject/project.xml
-nbproject/build-impl.xml
-nbproject/genfiles.properties
-nbproject/private/private.properties
-nbproject/private/private.xml
-nbproject/project.properties
-nbproject/project.xml
+uyTube - Parte 1/build/built-jar.properties
+uyTube - Parte 1/data/uytubedb.lck
+uyTube - Parte 1/nbproject/build-impl.xml
+uyTube - Parte 1/nbproject/genfiles.properties
+uyTube - Parte 1/nbproject/private/private.properties
+uyTube - Parte 1/nbproject/private/private.xml
+uyTube - Parte 1/nbproject/project.properties
+uyTube - Parte 1/nbproject/project.xml
+uyTube - Parte 1/nbproject/build-impl.xml
+uyTube - Parte 1/nbproject/genfiles.properties
+uyTube - Parte 1/nbproject/private/private.properties
+uyTube - Parte 1/nbproject/private/private.xml
+uyTube - Parte 1/nbproject/project.properties
+uyTube - Parte 1/nbproject/project.xml
 uyTube - Parte 2/uytube - Estacion de Trabajo/nbproject/build-impl.xml
 uyTube - Parte 2/uytube - Estacion de Trabajo/nbproject/genfiles.properties
 uyTube - Parte 2/uytube - Estacion de Trabajo/nbproject/private/private.properties

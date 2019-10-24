@@ -7,7 +7,6 @@ package presentacion;
 
 import java.util.List;
 import javax.swing.DefaultListModel;
-import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import logica.controladores.Fabrica;
 import logica.controladores.IControladorUsuario;

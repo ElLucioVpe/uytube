@@ -171,7 +171,7 @@
                       var seguidor = '<%=session.getAttribute("userid")%>';
                       if(seguidor === null) conectate();
                       else{
-			$.ajax({
+						$.ajax({
                             url: "<%=path%>/api/suscripcion.jsp?seguidor="+seguidor+"&seguido="+seguido,
                             success: function() {
                                 alert("Suscripción/Desuscripción exitosa");
