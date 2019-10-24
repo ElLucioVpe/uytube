@@ -7,27 +7,12 @@
 <%@page import = "logica.controladores.Fabrica"%>
 <%@page import = "logica.controladores.IControladorUsuario"%>
 <%@page import = "logica.dt.UsuarioDt"%>
+<%@page import = "logica.dt.CanalDt"%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!doctype html>
-<!-- Load JQuery -->
-  <head>
-        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-        <script src="js/jquery.min.js"></script>
-        <%-- <input type="hidden" value="asc" name="hidden-order">--%>
-        <link rel="stylesheet" href="css/bootstrap4-toggle.min.css">
-        <script src="js/bootstrap4-toggle.min.js"></script> 
-         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-          <%@include file="include/header.jsp" %>
-          <script src="js/autocomplete.min.js"></script>
-                  <title>consulta User jsp</title>          
-<meta name="viewport" content="width=device-width, initial-scale=1">
 
- </head>
- 
- 
-<body>
-     <% 
+<% 
         Fabrica f = Fabrica.getInstance();
         IControladorUsuario user = f.getIControladorUsuario();
         String path = request.getContextPath();
@@ -36,16 +21,33 @@
         int canalUser_id = Integer.parseInt(request.getParameter("id"));
         session.setAttribute("canalUserid", canalUser_id);
         UsuarioDt u = user.ConsultarUsuario(canalUser_id);
-            Boolean estaSuscripto2 = false; 
-             List<String> seguidores = user.ListarSeguidores(canalUser_id);
-             int userid=-1;
-            if(session.getAttribute("userid") != null){ 
-                estaSuscripto2 = user.estaSuscripto((int)session.getAttribute("userid"), u.getId());
-                userid =(int)session.getAttribute("userid");
-            }
-            boolean privacidad = false;
-       if(user.obtenerCanalDt(canalUser_id).getPrivacidad()) privacidad = true; 
+        CanalDt canal = user.obtenerCanalDt(canalUser_id);
+        Boolean estaSuscripto2 = false; 
+        
+        List<String> seguidores = user.ListarSeguidores(canalUser_id);
+        int userid=-1;
+       	if(session.getAttribute("userid") != null){ 
+        	estaSuscripto2 = user.estaSuscripto((int)session.getAttribute("userid"), u.getId());
+            userid =(int)session.getAttribute("userid");
+        }
+        boolean privacidad = false;
+      	if(user.obtenerCanalDt(canalUser_id).getPrivacidad()) privacidad = true; 
 %>
+<!-- Load JQuery -->
+  <head>
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+        <script src="js/jquery.min.js"></script>
+        <%-- <input type="hidden" value="asc" name="hidden-order">--%>
+        <link rel="stylesheet" href="css/bootstrap4-toggle.min.css">
+        <script src="js/bootstrap4-toggle.min.js"></script> 
+       	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script src="js/autocomplete.min.js"></script>
+        <title><%=canal.getNombre()%> - uyTube</title>          
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+ </head>
+ 
+<body>
+<%@include file="include/header.jsp" %>
 <script>var canalUser_id="<%=canalUser_id%>";
         var privacidad= "<%=privacidad%>";
         var userid = "<%=userid%>";
@@ -54,26 +56,16 @@
 <script>
         myData = [];
         idUsr = 0; 
-        console.log("prueba1");
+        //console.log("prueba1");
         $( document ).ready(function() {
-            console.log("prueba2"); 
-           if(privacidad==false)
-           {console.log("false");}else{console.log("true");}
-
-              console.log("prueba2");          
-               listarDatosUsuario();
-               listarListas();
-               listarVideos();
-               listarSeguidores();
-                listarSeguidos();
-                myFunction();
-       /*$( "#btnBuscarUsuario" ).click(function() {
-             
-              listarVideos();
-              listarListas();
-              
-              // alert("button was clicked");
-            });*/ 
+            //console.log("prueba2"); 
+            //console.log("prueba2");          
+            listarDatosUsuario();
+            listarListas();
+            listarVideos();
+            listarSeguidores();
+            listarSeguidos();
+            myFunction();
         });
 
         function modificarPrivacidad(){
@@ -90,18 +82,15 @@
                     //console.log(usuarios);
                     //console.log(usuarios[0].mail);
                     var usrid = '<%=canalUser_id%>';   
-
                     
                     for (let i = 0; i < usuarios.length; i++) {
                         if ( usrid == usuarios[i].id){
                              //window.idUsr = usuarios[i].id;
                         html += "<tr>";
                         html += '<th scope="row">'+usuarios[i].nombre+ ' '+usuarios[i].apellido+'</th>';
-                      
-                        html += '<td>'+usuarios[i].Subcriptores+ '  subscriptores</td>';
-                     
                         html += "</tr>";
-                     $('.table tbody').html(html);console.log(usuarios[i].imagen);
+                     $('.table tbody').html(html);
+                     	//console.log(usuarios[i].imagen);
                         var img = document.getElementById("imgU");
                         img.src = "img/user.png";
                         if(usuarios[i].imagen !== "")img.src = "<%=path%>/images/"+usuarios[i].imagen; //aca va img.src = usuarios[i].imagen;
@@ -110,13 +99,12 @@
                         img.height = "100";
                         img.alt="User Picture";
                         var src = document.getElementById("usrImg");
-                        document.getElementById("usrNmb").innerHTML ="<h1>"+usuarios[i].nickname+"</h1>";
+                        //document.getElementById("usrNmb").innerHTML ="<h1>"+usuarios[i].canal.nombre+"</h1>";
+                        //document.getElementById("usrNick").innerHTML = "<h6>"+usuarios[i].nickname+"</h6>";
                         src.appendChild(img);
-                        var src2 = document.getElementById("categoria");
-                         var html2= document.createTextNode(" "+usuarios[i].canal.categoria);
-                        src2.appendChild(html2);
-                        
-                       
+                        /*var src2 = document.getElementById("categoria");
+                        var html2= document.createTextNode(" "+usuarios[i].canal.categoria);
+                        src2.appendChild(html2);*/
                     }
                     }
                 }
@@ -134,7 +122,7 @@
                    //console.log(usuarios);
                    //console.log(videos[0].mail);
                     var usrid = '<%=canalUser_id%>'; 
-                     console.log("la id es:")
+                    console.log("la id es:")
 
 
                     for (let i = 0; i < videos.length; i++) {
@@ -154,7 +142,7 @@
                            var usrid = '<%=canalUser_id%>';
 
                             /*aca esta el boton de modifica video*/
-                            if((userid !== -1)&&(userid ==usrid)){
+                            if((userid !== -1)&&(userid === usrid)){
                                 html += '<td> <a href="<%=path%>/modificarVideo.jsp?iddelvideo='+videos[i].id+'"><button class="fas fa-edit" ></button></a></td>';
                             }else{html += '<td></td>';}
                             
@@ -182,10 +170,21 @@
                    let html = "";
                    console.log(listas[0].nombre);
                    for (let i = 0; i < listas.length; i++) {
-                       html += "<tr>";
-                       html += '<td scope="row"<a href="<%=path%>/consultarListaDR.jsp?user_id='+listas[i].user_id +'&nom='+listas[i].nombre+'">'+listas[i].nombre+'</a></td>';
-                       html += '<td><a href="<%=path%>/consultarListaDR.jsp?user_id='+listas[i].user_id +'&nom='+listas[i].nombre+'">'+listas[i].categoria+'</td>';                                      
-                       html += "</tr>";
+                	   if(listas[i].tipo === "Particular") {
+                		   if(listas[i].privacidad === "false") {
+		                       html += "<tr>";
+		                       html += '<td scope="row"<a href="<%=path%>/consultarListaDR.jsp?user_id='+listas[i].user_id +'&nom='+listas[i].nombre+'">'+listas[i].nombre+'</a></td>';
+		                       html += '<td><a href="<%=path%>/consultarListaDR.jsp?user_id='+listas[i].user_id +'&nom='+listas[i].nombre+'">'+listas[i].categoria+'</td>';                                      
+		                       html += "</tr>";
+                		   } else {
+                			   if('<%=canalUser_id%>' === '<%=userid%>'){
+                				   html += "<tr>";
+    		                       html += '<td scope="row"<a href="<%=path%>/consultarListaDR.jsp?user_id='+listas[i].user_id +'&nom='+listas[i].nombre+'">'+listas[i].nombre+'</a></td>';
+    		                       html += '<td><a href="<%=path%>/consultarListaDR.jsp?user_id='+listas[i].user_id +'&nom='+listas[i].nombre+'">'+listas[i].categoria+'</td>';                                      
+    		                       html += "</tr>";
+                			   }
+                		   }
+                	   }
                    }
                    $('.table3 tbody').html(html);
                 },
@@ -298,16 +297,23 @@
                                         </script>
 
                                         <div class="container" id="canalInfo">
-
-
-                                            <div id =usrImg style="float: center; width: 450px;">
-                                            <div style="float: left;">
-                                                 <img id ="imgU" class ="rounded-circle">
+									 	 <form class="form-inline">
+                                            
+                                            <img id ="imgU" class ="rounded-circle">
+                                            <div class="col"> 
+                                             <!--<p id="usrNmb">  -->
+	                                             <h1><%=canal.getNombre()%>
+	                                             <%if(canalUser_id == userid){%>
+	                                             <a href="<%=path%>/modificarUser.jsp"><i class="fas fa-edit" ></i></a> <%}%>
+	                                             </h1>
+                                             	<div class="col">
+                                             		<p id="usrNick"><b><%=u.getNickname()%></b></p>
+                                             		<span id="user-subs"><%=seguidores.size()%> seguidores</span>
+                                             		<button class="btn btn-outline-dark" onclick="suscripcion(<%=u.getId()%>)">
+                        							<%if(!estaSuscripto2){%>Suscribirse<%} else {%>Desuscribirse<%}%></button>
+                                             	</div>                
                                             </div>
-                                            <div style="float: right;"> 
-                                             <p id="usrNmb"></p> 
-                                            </div> 
-                                        </div>
+                                          </form>
 
                                           <table class="table">
 
@@ -321,27 +327,14 @@
                                               </tbody>
                                             </table>
                                             <div>
-                                                <div style="float: right;">
-	                                            <button class="btn btn-outline-dark" onclick="suscripcion(<%=u.getId()%>)">
-	                                                <%if(!estaSuscripto2){%>
-	                                                Suscribirse
-	                                                <%}else{%>
-	                                                Desuscribirse
-	                                                <%}%>
-	                                            </button>
-	                                            </div>
-	                                            <div id="categoria" style="float: right; width: 150px;">CATEGORIA</div>
 		                                        <div style="float: left;">
-		                                            <form id="pirvacity">    
-		                                            <li class="nav-item px-2"> <a href="<%=path%>/modificarUser.jsp"> Privacidad: 
-		                                             <input id="toggle-privacidad" type="checkbox" data-toggle="toggle" data-onstyle="dark" data-on="Público" data-off="Privado" data-width="150"><button class="fas fa-edit" ></button></a>
-		                                               <script>
-		                                                    $('#toggle-privacidad').prop('checked', privacidad).change();
-		                                               </script>                                             
+		                                            <li class="nav-item px-2"> <b>Privacidad:</b> 
+		                                             <%if(privacidad){%>Privado<%}else{%>Público<%}%>                                     
 		                                            </li>
-		                                            </form>
+		                                            <li class="nav-item px-2"> <b>Categoria:</b> 
+		                                             <%=canal.getCategoria()%>                                   
+		                                            </li>
 	                                            </div>
-                                            
                                             </div>
                                         </div>
                              

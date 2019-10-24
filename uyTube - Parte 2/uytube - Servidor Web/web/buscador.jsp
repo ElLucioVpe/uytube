@@ -31,13 +31,15 @@
         <script defer src="js/solid.js"></script>
         <script defer src="js/fontawesome.js"></script>
         
+        <!-- Bootstrap Toggle -->
+        <link rel="stylesheet" href="css/bootstrap4-toggle.min.css">
+        <script src="js/bootstrap4-toggle.min.js"></script>
+        
         <title>uyTube - Transmite tú mismo</title>
     </head>
     <body>
         <%@ include file="include/header.jsp" %>
         <input type="hidden" value="asc" name="hidden-order">
-        <link rel="stylesheet" href="css/bootstrap4-toggle.min.css">
-        <script src="js/bootstrap4-toggle.min.js"></script>
         <script>
             $( document ).ready(function() {
                 cargarDatos('<%=cat%>', '<%=text%>');
@@ -85,11 +87,11 @@
                     if(datos[i].jsonType === "usuario") {
                         if(datos[i].canal.privacidad === false) {
                             html += '<div id="'+datos[i].canal.nombre+datos[i].id+'" class="media">';
-                            html += '<a href="consultarUser.jsp?id='+datos[i].id+'" class="pull-left mr-2">';
+                            html += '<a href="consultaUser.jsp?id='+datos[i].id+'" class="pull-left mr-2">';
                             if(datos[i].imagen !== "") html += '<img src="<%=path%>/images/'+datos[i].imagen+'" width=90 height=90 class="rounded-circle" alt="User Picture"></a>';
                             else html += '<img src="img/user.png" class="rounded-circle" width=90 height=90 alt="User Picture"></a>';
 
-                            html += '<div class="media-body"><h5 class="media-heading"><a href="consultarUser.jsp?id='+datos[i].id+'">'+datos[i].canal.nombre+'</a></h5><a>'+datos[i].canal.descripcion+'</a></div></div>';
+                            html += '<div class="media-body"><h5 class="media-heading"><a href="consultaUser.jsp?id='+datos[i].id+'">'+datos[i].canal.nombre+'</a></h5><a>'+datos[i].canal.descripcion+'</a></div></div>';
                             resultados++;
                         }
                     }
@@ -97,7 +99,7 @@
                     if(datos[i].jsonType === "lista") {
                         if(datos[i].privacidad === false) { 
                             html += '<div id="'+datos[i].nombre+datos[i].id+'" class="media">';
-                            html += '<a href="consultarLista.jsp?user_id='+datos[i].user_id+'&nom='+datos[i].nombre+'" class="pull-left mr-2">';
+                            html += '<a href="consultarListaDR.jsp?user_id='+datos[i].user_id+'&nom='+datos[i].nombre+'" class="pull-left mr-2">';
                             html += '<img src="img/playlist.png" class="rounded" width=120 height=90 alt="List Picture"></a>';
 
                             html += '<div class="media-body"><h5 class="media-heading"><a href="consultarListaDR.jsp?user_id='+datos[i].user_id+'&nom='+datos[i].nombre+'">'+datos[i].nombre+'</a></h5><a> Categoria: '+datos[i].categoria+'</a>';
