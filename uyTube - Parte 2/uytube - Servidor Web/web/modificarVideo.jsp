@@ -36,8 +36,6 @@
 <!DOCTYPE html>
 <html>
     <head>
-         <%@ include file="include/header.jsp" %>
-
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
@@ -56,7 +54,6 @@
                  });
                 } );
             </script>
-
             <%
 
                //ErrormodificarVideo seteado en null por las deudas
@@ -137,7 +134,8 @@
                     response.sendRedirect(redirectURL);
                     }
                 }
-
+				
+                boolean seModifico = false;
                 if((request.getParameter("nombre")!= null)&&(request.getParameter("url")!= null)&&(request.getParameter("desc")!= null)&&(request.getParameter("categoria")!= null)&&(request.getParameter("datepicker")!= null&&(request.getParameter("segundos")!= null&&(request.getParameter("minutos")!= null))))
                 {
                 entre = "1";
@@ -148,41 +146,41 @@
                 categoriaUp = request.getParameter("categoria");
                 fechaUp = request.getParameter("datepicker");
 
+				VideoDt videodt = vid.obtenerVideoDt(nombreUp, _id);
+				if(videodt == null) {
 
-
-
-                //Crea la variable de la duracion
-                String durat;
-                int nuevosegundosint = Integer.parseInt(request.getParameter("segundos"));
-                int nuevominutosint = Integer.parseInt(request.getParameter("minutos"));
-
-                if(nuevosegundosint<10){
-                    durat = nuevominutosint+".0"+nuevosegundosint;
-                    }else{
-                    durat = nuevominutosint+"."+nuevosegundosint;
-                 }
-
-
-                visibility = request.getParameter("visibilidad");
-                if(visibility.contains("privado")){
-                 visUp=true;
-                 }
-                 if (visibility.contains("publico")){
-                 visUp=false;
-                }
-
-
-                 Boolean canalpriv = canalx.getPrivacidad();
-                    if(canalpriv= true && !visUp) {
-                    session.setAttribute("errormodificarVideo","privacidad");
-
-                    }
-
-                  // vid.ModificarVideo(1, "locuritaeeeeea", "4.20", "asdads", "coï¿½o", fechaSubida, true, "Carnaval");
-                   vid.ModificarVideo(_id, nombreUp, durat, urlUp, descripcionUp, fechaSubida, visUp, categoriaUp);
-
-                }
-
+	                //Crea la variable de la duracion
+	                String durat;
+	                int nuevosegundosint = Integer.parseInt(request.getParameter("segundos"));
+	                int nuevominutosint = Integer.parseInt(request.getParameter("minutos"));
+	
+	                if(nuevosegundosint<10){
+	                    durat = nuevominutosint+".0"+nuevosegundosint;
+	                    }else{
+	                    durat = nuevominutosint+"."+nuevosegundosint;
+	                 }
+	
+	
+	                visibility = request.getParameter("visibilidad");
+	                if(visibility.contains("privado")){
+	                 visUp=true;
+	                 }
+	                 if (visibility.contains("publico")){
+	                 visUp=false;
+	                }
+	
+	
+	                 Boolean canalpriv = canalx.getPrivacidad();
+	                    if(canalpriv= true && !visUp) {
+	                    session.setAttribute("errormodificarVideo","privacidad");
+	
+	                    }
+	
+	                  // vid.ModificarVideo(1, "locuritaeeeeea", "4.20", "asdads", "coï¿½o", fechaSubida, true, "Carnaval");
+	                   vid.ModificarVideo(_id, nombreUp, durat, urlUp, descripcionUp, fechaSubida, visUp, categoriaUp);
+	                   seModifico = true;
+	                }
+                } else session.setAttribute("errormodificarVideo", "nombre");
 
 
             %>
@@ -191,6 +189,8 @@
         <title>Modificar Video</title>
     </head>
     <body>
+    <%@ include file="include/header.jsp" %>
+    <%if(seModifico){%><script>alert("El video se modifico con exito");</script><%}%>
         <main class="login-form">
 
             <div class="cotainer">
@@ -212,14 +212,14 @@
                                         </div>
 
                                         <div class="form-group row">
-                                            <label for="minutos" class="col-md-4 col-form-label text-md-right">Nueva duraci?n (minutos)</label>
+                                            <label for="minutos" class="col-md-4 col-form-label text-md-right">Nueva duración (minutos)</label>
                                             <div class="col-md-6">
                                                 <input type="number" id="minutos" class="form-control" name="minutos" required min="0" max="59" required value="<%if(minutosint!=null){out.print(minutosint);} %>">
                                             </div>
                                         </div>
 
                                         <div class="form-group row">
-                                            <label for="segundos" class="col-md-4 col-form-label text-md-right">Nueva duraci?n (segundos)</label>
+                                            <label for="segundos" class="col-md-4 col-form-label text-md-right">Nueva duración (segundos)</label>
                                             <div class="col-md-6">
                                                 <input type="number" id="segundos" class="form-control" name="segundos" required min="0" max="59"  required value="<%if(segundosint!=null){out.print(segundosint);} %>">
                                             </div>
@@ -233,7 +233,7 @@
                                         </div>
 
                                         <div class="form-group row">
-                                            <label for="desc" class="col-md-4 col-form-label text-md-right"> Nueva Descripci?n</label>
+                                            <label for="desc" class="col-md-4 col-form-label text-md-right"> Nueva Descripción</label>
                                             <div class="col-md-6">
                                                 <input type="text" id="desc" class="form-control" name="desc" required value="<%if(descripcionUp!=null){out.print(descripcionUp);} %>">
                                             </div>
@@ -307,6 +307,13 @@
                                         <% if (session.getAttribute("errormodificarVideo")=="privacidad") { %>
                                                 <div class="alert alert-danger" role="alert">
                                                     No se puede tener un video público en un canal privado.
+                                                </div>
+                                            <%}
+                                        %>
+                                        
+                                        <% if (session.getAttribute("errormodificarVideo")=="nombre") { %>
+                                                <div class="alert alert-danger" role="alert">
+                                                    Ya tiene un video con ese nombre.
                                                 </div>
                                             <%}
                                         %>

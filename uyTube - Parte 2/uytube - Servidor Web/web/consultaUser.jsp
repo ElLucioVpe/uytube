@@ -135,19 +135,19 @@
                            } else {
                                html += '<th><img src="img/no-thumbnail.jpg" alt="Thumbnail"></th>';
                            }
-                           html += '<td  scope="row"> <a href="video.jsp?id='+ videos[i].id +'">'+videos[i].nombre+'</a></td>';
-
+                           html += '<td  scope="row"> <a href="video.jsp?id='+ videos[i].id +'">'+videos[i].nombre+'</a>';
+                           
+                           /*aca esta el boton de modifica video*/
+                           if((userid !== -1)&&(userid === usrid)){
+                               html += '<a href="<%=path%>/modificarVideo.jsp?iddelvideo='+videos[i].id+'"><i class="fas fa-edit" ></i></a></td>';
+                           }else{html += '</td>';}
+                           
                            html += '<td>'+videos[i].descripcion+'</td>';
                            html += '<td>'+videos[i].user+'</td>';
                            var usrid = '<%=canalUser_id%>';
-
-                            /*aca esta el boton de modifica video*/
-                            if((userid !== -1)&&(userid === usrid)){
-                                html += '<td> <a href="<%=path%>/modificarVideo.jsp?iddelvideo='+videos[i].id+'"><button class="fas fa-edit" ></button></a></td>';
-                            }else{html += '<td></td>';}
-                            
-                            //href=http://localhost:8080/WebApplication/modificarVideo.jsp?nombre='+videos[i].id +'&desc='+videos[i].descripcion+'&url='+ videos[i].url+'&categoria='+videos[i].categoria +'&datepicker='+ videos[i].fecha+'&minutos='+ videos[i].minutos+'&segundos='+ videos[i].minutos+'"
-                            html += "</tr>";
+                           
+                           //href=http://localhost:8080/WebApplication/modificarVideo.jsp?nombre='+videos[i].id +'&desc='+videos[i].descripcion+'&url='+ videos[i].url+'&categoria='+videos[i].categoria +'&datepicker='+ videos[i].fecha+'&minutos='+ videos[i].minutos+'&segundos='+ videos[i].minutos+'"
+                           html += "</tr>";
                         }
                     }
                     $('.table2 tbody').html(html);
@@ -267,15 +267,6 @@
                     <div class="col-md-8">
                         <div class="card">
                             <div class="container" id="busca" >
-
-                                         <!-- <div style="float: left; width: 450px;">
-                                      <input type="text" id= "txtBoxSelected" class="demo">
-                                        <input type="hidden" id="hidden-field">
-                                        </div>
-                                         <div style="float: left; width: 200px;">
-                                         <button type="button" class="btn btn-primary" id="btnBuscarUsuario">Buscar Usuario</button>
-                                        </div>
-                                        </div>-->
                                         
                                         <script>
                                                function conectate() {
@@ -327,14 +318,24 @@
                                               </tbody>
                                             </table>
                                             <div>
-		                                        <div style="float: left;">
-		                                            <li class="nav-item px-2"> <b>Privacidad:</b> 
-		                                             <%if(privacidad){%>Privado<%}else{%>Público<%}%>                                     
-		                                            </li>
-		                                            <li class="nav-item px-2"> <b>Categoria:</b> 
-		                                             <%=canal.getCategoria()%>                                   
-		                                            </li>
+                                            
+                                            <form class="form-inline">
+		                                        <div class="col-md-4-pull-left">
+		                                        	<div class="pull-left">
+			                                            <label> <b>Privacidad: </b> 
+			                                             &nbsp<%if(privacidad){%>Privado<%}else{%>Público <%}%>                                     
+			                                            </label>
+			                                            <label> <b>Categoria: </b> 
+			                                             &nbsp<%=canal.getCategoria()%>                                   
+			                                            </label>
+		                                            </div>
 	                                            </div>
+	                                            <div class="col">
+		                                            <label> <b>Descripción: </b>
+		                                            &nbsp<%if(canal.getDescripcion() != null){%><%=canal.getDescripcion()%><%}%>
+		                                            </label>
+	                                            </div>
+	                                         </form>   
                                             </div>
                                         </div>
                              
@@ -342,7 +343,9 @@
                     	</div> 
                     </div> 
                </div>
-                        
+<div class="row justify-content-center">
+   <div class="col-md-8">
+   <div class="card">            
       <ul class="nav nav-tabs" id="myTab" role="tablist">
   <li class="nav-item">
     <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Videos</a>
@@ -412,7 +415,9 @@
                       </table>
     </div>
 </div>             
-                 
+</div> 
+</div>
+</div>                
 </div>
 </main>
       <%@include file="include/footer.jsp" %>

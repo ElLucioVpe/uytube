@@ -198,7 +198,7 @@ public class IControladorVideoTest {
 		vid.EliminarVideo(id_testuser, "_-_videoTest2_-_");
 		test1 = vid.obtenerVideoDt("_-_videoTest1_-_", id_testuser);
 		test2 = vid.obtenerVideoDt("_-_videoTest2_-_", id_testuser);
-
+		
 		assertTrue("Esto funciona pero por alguna razon hace commit luego gg".compareTo("")> 1);
 	}
 	

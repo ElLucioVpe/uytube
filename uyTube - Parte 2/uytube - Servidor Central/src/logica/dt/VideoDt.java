@@ -90,7 +90,7 @@ public class VideoDt {
             	String video_id = url.substring(17);
                 _url = "https://img.youtube.com/vi/" + video_id + "/3.jpg";
             } else if (this.url.contains("https://www.youtube.com/")) {
-            	String video_id = url.substring(24);
+            	String video_id = url.substring(32);
                 _url = "https://img.youtube.com/vi/" + video_id + "/3.jpg";
             }
         }
@@ -104,7 +104,7 @@ public class VideoDt {
             if(this.url.contains("https://youtu.be/")) {
                 video_id = url.substring(17);
             } else if (this.url.contains("https://www.youtube.com/")) {
-                video_id = url.substring(24);
+                video_id = url.substring(32);
             }
             _url = "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/"+ video_id +"\" frameborder=\"0\" allow=\"autoplay; encrypted-media\" allowfullscreen></iframe>";
         }

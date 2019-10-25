@@ -167,7 +167,9 @@
                                     <div class="form-group row">
                                         <label for="desc" class="col-md-4 col-form-label text-md-right">Descripcion</label>
                                         <div class="col-md-6">
-                                            <textarea class="form-control" id="desc" name="desc" rows="3" placeholder="Descripcion del canal"><%out.print(canalx.getDescripcion());%></textarea>
+                                            <textarea class="form-control" id="desc" name="desc" rows="3" placeholder="Descripcion del canal">
+                                            <%if(canalx.getDescripcion() != null){%> <%=canalx.getDescripcion()%><%}%>
+                                            </textarea>
                                         </div>
                                     </div>
                                         
