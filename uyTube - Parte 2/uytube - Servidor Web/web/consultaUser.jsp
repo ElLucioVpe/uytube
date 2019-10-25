@@ -17,11 +17,13 @@
         IControladorUsuario user = f.getIControladorUsuario();
         String path = request.getContextPath();
         
+        String id_aux = "5";
         if(request.getParameter("id") == null || request.getParameter("id") == "null" || request.getParameter("id") == "") {
         	response.sendRedirect(path+"/index.jsp");
-        }
+        } else id_aux = request.getParameter("id");
+        
 	        Boolean estaSuscripto = false; //inicializo
-	        int canalUser_id = Integer.parseInt(request.getParameter("id"));
+	        int canalUser_id = Integer.parseInt(id_aux);
 	        session.setAttribute("canalUserid", canalUser_id);
 	        UsuarioDt u = user.ConsultarUsuario(canalUser_id);
 	        CanalDt canal = user.obtenerCanalDt(canalUser_id);
