@@ -30,8 +30,8 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-         <%@include file="include/header.jsp" %>
-        <title>JSP Page</title>
+        <%@include file="include/header.jsp" %>  
+        <title>Te has registrado!! - uyTube</title>
 
         <%
    File file ;
@@ -205,6 +205,5 @@
             
     </head>
     <body>
-        
     </body>
 </html>

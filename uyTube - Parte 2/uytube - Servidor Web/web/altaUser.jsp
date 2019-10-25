@@ -42,9 +42,9 @@
         <script src="js/jquery.min.js"></script>
         
           <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-            <link rel="stylesheet" href="/resources/demos/style.css">
-            <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-            <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+          <link rel="stylesheet" href="/resources/demos/style.css">
+          <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+          <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   
           <script>
                 $( function() {
@@ -134,7 +134,7 @@
                                         
                                         
                                     <div class="form-group row">
-                                        <label for="desc" class="col-md-4 col-form-label text-md-right">Descripcion</label>
+                                        <label for="desc" class="col-md-4 col-form-label text-md-right">Descripción</label>
                                         <div class="col-md-6">
                                             <textarea class="form-control" id="desc" name="desc" rows="3" placeholder="Descripcion del canal"></textarea>
                                         </div>

@@ -12,6 +12,9 @@
 <script defer src="js/solid.js"></script>
 <script defer src="js/fontawesome.js"></script>
 
+<%-- Popper --%>
+<script src="js/popper.min.js"></script>
+
 <%@page import = "logica.controladores.Fabrica"%>
 <%@page import = "logica.controladores.IControladorUsuario"%>
 <%@page import = "logica.dt.UsuarioDt"%>
@@ -54,7 +57,7 @@
                 function buscar() {
                     var contenido = $('#search-text').val();
                     if(contenido !== null) window.location.replace("<%=header_path%>/buscador.jsp?video=true&channel=true&list=true&text="+contenido);
-                    else window.location.replace("<%=header_path%>buscador.jsp?video=true&channel=true&list=true");
+                    else window.location.replace("<%=header_path%>/buscador.jsp?video=true&channel=true&list=true");
                 }
             </script>
             

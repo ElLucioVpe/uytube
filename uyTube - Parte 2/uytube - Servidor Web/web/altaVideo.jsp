@@ -5,6 +5,7 @@
 --%>
 
 <%@page import="java.util.List"%>
+<%@page import="logica.dt.VideoDt"%>
 <%@page import="logica.dt.CategoriaDt"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
@@ -18,7 +19,6 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <%@ include file="include/header.jsp" %>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
         <script src="js/bootstrap.min.js"></script>
@@ -42,7 +42,8 @@
                 IControladorUsuario usu = f.getIControladorUsuario();
                 IControladorCategoria cat = f.getIControladorCategoria();
                 
-                
+                session.setAttribute("errorAltaVideo", "");
+                boolean seCreo = false;
                 //se fija si el user esta logged
                 int _id=0;
                 if(session.getAttribute("userid")==null){
@@ -77,7 +78,13 @@
                      }else{
                     durat = minutosint+"."+segundosint;
                  }
+                	VideoDt videoAntes = vid.obtenerVideoDt(nombre, _id);
+                	if(videoAntes != null) session.setAttribute("errorAltaVideo", "nombrevid");
+                	
                     vid.AltaVideo(nombre, durat, url, descr, _id, categoria);
+                    
+                    VideoDt videoDespues = vid.obtenerVideoDt(nombre, _id);
+                    if(videoAntes == null && videoDespues != null) seCreo = true;
                 }
         
              
@@ -85,7 +92,8 @@
     </head>
     
     <body>
-        
+      <%@ include file="include/header.jsp" %>
+      <%if(seCreo){%><script>alert("El video se agrego con exito");</script><%}%>
       <main class="altaVideo-form">
             <div class="row justify-content-center">
 		<div class="col-md-12">
@@ -110,7 +118,7 @@
                                     <div class="form-group row">
                                         <label for="minutos" class="col-md-4 col-form-label text-md-right">Duración (minutos)</label>
                                         <div class="col-md-6">
-                                            <input type="number" id="minutos" class="form-control" name="minutos" required min="0" max="59">
+                                            <input type="number" id="minutos" class="form-control" name="minutos" required min="0">
                                         </div>
                                     </div>
                                     
@@ -172,6 +180,12 @@
                                     <% if (session.getAttribute("errorAltaVideo")=="nombreusu") { %>
                                             <div class="alert alert-danger" role="alert">
                                                 No existe usuario con ese nick.
+                                            </div>
+                                        <%}
+                                    %>
+                                    <% if (session.getAttribute("errorAltaVideo")=="nombrevid") { %>
+                                            <div class="alert alert-danger" role="alert">
+                                                Ya tiene un video con ese nombre.
                                             </div>
                                         <%}
                                     %>
