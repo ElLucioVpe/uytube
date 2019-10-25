@@ -157,7 +157,7 @@
                     
                  IdUsuarioCreate = user.obtenerIdUsuario(userUp);
                      
-                 if(IdUsuarioCreate!=-1){
+                 if(IdUsuarioCreate!=-1){out.println(descUp);
                  	user.AltaCanal(canalUp, visUp, catUp, IdUsuarioCreate, descUp);
                  }
                  
