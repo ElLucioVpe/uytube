@@ -232,7 +232,7 @@
                         <h5> Comentarios </h5>
                     <div class="form-group row">
                         <div class="col-sm-6">
-                            <textarea class="form-control" rows="2" placeholder="Agregue un comentario..." required></textarea>
+                            <textarea id="textArea-1" class="form-control" rows="2" placeholder="Agregue un comentario..." required></textarea>
                         </div>
                         <button type="button" class="btn btn-success" onclick="comentarVideo(-1)">Comentar</button>
                     </div>

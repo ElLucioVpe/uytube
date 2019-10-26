@@ -26,6 +26,7 @@
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <link rel="stylesheet" href="/resources/demos/style.css">
         <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <%@ include file="include/header.jsp" %>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <script>
   $( function() {
@@ -92,7 +93,7 @@
     </head>
     
     <body>
-      <%@ include file="include/header.jsp" %>
+      
       <%if(seCreo){%><script>alert("El video se agrego con exito");</script><%}%>
       <main class="altaVideo-form">
             <div class="row justify-content-center">
