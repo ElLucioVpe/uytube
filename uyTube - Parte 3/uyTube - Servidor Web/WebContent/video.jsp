@@ -13,7 +13,11 @@
 <%@page import = "logica.controladores.IControladorVideo"%>
 <%@page import = "logica.dt.VideoDt" %>
 <%@page import = "logica.dt.UsuarioDt" %>
-
+<%@page import = "java.io.File" %>
+<%@page import="java.util.ResourceBundle"%>
+<%@page import="java.net.URL"%>
+<%@page import="java.net.URLClassLoader"%>
+<%@page import="java.util.Locale"%>
 <%@page import="java.util.Date"%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -39,6 +43,7 @@
         <% Fabrica f = Fabrica.getInstance();
             IControladorUsuario user = f.getIControladorUsuario();
             IControladorVideo video = f.getIControladorVideo();
+            String path = request.getContextPath();
             int video_id = -1;
             VideoDt dt = null;
             
@@ -51,17 +56,35 @@
             	if(request.getParameter("cod") != null) {
             		dt = video.obtenerVideoDtPorCOD(request.getParameter("cod"));
             		video_id = dt.getId();
+            		session.setAttribute("videoid", video_id);
             	}
             }
+
+            //Evito crasheo
+            if(dt == null || dt.getNombre() == null) {
+            	video_id = 1;
+            	session.setAttribute("videoid", video_id);
+            	dt = video.obtenerVideoDtPorID(video_id);
+            	response.sendRedirect(path+"/index.jsp");
+            }
+
             UsuarioDt u = user.ConsultarUsuario(dt.getIdCanal());
-            List<String> seguidores = user.ListarSeguidores(dt.getId());
+            List<String> seguidores = user.ListarSeguidores(dt.getIdCanal());
             
-            String path = request.getContextPath();
             String imagenUser = "img/user.png";
             if(u.getImagen() != null) imagenUser = path+"/images/"+u.getImagen();
             
             Boolean estaSuscripto = false; //inicializo
             if(session.getAttribute("userid") != null) estaSuscripto = user.estaSuscripto((int)session.getAttribute("userid"), u.getId());
+        
+        	//Obtengo url para compartir
+        	File properties = new File(System.getProperty("user.home")+"/.UyTube");
+		    URL[] urls = {properties.toURI().toURL()};
+		    ClassLoader loader = new URLClassLoader(urls);
+		    ResourceBundle bundle = ResourceBundle.getBundle("uytube_conf", Locale.getDefault(), loader);
+		   
+		    String url_compartir = bundle.getString("url")+dt.getCodigo();
+        
         %>
         <%@ include file="include/header.jsp" %>
 
@@ -195,18 +218,32 @@
                 </div>
                 
                 <div class="col">
-                    <button class="btn btn-outline-secondary" type="button" id="listaDropdownbtn" data-toggle="dropdown" data-target="listas-menu" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-plus"> </i> Lista de Reproducción
-                    </button>
-                    <div id="listas-menu" class="dropdown-menu" aria-labelledby="listaDropdownbtn">
-                        <%-- Aca van las listas --%>
-                        <a class="dropdown-item" href="login.jsp">Inicie sesión</a>
-                    </div>
-                    
                     <button class="btn btn-outline-success my-2 my-sm-0" onclick="gustar(true)"><i class="fa fa-thumbs-up"></i>
                     <span><b></b> <%=dt.getLikes()%></span></button>
                     <button class="btn btn-outline-success my-2 my-sm-0" onclick="gustar(false)"><i class="fa fa-thumbs-down"></i>
                     <span><b></b> <%=dt.getDislikes()%></span></button>
+                    
+                    <div class="btn-group">
+	                    <button class="btn btn-outline-secondary" type="button" id="listaDropdownbtn" data-toggle="dropdown" data-target="listas-menu" aria-haspopup="true" aria-expanded="false">
+	                        <i class="fas fa-plus"> </i> Lista de Reproducción
+	                    </button>
+	                    <div id="listas-menu" class="dropdown-menu" aria-labelledby="listaDropdownbtn">
+	                        <%-- Aca van las listas --%>
+	                        <a class="dropdown-item" href="login.jsp">Inicie sesión</a>
+	                    </div>
+                    </div>
+                    
+                    <div class="btn-group">
+	                    <button class="btn btn-outline-secondary" type="button" id="shareDropdownbtn" data-toggle="dropdown" data-target="share-menu" aria-haspopup="true" aria-expanded="false">
+	                        <i class="fas fa-share"></i> Compartir
+	                    </button>
+	                    <div id="share-menu" class="dropdown-menu dropdown-menu-right" aria-labelledby="shareDropdownbtn">
+	                        <a class="dropdown-item">
+	                        	<textarea id="share-url" readonly><%=url_compartir%></textarea> 
+	                        	<button class="btn btn-outline-dark" onclick="copiarURL()"><i class="fas fa-copy"></i>Copiar</button>
+	                    	</a>
+	                    </div>
+                    </div>
                     <script>
                         function gustar(g) {
                             var user = '<%=session.getAttribute("userid")%>';
@@ -223,7 +260,16 @@
                                 });
                             }
                         }
+                        
+                        function copiarURL() {
+                       		var urlText = document.getElementById("share-url");
+                       		urlText.select();
+                        	document.execCommand("copy");
+
+                        	alert("URL Copiada al portapapeles: " + urlText.value);
+                        }
                     </script>
+                    
                 </div>
             </div>
             <hr>

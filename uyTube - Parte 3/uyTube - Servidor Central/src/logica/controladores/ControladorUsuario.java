@@ -1132,11 +1132,11 @@ public class ControladorUsuario implements IControladorUsuario {
         	List<Comentario> comentarios = emanager.createQuery("SELECT c FROM Comentario c where USER_ID = :userid", Comentario.class).setParameter("userid", usr.getId()).getResultList();
         	
         	for(int i = 0; i < comentarios.size(); i++) {
-        		eliminarComentarios(comentarios.get(i));
         		emanager.remove(comentarios.get(i));
         	}
         	
         	usr.setActivo(false);
+        	usr.setCanal(cnl);
         	emanager.merge(cnl);
         	emanager.merge(usr);
         } catch (Exception exc) {
@@ -1148,22 +1148,7 @@ public class ControladorUsuario implements IControladorUsuario {
         emanager.getTransaction().commit();
         emanager.close();
     }
-    
-    private void eliminarComentarios(Comentario com) {
-    	if(com != null) {
-            Collection<Comentario> hijos = com.getHijos();
-            Iterator<Comentario> iter = hijos.iterator();
-            while(iter.hasNext()) {
-                Comentario hijo = iter.next();
-                eliminarComentarios(hijo);
-            }
-            EntityManager emanager = emFactory.createEntityManager();
-        	emanager.getTransaction().begin();
-        	emanager.remove(com);
-        	emanager.getTransaction().commit();
-        	emanager.close();
-        }
-    }
+
     
     @Override
     public List<UsuarioDt> ListarUsuariosInactivos() {

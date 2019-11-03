@@ -45,7 +45,7 @@
    String pathFolder = path2.getParent();
    //Adding Path
    //String filePath = context.getInitParameter("file-upload");
-   File properties = new File(System.getProperty("catalina.home")+"/conf");
+   File properties = new File(System.getProperty("user.home")+"/.UyTube");
    URL[] urls = {properties.toURI().toURL()};
    ClassLoader loader = new URLClassLoader(urls);
    ResourceBundle bundle = ResourceBundle.getBundle("uytube_conf", Locale.getDefault(), loader);

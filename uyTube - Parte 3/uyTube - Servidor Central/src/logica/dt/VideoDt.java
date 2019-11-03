@@ -16,6 +16,7 @@ import logica.Video;
  */
 public class VideoDt {
     private Integer id;
+    private String codigo;
     private String nombre;
     private float duracion;
     private String url;
@@ -37,6 +38,7 @@ public class VideoDt {
     
     public VideoDt(Video v){
         this.id= v.getId();
+        this.codigo = v.getCodigo();
         this.nombre = v.getNombre();
         this.duracion = v.getDuracion();
         this.url = v.getUrl();
@@ -57,6 +59,10 @@ public class VideoDt {
     
     public int getIdCanal() {
         return canal_user_id;
+    }
+    
+    public String getCodigo() {
+        return codigo;
     }
     
     public String getNombre() {

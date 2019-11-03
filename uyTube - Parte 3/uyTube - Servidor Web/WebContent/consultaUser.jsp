@@ -93,7 +93,7 @@
                     
                     for (let i = 0; i < usuarios.length; i++) {
                         if ( usrid == usuarios[i].id){
-                             //window.idUsr = usuarios[i].id;
+                        //window.idUsr = usuarios[i].id;
                         html += "<tr>";
                         html += '<th scope="row">'+usuarios[i].nombre+ ' '+usuarios[i].apellido+'</th>';
                         html += "</tr>";

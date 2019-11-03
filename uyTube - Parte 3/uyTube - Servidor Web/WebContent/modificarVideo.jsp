@@ -272,30 +272,32 @@
 
 
                                         <div class="form-group row">
-                                           <label for="exampleFormControlSelect1">Categoria del canal</label>
-                                           <select class="form-control" id="categoria" name="categoria">
-                                               <%
-
-                                                   List<CategoriaDt> catArray = cat.ListarCategorias();
-
-                                               %>
-
-                                               <%
-                                                   for (CategoriaDt c : catArray) {
-                                               %>
-                                                   <option value="<%out.print(c.getNombre());%>" <%if(vidx.getCategoria().equals(c.getNombre())){out.println("selected");}%>>
-                                                 <%
-                                                      out.println(c.getNombre());
-                                                  %>
-                                                  </option>
-
-                                                   <%
-
-                                                       }
-
-                                                   %>
-
-                                           </select>
+                                           <label for="exampleFormControlSelect1" class="col-md-4 col-form-label text-md-right">Categoria del canal</label>
+                                           <div class="col-md-6">
+	                                           <select class="form-control" id="categoria" name="categoria">
+	                                               <%
+	
+	                                                   List<CategoriaDt> catArray = cat.ListarCategorias();
+	
+	                                               %>
+	
+	                                               <%
+	                                                   for (CategoriaDt c : catArray) {
+	                                               %>
+	                                                   <option value="<%out.print(c.getNombre());%>" <%if(vidx.getCategoria().equals(c.getNombre())){out.println("selected");}%>>
+	                                                 <%
+	                                                      out.println(c.getNombre());
+	                                                  %>
+	                                                  </option>
+	
+	                                                   <%
+	
+	                                                       }
+	
+	                                                   %>
+	
+	                                           </select>
+                                           </div>
                                          </div>
 
                                         <div class="col-md-6 offset-md-4">

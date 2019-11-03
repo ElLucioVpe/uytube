@@ -44,7 +44,7 @@
         <script src="js/jquery.min.js"></script>
         
           <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-            <link rel="stylesheet" href="/resources/demos/style.css">
+            <!--  <link rel="stylesheet" href="/resources/demos/style.css">-->
             <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
             <%@include file="include/header.jsp" %>
             <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -83,6 +83,9 @@
                 String fechaNacimiento= fecha.format(userx.getFechanac());
                 UsuarioDt imm = user.ConsultarUsuario(_id);
                 
+                String descripcion = "";
+                if(canalx.getDescripcion() != null) descripcion = canalx.getDescripcion();
+                System.out.println(descripcion);
                 
             %>
             
@@ -168,9 +171,7 @@
                                     <div class="form-group row">
                                         <label for="desc" class="col-md-4 col-form-label text-md-right">Descripcion</label>
                                         <div class="col-md-6">
-                                            <textarea class="form-control" id="desc" name="desc" rows="3" placeholder="Descripcion del canal">
-                                            <%if(canalx.getDescripcion() != null){%> <%=canalx.getDescripcion()%><%}%>
-                                            </textarea>
+                                            <textarea class="form-control" id="desc" name="desc" rows="3" placeholder="Descripcion del canal"><%=descripcion%></textarea>
                                         </div>
                                     </div>
                                         
@@ -194,33 +195,56 @@
                                         
                                         
                                    <div class="form-group row">
-                                    <label for="exampleFormControlSelect1">Categoria del canal</label>
-                                    <select class="form-control" id="categoria" name="categoria">
-                                        <%
-                                          
-                                            IControladorCategoria cat = f.getIControladorCategoria();
-                                            List<CategoriaDt> catArray = cat.ListarCategorias();
-                                            
-                                        %>
-                                        
-                                        <%
-                                            for (CategoriaDt c : catArray) {
-                                        %>
-                                            <option value="<%out.print(c.getNombre());%>"<%if(canalx.getCategoria().equals(c.getNombre())){out.print("selected");}%>>
-                                          <%
-                                               out.print(c.getNombre());
-                                           %>
-                                           </option>
-                                      
-                                            <%
-                                                
-                                                }
-                                            
-                                            %>
-                                            
-                                    </select>
+                                    <label for="exampleFormControlSelect1" class="col-md-4 col-form-label text-md-right">Categoria del canal</label>
+                                    <div class="col-md-6">
+	                                    <select class="form-control" id="categoria" name="categoria">
+	                                        <%
+	                                          
+	                                            IControladorCategoria cat = f.getIControladorCategoria();
+	                                            List<CategoriaDt> catArray = cat.ListarCategorias();
+	                                            
+	                                        %>
+	                                        
+	                                        <%
+	                                            for (CategoriaDt c : catArray) {
+	                                        %>
+	                                            <option value="<%out.print(c.getNombre());%>"<%if(canalx.getCategoria().equals(c.getNombre())){out.print("selected");}%>>
+	                                          <%
+	                                               out.print(c.getNombre());
+	                                           %>
+	                                           </option>
+	                                      
+	                                            <%
+	                                                
+	                                                }
+	                                            
+	                                            %>
+	                                            
+	                                    </select>
+                                    </div>
                                   </div>
                                         
+                                   <div class="col-md-6 offset-md-4">
+                                        <button type="button" class="btn btn-danger" onclick="bajaUsuario()">
+                                            Darse de baja
+                                        </button>
+                                    </div>
+                                    <script>
+                                    	function bajaUsuario() {
+                                    		if (confirm('¿Esta seguro que desea darse de baja?')) {
+                                                $.ajax({
+                                                    url:'<%=request.getContextPath()%>/api/bajaUsuario.jsp?id=<%=_id%>',
+                                                    success: function (result) {
+                                                        alert(result);
+                                                    },
+                                                    error: function (xhr, ajaxOptions, thrownError) {
+                                                      console.log(xhr.status);
+                                                      console.log(thrownError);
+                                                    }
+                                                });
+                                            }
+                                    	}
+                                    </script>
                                         
                                     </div>
 

@@ -130,6 +130,14 @@ public class Video implements Serializable {
         this.nombre = nombre;
     }
 
+    public String getCodigo() {
+        return codigo;
+    }
+    
+    public void setCodigo(String newcodigo) {
+        this.codigo = newcodigo;
+    }
+    
     public float getDuracion() {
         return duracion;
     }
