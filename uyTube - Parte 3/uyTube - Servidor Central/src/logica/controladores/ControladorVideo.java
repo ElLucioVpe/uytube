@@ -10,6 +10,10 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
+import java.util.Random;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -61,7 +65,15 @@ public class ControladorVideo implements IControladorVideo {
             if(cnl.obtenerVideo(nombre) != null) throw new Exception("El video ya esta registrado en ese user");
             
             java.util.Date fecha = new Date();
-            Video vid = new Video(nombre, Float.parseFloat(duracion), url, desc, fecha,true,user);
+            
+            String codigo = "";
+            boolean seguir = true;
+            while(seguir) {
+            	codigo = this.GenerarCodigoVideo();
+            	if(obtenerVideoDtPorCOD(codigo) == null) seguir = false;
+            }
+            
+            Video vid = new Video(codigo, nombre, Float.parseFloat(duracion), url, desc, fecha,true,user);
             
             if(!categoria.equals("Ninguna")){
                 Categoria cat = emanager.find(Categoria.class, categoria);
@@ -449,5 +461,48 @@ public class ControladorVideo implements IControladorVideo {
           }
     	  emanager.getTransaction().commit();
 		  emanager.close();
+      }
+      
+      //Parte 3
+      private String GenerarCodigoVideo() {
+    	  
+    	  String upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    	  String lower = upper.toLowerCase();
+    	  String digits = "0123456789";
+    	  char[] alphanum = (upper + lower + digits).toCharArray();
+    	  
+    	  StringBuilder codigo = new StringBuilder();
+    	  
+    	  for(int i=0; i < 11; i++) {
+    		  codigo.append(alphanum[new Random().nextInt(alphanum.length)]);
+    	  }
+    	  
+    	  return codigo.toString();
+      }
+      
+      @Override
+      public VideoDt obtenerVideoDtPorCOD(String codigo) {
+          VideoDt vdt = null;
+          EntityManager emanager = emFactory.createEntityManager();
+          try {
+              
+              emanager.getTransaction().begin();
+
+              TypedQuery<Video> querry = emanager.createNamedQuery("Video.findByCodigo", Video.class);
+              
+              Video video = querry.setParameter("codigo", codigo).getSingleResult();
+              if(video == null) throw new Exception("El video no existe");
+              
+              vdt = new VideoDt(video);
+
+          } catch (Exception exc) {
+              Throwable _throwable = new Throwable();
+              StackTraceElement[] elements = _throwable.getStackTrace();
+              String invocador = elements[1].getFileName();
+              exceptionAux(invocador, exc);
+          }
+          emanager.getTransaction().commit();
+          emanager.close();
+          return vdt;
       }
 }

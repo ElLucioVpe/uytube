@@ -33,4 +33,7 @@ public interface IControladorVideo {
     
     //Para testing
     public abstract void EliminarVideo(int id_user, String vid_nom);
+    
+    //Parte 3
+    public abstract VideoDt obtenerVideoDtPorCOD(String codigo);
 }
