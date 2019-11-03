@@ -29,6 +29,9 @@
             if(request.getParameter("nom") != null && request.getParameter("nom") != "") {
                 if(session.getAttribute("userid") != null) if(user_id == (int)session.getAttribute("userid")) propietario = true;
                 lista = user.obtenerListaDt(user_id, request.getParameter("nom"));
+                //Evito consultas a datos de un usuario inactivo
+                UsuarioDt dt_propietario = user.ConsultarUsuario(user_id);
+                if(dt_propietario != null) if(!dt_propietario.getActivo()) response.sendRedirect(path+"/index.jsp");
             }
         }
     %>

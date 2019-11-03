@@ -26,6 +26,9 @@
 	        int canalUser_id = Integer.parseInt(id_aux);
 	        session.setAttribute("canalUserid", canalUser_id);
 	        UsuarioDt u = user.ConsultarUsuario(canalUser_id);
+	        
+	        if(!u.getActivo()) response.sendRedirect(path+"/index.jsp");
+	        
 	        CanalDt canal = user.obtenerCanalDt(canalUser_id);
 	        Boolean estaSuscripto2 = false; 
 	        

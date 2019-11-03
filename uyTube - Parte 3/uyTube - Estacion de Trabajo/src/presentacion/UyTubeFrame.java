@@ -20,6 +20,9 @@ import logica.controladores.Fabrica;
 import logica.controladores.IControladorUsuario;
 import logica.controladores.IControladorVideo;
 import logica.controladores.IControladorCategoria;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.GroupLayout;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 /**
  *
@@ -39,7 +42,7 @@ public class UyTubeFrame extends javax.swing.JFrame {
         initComponents();
         
         try {
-            BufferedImage img = ImageIO.read(new File("../data/logo.png"));
+            BufferedImage img = ImageIO.read(new File(System.getProperty("user.home")+"/.UyTube/data/logo.png"));
             if(img != null){
                 ImageIcon icon = new ImageIcon(resize(img, 80, 100));
                 logoLabel.setIcon(icon);
@@ -136,41 +139,39 @@ public class UyTubeFrame extends javax.swing.JFrame {
         Escritorio.setLayer(logoLabel, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout EscritorioLayout = new javax.swing.GroupLayout(Escritorio);
-        Escritorio.setLayout(EscritorioLayout);
         EscritorioLayout.setHorizontalGroup(
-            EscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(EscritorioLayout.createSequentialGroup()
-                .addGap(109, 109, 109)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EscritorioLayout.createSequentialGroup()
-                .addContainerGap(77, Short.MAX_VALUE)
-                .addGroup(EscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EscritorioLayout.createSequentialGroup()
-                        .addComponent(ELBOTON)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EscritorioLayout.createSequentialGroup()
-                        .addComponent(logoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(72, 72, 72))))
+        	EscritorioLayout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(EscritorioLayout.createSequentialGroup()
+        			.addGap(77)
+        			.addGroup(EscritorioLayout.createParallelGroup(Alignment.TRAILING)
+        				.addGroup(EscritorioLayout.createSequentialGroup()
+        					.addComponent(ELBOTON)
+        					.addPreferredGap(ComponentPlacement.RELATED))
+        				.addGroup(EscritorioLayout.createSequentialGroup()
+        					.addComponent(logoLabel, GroupLayout.PREFERRED_SIZE, 109, GroupLayout.PREFERRED_SIZE)
+        					.addPreferredGap(ComponentPlacement.RELATED)
+        					.addComponent(jLabel2, GroupLayout.PREFERRED_SIZE, 207, GroupLayout.PREFERRED_SIZE)
+        					.addGap(36)))
+        			.addGap(0, 0, Short.MAX_VALUE))
+        		.addGroup(EscritorioLayout.createSequentialGroup()
+        			.addGap(109)
+        			.addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, 275, GroupLayout.PREFERRED_SIZE)
+        			.addContainerGap(51, Short.MAX_VALUE))
         );
         EscritorioLayout.setVerticalGroup(
-            EscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EscritorioLayout.createSequentialGroup()
-                .addGap(98, 98, 98)
-                .addComponent(jLabel1)
-                .addGroup(EscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(EscritorioLayout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addComponent(jLabel2))
-                    .addGroup(EscritorioLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(logoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 104, Short.MAX_VALUE)
-                .addComponent(ELBOTON)
-                .addContainerGap())
+        	EscritorioLayout.createParallelGroup(Alignment.TRAILING)
+        		.addGroup(EscritorioLayout.createSequentialGroup()
+        			.addGap(98)
+        			.addComponent(jLabel1)
+        			.addGap(6)
+        			.addGroup(EscritorioLayout.createParallelGroup(Alignment.LEADING)
+        				.addComponent(logoLabel, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(jLabel2))
+        			.addPreferredGap(ComponentPlacement.RELATED, 104, Short.MAX_VALUE)
+        			.addComponent(ELBOTON)
+        			.addContainerGap())
         );
+        Escritorio.setLayout(EscritorioLayout);
 
         jMenu1.setText("Inicio");
         jMenu1.addActionListener(new java.awt.event.ActionListener() {

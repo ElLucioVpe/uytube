@@ -310,7 +310,7 @@ public class modificarUsuario extends javax.swing.JInternalFrame {
                     throw new Exception(extension+" Imagen con extension invalida, por favor suba una imagen .jpg o .png");
 
                 imagen = u_nick + "." + extension;
-                fnewpath = "data/imagenes/" + imagen;
+                fnewpath = System.getProperty("user.home")+"/.UyTube/data/imagenes/" + imagen;
             }
             
             //Modifico el usuario

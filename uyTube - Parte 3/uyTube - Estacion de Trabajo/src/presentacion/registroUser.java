@@ -210,7 +210,7 @@ public class registroUser extends javax.swing.JInternalFrame {
                     throw new Exception(extension+" Imagen con extension invalida, por favor suba una imagen .jpg o .png");
 
                 imagen = textField3.getText() + "." + extension;
-                fnewpath = "data/imagenes/" + imagen;
+                fnewpath = System.getProperty("user.home")+"/.UyTube/data/imagenes/" + imagen;
             }
             //AltaUsuario(String nick,String passw, String nom, String apell, String mail, Date fnac, String img)
             //Creo el usuario
