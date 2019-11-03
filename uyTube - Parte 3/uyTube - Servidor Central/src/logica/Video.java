@@ -45,7 +45,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Video.findByFechaPublicacion", query = "SELECT v FROM Video v WHERE v.fechaPublicacion = :fechaPublicacion"),
     @NamedQuery(name = "Video.findByCategoria", query = "SELECT v FROM Video v WHERE v.categoria = :categoria"),
     @NamedQuery(name = "Video.findByPrivacidad", query = "SELECT v FROM Video v WHERE v.privacidad = :privacidad"),
-    @NamedQuery(name = "Video.findByUserId", query = "SELECT v FROM Video v WHERE v.canal_user_id = :canal_user_id")})
+    @NamedQuery(name = "Video.findByUserId", query = "SELECT v FROM Video v WHERE v.canal_user_id = :canal_user_id"),
+	@NamedQuery(name = "Video.findByCodigo", query = "SELECT v FROM Video v WHERE v.codigo = :codigo")})
 
 public class Video implements Serializable {
 
@@ -55,6 +56,9 @@ public class Video implements Serializable {
     @Basic(optional = false)
     @Column(name = "ID")
     private Integer id;
+    @Basic(optional = false)
+    @Column(name = "CODIGO")
+    private String codigo;
     @Basic(optional = false)
     @Column(name = "NOMBRE")
     private String nombre;
@@ -96,8 +100,9 @@ public class Video implements Serializable {
         this.id = id;
     }
 
-    public Video(String nombre, float duracion, String url,String Desc, Date fechaPublicacion, Boolean privacidad, int user) {
+    public Video(String codigo, String nombre, float duracion, String url,String Desc, Date fechaPublicacion, Boolean privacidad, int user) {
         //this.id = id;
+    	this.codigo = codigo;
         this.nombre = nombre;
         this.duracion = duracion;
         this.url = url;
