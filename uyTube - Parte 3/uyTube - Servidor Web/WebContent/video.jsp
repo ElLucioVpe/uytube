@@ -39,9 +39,20 @@
         <% Fabrica f = Fabrica.getInstance();
             IControladorUsuario user = f.getIControladorUsuario();
             IControladorVideo video = f.getIControladorVideo();
-            int video_id = Integer.parseInt(request.getParameter("id"));
-            session.setAttribute("videoid", video_id);
-            VideoDt dt = video.obtenerVideoDtPorID(video_id);
+            int video_id = -1;
+            VideoDt dt = null;
+            
+            if(request.getParameter("id") != null) {
+	            video_id = Integer.parseInt(request.getParameter("id"));
+	            session.setAttribute("videoid", video_id);
+	
+	            dt = video.obtenerVideoDtPorID(video_id);
+            } else {
+            	if(request.getParameter("cod") != null) {
+            		dt = video.obtenerVideoDtPorCOD(request.getParameter("cod"));
+            		video_id = dt.getId();
+            	}
+            }
             UsuarioDt u = user.ConsultarUsuario(dt.getIdCanal());
             List<String> seguidores = user.ListarSeguidores(dt.getId());
             
