@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <servlet>
+        <servlet-name>UploadServlet</servlet-name>
+        <servlet-class>com.UyTube.UploadServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UploadServlet</servlet-name>
+        <jsp-file>/uploadFile.jsp</jsp-file>
+        <url-pattern>/UploadServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>UploadModifyServlet</servlet-name>
+        <jsp-file>/modifyFile.jsp</jsp-file>
+        <servlet-class>com.UyTube.UploadModifyServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UploadModifyServlet</servlet-name>
+        <jsp-file>/modifyFile.jsp</jsp-file>
+        <url-pattern>/UploadModifyServlet</url-pattern>
+    </servlet-mapping>
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+    <context-param> 
+   <description>Location to store uploaded file</description> 
+   <param-name>file-upload</param-name> 
+   <param-value>
+     C:\OLD\DiscoD\UyTube\uytube3\uytube\uyTube - Parte 2\data\imagenes\
+   </param-value> 
+    </context-param>
+
+</web-app>

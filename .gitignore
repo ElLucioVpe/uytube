@@ -1,4 +1,4 @@
-*.xml
+
 uyTube - Parte 1/build/
 uyTube - Parte 1/build\
 uyTube - Parte 1/nbproject/private/private.xml
@@ -16,15 +16,19 @@ uyTube - Parte 1/build.xml
 uyTube - Parte 1/derby.log
 LICENSE
 manifest.mf
+
+uyTube - Parte 1/*.xml
+uyTube - Parte 2/*.xml
+uyTube - Parte 1/*.properties
+uyTube - Parte 2/nbproject/*.properties
+
 uyTube - Parte 1/build/built-jar.properties
 uyTube - Parte 1/dist/UyTube.jar
-*.xml
 uyTube - Parte 1/build/built-jar.properties
 uyTube - Parte 1/nbproject/private/private.properties
 uyTube - Parte 1/build/built-jar.properties
 uyTube - Parte 1/nbproject/private/private.properties
 uyTube - Parte 1/nbproject/project.properties
-*.properties
 uyTube - Parte 1/build/built-jar.properties
 uyTube - Parte 1/data/uytubedb.lck
 uyTube - Parte 1/nbproject/build-impl.xml
@@ -39,16 +43,19 @@ uyTube - Parte 1/nbproject/private/private.properties
 uyTube - Parte 1/nbproject/private/private.xml
 uyTube - Parte 1/nbproject/project.properties
 uyTube - Parte 1/nbproject/project.xml
+uyTube - Parte 2/uytube - Estacion de Trabajo/nbproject/
 uyTube - Parte 2/uytube - Estacion de Trabajo/nbproject/build-impl.xml
 uyTube - Parte 2/uytube - Estacion de Trabajo/nbproject/genfiles.properties
 uyTube - Parte 2/uytube - Estacion de Trabajo/nbproject/private/private.properties
 uyTube - Parte 2/uytube - Estacion de Trabajo/nbproject/project.properties
 uyTube - Parte 2/uytube - Estacion de Trabajo/nbproject/project.xml
+uyTube - Parte 2/uytube - Servidor Central/nbproject/
 uyTube - Parte 2/uytube - Servidor Central/nbproject/build-impl.xml
 uyTube - Parte 2/uytube - Servidor Central/nbproject/genfiles.properties
 uyTube - Parte 2/uytube - Servidor Central/nbproject/private/private.properties
 uyTube - Parte 2/uytube - Servidor Central/nbproject/project.properties
 uyTube - Parte 2/uytube - Servidor Central/nbproject/project.xml
+uyTube - Parte 2/uytube - Servidor Web/nbproject/
 uyTube - Parte 2/uytube - Servidor Web/nbproject/build-impl.xml
 uyTube - Parte 2/uytube - Servidor Web/nbproject/genfiles.properties
 uyTube - Parte 2/uytube - Servidor Web/nbproject/private/private.properties
