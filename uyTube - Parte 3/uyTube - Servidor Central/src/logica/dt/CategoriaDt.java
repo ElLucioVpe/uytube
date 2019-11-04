@@ -1,7 +1,10 @@
 package logica.dt;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 import logica.Categoria;
 
+@XmlRootElement
 public class CategoriaDt {
      private String nombre;
 

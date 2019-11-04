@@ -8,10 +8,13 @@ package logica.dt;
 import java.util.Date;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  *
  * @author Esteban
  */
+@XmlRootElement
 public class ComentarioDt {
     private long id;
     private long id_padre;

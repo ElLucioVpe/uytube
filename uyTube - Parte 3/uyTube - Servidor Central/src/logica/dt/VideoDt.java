@@ -7,6 +7,9 @@ package logica.dt;
 
 import java.util.Collection;
 import java.util.Date;
+
+import javax.xml.bind.annotation.XmlRootElement;
+
 import logica.Valoracion;
 import logica.Video;
 
@@ -14,6 +17,7 @@ import logica.Video;
  *
  * @author antus
  */
+@XmlRootElement
 public class VideoDt {
     private Integer id;
     private String codigo;

@@ -5,12 +5,15 @@
  */
 package logica.dt;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 import logica.Valoracion;
 
 /**
  *
  * @author pagol
  */
+@XmlRootElement
 public class valoracionDt {
      private String user;
      private boolean like;

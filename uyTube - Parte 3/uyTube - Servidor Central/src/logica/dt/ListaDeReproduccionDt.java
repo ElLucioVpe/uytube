@@ -7,10 +7,13 @@ package logica.dt;
 
 import java.util.Date;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  *
  * @author Esteban
  */
+@XmlRootElement
 public class ListaDeReproduccionDt {
     private int id;
     private String nombre;

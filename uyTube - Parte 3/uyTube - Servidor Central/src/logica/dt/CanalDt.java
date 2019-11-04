@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
+
+import javax.xml.bind.annotation.XmlRootElement;
+
 import logica.Canal;
 import logica.ListaDeReproduccion;
 import logica.Usuario;
@@ -19,6 +22,7 @@ import logica.Video;
  *
  * @author antus
  */
+@XmlRootElement
 public class CanalDt {
     
     private Integer userId;

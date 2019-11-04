@@ -10,10 +10,13 @@ import logica.Canal;
 import logica.Usuario;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  *
  * @author Luciano
  */
+@XmlRootElement
 public class UsuarioDt {
     private Integer id;
     private String nombre;
