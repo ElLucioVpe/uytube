@@ -33,7 +33,7 @@ public interface IControladorUsuario {
     
     //SeguirUsuario
     public abstract void seguirUsuario(String seguidor, String seguido); ////
-    public void dejarDeSeguirUsuario(String seguidor, String seguido); ////
+    public abstract void dejarDeSeguirUsuario(String seguidor, String seguido); ////
     
     //listar video
     public abstract List<VideoDt> listarVideosDeUsuario(String usernick);
