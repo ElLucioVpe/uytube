@@ -23,6 +23,9 @@ import logica.controladores.IControladorCategoria;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.GroupLayout;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JMenuItem;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 /**
  *
@@ -252,19 +255,30 @@ public class UyTubeFrame extends javax.swing.JFrame {
         jMenu3.add(ModificarLista);
 
         jMenuBar1.add(jMenu3);
+        
+        mntmListarUsuariosEliminados = new JMenuItem("Listar Usuarios Eliminados");
+        mntmListarUsuariosEliminados.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		ListarUsuariosEliminadosAction(e);
+        	}
+        });
+        
+        jMenu3.add(mntmListarUsuariosEliminados);
 
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Escritorio)
+        	layout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(layout.createSequentialGroup()
+        			.addComponent(Escritorio, GroupLayout.PREFERRED_SIZE, 454, GroupLayout.PREFERRED_SIZE)
+        			.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Escritorio)
+        	layout.createParallelGroup(Alignment.LEADING)
+        		.addComponent(Escritorio, GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)
         );
+        getContentPane().setLayout(layout);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -339,12 +353,15 @@ public class UyTubeFrame extends javax.swing.JFrame {
         AgregarInternalFrame(new listaDeReproduccionFrame(this));
     }//GEN-LAST:event_ModificarListaActionPerformed
 
-
+    
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         AgregarInternalFrame(new listarVideos(this));
     }//GEN-LAST:event_jMenuItem2ActionPerformed
-
-
+    
+    private void ListarUsuariosEliminadosAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    	AgregarInternalFrame(new listarUsuariosEliminados(this));
+    }
+    
     private void ELBOTONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ELBOTONActionPerformed
         // TODO add your handling code here:
        //CATEGORIA
@@ -590,5 +607,6 @@ public class UyTubeFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem listarCategorias;
     private javax.swing.JLabel logoLabel;
+    private JMenuItem mntmListarUsuariosEliminados;
     // End of variables declaration//GEN-END:variables
 }
