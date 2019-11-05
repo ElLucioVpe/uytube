@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Use this file to deploy some handlers/chains and services      --><!-- Two ways to do this:                                           --><!--   java org.apache.axis.client.AdminClient deploy.wsdd          --><!--      after the axis server is running                          --><!-- or                                                             --><!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   --><!--      from the same directory that the Axis engine runs         --><deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from WScontroladorUsuarioImplService WSDL service -->
+
+  <service name="WScontroladorUsuarioImpl" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://webservices.logica"/>
+      <parameter name="wsdlServiceElement" value="WScontroladorUsuarioImplService"/>
+      <parameter name="schemaQualified" value="http://logica,http://xml.apache.org/xml-soap,http://dt.logica,http://webservices.logica"/>
+      <parameter name="wsdlServicePort" value="WScontroladorUsuarioImpl"/>
+      <parameter name="className" value="logica.webservices.WScontroladorUsuarioImpl"/>
+      <parameter name="wsdlPortType" value="WScontroladorUsuarioImpl"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation xmlns:operNS="http://webservices.logica" xmlns:retNS="http://webservices.logica" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="loginUsuario" qname="operNS:LoginUsuario" returnQName="retNS:LoginUsuarioReturn" returnType="rtns:int" soapAction="">
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:_user" type="tns:string"/>
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:_password" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://webservices.logica" xmlns:retNS="http://webservices.logica" xmlns:rtns="http://dt.logica" name="obtenerListaDt" qname="operNS:obtenerListaDt" returnQName="retNS:obtenerListaDtReturn" returnType="rtns:ListaDeReproduccionDt" soapAction="">
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:id_user" type="tns:int"/>
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:lista" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://webservices.logica" name="altaUsuario" qname="operNS:AltaUsuario" soapAction="">
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:nick" type="tns:string"/>
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:pass" type="tns:string"/>
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:nom" type="tns:string"/>
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:apell" type="tns:string"/>
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:mail" type="tns:string"/>
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:fnac" type="tns:dateTime"/>
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:img" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://webservices.logica" xmlns:retNS="http://webservices.logica" xmlns:rtns="http://webservices.logica" xmlns:tns="http://webservices.logica" name="listarSeguidores" qname="operNS:ListarSeguidores" returnQName="retNS:ListarSeguidoresReturn" returnType="rtns:ArrayOf_xsd_anyType" returnItemQName="tns:item" soapAction="">
+        <parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" xmlns:pns="http://webservices.logica" qname="pns:userId" type="tns:int"/>
+      </operation>
+      <operation xmlns:operNS="http://webservices.logica" name="bajaUsuario" qname="operNS:BajaUsuario" soapAction="">
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:iduser" type="tns:int"/>
+      </operation>
+      <operation xmlns:operNS="http://webservices.logica" xmlns:retNS="http://webservices.logica" xmlns:rtns="http://dt.logica" name="consultarUsuario" qname="operNS:ConsultarUsuario" returnQName="retNS:ConsultarUsuarioReturn" returnType="rtns:UsuarioDt" soapAction="">
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:id_user" type="tns:int"/>
+      </operation>
+      <operation xmlns:operNS="http://webservices.logica" name="altaCanal" qname="operNS:AltaCanal" soapAction="">
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:nombre" type="tns:string"/>
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:privado" type="tns:boolean"/>
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:categoria" type="tns:string"/>
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:user_id" type="tns:int"/>
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:descripcion" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://webservices.logica" xmlns:retNS="http://webservices.logica" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="probando" qname="operNS:probando" returnQName="retNS:probandoReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:text" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://webservices.logica" name="eliminarUsuario" qname="operNS:EliminarUsuario" soapAction="">
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:id_user" type="tns:int"/>
+      </operation>
+      <operation xmlns:operNS="http://webservices.logica" name="seguirUsuario" qname="operNS:seguirUsuario" soapAction="">
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:seguidor" type="tns:string"/>
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:seguido" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://webservices.logica" xmlns:retNS="http://webservices.logica" xmlns:rtns="http://webservices.logica" xmlns:tns="http://webservices.logica" name="obtenerCategorias" qname="operNS:obtenerCategorias" returnQName="retNS:obtenerCategoriasReturn" returnType="rtns:ArrayOf_xsd_anyType" returnItemQName="tns:item" soapAction="">
+      </operation>
+      <operation xmlns:operNS="http://webservices.logica" xmlns:retNS="http://webservices.logica" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="obtenerIdUsuario" qname="operNS:obtenerIdUsuario" returnQName="retNS:obtenerIdUsuarioReturn" returnType="rtns:int" soapAction="">
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:nick" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://webservices.logica" xmlns:retNS="http://webservices.logica" xmlns:rtns="http://webservices.logica" xmlns:tns="http://webservices.logica" name="listarUsuarios" qname="operNS:ListarUsuarios" returnQName="retNS:ListarUsuariosReturn" returnType="rtns:ArrayOf_xsd_anyType" returnItemQName="tns:item" soapAction="">
+      </operation>
+      <operation xmlns:operNS="http://webservices.logica" name="modificarUsuario" qname="operNS:ModificarUsuario" soapAction="">
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:id_user" type="tns:int"/>
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:nuevopass" type="tns:string"/>
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:nuevonom" type="tns:string"/>
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:nuevoapell" type="tns:string"/>
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:nuevafechaNac" type="tns:dateTime"/>
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:nuevonomC" type="tns:string"/>
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:nuevacatC" type="tns:string"/>
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:nuevadesC" type="tns:string"/>
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:nuevaprivC" type="tns:boolean"/>
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:nuevaImg" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://webservices.logica" xmlns:retNS="http://webservices.logica" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="obtenerTipoLista" qname="operNS:obtenerTipoLista" returnQName="retNS:obtenerTipoListaReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:propietario" type="tns:int"/>
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:lista" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://webservices.logica" xmlns:retNS="http://webservices.logica" xmlns:rtns="http://webservices.logica" xmlns:tns="http://webservices.logica" name="listarSiguiendo" qname="operNS:ListarSiguiendo" returnQName="retNS:ListarSiguiendoReturn" returnType="rtns:ArrayOf_xsd_anyType" returnItemQName="tns:item" soapAction="">
+        <parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" xmlns:pns="http://webservices.logica" qname="pns:userId" type="tns:int"/>
+      </operation>
+      <operation xmlns:operNS="http://webservices.logica" xmlns:retNS="http://webservices.logica" xmlns:rtns="http://dt.logica" name="obtenerCanalDt" qname="operNS:obtenerCanalDt" returnQName="retNS:obtenerCanalDtReturn" returnType="rtns:CanalDt" soapAction="">
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:id_canal" type="tns:int"/>
+      </operation>
+      <operation xmlns:operNS="http://webservices.logica" xmlns:retNS="http://webservices.logica" xmlns:rtns="http://webservices.logica" xmlns:tns="http://webservices.logica" name="obtenerVideosLista" qname="operNS:obtenerVideosLista" returnQName="retNS:obtenerVideosListaReturn" returnType="rtns:ArrayOf_xsd_anyType" returnItemQName="tns:item" soapAction="">
+        <parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" xmlns:pns="http://webservices.logica" qname="pns:id_user" type="tns:int"/>
+        <parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" xmlns:pns="http://webservices.logica" qname="pns:lista" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://webservices.logica" xmlns:retNS="http://webservices.logica" xmlns:rtns="http://webservices.logica" xmlns:tns="http://webservices.logica" name="listarVideos" qname="operNS:ListarVideos" returnQName="retNS:ListarVideosReturn" returnType="rtns:ArrayOf_xsd_anyType" returnItemQName="tns:item" soapAction="">
+        <parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" xmlns:pns="http://webservices.logica" qname="pns:userId" type="tns:int"/>
+      </operation>
+      <operation xmlns:operNS="http://webservices.logica" xmlns:retNS="http://webservices.logica" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="obtenerNickUsuario" qname="operNS:obtenerNickUsuario" returnQName="retNS:obtenerNickUsuarioReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:id_user" type="tns:int"/>
+      </operation>
+      <operation xmlns:operNS="http://webservices.logica" name="altaListaDeReproduccionPorDefecto" qname="operNS:AltaListaDeReproduccionPorDefecto" soapAction="">
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:nombre" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://webservices.logica" name="altaListaDeReproduccionParticular" qname="operNS:AltaListaDeReproduccionParticular" soapAction="">
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:nombre" type="tns:string"/>
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:id_propietario" type="tns:int"/>
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:privacidad" type="tns:boolean"/>
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:categoria" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://webservices.logica" name="modificarListaDeReproduccion" qname="operNS:ModificarListaDeReproduccion" soapAction="">
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:usuario" type="tns:int"/>
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:lista" type="tns:string"/>
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:nuevaCat" type="tns:string"/>
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:nuevaPri" type="tns:boolean"/>
+      </operation>
+      <operation xmlns:operNS="http://webservices.logica" name="agregarVideoListaDeReproduccion" qname="operNS:AgregarVideoListaDeReproduccion" soapAction="">
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:usuarioVideo" type="tns:int"/>
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:usuarioLista" type="tns:int"/>
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:video" type="tns:string"/>
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:lista" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://webservices.logica" name="quitarVideoListaDeReproduccion" qname="operNS:QuitarVideoListaDeReproduccion" soapAction="">
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:usuarioLista" type="tns:int"/>
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:lista" type="tns:string"/>
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:video" type="tns:int"/>
+      </operation>
+      <operation xmlns:operNS="http://webservices.logica" name="dejarDeSeguirUsuario" qname="operNS:dejarDeSeguirUsuario" soapAction="">
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:seguidor" type="tns:string"/>
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:seguido" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://webservices.logica" xmlns:retNS="http://webservices.logica" xmlns:rtns="http://webservices.logica" xmlns:tns="http://webservices.logica" name="listarVideosDeUsuario" qname="operNS:listarVideosDeUsuario" returnQName="retNS:listarVideosDeUsuarioReturn" returnType="rtns:ArrayOf_xsd_anyType" returnItemQName="tns:item" soapAction="">
+        <parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" xmlns:pns="http://webservices.logica" qname="pns:usernick" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://webservices.logica" xmlns:retNS="http://webservices.logica" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="obtenerIdUsuarioMail" qname="operNS:obtenerIdUsuarioMail" returnQName="retNS:obtenerIdUsuarioMailReturn" returnType="rtns:int" soapAction="">
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:mail" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://webservices.logica" xmlns:retNS="http://webservices.logica" xmlns:rtns="http://webservices.logica" xmlns:tns="http://webservices.logica" name="obtenerListasUsuario" qname="operNS:obtenerListasUsuario" returnQName="retNS:obtenerListasUsuarioReturn" returnType="rtns:ArrayOf_xsd_anyType" returnItemQName="tns:item" soapAction="">
+        <parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" xmlns:pns="http://webservices.logica" qname="pns:id_user" type="tns:int"/>
+      </operation>
+      <operation xmlns:operNS="http://webservices.logica" xmlns:retNS="http://webservices.logica" xmlns:rtns="http://webservices.logica" xmlns:tns="http://webservices.logica" name="obtenerListasDtPorUsuario" qname="operNS:obtenerListasDtPorUsuario" returnQName="retNS:obtenerListasDtPorUsuarioReturn" returnType="rtns:ArrayOf_xsd_anyType" returnItemQName="tns:item" soapAction="">
+        <parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" xmlns:pns="http://webservices.logica" qname="pns:id_user" type="tns:int"/>
+      </operation>
+      <operation xmlns:operNS="http://webservices.logica" xmlns:retNS="http://webservices.logica" xmlns:rtns="http://dt.logica" name="obtenerListaDtPorId" qname="operNS:obtenerListaDtPorId" returnQName="retNS:obtenerListaDtPorIdReturn" returnType="rtns:ListaDeReproduccionDt" soapAction="">
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:id_lista" type="tns:int"/>
+      </operation>
+      <operation xmlns:operNS="http://webservices.logica" xmlns:retNS="http://webservices.logica" xmlns:rtns="http://webservices.logica" xmlns:tns="http://webservices.logica" name="listarUsuariosInactivos" qname="operNS:ListarUsuariosInactivos" returnQName="retNS:ListarUsuariosInactivosReturn" returnType="rtns:ArrayOf_xsd_anyType" returnItemQName="tns:item" soapAction="">
+      </operation>
+      <operation xmlns:operNS="http://webservices.logica" xmlns:retNS="http://webservices.logica" xmlns:rtns="http://webservices.logica" xmlns:tns="http://webservices.logica" name="obtenerListas" qname="operNS:obtenerListas" returnQName="retNS:obtenerListasReturn" returnType="rtns:ArrayOf_xsd_anyType" returnItemQName="tns:item" soapAction="">
+      </operation>
+      <operation xmlns:operNS="http://webservices.logica" xmlns:retNS="http://webservices.logica" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="estaSuscripto" qname="operNS:estaSuscripto" returnQName="retNS:estaSuscriptoReturn" returnType="rtns:boolean" soapAction="">
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:suscripto" type="tns:int"/>
+        <parameter xmlns:pns="http://webservices.logica" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:pcanal" type="tns:int"/>
+      </operation>
+      <parameter name="allowedMethods" value="listarSiguiendo obtenerIdUsuario obtenerListasUsuario listarVideos probando altaListaDeReproduccionPorDefecto loginUsuario bajaUsuario obtenerNickUsuario agregarVideoListaDeReproduccion quitarVideoListaDeReproduccion obtenerIdUsuarioMail dejarDeSeguirUsuario obtenerListas listarUsuarios obtenerTipoLista altaCanal modificarListaDeReproduccion altaListaDeReproduccionParticular obtenerListaDtPorId estaSuscripto listarSeguidores obtenerCategorias listarVideosDeUsuario obtenerListaDt eliminarUsuario seguirUsuario obtenerCanalDt listarUsuariosInactivos altaUsuario obtenerVideosLista consultarUsuario modificarUsuario obtenerListasDtPorUsuario"/>
+
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;AltaListaDeReproduccionPorDefecto" type="java:logica.webservices.AltaListaDeReproduccionPorDefecto" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;ModificarListaDeReproduccionResponse" type="java:logica.webservices.ModificarListaDeReproduccionResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;AltaUsuario" type="java:logica.webservices.AltaUsuario" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;LoginUsuario" type="java:logica.webservices.LoginUsuario" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;estaSuscriptoResponse" type="java:logica.webservices.EstaSuscriptoResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <arrayMapping xmlns:ns="http://webservices.logica" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_anyType" type="java:java.lang.Object[]" innerType="cmp-ns:anyType" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;ListarSeguidores" type="java:logica.webservices.ListarSeguidores" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;dejarDeSeguirUsuario" type="java:logica.webservices.DejarDeSeguirUsuario" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;LoginUsuarioResponse" type="java:logica.webservices.LoginUsuarioResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;BajaUsuario" type="java:logica.webservices.BajaUsuario" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;ConsultarUsuario" type="java:logica.webservices.ConsultarUsuario" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;obtenerTipoLista" type="java:logica.webservices.ObtenerTipoLista" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;ListarVideosResponse" type="java:logica.webservices.ListarVideosResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://dt.logica" qname="ns:ListaDeReproduccionDt" type="java:logica.dt.ListaDeReproduccionDt" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;QuitarVideoListaDeReproduccion" type="java:logica.webservices.QuitarVideoListaDeReproduccion" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;AltaCanal" type="java:logica.webservices.AltaCanal" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;BajaUsuarioResponse" type="java:logica.webservices.BajaUsuarioResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;AgregarVideoListaDeReproduccionResponse" type="java:logica.webservices.AgregarVideoListaDeReproduccionResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;QuitarVideoListaDeReproduccionResponse" type="java:logica.webservices.QuitarVideoListaDeReproduccionResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;listarVideosDeUsuarioResponse" type="java:logica.webservices.ListarVideosDeUsuarioResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;ListarSeguidoresResponse" type="java:logica.webservices.ListarSeguidoresResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;ListarVideos" type="java:logica.webservices.ListarVideos" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;AltaListaDeReproduccionPorDefectoResponse" type="java:logica.webservices.AltaListaDeReproduccionPorDefectoResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;obtenerListaDt" type="java:logica.webservices.ObtenerListaDt" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;obtenerIdUsuarioResponse" type="java:logica.webservices.ObtenerIdUsuarioResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;obtenerListaDtResponse" type="java:logica.webservices.ObtenerListaDtResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;obtenerNickUsuario" type="java:logica.webservices.ObtenerNickUsuario" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;obtenerListasUsuarioResponse" type="java:logica.webservices.ObtenerListasUsuarioResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;obtenerCategorias" type="java:logica.webservices.ObtenerCategorias" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;ListarUsuarios" type="java:logica.webservices.ListarUsuarios" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;obtenerListasDtPorUsuarioResponse" type="java:logica.webservices.ObtenerListasDtPorUsuarioResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://logica" qname="ns:Usuario" type="java:logica.Usuario" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;listarVideosDeUsuario" type="java:logica.webservices.ListarVideosDeUsuario" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;obtenerListaDtPorIdResponse" type="java:logica.webservices.ObtenerListaDtPorIdResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;EliminarUsuarioResponse" type="java:logica.webservices.EliminarUsuarioResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;ModificarUsuarioResponse" type="java:logica.webservices.ModificarUsuarioResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;obtenerListasUsuario" type="java:logica.webservices.ObtenerListasUsuario" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://logica" qname="ns:Categoria" type="java:logica.Categoria" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;ListarSiguiendo" type="java:logica.webservices.ListarSiguiendo" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;obtenerIdUsuarioMail" type="java:logica.webservices.ObtenerIdUsuarioMail" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;ModificarListaDeReproduccion" type="java:logica.webservices.ModificarListaDeReproduccion" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://dt.logica" qname="ns:CanalDt" type="java:logica.dt.CanalDt" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;obtenerNickUsuarioResponse" type="java:logica.webservices.ObtenerNickUsuarioResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;obtenerVideosListaResponse" type="java:logica.webservices.ObtenerVideosListaResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;obtenerCanalDt" type="java:logica.webservices.ObtenerCanalDt" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;obtenerCanalDtResponse" type="java:logica.webservices.ObtenerCanalDtResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;probandoResponse" type="java:logica.webservices.ProbandoResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;probando" type="java:logica.webservices.Probando" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;estaSuscripto" type="java:logica.webservices.EstaSuscripto" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;ListarUsuariosResponse" type="java:logica.webservices.ListarUsuariosResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;EliminarUsuario" type="java:logica.webservices.EliminarUsuario" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;obtenerIdUsuario" type="java:logica.webservices.ObtenerIdUsuario" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;AltaUsuarioResponse" type="java:logica.webservices.AltaUsuarioResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;seguirUsuario" type="java:logica.webservices.SeguirUsuario" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;obtenerIdUsuarioMailResponse" type="java:logica.webservices.ObtenerIdUsuarioMailResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;ConsultarUsuarioResponse" type="java:logica.webservices.ConsultarUsuarioResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://dt.logica" qname="ns:UsuarioDt" type="java:logica.dt.UsuarioDt" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;obtenerListasResponse" type="java:logica.webservices.ObtenerListasResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;obtenerVideosLista" type="java:logica.webservices.ObtenerVideosLista" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;obtenerListaDtPorId" type="java:logica.webservices.ObtenerListaDtPorId" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;AltaListaDeReproduccionParticular" type="java:logica.webservices.AltaListaDeReproduccionParticular" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;obtenerTipoListaResponse" type="java:logica.webservices.ObtenerTipoListaResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://logica" qname="ns:Canal" type="java:logica.Canal" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;AltaListaDeReproduccionParticularResponse" type="java:logica.webservices.AltaListaDeReproduccionParticularResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;AgregarVideoListaDeReproduccion" type="java:logica.webservices.AgregarVideoListaDeReproduccion" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;ListarUsuariosInactivos" type="java:logica.webservices.ListarUsuariosInactivos" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;ListarUsuariosInactivosResponse" type="java:logica.webservices.ListarUsuariosInactivosResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;seguirUsuarioResponse" type="java:logica.webservices.SeguirUsuarioResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;ModificarUsuario" type="java:logica.webservices.ModificarUsuario" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;obtenerListasDtPorUsuario" type="java:logica.webservices.ObtenerListasDtPorUsuario" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;AltaCanalResponse" type="java:logica.webservices.AltaCanalResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;obtenerCategoriasResponse" type="java:logica.webservices.ObtenerCategoriasResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;dejarDeSeguirUsuarioResponse" type="java:logica.webservices.DejarDeSeguirUsuarioResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;obtenerListas" type="java:logica.webservices.ObtenerListas" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://webservices.logica" qname="ns:&gt;ListarSiguiendoResponse" type="java:logica.webservices.ListarSiguiendoResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+  </service>
+</deployment>

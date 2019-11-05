@@ -4,7 +4,6 @@
     Author     : pagol
 --%>
 
-<%@page import="java.lang.System.Logger.Level"%>
 <%@page import="org.jboss.logging.Logger"%>
 <%@page import="java.text.ParseException"%>
 <%@page import="org.apache.commons.fileupload.FileItem"%>

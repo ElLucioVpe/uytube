@@ -1,4 +1,24 @@
 Manifest-Version: 1.0
 Ant-Version: Apache Ant 1.10.4
 Created-By: 12.0.2+10 (Oracle Corporation)
+Class-Path: uyTube 
+ - 
+ Servidor 
+ Central.jar 
+ uyTube 
+ - 
+ Servidor 
+ Central.jar 
+ uyTube 
+ - 
+ Servidor 
+ Central.jar 
+ uyTube 
+ - 
+ Servidor 
+ Central.jar 
+ uyTube 
+ - 
+ Servidor 
+ Central.jar
 

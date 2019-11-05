@@ -7,7 +7,6 @@ package logica.dt;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 
@@ -31,9 +30,9 @@ public class CanalDt {
     private Boolean privacidad;
     private String categoria;
     private Usuario usuario;
-    private Collection<Video> videos;
-    private Collection<ListaDeReproduccion> listas;
-    private Collection<Usuario> seguidores;
+    private ArrayList<Video> videos;
+    private ArrayList<ListaDeReproduccion> listas;
+    private ArrayList<Usuario> seguidores;
     private Date fechaUV; //Fecha ultimo video
 
     public CanalDt() {
@@ -57,9 +56,9 @@ public class CanalDt {
         this.privacidad = c.getPrivacidad();
         this.categoria = "Ninguna";
         if(c.getCategoria() != null) this.categoria = c.getCategoria().getNombre();
-        this.videos = c.getVideos();
-        this.listas = c.getListas();
-        this.seguidores = c.getSeguidores();
+        this.videos = new ArrayList<>(c.getVideos());
+        //this.listas = new ArrayList<>(c.getListas());
+        //this.seguidores = new ArrayList<>(c.getSeguidores());
         this.descripcion  = c.getDescripcion();
         this.fechaUV = fechaUltimoVideo();
     }
@@ -131,23 +130,23 @@ public class CanalDt {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
-    public Collection<Usuario> getSeguidores(){
+    public ArrayList<Usuario> getSeguidores(){
         return seguidores;
     }
     
-    public void setSeguidores(Collection<Usuario> s){
-        seguidores = s;
+    public void setSeguidores(ArrayList<Usuario> seg){
+        seguidores = seg;
     
-}
- public Collection<Video> getVideos() {
+    }
+    public ArrayList<Video> getVideos() {
         return videos;
     }
     
-    public Collection<ListaDeReproduccion> getListas() {
+    public ArrayList<ListaDeReproduccion> getListas() {
         return listas;
     }
 
-    public void setListas(Collection<ListaDeReproduccion> listas) {
+    public void setListas(ArrayList<ListaDeReproduccion> listas) {
         this.listas = listas;
     }
 
@@ -155,10 +154,9 @@ public class CanalDt {
         this.listas.add(nuevalista);
     }
     
-    public void setVideos(Collection<Video> v){
-        videos = v;
-    
-}
+    public void setVideos(ArrayList<Video> vids){
+        videos = vids;
+    }
    
     
 }

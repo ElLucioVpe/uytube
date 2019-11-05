@@ -10,6 +10,7 @@ import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 
 import logica.dt.CanalDt;
+import logica.dt.ListaDeReproduccionDt;
 import logica.dt.UsuarioDt;
 import logica.webservices.WScontroladorUsuario;
 
@@ -38,9 +39,14 @@ public class WScontroladorUsuarioClient {
         
         UsuarioDt user = controlador.ConsultarUsuario(5);
         String usernick = controlador.obtenerNickUsuario(5);
-        CanalDt canal = controlador.obtenerCanalDt(5);
-        System.out.println(user+"----"+user.getNickname()+"****"+canal.getNombre());
-        System.out.println(usernick);
+        //CanalDt canal = controlador.obtenerCanalDt(5);
+        System.out.println(user+"--nick--"+user.getNickname()+user.getMail());
+        System.out.println("--nick2--"+usernick);
+        //System.out.println(canal+"--canal--"+canal.getNombre());
+        
+        ListaDeReproduccionDt lista = controlador.obtenerListaDtPorId(1);
+        System.out.println("--lista--"+lista.getNombre());
+
 
     }
 

@@ -73,6 +73,10 @@ public class VideoDt {
         return nombre;
     }
 
+    public void setNombre(String nom) {
+    	this.nombre = nom;
+    }
+    
     public float getDuracion() {
         return duracion;
     }

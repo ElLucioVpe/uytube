@@ -20,6 +20,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -27,6 +28,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "ListaDeReproduccion")
+@XmlRootElement
 @NamedQueries({
 @NamedQuery(name = "ListaDeReproduccion.findByCategoria", query = "SELECT l FROM ListaDeReproduccion l where l.categoria = :categoria")})
 public class ListaDeReproduccion implements Serializable {

@@ -8,12 +8,14 @@ package logica;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author Esteban
  */
 @Entity
+@XmlRootElement
 public class ListaDeReproduccion_PorDefecto implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -16,8 +16,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author Luciano
  */
+
 @XmlRootElement
 public class UsuarioDt {
+	
     private Integer id;
     private String nombre;
     private String password;
@@ -49,6 +51,7 @@ public class UsuarioDt {
         this.imagen = imagen;
         this.canal = canal;
         this.activo = activo;
+        this.suscripciones = suscripciones;
     }
     
     public UsuarioDt(Usuario u) {
@@ -71,7 +74,11 @@ public class UsuarioDt {
     public String getNombre() {
         return nombre;
     }
-
+    
+    public void setNombre(String nom) {
+    	this.nombre = nom;
+    }
+    
     public String getApellido() {
         return apellido;
     }

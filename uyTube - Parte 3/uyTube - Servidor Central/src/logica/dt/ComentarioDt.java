@@ -40,6 +40,10 @@ public class ComentarioDt {
         return id;
     }
     
+    public void setId(long nuevaid) {
+    	this.id = nuevaid;
+    }
+    
     public long getIdPadre() {
         return id_padre;
     }

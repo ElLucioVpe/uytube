@@ -19,12 +19,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author Esteban
  */
 @Entity
+@XmlRootElement
 @Table(name = "COMENTARIO")
 public class Comentario implements Serializable {
 

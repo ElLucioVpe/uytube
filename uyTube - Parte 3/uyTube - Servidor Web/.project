@@ -3,6 +3,7 @@
 	<name>uyTube - Servidor Web</name>
 	<comment></comment>
 	<projects>
+		<project>uyTube - Servidor Central</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

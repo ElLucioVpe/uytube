@@ -48,6 +48,10 @@ public class ListaDeReproduccionDt {
         return nombre;
     }
 
+    public void setNombre(String nom) {
+    	this.nombre = nom;
+    }
+    
     public boolean getPrivada() {
         return privada;
     }

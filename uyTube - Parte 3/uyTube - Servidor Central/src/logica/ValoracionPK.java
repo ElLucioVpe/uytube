@@ -9,11 +9,13 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author Esteban
  */
+@XmlRootElement
 @Embeddable
 public class ValoracionPK implements Serializable {
 

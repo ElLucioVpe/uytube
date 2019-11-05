@@ -30,4 +30,8 @@ public class VideoListaDt {
     public String getNombre() {
         return nombre;
     }
+    
+    public void setNombre(String nom) {
+    	this.nombre = nom;
+    }
 }
