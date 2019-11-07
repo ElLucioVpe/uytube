@@ -30,6 +30,15 @@ public class VideoListaDt {
     public String getNombre() {
         return nombre;
     }
+    /****************************************
+     * Estos son sets que sin estar SOAP 
+     * no reconoce las variables.
+     *  
+     *     Aunque esto ni se usa ya creo
+     ****************************************/
+    public void setId(int nuevaId) {
+        id = nuevaId;
+    }
     
     public void setNombre(String nom) {
     	this.nombre = nom;

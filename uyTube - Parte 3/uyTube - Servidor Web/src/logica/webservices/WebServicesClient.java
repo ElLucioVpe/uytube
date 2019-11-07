@@ -1,15 +1,5 @@
 package logica.webservices;
 
-import java.io.File;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.util.Locale;
-import java.util.ResourceBundle;
-
-import javax.xml.namespace.QName;
-import javax.xml.ws.Service;
-
-
 
 public class WebServicesClient {
 

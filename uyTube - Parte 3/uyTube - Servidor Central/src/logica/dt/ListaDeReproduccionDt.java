@@ -47,10 +47,6 @@ public class ListaDeReproduccionDt {
     public String getNombre() {
         return nombre;
     }
-
-    public void setNombre(String nom) {
-    	this.nombre = nom;
-    }
     
     public boolean getPrivada() {
         return privada;
@@ -67,4 +63,38 @@ public class ListaDeReproduccionDt {
     public int getIdUsuario() {
         return user_id;
     }
+    
+    /****************************************
+     * Estos son sets que sin estar SOAP 
+     * no reconoce las variables.
+     *     
+     ****************************************/
+    public void setFechaUV(Date fecha) {
+        fechaUV = fecha;
+    }
+    
+    public void setId(int nuevaId) {
+        id = nuevaId;
+    }
+
+    public void setNombre(String nom) {
+    	this.nombre = nom;
+    }
+    
+    public void setPrivada(boolean estado) {
+        privada = estado;
+    }
+
+    public void setTipo(String nuevoTipo) {
+        tipo = nuevoTipo;
+    }
+    
+    public void setCategoria(String nuevaCat) {
+        categoria = nuevaCat;
+    }
+
+    public void setIdUsuario(int nuevaId) {
+        user_id = nuevaId;
+    }
+
 }

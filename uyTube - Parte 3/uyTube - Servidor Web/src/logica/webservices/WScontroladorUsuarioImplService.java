@@ -39,7 +39,7 @@ public class WScontroladorUsuarioImplService
     		File properties = new File(System.getProperty("user.home")+"/.UyTube");
     		URL[] urls = {properties.toURI().toURL()};
     		ClassLoader loader = new URLClassLoader(urls);
-    		ResourceBundle bundle = ResourceBundle.getBundle("uytube_webservices", Locale.getDefault(), loader);	
+    		ResourceBundle bundle = ResourceBundle.getBundle("uytube_webservices", Locale.getDefault(), loader);
     		
     		url = new URL("http://"+bundle.getString("serviceIP")+bundle.getString("serviceUsuario")+"?wsdl");
         } catch (MalformedURLException ex) {

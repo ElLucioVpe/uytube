@@ -21,16 +21,17 @@ public class ServicesPublisher{
 		ResourceBundle bundle = ResourceBundle.getBundle("uytube_webservices", Locale.getDefault(), loader);
 		
 		String serviceIP = bundle.getString("serviceIP");
-		
+
 		//Publico services
 		//wsimport -keep http://192.168.1.21:9990/ws/cUsuario?wsdl
 		Endpoint.publish("http://"+serviceIP+bundle.getString("serviceUsuario"), new WScontroladorUsuarioImpl());
-		//Endpoint.publish("http://"+serviceIP+bundle.getString("serviceVideo"), new WScontroladorVideoImpl());
-		//Endpoint.publish("http://"+serviceIP+bundle.getString("serviceCategoria"), new WScontroladorCategoriaImpl());
-		//Endpoint.publish("http://"+serviceIP+bundle.getString("serviceUploadFile"), new WSuploadFileImpl());
+		Endpoint.publish("http://"+serviceIP+bundle.getString("serviceVideo"), new WScontroladorVideoImpl());
+		Endpoint.publish("http://"+serviceIP+bundle.getString("serviceCategoria"), new WScontroladorCategoriaImpl());
+		//Endpoint.publish("http://"+serviceIP+bundle.getString("serviceFiles"), new WSfilesImpl());
 		
 		System.out.println("Servicios publicados");
 		//ep.stop();
+
     }
 	
 }

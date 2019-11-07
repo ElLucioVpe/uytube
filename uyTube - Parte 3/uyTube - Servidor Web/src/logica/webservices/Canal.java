@@ -168,7 +168,7 @@ public class Canal {
      *     {@link Boolean }
      *     
      */
-    public Boolean isPrivacidad() {
+    public Boolean getPrivacidad() {
         return privacidad;
     }
 

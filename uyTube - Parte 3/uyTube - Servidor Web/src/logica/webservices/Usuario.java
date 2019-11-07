@@ -74,7 +74,7 @@ public class Usuario {
      * Obtiene el valor de la propiedad activo.
      * 
      */
-    public boolean isActivo() {
+    public boolean getActivo() {
         return activo;
     }
 

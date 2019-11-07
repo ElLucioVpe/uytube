@@ -6,7 +6,9 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.datatype.XMLGregorianCalendar;
 
 
 /**
@@ -19,7 +21,9 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
+ *         &lt;element name="categoria" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="descripcion" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="fechaUV" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
  *         &lt;element name="listas" type="{http://webservices.logica/}listaDeReproduccion" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="nombre" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="privacidad" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
@@ -37,7 +41,9 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "canalDt", propOrder = {
+    "categoria",
     "descripcion",
+    "fechaUV",
     "listas",
     "nombre",
     "privacidad",
@@ -48,7 +54,10 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class CanalDt {
 
+    protected String categoria;
     protected String descripcion;
+    @XmlSchemaType(name = "dateTime")
+    protected XMLGregorianCalendar fechaUV;
     @XmlElement(nillable = true)
     protected List<ListaDeReproduccion> listas;
     protected String nombre;
@@ -59,6 +68,30 @@ public class CanalDt {
     protected Usuario usuario;
     @XmlElement(nillable = true)
     protected List<Video> videos;
+
+    /**
+     * Obtiene el valor de la propiedad categoria.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getCategoria() {
+        return categoria;
+    }
+
+    /**
+     * Define el valor de la propiedad categoria.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setCategoria(String value) {
+        this.categoria = value;
+    }
 
     /**
      * Obtiene el valor de la propiedad descripcion.
@@ -82,6 +115,30 @@ public class CanalDt {
      */
     public void setDescripcion(String value) {
         this.descripcion = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad fechaUV.
+     * 
+     * @return
+     *     possible object is
+     *     {@link XMLGregorianCalendar }
+     *     
+     */
+    public XMLGregorianCalendar getFechaUV() {
+        return fechaUV;
+    }
+
+    /**
+     * Define el valor de la propiedad fechaUV.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link XMLGregorianCalendar }
+     *     
+     */
+    public void setFechaUV(XMLGregorianCalendar value) {
+        this.fechaUV = value;
     }
 
     /**
@@ -145,7 +202,7 @@ public class CanalDt {
      *     {@link Boolean }
      *     
      */
-    public Boolean isPrivacidad() {
+    public Boolean getPrivacidad() {
         return privacidad;
     }
 

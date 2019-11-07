@@ -72,10 +72,6 @@ public class VideoDt {
     public String getNombre() {
         return nombre;
     }
-
-    public void setNombre(String nom) {
-    	this.nombre = nom;
-    }
     
     public float getDuracion() {
         return duracion;
@@ -140,4 +136,63 @@ public class VideoDt {
     public Collection<Valoracion> getValoraciones() {
         return valoraciones;
     }
+    
+    /****************************************
+     * Estos son sets que sin estar SOAP 
+     * no reconoce las variables.
+     *     
+     ****************************************/
+    public void setId(Integer nuevaId) {
+        id = nuevaId;
+    }
+    
+    public void setIdCanal(int nuevaId) {
+        canal_user_id = nuevaId;
+    }
+    
+    public void setCodigo(String cod) {
+        codigo = cod;
+    }
+
+    public void setNombre(String nom) {
+    	this.nombre = nom;
+    }
+    
+    public void setDuracion(float dur) {
+        duracion = dur;
+    }
+
+    public void setUrl(String nuevaUrl) {
+        url = nuevaUrl;
+    }
+
+    public void setDescripcion(String desc) {
+        descripcion = desc;
+    }
+
+    public void setFechaPublicacion(Date fecha) {
+        fechaPublicacion = fecha;
+    }
+
+    public void setCategoria(String cat) {
+        categoria = cat;
+    }
+
+    public void setPrivacidad(Boolean estado) {
+        privacidad = estado;
+    }
+    
+    public void setLikes(int cant) {
+        likes = cant;
+    }
+
+    public void setDislikes(int cant) {
+        dislikes = cant;
+    }
+
+    public void setValoraciones(Collection<Valoracion> vals) {
+        valoraciones = vals;
+    }
+    
+    
 }

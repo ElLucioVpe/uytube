@@ -86,27 +86,15 @@ public class CanalDt {
     public Integer getUserId() {
         return userId;
     }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
+    
     public String getNombre() {
         return nombre;
     }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
+    
     public String getDescripcion() {
         return descripcion;
     }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
+    
     public Boolean getPrivacidad() {
         return privacidad;
     }
@@ -114,30 +102,19 @@ public class CanalDt {
     public String getCategoria() {
         return categoria;
     }
-
-    public void setPrivacidad(Boolean privacidad) {
-        this.privacidad = privacidad;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
+    
     public Date getFechaUV() {
         return fechaUV;
     }
     
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public Usuario getUsuario() {
+        return usuario;
     }
+    
     public ArrayList<Usuario> getSeguidores(){
         return seguidores;
     }
     
-    public void setSeguidores(ArrayList<Usuario> seg){
-        seguidores = seg;
-    
-    }
     public ArrayList<Video> getVideos() {
         return videos;
     }
@@ -146,17 +123,54 @@ public class CanalDt {
         return listas;
     }
 
+    /****************************************
+     * Estos son sets que sin estar SOAP 
+     * no reconoce las variables.
+     *     
+     ****************************************/
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+    
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public void setPrivacidad(Boolean privacidad) {
+        this.privacidad = privacidad;
+    }
+
+    public void setCategoria(String cat) {
+        this.categoria = cat;
+    }
+  
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public void setSeguidores(ArrayList<Usuario> seg){
+        seguidores = seg;
+    
+    }
+
+    public void setVideos(ArrayList<Video> vids){
+        videos = vids;
+    }
+
     public void setListas(ArrayList<ListaDeReproduccion> listas) {
         this.listas = listas;
     }
 
+    public void setFechaUV(Date fecha) {
+        fechaUV = fecha;
+    }
+    
     public void addLista(ListaDeReproduccion nuevalista) {
         this.listas.add(nuevalista);
     }
-    
-    public void setVideos(ArrayList<Video> vids){
-        videos = vids;
-    }
-   
-    
+
 }

@@ -39,11 +39,8 @@ public class ComentarioDt {
     public long getId() {
         return id;
     }
-    
-    public void setId(long nuevaid) {
-    	this.id = nuevaid;
-    }
-    
+  
+  
     public long getIdPadre() {
         return id_padre;
     }
@@ -63,4 +60,35 @@ public class ComentarioDt {
     public List getHijos() {
         return hijos;
     }
+    
+    /****************************************
+     * Estos son sets que sin estar SOAP 
+     * no reconoce las variables.
+     *     
+     ****************************************/
+    
+    public void setId(long nuevaid) {
+    	this.id = nuevaid;
+    }
+    
+    public void setIdPadre(long nuevopadre) {
+        id_padre = nuevopadre;
+    }
+    
+    public void setContenido(String cont) {
+        contenido = cont;
+    }
+
+    public void setUsuarioDt(UsuarioDt userdt) {
+        user = userdt;
+    }
+
+    public void setFecha(Date nuevaFecha) {
+        fecha = nuevaFecha;
+    }
+    
+    public void setHijos(List nuevosHijos) {
+        hijos = nuevosHijos;
+    }
+    
 }

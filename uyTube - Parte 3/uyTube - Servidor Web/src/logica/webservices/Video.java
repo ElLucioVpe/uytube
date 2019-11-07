@@ -228,7 +228,7 @@ public class Video {
      *     {@link Boolean }
      *     
      */
-    public Boolean isPrivacidad() {
+    public Boolean getPrivacidad() {
         return privacidad;
     }
 

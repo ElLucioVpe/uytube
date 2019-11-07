@@ -75,10 +75,6 @@ public class UsuarioDt {
         return nombre;
     }
     
-    public void setNombre(String nom) {
-    	this.nombre = nom;
-    }
-    
     public String getApellido() {
         return apellido;
     }
@@ -114,5 +110,53 @@ public class UsuarioDt {
     public String getPassword() {
         return password;
     }
-   
+    
+    /****************************************
+     * Estos son sets que sin estar SOAP 
+     * no reconoce las variables.
+     *     
+     ****************************************/
+    public void setId(Integer id) {
+        this.id = id;
+    }
+    
+    public void setNombre(String nom) {
+    	this.nombre = nom;
+    }
+    
+    public void setApellido(String apell) {
+    	apellido = apell;
+    }
+
+    public void setNickname(String nick) {
+        nickname = nick;
+    }
+
+    public void setMail(String nuevoMail) {
+        mail = nuevoMail;
+    }
+    
+    public void setSuscripciones(List<String> sus) {
+        suscripciones = sus;
+    }
+    
+    public void setFechanac(Date fecha) {
+        fechanac = fecha;
+    }
+
+    public void setImagen(String nuevaImg) {
+        imagen = nuevaImg;
+    }
+
+    public void setCanal(Canal nuevoCanal) {
+        canal = nuevoCanal;
+    }
+    
+    public void setActivo(boolean nuevoEstado) {
+    	activo = nuevoEstado;
+    }
+    
+    public void setPassword(String pass) {
+        password = pass;
+    }
 }

@@ -42,6 +42,164 @@ public interface WScontroladorUsuario {
      * 
      * @param arg3
      * @param arg2
+     * @param arg5
+     * @param arg4
+     * @param arg1
+     * @param arg0
+     * @param arg6
+     */
+    @WebMethod(operationName = "AltaUsuario")
+    @Action(input = "http://webservices.logica/WScontroladorUsuario/AltaUsuarioRequest", output = "http://webservices.logica/WScontroladorUsuario/AltaUsuarioResponse")
+    public void altaUsuario(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0,
+        @WebParam(name = "arg1", partName = "arg1")
+        String arg1,
+        @WebParam(name = "arg2", partName = "arg2")
+        String arg2,
+        @WebParam(name = "arg3", partName = "arg3")
+        String arg3,
+        @WebParam(name = "arg4", partName = "arg4")
+        String arg4,
+        @WebParam(name = "arg5", partName = "arg5")
+        XMLGregorianCalendar arg5,
+        @WebParam(name = "arg6", partName = "arg6")
+        String arg6);
+
+    /**
+     * 
+     * @param arg3
+     * @param arg2
+     * @param arg4
+     * @param arg1
+     * @param arg0
+     */
+    @WebMethod(operationName = "AltaCanal")
+    @Action(input = "http://webservices.logica/WScontroladorUsuario/AltaCanalRequest", output = "http://webservices.logica/WScontroladorUsuario/AltaCanalResponse")
+    public void altaCanal(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0,
+        @WebParam(name = "arg1", partName = "arg1")
+        boolean arg1,
+        @WebParam(name = "arg2", partName = "arg2")
+        String arg2,
+        @WebParam(name = "arg3", partName = "arg3")
+        int arg3,
+        @WebParam(name = "arg4", partName = "arg4")
+        String arg4);
+
+    /**
+     * 
+     * @param arg3
+     * @param arg2
+     * @param arg5
+     * @param arg4
+     * @param arg1
+     * @param arg0
+     * @param arg7
+     * @param arg6
+     * @param arg9
+     * @param arg8
+     */
+    @WebMethod(operationName = "ModificarUsuario")
+    @Action(input = "http://webservices.logica/WScontroladorUsuario/ModificarUsuarioRequest", output = "http://webservices.logica/WScontroladorUsuario/ModificarUsuarioResponse")
+    public void modificarUsuario(
+        @WebParam(name = "arg0", partName = "arg0")
+        int arg0,
+        @WebParam(name = "arg1", partName = "arg1")
+        String arg1,
+        @WebParam(name = "arg2", partName = "arg2")
+        String arg2,
+        @WebParam(name = "arg3", partName = "arg3")
+        String arg3,
+        @WebParam(name = "arg4", partName = "arg4")
+        XMLGregorianCalendar arg4,
+        @WebParam(name = "arg5", partName = "arg5")
+        String arg5,
+        @WebParam(name = "arg6", partName = "arg6")
+        String arg6,
+        @WebParam(name = "arg7", partName = "arg7")
+        String arg7,
+        @WebParam(name = "arg8", partName = "arg8")
+        boolean arg8,
+        @WebParam(name = "arg9", partName = "arg9")
+        String arg9);
+
+    /**
+     * 
+     * @return
+     *     returns logica.webservices.ArrayList
+     */
+    @WebMethod(operationName = "ListarUsuarios")
+    @WebResult(partName = "return")
+    @Action(input = "http://webservices.logica/WScontroladorUsuario/ListarUsuariosRequest", output = "http://webservices.logica/WScontroladorUsuario/ListarUsuariosResponse")
+    public ArrayList listarUsuarios();
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns logica.webservices.UsuarioDt
+     */
+    @WebMethod(operationName = "ConsultarUsuario")
+    @WebResult(partName = "return")
+    @Action(input = "http://webservices.logica/WScontroladorUsuario/ConsultarUsuarioRequest", output = "http://webservices.logica/WScontroladorUsuario/ConsultarUsuarioResponse")
+    public UsuarioDt consultarUsuario(
+        @WebParam(name = "arg0", partName = "arg0")
+        int arg0);
+
+    /**
+     * 
+     * @param arg0
+     */
+    @WebMethod(operationName = "AltaListaDeReproduccionPorDefecto")
+    @Action(input = "http://webservices.logica/WScontroladorUsuario/AltaListaDeReproduccionPorDefectoRequest", output = "http://webservices.logica/WScontroladorUsuario/AltaListaDeReproduccionPorDefectoResponse")
+    public void altaListaDeReproduccionPorDefecto(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0);
+
+    /**
+     * 
+     * @param arg3
+     * @param arg2
+     * @param arg1
+     * @param arg0
+     */
+    @WebMethod(operationName = "AltaListaDeReproduccionParticular")
+    @Action(input = "http://webservices.logica/WScontroladorUsuario/AltaListaDeReproduccionParticularRequest", output = "http://webservices.logica/WScontroladorUsuario/AltaListaDeReproduccionParticularResponse")
+    public void altaListaDeReproduccionParticular(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0,
+        @WebParam(name = "arg1", partName = "arg1")
+        int arg1,
+        @WebParam(name = "arg2", partName = "arg2")
+        boolean arg2,
+        @WebParam(name = "arg3", partName = "arg3")
+        String arg3);
+
+    /**
+     * 
+     * @param arg3
+     * @param arg2
+     * @param arg1
+     * @param arg0
+     */
+    @WebMethod(operationName = "ModificarListaDeReproduccion")
+    @Action(input = "http://webservices.logica/WScontroladorUsuario/ModificarListaDeReproduccionRequest", output = "http://webservices.logica/WScontroladorUsuario/ModificarListaDeReproduccionResponse")
+    public void modificarListaDeReproduccion(
+        @WebParam(name = "arg0", partName = "arg0")
+        int arg0,
+        @WebParam(name = "arg1", partName = "arg1")
+        String arg1,
+        @WebParam(name = "arg2", partName = "arg2")
+        String arg2,
+        @WebParam(name = "arg3", partName = "arg3")
+        boolean arg3);
+
+    /**
+     * 
+     * @param arg3
+     * @param arg2
      * @param arg1
      * @param arg0
      */
@@ -371,163 +529,5 @@ public interface WScontroladorUsuario {
     @WebResult(partName = "return")
     @Action(input = "http://webservices.logica/WScontroladorUsuario/ListarUsuariosInactivosRequest", output = "http://webservices.logica/WScontroladorUsuario/ListarUsuariosInactivosResponse")
     public ArrayList listarUsuariosInactivos();
-
-    /**
-     * 
-     * @param arg3
-     * @param arg2
-     * @param arg5
-     * @param arg4
-     * @param arg1
-     * @param arg0
-     * @param arg6
-     */
-    @WebMethod(operationName = "AltaUsuario")
-    @Action(input = "http://webservices.logica/WScontroladorUsuario/AltaUsuarioRequest", output = "http://webservices.logica/WScontroladorUsuario/AltaUsuarioResponse")
-    public void altaUsuario(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0,
-        @WebParam(name = "arg1", partName = "arg1")
-        String arg1,
-        @WebParam(name = "arg2", partName = "arg2")
-        String arg2,
-        @WebParam(name = "arg3", partName = "arg3")
-        String arg3,
-        @WebParam(name = "arg4", partName = "arg4")
-        String arg4,
-        @WebParam(name = "arg5", partName = "arg5")
-        XMLGregorianCalendar arg5,
-        @WebParam(name = "arg6", partName = "arg6")
-        String arg6);
-
-    /**
-     * 
-     * @param arg3
-     * @param arg2
-     * @param arg4
-     * @param arg1
-     * @param arg0
-     */
-    @WebMethod(operationName = "AltaCanal")
-    @Action(input = "http://webservices.logica/WScontroladorUsuario/AltaCanalRequest", output = "http://webservices.logica/WScontroladorUsuario/AltaCanalResponse")
-    public void altaCanal(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0,
-        @WebParam(name = "arg1", partName = "arg1")
-        boolean arg1,
-        @WebParam(name = "arg2", partName = "arg2")
-        String arg2,
-        @WebParam(name = "arg3", partName = "arg3")
-        int arg3,
-        @WebParam(name = "arg4", partName = "arg4")
-        String arg4);
-
-    /**
-     * 
-     * @param arg3
-     * @param arg2
-     * @param arg5
-     * @param arg4
-     * @param arg1
-     * @param arg0
-     * @param arg7
-     * @param arg6
-     * @param arg9
-     * @param arg8
-     */
-    @WebMethod(operationName = "ModificarUsuario")
-    @Action(input = "http://webservices.logica/WScontroladorUsuario/ModificarUsuarioRequest", output = "http://webservices.logica/WScontroladorUsuario/ModificarUsuarioResponse")
-    public void modificarUsuario(
-        @WebParam(name = "arg0", partName = "arg0")
-        int arg0,
-        @WebParam(name = "arg1", partName = "arg1")
-        String arg1,
-        @WebParam(name = "arg2", partName = "arg2")
-        String arg2,
-        @WebParam(name = "arg3", partName = "arg3")
-        String arg3,
-        @WebParam(name = "arg4", partName = "arg4")
-        XMLGregorianCalendar arg4,
-        @WebParam(name = "arg5", partName = "arg5")
-        String arg5,
-        @WebParam(name = "arg6", partName = "arg6")
-        String arg6,
-        @WebParam(name = "arg7", partName = "arg7")
-        String arg7,
-        @WebParam(name = "arg8", partName = "arg8")
-        boolean arg8,
-        @WebParam(name = "arg9", partName = "arg9")
-        String arg9);
-
-    /**
-     * 
-     * @return
-     *     returns logica.webservices.ArrayList
-     */
-    @WebMethod(operationName = "ListarUsuarios")
-    @WebResult(partName = "return")
-    @Action(input = "http://webservices.logica/WScontroladorUsuario/ListarUsuariosRequest", output = "http://webservices.logica/WScontroladorUsuario/ListarUsuariosResponse")
-    public ArrayList listarUsuarios();
-
-    /**
-     * 
-     * @param arg0
-     * @return
-     *     returns logica.webservices.UsuarioDt
-     */
-    @WebMethod(operationName = "ConsultarUsuario")
-    @WebResult(partName = "return")
-    @Action(input = "http://webservices.logica/WScontroladorUsuario/ConsultarUsuarioRequest", output = "http://webservices.logica/WScontroladorUsuario/ConsultarUsuarioResponse")
-    public UsuarioDt consultarUsuario(
-        @WebParam(name = "arg0", partName = "arg0")
-        int arg0);
-
-    /**
-     * 
-     * @param arg0
-     */
-    @WebMethod(operationName = "AltaListaDeReproduccionPorDefecto")
-    @Action(input = "http://webservices.logica/WScontroladorUsuario/AltaListaDeReproduccionPorDefectoRequest", output = "http://webservices.logica/WScontroladorUsuario/AltaListaDeReproduccionPorDefectoResponse")
-    public void altaListaDeReproduccionPorDefecto(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0);
-
-    /**
-     * 
-     * @param arg3
-     * @param arg2
-     * @param arg1
-     * @param arg0
-     */
-    @WebMethod(operationName = "AltaListaDeReproduccionParticular")
-    @Action(input = "http://webservices.logica/WScontroladorUsuario/AltaListaDeReproduccionParticularRequest", output = "http://webservices.logica/WScontroladorUsuario/AltaListaDeReproduccionParticularResponse")
-    public void altaListaDeReproduccionParticular(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0,
-        @WebParam(name = "arg1", partName = "arg1")
-        int arg1,
-        @WebParam(name = "arg2", partName = "arg2")
-        boolean arg2,
-        @WebParam(name = "arg3", partName = "arg3")
-        String arg3);
-
-    /**
-     * 
-     * @param arg3
-     * @param arg2
-     * @param arg1
-     * @param arg0
-     */
-    @WebMethod(operationName = "ModificarListaDeReproduccion")
-    @Action(input = "http://webservices.logica/WScontroladorUsuario/ModificarListaDeReproduccionRequest", output = "http://webservices.logica/WScontroladorUsuario/ModificarListaDeReproduccionResponse")
-    public void modificarListaDeReproduccion(
-        @WebParam(name = "arg0", partName = "arg0")
-        int arg0,
-        @WebParam(name = "arg1", partName = "arg1")
-        String arg1,
-        @WebParam(name = "arg2", partName = "arg2")
-        String arg2,
-        @WebParam(name = "arg3", partName = "arg3")
-        boolean arg3);
 
 }
