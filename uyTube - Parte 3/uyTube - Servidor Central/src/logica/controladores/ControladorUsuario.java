@@ -232,11 +232,31 @@ public class ControladorUsuario implements IControladorUsuario {
             
             emanager.getTransaction().begin();
             Usuario user = emanager.find(Usuario.class, id_user);
+            if(user == null) throw new Exception("El usuario no existe");
             
-            List<String> suscripciones = new ArrayList<>(); 
-            Collection<Canal> sus = user.getSuscripciones();
+            CanalDt cnl = obtenerCanalDt(user.getId());
             
-            if(!sus.isEmpty()) {
+            List<Canal> saux = new ArrayList<>(user.getSuscripciones());
+            ArrayList<String> suscripciones = new ArrayList<>();
+            
+            for(int i = 0; i < saux.size(); i++) suscripciones.add(saux.get(i).getNombre());
+
+            udt = new UsuarioDt(
+                    user.getId(),
+                    user.getPassword(),
+                    user.getNickname(),
+                    user.getNombre(),
+                    user.getApellido(),
+                    user.getMail(),
+                    user.getFechanac(),
+                    user.getImagen(),
+                    cnl,
+                    user.getActivo(),
+                    suscripciones
+            );
+            //Collection<Canal> sus = user.getSuscripciones();
+            
+            /*if(!sus.isEmpty()) {
                 Iterator<Canal> iter = sus.iterator();
                 while(iter.hasNext()){
                     suscripciones.add(iter.next().getUsuario().getNickname());
@@ -255,7 +275,7 @@ public class ControladorUsuario implements IControladorUsuario {
                     user.getCanal(),
                     user.getActivo(),
                     suscripciones
-            );
+            );*/
             
         } catch (Exception exc) {
             Throwable _throwable = new Throwable();
@@ -1019,7 +1039,35 @@ public class ControladorUsuario implements IControladorUsuario {
             Canal cnl = emanager.find(Canal.class, id);
             if(cnl == null) throw new Exception("El canal no existe");
             
-            cdt = new CanalDt(cnl);
+            List<Video> videoscnl = new ArrayList<>(cnl.getVideos());
+            List<ListaDeReproduccion> listascnl = new ArrayList<>(cnl.getListas());
+            List<Usuario> saux = new ArrayList<>(cnl.getSeguidores());
+            
+            List<VideoDt> videos = new ArrayList<>();
+            List<ListaDeReproduccionDt> listas = new ArrayList<>();
+            List<String> seguidores = new ArrayList<>();
+            
+            for(int i = 0; i < saux.size(); i++) seguidores.add(saux.get(i).getNickname());
+            for(int i=0;i < videoscnl.size(); i++) videos.add(new VideoDt(videoscnl.get(i)));
+            for(int i=0;i < listascnl.size(); i++) { 
+            	
+            	ListaDeReproduccion lista = listascnl.get(i);
+            	Categoria cat = lista.getCategoria();
+            	String categoria = "Ninguna";
+            	if(cat != null) categoria = cat.getNombre();
+            	
+            	listas.add(new ListaDeReproduccionDt(
+            			lista.getId(),
+            			lista.getNombre(),
+            			this.obtenerTipoLista(lista.getUsuario().getId(), lista.getNombre()),
+            			lista.getPrivada(),
+            			categoria,
+            			lista.getUsuario().getId(),
+            			fechaUltimoVideo(lista.getVideos())
+            	));
+            }
+
+            cdt = new CanalDt(cnl, videos, listas, seguidores);
             
         } catch (Exception exc) {
             Throwable _throwable = new Throwable();

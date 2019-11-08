@@ -27,7 +27,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -83,7 +82,7 @@ public class Usuario implements Serializable {
     private Canal canal;
 
     @Column(name = "ACTIVO")
-    private boolean activo;
+    private Boolean activo;
     
     @ManyToMany(cascade=CascadeType.ALL)
     @JoinTable(name="Canal_Usuario",  joinColumns={@JoinColumn(referencedColumnName="ID")}
@@ -192,11 +191,11 @@ public class Usuario implements Serializable {
         this.canal = canal;
     }
     
-    public boolean getActivo() {
+    public Boolean getActivo() {
         return activo;
     }
     
-    public void setActivo(boolean nuevoEstado) {
+    public void setActivo(Boolean nuevoEstado) {
         activo = nuevoEstado;
     }
     
@@ -214,6 +213,15 @@ public class Usuario implements Serializable {
     
     public void eliminarValoracion(Valoracion v) {
         this.valoraciones.remove(v);
+    }
+    
+    //@XmlTransient
+    public Collection<Valoracion> getValoraciones() {
+        return valoraciones;
+    }
+
+    public void setValoraciones(Collection<Valoracion> valoracionCollection) {
+        this.valoraciones = valoracionCollection;
     }
     
     @Override
@@ -241,12 +249,4 @@ public class Usuario implements Serializable {
         return "logica.Usuario[ id=" + id + " ]";
     }
 
-    @XmlTransient
-    public Collection<Valoracion> getValoraciones() {
-        return valoraciones;
-    }
-
-    public void setValoraciones(Collection<Valoracion> valoracionCollection) {
-        this.valoraciones = valoracionCollection;
-    }
 }

@@ -9,6 +9,7 @@ import logica.dt.CanalDt;
 import logica.dt.ListaDeReproduccionDt;
 import logica.dt.UsuarioDt;
 import logica.dt.VideoDt;
+import logica.Canal;
 import logica.controladores.Fabrica;
 import logica.controladores.IControladorUsuario;
 
@@ -41,7 +42,8 @@ public class WScontroladorUsuarioImpl implements WScontroladorUsuario {
     }
 	@Override
     public UsuarioDt ConsultarUsuario(int id_user) {
-    	return controlador.ConsultarUsuario(id_user);
+    	//return new UsuarioDt(21, "pass", "j","juan", "perez", "1@j.com", new Date(), null, null, true, null);
+		return controlador.ConsultarUsuario(id_user);
     }
     @Override
     public void AltaListaDeReproduccionPorDefecto(String nombre) {

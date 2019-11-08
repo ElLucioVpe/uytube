@@ -6,9 +6,8 @@
 package logica.dt;
 
 import java.util.Date;
-import logica.Canal;
 import logica.Usuario;
-import java.util.List;
+import java.util.ArrayList;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -28,19 +27,15 @@ public class UsuarioDt {
     private String mail;
     private Date fechanac;
     private String imagen;
-    private Canal canal;
-    private boolean activo;
-    private List<String> suscripciones;
+    private CanalDt canal;
+    private Boolean activo;
+    private ArrayList<String> suscripciones;
 
 
     public UsuarioDt() {
     }
 
-    public UsuarioDt(Integer id) {
-        this.id = id;
-    }
-
-    public UsuarioDt(Integer id, String pass, String nickname, String nombre, String apellido, String mail, Date fechanac, String imagen, Canal canal, boolean activo, List<String> suscripciones) {
+    public UsuarioDt(Integer id, String pass, String nickname, String nombre, String apellido, String mail, Date fechanac, String imagen, CanalDt canal, Boolean activo, ArrayList<String> suscripciones) {
         this.id = id;
         this.nickname = nickname;
         this.nombre = nombre;
@@ -63,8 +58,9 @@ public class UsuarioDt {
         this.mail = u.getMail();
         this.imagen = u.getImagen();
         this.fechanac = u.getFechanac();
-        this.canal = u.getCanal();
+        this.canal = null;
         this.activo = u.getActivo();
+        this.suscripciones = new ArrayList<>();
     }
     
     public Integer getId() {
@@ -87,7 +83,7 @@ public class UsuarioDt {
         return mail;
     }
     
-    public List<String> getSuscripciones() {
+    public ArrayList<String> getSuscripciones() {
         return suscripciones;
     }
     
@@ -99,11 +95,11 @@ public class UsuarioDt {
         return imagen;
     }
 
-    public Canal getCanal() {
+    public CanalDt getCanal() {
         return canal;
     }
     
-    public boolean getActivo() {
+    public Boolean getActivo() {
     	return activo;
     }
     
@@ -136,7 +132,7 @@ public class UsuarioDt {
         mail = nuevoMail;
     }
     
-    public void setSuscripciones(List<String> sus) {
+    public void setSuscripciones(ArrayList<String> sus) {
         suscripciones = sus;
     }
     
@@ -148,11 +144,11 @@ public class UsuarioDt {
         imagen = nuevaImg;
     }
 
-    public void setCanal(Canal nuevoCanal) {
+    public void setCanal(CanalDt nuevoCanal) {
         canal = nuevoCanal;
     }
     
-    public void setActivo(boolean nuevoEstado) {
+    public void setActivo(Boolean nuevoEstado) {
     	activo = nuevoEstado;
     }
     

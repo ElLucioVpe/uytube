@@ -69,7 +69,7 @@ public class Video implements Serializable {
     @Column(name = "URL")
     private String url;
     @Column(name = "DESCRIPCION")
-    private String descripcion; //en minutos
+    private String descripcion;
     @Basic(optional = false)
     @Column(name = "FECHA_PUBLICACION")
     @Temporal(TemporalType.DATE)

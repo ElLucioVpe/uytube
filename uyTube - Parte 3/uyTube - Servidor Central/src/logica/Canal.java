@@ -176,6 +176,10 @@ public class Canal implements Serializable {
         return videos;
     }
     
+    public void setVideos(Collection<Video> videos) {
+        this.videos = videos;
+    }
+    
     public Collection<ListaDeReproduccion> getListas() {
         return listas;
     }

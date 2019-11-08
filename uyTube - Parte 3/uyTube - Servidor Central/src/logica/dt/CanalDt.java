@@ -6,6 +6,7 @@
 package logica.dt;
 
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -13,9 +14,7 @@ import java.util.Iterator;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import logica.Canal;
-import logica.ListaDeReproduccion;
 import logica.Usuario;
-import logica.Video;
 
 /**
  *
@@ -30,9 +29,9 @@ public class CanalDt {
     private Boolean privacidad;
     private String categoria;
     private Usuario usuario;
-    private ArrayList<Video> videos;
-    private ArrayList<ListaDeReproduccion> listas;
-    private ArrayList<Usuario> seguidores;
+    private List<VideoDt> videos;
+    private List<ListaDeReproduccionDt> listas;
+    private List<String> seguidores;
     private Date fechaUV; //Fecha ultimo video
 
     public CanalDt() {
@@ -50,15 +49,15 @@ public class CanalDt {
         this.seguidores = new ArrayList<>();
     }
     
-    public CanalDt(Canal c) {
+    public CanalDt(Canal c, List<VideoDt> videos, List<ListaDeReproduccionDt> listas, List<String> seguidores) {
         this.userId = c.getUserId();
         this.nombre = c.getNombre();
         this.privacidad = c.getPrivacidad();
         this.categoria = "Ninguna";
         if(c.getCategoria() != null) this.categoria = c.getCategoria().getNombre();
-        this.videos = new ArrayList<>(c.getVideos());
-        //this.listas = new ArrayList<>(c.getListas());
-        //this.seguidores = new ArrayList<>(c.getSeguidores());
+        this.videos = videos;
+        this.listas = listas;
+        this.seguidores = seguidores;
         this.descripcion  = c.getDescripcion();
         this.fechaUV = fechaUltimoVideo();
     }
@@ -67,14 +66,14 @@ public class CanalDt {
         Date retorno = null;
         
         if(videos != null) {
-            Iterator<Video> it = videos.iterator();
+            Iterator<VideoDt> it = videos.iterator();
             
             try {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 Date ultima = sdf.parse("1990-01-01");
                 
                 while(it.hasNext()) {
-                    Video aux = it.next();
+                    VideoDt aux = it.next();
                     if(aux.getFechaPublicacion().after(ultima)) ultima = aux.getFechaPublicacion();
                 }
                 retorno = ultima;
@@ -111,15 +110,15 @@ public class CanalDt {
         return usuario;
     }
     
-    public ArrayList<Usuario> getSeguidores(){
+    public List<String> getSeguidores(){
         return seguidores;
     }
     
-    public ArrayList<Video> getVideos() {
+    public List<VideoDt> getVideos() {
         return videos;
     }
     
-    public ArrayList<ListaDeReproduccion> getListas() {
+    public List<ListaDeReproduccionDt> getListas() {
         return listas;
     }
 
@@ -152,16 +151,16 @@ public class CanalDt {
         this.usuario = usuario;
     }
 
-    public void setSeguidores(ArrayList<Usuario> seg){
+    public void setSeguidores(List<String> seg){
         seguidores = seg;
     
     }
 
-    public void setVideos(ArrayList<Video> vids){
+    public void setVideos(List<VideoDt> vids){
         videos = vids;
     }
 
-    public void setListas(ArrayList<ListaDeReproduccion> listas) {
+    public void setListas(List<ListaDeReproduccionDt> listas) {
         this.listas = listas;
     }
 
@@ -169,7 +168,7 @@ public class CanalDt {
         fechaUV = fecha;
     }
     
-    public void addLista(ListaDeReproduccion nuevalista) {
+    public void addLista(ListaDeReproduccionDt nuevalista) {
         this.listas.add(nuevalista);
     }
 
