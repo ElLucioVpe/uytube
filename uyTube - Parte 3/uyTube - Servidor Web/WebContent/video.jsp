@@ -4,15 +4,10 @@
     Author     : Luciano
 --%>
 
-<%@page import="logica.dt.valoracionDt"%>
 <%@page import="java.util.List"%>
-<%@page import="javax.swing.tree.DefaultMutableTreeNode"%>
 <%@page import = "javax.persistence.*"%>
-<%@page import = "logica.controladores.Fabrica"%>
-<%@page import = "logica.controladores.IControladorUsuario"%>
-<%@page import = "logica.controladores.IControladorVideo"%>
-<%@page import = "logica.dt.VideoDt" %>
-<%@page import = "logica.dt.UsuarioDt" %>
+<%@page import = "logica.webservices.VideoDt" %>
+<%@page import = "logica.webservices.UsuarioDt" %>
 <%@page import = "java.io.File" %>
 <%@page import="java.util.ResourceBundle"%>
 <%@page import="java.net.URL"%>
@@ -20,6 +15,10 @@
 <%@page import="java.util.Locale"%>
 <%@page import="java.util.Date"%>
 
+<%@page import = "logica.webservices.WScontroladorUsuarioImplService"%>
+<%@page import = "logica.webservices.WScontroladorUsuario"%>
+<%@page import = "logica.webservices.WScontroladorVideoImplService"%>
+<%@page import = "logica.webservices.WScontroladorVideo"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -40,9 +39,9 @@
         <title>uyTube - Transmite tú mismo</title>
     </head>
     <body>
-        <% Fabrica f = Fabrica.getInstance();
-            IControladorUsuario user = f.getIControladorUsuario();
-            IControladorVideo video = f.getIControladorVideo();
+        <% 
+	        WScontroladorUsuario user = new WScontroladorUsuarioImplService().getWScontroladorUsuarioImplPort();
+	    	WScontroladorVideo video = new WScontroladorVideoImplService().getWScontroladorVideoImplPort();
             String path = request.getContextPath();
             int video_id = -1;
             VideoDt dt = null;
@@ -68,23 +67,24 @@
             	response.sendRedirect(path+"/index.jsp");
             }
 
-            UsuarioDt u = user.ConsultarUsuario(dt.getIdCanal());
-            List<String> seguidores = user.ListarSeguidores(dt.getIdCanal());
+            UsuarioDt u = user.consultarUsuario(dt.getIdCanal());
+            List<String> seguidores = user.listarSeguidores(dt.getIdCanal()).getLista();
             
+            File properties = new File(System.getProperty("user.home")+"/.UyTube");
+        	URL[] urls = {properties.toURI().toURL()};
+        	ClassLoader loader = new URLClassLoader(urls);
+        	ResourceBundle bundle = ResourceBundle.getBundle("uytube_conf", Locale.getDefault(), loader);
+            
+        	//Obtengo url para compartir
+		    String url_compartir = bundle.getString("url")+dt.getCodigo();
+        	//Obtengo url de imagenes
+		    String images = bundle.getString("url_images");
+        	
             String imagenUser = "img/user.png";
-            if(u.getImagen() != null) imagenUser = path+"/images/"+u.getImagen();
+            if(u.getImagen() != null) imagenUser = images+u.getImagen();
             
             Boolean estaSuscripto = false; //inicializo
             if(session.getAttribute("userid") != null) estaSuscripto = user.estaSuscripto((int)session.getAttribute("userid"), u.getId());
-        
-        	//Obtengo url para compartir
-        	File properties = new File(System.getProperty("user.home")+"/.UyTube");
-		    URL[] urls = {properties.toURI().toURL()};
-		    ClassLoader loader = new URLClassLoader(urls);
-		    ResourceBundle bundle = ResourceBundle.getBundle("uytube_conf", Locale.getDefault(), loader);
-		   
-		    String url_compartir = bundle.getString("url")+dt.getCodigo();
-        
         %>
         <%@ include file="include/header.jsp" %>
 

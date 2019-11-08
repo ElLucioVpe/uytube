@@ -4,25 +4,20 @@
     Author     : pagol
 --%>
 
-<%@page import="logica.dt.UsuarioDt"%>
+<%@page import="logica.webservices.UsuarioDt"%>
 <%@page import="java.io.File"%>
-<%@page import="logica.controladores.Fabrica"%>
-<%@page import="logica.controladores.IControladorUsuario"%>
+<%@page import = "logica.webservices.WScontroladorUsuarioImplService"%>
+<%@page import = "logica.webservices.WScontroladorUsuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        
-          <%@include file="include/header.jsp" %>
-          
-          <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-        <script src="js/bootstrap.min.js"></script>
-        <script src="js/jquery.min.js"></script>
+
         
           <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-            <link rel="stylesheet" href="/resources/demos/style.css">
             <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+            <%@include file="include/header.jsp" %>
             <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   
             
@@ -34,9 +29,8 @@
              //ErrorAltaUser seteo en null por si las dudas
              session.setAttribute("errorAltaUser","");
    
-               //Verifica User
-                    Fabrica f = Fabrica.getInstance();
-                    IControladorUsuario user = f.getIControladorUsuario();
+             //Verifica User
+        	 WScontroladorUsuario user = new WScontroladorUsuarioImplService().getWScontroladorUsuarioImplPort();
              
              
             int _id = (Integer)session.getAttribute("userid");
@@ -100,11 +94,7 @@
             
 
             //
-            UsuarioDt userx = user.ConsultarUsuario(_id);
-               
-               
-               
-                
+            UsuarioDt userx = user.consultarUsuario(_id);
          %>
             
             
@@ -125,7 +115,7 @@
                                 
                                   <div>
                                       <center>
-                                        <img src="<%=request.getContextPath()%>/images/<% out.print(userx.getImagen()); %>" width="100" height="auto" />
+                                        <img src="<%=images_url%><%=userx.getImagen()%>" width="100" height="auto" />
                                         </center>
                                     </div>
                                  <!-- <form action="UploadServlet" method="post" enctype = "multipart/form-data">-->

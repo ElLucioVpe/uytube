@@ -88,7 +88,7 @@
                         if(datos[i].canal.privacidad === false) {
                             html += '<div id="'+datos[i].canal.nombre+datos[i].id+'" class="media">';
                             html += '<a href="consultaUser.jsp?id='+datos[i].id+'" class="pull-left mr-2">';
-                            if(datos[i].imagen !== "") html += '<img src="<%=path%>/images/'+datos[i].imagen+'" width=90 height=90 class="rounded-circle" alt="User Picture"></a>';
+                            if(datos[i].imagen !== "") html += '<img src="<%=images_url%>'+datos[i].imagen+'" width=90 height=90 class="rounded-circle" alt="User Picture"></a>';
                             else html += '<img src="img/user.png" class="rounded-circle" width=90 height=90 alt="User Picture"></a>';
 
                             html += '<div class="media-body"><h5 class="media-heading"><a href="consultaUser.jsp?id='+datos[i].id+'">'+datos[i].canal.nombre+'</a></h5><a>'+datos[i].canal.descripcion+'</a></div></div>';

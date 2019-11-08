@@ -50,7 +50,7 @@ public class Valoracion {
      *     {@link Boolean }
      *     
      */
-    public Boolean getGustar() {
+    public Boolean isGustar() {
         return gustar;
     }
 

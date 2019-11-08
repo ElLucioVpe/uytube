@@ -4,20 +4,20 @@
     Author     : Esteban
 --%>
 
-<%@page import="logica.controladores.IControladorCategoria"%>
-<%@page import="logica.dt.VideoDt"%>
+<%@page import="logica.webservices.VideoDt"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import = "logica.controladores.Fabrica" %>
-<%@page import = "logica.controladores.IControladorUsuario"%>
-<%@page import="logica.dt.CategoriaDt"%>
-<%@page import="logica.dt.CanalDt"%>
-<%@page import="logica.dt.ListaDeReproduccionDt"%>
+<%@page import="logica.webservices.CategoriaDt"%>
+<%@page import="logica.webservices.CanalDt"%>
+<%@page import="logica.webservices.ListaDeReproduccionDt"%>
+<%@page import = "logica.webservices.WScontroladorUsuarioImplService"%>
+<%@page import = "logica.webservices.WScontroladorUsuario"%>
+<%@page import = "logica.webservices.WScontroladorCategoriaImplService"%>
+<%@page import = "logica.webservices.WScontroladorCategoria"%>
 
 <!DOCTYPE html>
 <html>
     <%
-        Fabrica f = Fabrica.getInstance();
-        IControladorUsuario user = f.getIControladorUsuario();
+    	WScontroladorUsuario user = new WScontroladorUsuarioImplService().getWScontroladorUsuarioImplPort();
         String path = request.getContextPath();
         
         int user_id = -1;
@@ -30,8 +30,8 @@
                 if(session.getAttribute("userid") != null) if(user_id == (int)session.getAttribute("userid")) propietario = true;
                 lista = user.obtenerListaDt(user_id, request.getParameter("nom"));
                 //Evito consultas a datos de un usuario inactivo
-                UsuarioDt dt_propietario = user.ConsultarUsuario(user_id);
-                if(dt_propietario != null) if(!dt_propietario.getActivo()) response.sendRedirect(path+"/index.jsp");
+                UsuarioDt dt_propietario = user.consultarUsuario(user_id);
+                if(dt_propietario != null) if(!dt_propietario.isActivo()) response.sendRedirect(path+"/index.jsp");
             }
         }
     %>
@@ -94,7 +94,7 @@
                         <hr />
                         <label><b>Categoria: &nbsp </b> <%=lista.getCategoria()%></label>
                         <hr />
-                        <label><b>Visibilidad: &nbsp </b> <%if(lista.getPrivada()){%> Privada<%} else {%> Pública <%}%></label>
+                        <label><b>Visibilidad: &nbsp </b> <%if(lista.isPrivada()){%> Privada<%} else {%> Pública <%}%></label>
                         <hr />
                         <label><b>Propietario: &nbsp </b> <a href="consultarUser.jsp?id=<%=lista.getIdUsuario()%>"><%=user.obtenerNickUsuario(lista.getIdUsuario())%></a></label>
                         <%if(propietario) {%>
@@ -112,8 +112,8 @@
                                 <label for="selectCategoria" class="col-md-4 col-form-label text-md-right"> Categoria</label>
                                 <select class="form-control" id="categoria" name="categoria">
                                     <option selected value="Ninguna"> Ninguna </option>
-                                    <%  IControladorCategoria cat = f.getIControladorCategoria();
-                                        List<CategoriaDt> catArray = cat.ListarCategorias();
+                                    <%  WScontroladorCategoria cat = new WScontroladorCategoriaImplService().getWScontroladorCategoriaImplPort();
+                                        List<CategoriaDt> catArray = cat.listarCategorias().getLista();
                                         for (CategoriaDt c : catArray) {%>
                                         <option value="<%=c.getNombre()%>"><%=c.getNombre()%></option>
                                     <%}%>
@@ -129,7 +129,7 @@
                 <div class="card">
                     <div class="card-body">
                     <%
-                        List<VideoDt> videos = user.obtenerVideosLista(user_id, request.getParameter("nom"));
+                        List<VideoDt> videos = user.obtenerVideosLista(user_id, request.getParameter("nom")).getLista();
                         for(int i=0; i < videos.size(); i++) {%>
                             <div class="media">
                                 <a href="video.jsp?id=<%=videos.get(i).getId()%>" class="pull-left mr-2">

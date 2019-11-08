@@ -35,7 +35,7 @@ public class WScontroladorCategoriaImplService
         URL url = null;
         WebServiceException e = null;
         try {
-        	//Obtengo datos del archivo .properties
+            //Obtengo datos del archivo .properties
     		File properties = new File(System.getProperty("user.home")+"/.UyTube");
     		URL[] urls = {properties.toURI().toURL()};
     		ClassLoader loader = new URLClassLoader(urls);

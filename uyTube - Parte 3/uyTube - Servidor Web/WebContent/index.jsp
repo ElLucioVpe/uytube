@@ -4,8 +4,6 @@
     Author     : pagol
 --%>
 
-<%@page import = "logica.controladores.Fabrica"%>
-<%@page import = "logica.controladores.IControladorUsuario"%>
 <%@page import="java.util.Date"%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -25,8 +23,6 @@
         <title>uyTube - Transmite tú mismo</title>
     </head>
     <body>
-        <%! Fabrica f = Fabrica.getInstance();
-            IControladorUsuario user = f.getIControladorUsuario(); %>
         <%@ include file="include/header.jsp" %>
         <table class="table" id="tblVideos">
           <thead>

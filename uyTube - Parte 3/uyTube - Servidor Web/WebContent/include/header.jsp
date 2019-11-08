@@ -3,6 +3,11 @@
     Created on : Oct 2, 2019, 10:47:50 AM
     Author     : Luciano
 --%>
+<%@page import="java.util.Locale"%>
+<%@page import="java.util.ResourceBundle"%>
+<%@page import="java.net.URLClassLoader"%>
+<%@page import="java.net.URL"%>
+<%@page import="java.io.File"%>
 <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 <script src="js/bootstrap.min.js"></script>
 <script src="js/jquery.min.js"></script>
@@ -15,25 +20,30 @@
 <%-- Popper --%>
 <script src="js/popper.min.js"></script>
 
-<%@page import = "logica.controladores.Fabrica"%>
-<%@page import = "logica.controladores.IControladorUsuario"%>
-<%@page import = "logica.dt.UsuarioDt"%>
+<%@page import = "logica.webservices.WScontroladorUsuarioImplService"%>
+<%@page import = "logica.webservices.WScontroladorUsuario"%>
+<%@page import = "logica.webservices.UsuarioDt"%>
 <%
     //Nombres con "header_" para evitar posibles conflictos de nombres con donde se agregue el header 
     String header_user_nick = "Anonimo";
     String header_user_img = "img/user.png";
-    Fabrica f_Header = Fabrica.getInstance();
-    IControladorUsuario user_header = f_Header.getIControladorUsuario();
+    WScontroladorUsuario user_header = new WScontroladorUsuarioImplService().getWScontroladorUsuarioImplPort();
     
+    File properties_header = new File(System.getProperty("user.home")+"/.UyTube");
+	URL[] urls_header = {properties_header.toURI().toURL()};
+	ClassLoader loader_header = new URLClassLoader(urls_header);
+	ResourceBundle bundle_header = ResourceBundle.getBundle("uytube_conf", Locale.getDefault(), loader_header);
+    
+	String images_url = bundle_header.getString("url_images");
     String header_path = request.getContextPath();System.out.println("header_path:"+header_path);
     if(session.getAttribute("userid") != null) {
          int sessionId = (int)session.getAttribute("userid");
-          UsuarioDt header_u = user_header.ConsultarUsuario(sessionId);
+          UsuarioDt header_u = user_header.consultarUsuario(sessionId);
           
         header_user_nick = header_u.getNickname();
         
         if(header_u.getImagen() != null){
-            header_user_img = header_path+"/images/"+header_u.getImagen();
+            header_user_img = images_url+header_u.getImagen();
         }
     }
 %>
@@ -62,7 +72,7 @@
             </script>
             
             <form class="form-inline" id="user-info">
-              <img src=<%=header_user_img%> class="rounded-circle" width="30" height="30" alt="User Picture">
+              <img src="<%=header_user_img%>" class="rounded-circle" width="30" height="30" alt="User Picture">
               <span class="text-muted"><%=header_user_nick%></span>
               <div class="btn-group">
                 <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">

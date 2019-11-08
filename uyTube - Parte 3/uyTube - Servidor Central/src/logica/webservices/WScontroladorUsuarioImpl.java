@@ -1,15 +1,24 @@
 package logica.webservices;
 
-import java.util.ArrayList;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.Date;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.jws.WebService;
 
 import logica.dt.CanalDt;
 import logica.dt.ListaDeReproduccionDt;
 import logica.dt.UsuarioDt;
-import logica.dt.VideoDt;
-import logica.Canal;
+import logica.webservices.pojos.POJOListadrDt;
+import logica.webservices.pojos.POJOString;
+import logica.webservices.pojos.POJOUsuarioDt;
+import logica.webservices.pojos.POJOVideoDt;
 import logica.controladores.Fabrica;
 import logica.controladores.IControladorUsuario;
 
@@ -37,8 +46,8 @@ public class WScontroladorUsuarioImpl implements WScontroladorUsuario {
     	controlador.ModificarUsuario(id_user, nuevopass, nuevonom, nuevoapell, nuevafechaNac, nuevonomC, nuevacatC, nuevadesC, nuevaprivC, nuevaImg);
     }
 	@Override
-    public ArrayList<UsuarioDt> ListarUsuarios() {
-    	return new ArrayList<UsuarioDt>(controlador.ListarUsuarios());
+    public POJOUsuarioDt ListarUsuarios() {
+    	return new POJOUsuarioDt(controlador.ListarUsuarios());
     }
 	@Override
     public UsuarioDt ConsultarUsuario(int id_user) {
@@ -74,8 +83,8 @@ public class WScontroladorUsuarioImpl implements WScontroladorUsuario {
     	controlador.dejarDeSeguirUsuario(seguidor, seguido);    
     }
     @Override
-    public ArrayList<VideoDt> listarVideosDeUsuario(String usernick) {
-    	return new ArrayList<VideoDt>(controlador.listarVideosDeUsuario(usernick));
+    public POJOVideoDt listarVideosDeUsuario(String usernick) {
+    	return new POJOVideoDt(controlador.listarVideosDeUsuario(usernick));
     }
     @Override
     public int obtenerIdUsuario(String nick) {
@@ -94,36 +103,36 @@ public class WScontroladorUsuarioImpl implements WScontroladorUsuario {
     	controlador.EliminarUsuario(id_user);
     }
     @Override
-    public ArrayList<String> obtenerCategorias() {
-    	return new ArrayList<String>(controlador.obtenerCategorias());
+    public POJOString obtenerCategorias() {
+    	return new POJOString(controlador.obtenerCategorias());
     } 
     @Override
     public String obtenerTipoLista(int propietario, String lista) {
     	return controlador.obtenerTipoLista(propietario, lista);
     }
     @Override
-    public ArrayList<String> obtenerListasUsuario(int id_user) {
-    	return new ArrayList<String>(controlador.obtenerListasUsuario(id_user));
+    public POJOString obtenerListasUsuario(int id_user) {
+    	return new POJOString(controlador.obtenerListasUsuario(id_user));
     }
     @Override
-    public ArrayList<VideoDt> obtenerVideosLista(int id_user, String lista) {
-    	return new ArrayList<VideoDt>(controlador.obtenerVideosLista(id_user, lista));
+    public POJOVideoDt obtenerVideosLista(int id_user, String lista) {
+    	return new POJOVideoDt(controlador.obtenerVideosLista(id_user, lista));
     }
     @Override
     public ListaDeReproduccionDt obtenerListaDt(int id_user, String lista) {
     	return controlador.obtenerListaDt(id_user, lista);
     }
     @Override
-    public ArrayList<String> ListarSeguidores(int userId) {
-    	return new ArrayList<String>(controlador.ListarSeguidores(userId));
+    public POJOString ListarSeguidores(int userId) {
+    	return new POJOString(controlador.ListarSeguidores(userId));
     }
     @Override
-    public ArrayList<String> ListarSiguiendo(int userId) {
-    	return new ArrayList<String>(controlador.ListarSiguiendo(userId));
+    public POJOString ListarSiguiendo(int userId) {
+    	return new POJOString(controlador.ListarSiguiendo(userId));
     } 
     @Override
-    public ArrayList<String> ListarVideos(int userId) {
-    	return new ArrayList<String>(controlador.ListarVideos(userId));
+    public POJOString ListarVideos(int userId) {
+    	return new POJOString(controlador.ListarVideos(userId));
     }
     @Override
     public Integer LoginUsuario(String _user, String _password) {
@@ -134,12 +143,12 @@ public class WScontroladorUsuarioImpl implements WScontroladorUsuario {
     	return controlador.estaSuscripto(suscripto, pcanal);
     }
     @Override
-    public ArrayList<ListaDeReproduccionDt> obtenerListasDtPorUsuario(int id_user) {
-    	return new ArrayList<ListaDeReproduccionDt>(controlador.obtenerListasDtPorUsuario(id_user));
+    public POJOListadrDt obtenerListasDtPorUsuario(int id_user) {
+    	return new POJOListadrDt(controlador.obtenerListasDtPorUsuario(id_user));
     }
     @Override
-    public ArrayList<ListaDeReproduccionDt> obtenerListas() {
-    	return new ArrayList<ListaDeReproduccionDt>(controlador.obtenerListas());
+    public POJOListadrDt obtenerListas() {
+    	return new POJOListadrDt(controlador.obtenerListas());
     }
     @Override
     public ListaDeReproduccionDt obtenerListaDtPorId(int id_lista) {
@@ -154,8 +163,37 @@ public class WScontroladorUsuarioImpl implements WScontroladorUsuario {
     	controlador.BajaUsuario(iduser);
     }
     @Override
-    public ArrayList<UsuarioDt> ListarUsuariosInactivos() {
-    	return new ArrayList<UsuarioDt>(controlador.ListarUsuariosInactivos());
+    public POJOUsuarioDt ListarUsuariosInactivos() {
+    	return new POJOUsuarioDt(controlador.ListarUsuariosInactivos());
     }
-
+    
+    @Override
+    public boolean saveFile(byte[] fileContent, String fileName) {
+		OutputStream outputStream = null;
+		try {
+			//Obtengo datos del archivo .properties
+    		File properties = new File(System.getProperty("user.home")+"/.UyTube");
+    		URL[] urls = {properties.toURI().toURL()};
+    		ClassLoader loader = new URLClassLoader(urls);
+    		ResourceBundle bundle = ResourceBundle.getBundle("uytube_conf", Locale.getDefault(), loader);
+    		
+    		String path = bundle.getString("images");
+    		
+			File file = new File(path + File.separator + fileName);
+			outputStream = new FileOutputStream(file);
+			outputStream.write(fileContent);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (outputStream != null) {
+				try {
+					outputStream.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return false;
+	}
 }

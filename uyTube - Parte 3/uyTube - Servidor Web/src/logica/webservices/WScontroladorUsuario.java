@@ -42,6 +42,356 @@ public interface WScontroladorUsuario {
      * 
      * @param arg3
      * @param arg2
+     * @param arg1
+     * @param arg0
+     */
+    @WebMethod(operationName = "AgregarVideoListaDeReproduccion")
+    @Action(input = "http://webservices.logica/WScontroladorUsuario/AgregarVideoListaDeReproduccionRequest", output = "http://webservices.logica/WScontroladorUsuario/AgregarVideoListaDeReproduccionResponse")
+    public void agregarVideoListaDeReproduccion(
+        @WebParam(name = "arg0", partName = "arg0")
+        int arg0,
+        @WebParam(name = "arg1", partName = "arg1")
+        int arg1,
+        @WebParam(name = "arg2", partName = "arg2")
+        String arg2,
+        @WebParam(name = "arg3", partName = "arg3")
+        String arg3);
+
+    /**
+     * 
+     * @param arg2
+     * @param arg1
+     * @param arg0
+     */
+    @WebMethod(operationName = "QuitarVideoListaDeReproduccion")
+    @Action(input = "http://webservices.logica/WScontroladorUsuario/QuitarVideoListaDeReproduccionRequest", output = "http://webservices.logica/WScontroladorUsuario/QuitarVideoListaDeReproduccionResponse")
+    public void quitarVideoListaDeReproduccion(
+        @WebParam(name = "arg0", partName = "arg0")
+        int arg0,
+        @WebParam(name = "arg1", partName = "arg1")
+        String arg1,
+        @WebParam(name = "arg2", partName = "arg2")
+        int arg2);
+
+    /**
+     * 
+     * @param arg1
+     * @param arg0
+     */
+    @WebMethod
+    @Action(input = "http://webservices.logica/WScontroladorUsuario/seguirUsuarioRequest", output = "http://webservices.logica/WScontroladorUsuario/seguirUsuarioResponse")
+    public void seguirUsuario(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0,
+        @WebParam(name = "arg1", partName = "arg1")
+        String arg1);
+
+    /**
+     * 
+     * @param arg1
+     * @param arg0
+     */
+    @WebMethod
+    @Action(input = "http://webservices.logica/WScontroladorUsuario/dejarDeSeguirUsuarioRequest", output = "http://webservices.logica/WScontroladorUsuario/dejarDeSeguirUsuarioResponse")
+    public void dejarDeSeguirUsuario(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0,
+        @WebParam(name = "arg1", partName = "arg1")
+        String arg1);
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns logica.webservices.PojoVideoDt
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://webservices.logica/WScontroladorUsuario/listarVideosDeUsuarioRequest", output = "http://webservices.logica/WScontroladorUsuario/listarVideosDeUsuarioResponse")
+    public PojoVideoDt listarVideosDeUsuario(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0);
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns int
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://webservices.logica/WScontroladorUsuario/obtenerIdUsuarioRequest", output = "http://webservices.logica/WScontroladorUsuario/obtenerIdUsuarioResponse")
+    public int obtenerIdUsuario(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0);
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns int
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://webservices.logica/WScontroladorUsuario/obtenerIdUsuarioMailRequest", output = "http://webservices.logica/WScontroladorUsuario/obtenerIdUsuarioMailResponse")
+    public int obtenerIdUsuarioMail(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0);
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns java.lang.String
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://webservices.logica/WScontroladorUsuario/obtenerNickUsuarioRequest", output = "http://webservices.logica/WScontroladorUsuario/obtenerNickUsuarioResponse")
+    public String obtenerNickUsuario(
+        @WebParam(name = "arg0", partName = "arg0")
+        int arg0);
+
+    /**
+     * 
+     * @param arg0
+     */
+    @WebMethod(operationName = "EliminarUsuario")
+    @Action(input = "http://webservices.logica/WScontroladorUsuario/EliminarUsuarioRequest", output = "http://webservices.logica/WScontroladorUsuario/EliminarUsuarioResponse")
+    public void eliminarUsuario(
+        @WebParam(name = "arg0", partName = "arg0")
+        int arg0);
+
+    /**
+     * 
+     * @return
+     *     returns logica.webservices.PojoString
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://webservices.logica/WScontroladorUsuario/obtenerCategoriasRequest", output = "http://webservices.logica/WScontroladorUsuario/obtenerCategoriasResponse")
+    public PojoString obtenerCategorias();
+
+    /**
+     * 
+     * @param arg1
+     * @param arg0
+     * @return
+     *     returns java.lang.String
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://webservices.logica/WScontroladorUsuario/obtenerTipoListaRequest", output = "http://webservices.logica/WScontroladorUsuario/obtenerTipoListaResponse")
+    public String obtenerTipoLista(
+        @WebParam(name = "arg0", partName = "arg0")
+        int arg0,
+        @WebParam(name = "arg1", partName = "arg1")
+        String arg1);
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns logica.webservices.PojoString
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://webservices.logica/WScontroladorUsuario/obtenerListasUsuarioRequest", output = "http://webservices.logica/WScontroladorUsuario/obtenerListasUsuarioResponse")
+    public PojoString obtenerListasUsuario(
+        @WebParam(name = "arg0", partName = "arg0")
+        int arg0);
+
+    /**
+     * 
+     * @param arg1
+     * @param arg0
+     * @return
+     *     returns logica.webservices.PojoVideoDt
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://webservices.logica/WScontroladorUsuario/obtenerVideosListaRequest", output = "http://webservices.logica/WScontroladorUsuario/obtenerVideosListaResponse")
+    public PojoVideoDt obtenerVideosLista(
+        @WebParam(name = "arg0", partName = "arg0")
+        int arg0,
+        @WebParam(name = "arg1", partName = "arg1")
+        String arg1);
+
+    /**
+     * 
+     * @param arg1
+     * @param arg0
+     * @return
+     *     returns logica.webservices.ListaDeReproduccionDt
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://webservices.logica/WScontroladorUsuario/obtenerListaDtRequest", output = "http://webservices.logica/WScontroladorUsuario/obtenerListaDtResponse")
+    public ListaDeReproduccionDt obtenerListaDt(
+        @WebParam(name = "arg0", partName = "arg0")
+        int arg0,
+        @WebParam(name = "arg1", partName = "arg1")
+        String arg1);
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns logica.webservices.PojoString
+     */
+    @WebMethod(operationName = "ListarSeguidores")
+    @WebResult(partName = "return")
+    @Action(input = "http://webservices.logica/WScontroladorUsuario/ListarSeguidoresRequest", output = "http://webservices.logica/WScontroladorUsuario/ListarSeguidoresResponse")
+    public PojoString listarSeguidores(
+        @WebParam(name = "arg0", partName = "arg0")
+        int arg0);
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns logica.webservices.PojoString
+     */
+    @WebMethod(operationName = "ListarSiguiendo")
+    @WebResult(partName = "return")
+    @Action(input = "http://webservices.logica/WScontroladorUsuario/ListarSiguiendoRequest", output = "http://webservices.logica/WScontroladorUsuario/ListarSiguiendoResponse")
+    public PojoString listarSiguiendo(
+        @WebParam(name = "arg0", partName = "arg0")
+        int arg0);
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns logica.webservices.PojoString
+     */
+    @WebMethod(operationName = "ListarVideos")
+    @WebResult(partName = "return")
+    @Action(input = "http://webservices.logica/WScontroladorUsuario/ListarVideosRequest", output = "http://webservices.logica/WScontroladorUsuario/ListarVideosResponse")
+    public PojoString listarVideos(
+        @WebParam(name = "arg0", partName = "arg0")
+        int arg0);
+
+    /**
+     * 
+     * @param arg1
+     * @param arg0
+     * @return
+     *     returns int
+     */
+    @WebMethod(operationName = "LoginUsuario")
+    @WebResult(partName = "return")
+    @Action(input = "http://webservices.logica/WScontroladorUsuario/LoginUsuarioRequest", output = "http://webservices.logica/WScontroladorUsuario/LoginUsuarioResponse")
+    public int loginUsuario(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0,
+        @WebParam(name = "arg1", partName = "arg1")
+        String arg1);
+
+    /**
+     * 
+     * @param arg1
+     * @param arg0
+     * @return
+     *     returns boolean
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://webservices.logica/WScontroladorUsuario/estaSuscriptoRequest", output = "http://webservices.logica/WScontroladorUsuario/estaSuscriptoResponse")
+    public boolean estaSuscripto(
+        @WebParam(name = "arg0", partName = "arg0")
+        int arg0,
+        @WebParam(name = "arg1", partName = "arg1")
+        int arg1);
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns logica.webservices.PojoListadrDt
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://webservices.logica/WScontroladorUsuario/obtenerListasDtPorUsuarioRequest", output = "http://webservices.logica/WScontroladorUsuario/obtenerListasDtPorUsuarioResponse")
+    public PojoListadrDt obtenerListasDtPorUsuario(
+        @WebParam(name = "arg0", partName = "arg0")
+        int arg0);
+
+    /**
+     * 
+     * @return
+     *     returns logica.webservices.PojoListadrDt
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://webservices.logica/WScontroladorUsuario/obtenerListasRequest", output = "http://webservices.logica/WScontroladorUsuario/obtenerListasResponse")
+    public PojoListadrDt obtenerListas();
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns logica.webservices.ListaDeReproduccionDt
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://webservices.logica/WScontroladorUsuario/obtenerListaDtPorIdRequest", output = "http://webservices.logica/WScontroladorUsuario/obtenerListaDtPorIdResponse")
+    public ListaDeReproduccionDt obtenerListaDtPorId(
+        @WebParam(name = "arg0", partName = "arg0")
+        int arg0);
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns logica.webservices.CanalDt
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://webservices.logica/WScontroladorUsuario/obtenerCanalDtRequest", output = "http://webservices.logica/WScontroladorUsuario/obtenerCanalDtResponse")
+    public CanalDt obtenerCanalDt(
+        @WebParam(name = "arg0", partName = "arg0")
+        int arg0);
+
+    /**
+     * 
+     * @param arg0
+     */
+    @WebMethod(operationName = "BajaUsuario")
+    @Action(input = "http://webservices.logica/WScontroladorUsuario/BajaUsuarioRequest", output = "http://webservices.logica/WScontroladorUsuario/BajaUsuarioResponse")
+    public void bajaUsuario(
+        @WebParam(name = "arg0", partName = "arg0")
+        int arg0);
+
+    /**
+     * 
+     * @return
+     *     returns logica.webservices.PojoUsuarioDt
+     */
+    @WebMethod(operationName = "ListarUsuariosInactivos")
+    @WebResult(partName = "return")
+    @Action(input = "http://webservices.logica/WScontroladorUsuario/ListarUsuariosInactivosRequest", output = "http://webservices.logica/WScontroladorUsuario/ListarUsuariosInactivosResponse")
+    public PojoUsuarioDt listarUsuariosInactivos();
+
+    /**
+     * 
+     * @param arg1
+     * @param arg0
+     * @return
+     *     returns boolean
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://webservices.logica/WScontroladorUsuario/saveFileRequest", output = "http://webservices.logica/WScontroladorUsuario/saveFileResponse")
+    public boolean saveFile(
+        @WebParam(name = "arg0", partName = "arg0")
+        byte[] arg0,
+        @WebParam(name = "arg1", partName = "arg1")
+        String arg1);
+
+    /**
+     * 
+     * @param arg3
+     * @param arg2
      * @param arg5
      * @param arg4
      * @param arg1
@@ -128,12 +478,12 @@ public interface WScontroladorUsuario {
     /**
      * 
      * @return
-     *     returns logica.webservices.ArrayList
+     *     returns logica.webservices.PojoUsuarioDt
      */
     @WebMethod(operationName = "ListarUsuarios")
     @WebResult(partName = "return")
     @Action(input = "http://webservices.logica/WScontroladorUsuario/ListarUsuariosRequest", output = "http://webservices.logica/WScontroladorUsuario/ListarUsuariosResponse")
-    public ArrayList listarUsuarios();
+    public PojoUsuarioDt listarUsuarios();
 
     /**
      * 
@@ -195,339 +545,5 @@ public interface WScontroladorUsuario {
         String arg2,
         @WebParam(name = "arg3", partName = "arg3")
         boolean arg3);
-
-    /**
-     * 
-     * @param arg3
-     * @param arg2
-     * @param arg1
-     * @param arg0
-     */
-    @WebMethod(operationName = "AgregarVideoListaDeReproduccion")
-    @Action(input = "http://webservices.logica/WScontroladorUsuario/AgregarVideoListaDeReproduccionRequest", output = "http://webservices.logica/WScontroladorUsuario/AgregarVideoListaDeReproduccionResponse")
-    public void agregarVideoListaDeReproduccion(
-        @WebParam(name = "arg0", partName = "arg0")
-        int arg0,
-        @WebParam(name = "arg1", partName = "arg1")
-        int arg1,
-        @WebParam(name = "arg2", partName = "arg2")
-        String arg2,
-        @WebParam(name = "arg3", partName = "arg3")
-        String arg3);
-
-    /**
-     * 
-     * @param arg2
-     * @param arg1
-     * @param arg0
-     */
-    @WebMethod(operationName = "QuitarVideoListaDeReproduccion")
-    @Action(input = "http://webservices.logica/WScontroladorUsuario/QuitarVideoListaDeReproduccionRequest", output = "http://webservices.logica/WScontroladorUsuario/QuitarVideoListaDeReproduccionResponse")
-    public void quitarVideoListaDeReproduccion(
-        @WebParam(name = "arg0", partName = "arg0")
-        int arg0,
-        @WebParam(name = "arg1", partName = "arg1")
-        String arg1,
-        @WebParam(name = "arg2", partName = "arg2")
-        int arg2);
-
-    /**
-     * 
-     * @param arg1
-     * @param arg0
-     */
-    @WebMethod
-    @Action(input = "http://webservices.logica/WScontroladorUsuario/seguirUsuarioRequest", output = "http://webservices.logica/WScontroladorUsuario/seguirUsuarioResponse")
-    public void seguirUsuario(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0,
-        @WebParam(name = "arg1", partName = "arg1")
-        String arg1);
-
-    /**
-     * 
-     * @param arg1
-     * @param arg0
-     */
-    @WebMethod
-    @Action(input = "http://webservices.logica/WScontroladorUsuario/dejarDeSeguirUsuarioRequest", output = "http://webservices.logica/WScontroladorUsuario/dejarDeSeguirUsuarioResponse")
-    public void dejarDeSeguirUsuario(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0,
-        @WebParam(name = "arg1", partName = "arg1")
-        String arg1);
-
-    /**
-     * 
-     * @param arg0
-     * @return
-     *     returns logica.webservices.ArrayList
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://webservices.logica/WScontroladorUsuario/listarVideosDeUsuarioRequest", output = "http://webservices.logica/WScontroladorUsuario/listarVideosDeUsuarioResponse")
-    public ArrayList listarVideosDeUsuario(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0);
-
-    /**
-     * 
-     * @param arg0
-     * @return
-     *     returns int
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://webservices.logica/WScontroladorUsuario/obtenerIdUsuarioRequest", output = "http://webservices.logica/WScontroladorUsuario/obtenerIdUsuarioResponse")
-    public int obtenerIdUsuario(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0);
-
-    /**
-     * 
-     * @param arg0
-     * @return
-     *     returns int
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://webservices.logica/WScontroladorUsuario/obtenerIdUsuarioMailRequest", output = "http://webservices.logica/WScontroladorUsuario/obtenerIdUsuarioMailResponse")
-    public int obtenerIdUsuarioMail(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0);
-
-    /**
-     * 
-     * @param arg0
-     * @return
-     *     returns java.lang.String
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://webservices.logica/WScontroladorUsuario/obtenerNickUsuarioRequest", output = "http://webservices.logica/WScontroladorUsuario/obtenerNickUsuarioResponse")
-    public String obtenerNickUsuario(
-        @WebParam(name = "arg0", partName = "arg0")
-        int arg0);
-
-    /**
-     * 
-     * @param arg0
-     */
-    @WebMethod(operationName = "EliminarUsuario")
-    @Action(input = "http://webservices.logica/WScontroladorUsuario/EliminarUsuarioRequest", output = "http://webservices.logica/WScontroladorUsuario/EliminarUsuarioResponse")
-    public void eliminarUsuario(
-        @WebParam(name = "arg0", partName = "arg0")
-        int arg0);
-
-    /**
-     * 
-     * @return
-     *     returns logica.webservices.ArrayList
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://webservices.logica/WScontroladorUsuario/obtenerCategoriasRequest", output = "http://webservices.logica/WScontroladorUsuario/obtenerCategoriasResponse")
-    public ArrayList obtenerCategorias();
-
-    /**
-     * 
-     * @param arg1
-     * @param arg0
-     * @return
-     *     returns java.lang.String
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://webservices.logica/WScontroladorUsuario/obtenerTipoListaRequest", output = "http://webservices.logica/WScontroladorUsuario/obtenerTipoListaResponse")
-    public String obtenerTipoLista(
-        @WebParam(name = "arg0", partName = "arg0")
-        int arg0,
-        @WebParam(name = "arg1", partName = "arg1")
-        String arg1);
-
-    /**
-     * 
-     * @param arg0
-     * @return
-     *     returns logica.webservices.ArrayList
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://webservices.logica/WScontroladorUsuario/obtenerListasUsuarioRequest", output = "http://webservices.logica/WScontroladorUsuario/obtenerListasUsuarioResponse")
-    public ArrayList obtenerListasUsuario(
-        @WebParam(name = "arg0", partName = "arg0")
-        int arg0);
-
-    /**
-     * 
-     * @param arg1
-     * @param arg0
-     * @return
-     *     returns logica.webservices.ArrayList
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://webservices.logica/WScontroladorUsuario/obtenerVideosListaRequest", output = "http://webservices.logica/WScontroladorUsuario/obtenerVideosListaResponse")
-    public ArrayList obtenerVideosLista(
-        @WebParam(name = "arg0", partName = "arg0")
-        int arg0,
-        @WebParam(name = "arg1", partName = "arg1")
-        String arg1);
-
-    /**
-     * 
-     * @param arg1
-     * @param arg0
-     * @return
-     *     returns logica.webservices.ListaDeReproduccionDt
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://webservices.logica/WScontroladorUsuario/obtenerListaDtRequest", output = "http://webservices.logica/WScontroladorUsuario/obtenerListaDtResponse")
-    public ListaDeReproduccionDt obtenerListaDt(
-        @WebParam(name = "arg0", partName = "arg0")
-        int arg0,
-        @WebParam(name = "arg1", partName = "arg1")
-        String arg1);
-
-    /**
-     * 
-     * @param arg0
-     * @return
-     *     returns logica.webservices.ArrayList
-     */
-    @WebMethod(operationName = "ListarSeguidores")
-    @WebResult(partName = "return")
-    @Action(input = "http://webservices.logica/WScontroladorUsuario/ListarSeguidoresRequest", output = "http://webservices.logica/WScontroladorUsuario/ListarSeguidoresResponse")
-    public ArrayList listarSeguidores(
-        @WebParam(name = "arg0", partName = "arg0")
-        int arg0);
-
-    /**
-     * 
-     * @param arg0
-     * @return
-     *     returns logica.webservices.ArrayList
-     */
-    @WebMethod(operationName = "ListarSiguiendo")
-    @WebResult(partName = "return")
-    @Action(input = "http://webservices.logica/WScontroladorUsuario/ListarSiguiendoRequest", output = "http://webservices.logica/WScontroladorUsuario/ListarSiguiendoResponse")
-    public ArrayList listarSiguiendo(
-        @WebParam(name = "arg0", partName = "arg0")
-        int arg0);
-
-    /**
-     * 
-     * @param arg0
-     * @return
-     *     returns logica.webservices.ArrayList
-     */
-    @WebMethod(operationName = "ListarVideos")
-    @WebResult(partName = "return")
-    @Action(input = "http://webservices.logica/WScontroladorUsuario/ListarVideosRequest", output = "http://webservices.logica/WScontroladorUsuario/ListarVideosResponse")
-    public ArrayList listarVideos(
-        @WebParam(name = "arg0", partName = "arg0")
-        int arg0);
-
-    /**
-     * 
-     * @param arg1
-     * @param arg0
-     * @return
-     *     returns int
-     */
-    @WebMethod(operationName = "LoginUsuario")
-    @WebResult(partName = "return")
-    @Action(input = "http://webservices.logica/WScontroladorUsuario/LoginUsuarioRequest", output = "http://webservices.logica/WScontroladorUsuario/LoginUsuarioResponse")
-    public int loginUsuario(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0,
-        @WebParam(name = "arg1", partName = "arg1")
-        String arg1);
-
-    /**
-     * 
-     * @param arg1
-     * @param arg0
-     * @return
-     *     returns boolean
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://webservices.logica/WScontroladorUsuario/estaSuscriptoRequest", output = "http://webservices.logica/WScontroladorUsuario/estaSuscriptoResponse")
-    public boolean estaSuscripto(
-        @WebParam(name = "arg0", partName = "arg0")
-        int arg0,
-        @WebParam(name = "arg1", partName = "arg1")
-        int arg1);
-
-    /**
-     * 
-     * @param arg0
-     * @return
-     *     returns logica.webservices.ArrayList
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://webservices.logica/WScontroladorUsuario/obtenerListasDtPorUsuarioRequest", output = "http://webservices.logica/WScontroladorUsuario/obtenerListasDtPorUsuarioResponse")
-    public ArrayList obtenerListasDtPorUsuario(
-        @WebParam(name = "arg0", partName = "arg0")
-        int arg0);
-
-    /**
-     * 
-     * @return
-     *     returns logica.webservices.ArrayList
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://webservices.logica/WScontroladorUsuario/obtenerListasRequest", output = "http://webservices.logica/WScontroladorUsuario/obtenerListasResponse")
-    public ArrayList obtenerListas();
-
-    /**
-     * 
-     * @param arg0
-     * @return
-     *     returns logica.webservices.ListaDeReproduccionDt
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://webservices.logica/WScontroladorUsuario/obtenerListaDtPorIdRequest", output = "http://webservices.logica/WScontroladorUsuario/obtenerListaDtPorIdResponse")
-    public ListaDeReproduccionDt obtenerListaDtPorId(
-        @WebParam(name = "arg0", partName = "arg0")
-        int arg0);
-
-    /**
-     * 
-     * @param arg0
-     * @return
-     *     returns logica.webservices.CanalDt
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://webservices.logica/WScontroladorUsuario/obtenerCanalDtRequest", output = "http://webservices.logica/WScontroladorUsuario/obtenerCanalDtResponse")
-    public CanalDt obtenerCanalDt(
-        @WebParam(name = "arg0", partName = "arg0")
-        int arg0);
-
-    /**
-     * 
-     * @param arg0
-     */
-    @WebMethod(operationName = "BajaUsuario")
-    @Action(input = "http://webservices.logica/WScontroladorUsuario/BajaUsuarioRequest", output = "http://webservices.logica/WScontroladorUsuario/BajaUsuarioResponse")
-    public void bajaUsuario(
-        @WebParam(name = "arg0", partName = "arg0")
-        int arg0);
-
-    /**
-     * 
-     * @return
-     *     returns logica.webservices.ArrayList
-     */
-    @WebMethod(operationName = "ListarUsuariosInactivos")
-    @WebResult(partName = "return")
-    @Action(input = "http://webservices.logica/WScontroladorUsuario/ListarUsuariosInactivosRequest", output = "http://webservices.logica/WScontroladorUsuario/ListarUsuariosInactivosResponse")
-    public ArrayList listarUsuariosInactivos();
 
 }

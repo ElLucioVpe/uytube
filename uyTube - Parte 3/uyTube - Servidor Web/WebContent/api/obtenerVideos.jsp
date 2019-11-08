@@ -4,29 +4,28 @@
     Author     : Luciano
 --%>
 
-<%@page import="logica.dt.UsuarioDt"%>
+<%@page import="logica.webservices.UsuarioDt"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import = "org.json.JSONObject"%>
 <%@page import = "org.json.JSONArray"%>
-<%@page import = "logica.controladores.Fabrica" %>
-<%@page import = "logica.controladores.IControladorVideo"%>
-<%@page import = "logica.controladores.IControladorUsuario"%>
-<%@page import = "logica.dt.VideoDt" %>
+<%@page import = "logica.webservices.WScontroladorUsuarioImplService"%>
+<%@page import = "logica.webservices.WScontroladorUsuario"%>
+<%@page import = "logica.webservices.WScontroladorVideoImplService"%>
+<%@page import = "logica.webservices.WScontroladorVideo"%>
+<%@page import = "logica.webservices.VideoDt" %>
 <%@page import = "java.util.List" %>
 <%@page import = "java.util.Date" %>
         <%
-            Fabrica f = Fabrica.getInstance();
-            IControladorVideo video = f.getIControladorVideo();
-            IControladorUsuario user = f.getIControladorUsuario();
-            
+        	WScontroladorUsuario user = new WScontroladorUsuarioImplService().getWScontroladorUsuarioImplPort();
+        	WScontroladorVideo video = new WScontroladorVideoImplService().getWScontroladorVideoImplPort();
             String cat = request.getParameter("cat");
             JSONObject json1 = null;
             JSONArray jarr = new JSONArray();
             
             if (request.getParameter("id") == null || request.getParameter("id") == "") {
-                List<VideoDt> list = video.obtenerVideos();
+                List<VideoDt> list = video.obtenerVideos().getLista();
                 for(int i = 0; i < list.size(); i++) {
-                    UsuarioDt _user = user.ConsultarUsuario((int)list.get(i).getIdCanal());
+                    UsuarioDt _user = user.consultarUsuario((int)list.get(i).getIdCanal());
                     json1 = new JSONObject();
                     json1.put("jsonType", "video");
                     json1.put("id", (Integer)list.get(i).getId());
@@ -35,7 +34,7 @@
                     json1.put("url", (String)list.get(i).getUrl());
                     json1.put("descripcion", (String)list.get(i).getDescripcion());
                     json1.put("fechaPublicacion", list.get(i).getFechaPublicacion());
-                    json1.put("privacidad", (Boolean)list.get(i).getPrivacidad());
+                    json1.put("privacidad", (Boolean)list.get(i).isPrivacidad());
                     json1.put("categoria", list.get(i).getCategoria());
                     json1.put("canal_user_id", (int)list.get(i).getIdCanal());
                     json1.put("user", _user.getNickname());
@@ -49,15 +48,15 @@
                 out.println(jarr);
             } else {
                 VideoDt _video = video.obtenerVideoDtPorID(Integer.parseInt(request.getParameter("id")));
-                UsuarioDt _user = user.ConsultarUsuario((int)_video.getIdCanal());
+                UsuarioDt _user = user.consultarUsuario((int)_video.getIdCanal());
                 json1 = new JSONObject();
                 json1.put("id", (Integer)_video.getId());
                 json1.put("nombre", (String)_video.getNombre());
                 json1.put("thumbnail", (String)_video.getThumbnail());
                 json1.put("url", (String)_video.getUrl());
                 json1.put("descripcion", (String)_video.getDescripcion());
-                json1.put("fecha", (Date)_video.getFechaPublicacion());
-                json1.put("privacidad", (Boolean)_video.getPrivacidad());
+                json1.put("fecha", _video.getFechaPublicacion());
+                json1.put("privacidad", (Boolean)_video.isPrivacidad());
                 json1.put("canal_user_id", (int)_video.getIdCanal());
                 json1.put("user", _user.getNickname());
                 json1.put("likes", (int)_video.getLikes());

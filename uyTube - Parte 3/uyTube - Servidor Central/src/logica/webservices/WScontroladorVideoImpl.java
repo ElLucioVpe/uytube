@@ -9,6 +9,10 @@ import logica.controladores.IControladorVideo;
 import logica.dt.ComentarioDt;
 import logica.dt.VideoDt;
 import logica.dt.valoracionDt;
+import logica.webservices.pojos.POJOComentarioDt;
+import logica.webservices.pojos.POJOString;
+import logica.webservices.pojos.POJOVideoDt;
+import logica.webservices.pojos.POJOvaloracionDt;
 
 @WebService(endpointInterface = "logica.webservices.WScontroladorVideo")
 public class WScontroladorVideoImpl implements WScontroladorVideo {
@@ -46,8 +50,8 @@ public class WScontroladorVideoImpl implements WScontroladorVideo {
 
 	@Override
 	public void ComentarVideo(int user_id, int video_id, long id_padre, String texto, Date fecha) {
+		ComentarioDt com = new ComentarioDt(); //Para que se genere la clase en wsimport
 		controlador.ComentarVideo(user_id, video_id, id_padre, texto, fecha);
-		ComentarioDt com = new ComentarioDt();
 	}
 
 	@Override
@@ -61,18 +65,19 @@ public class WScontroladorVideoImpl implements WScontroladorVideo {
 	}
 
 	@Override
-	public ArrayList<valoracionDt> obtenerValoracionVideo(int id_video) {
-		return new ArrayList<>(controlador.obtenerValoracionVideo(id_video));
+	public POJOvaloracionDt obtenerValoracionVideo(int id_video) {
+		valoracionDt val = new valoracionDt(); //Para que se genere la clase en wsimport
+		return new POJOvaloracionDt(controlador.obtenerValoracionVideo(id_video));
 	}
 
 	@Override
-	public ArrayList<VideoDt> obtenerVideos() {
-		return new ArrayList<>(controlador.obtenerVideos());
+	public POJOVideoDt obtenerVideos() {
+		return new POJOVideoDt(controlador.obtenerVideos());
 	}
 
 	@Override
-	public ArrayList<ComentarioDt> obtenerComentariosDt(int id_video) {
-		return new ArrayList<>(controlador.obtenerComentariosDt(id_video));
+	public POJOComentarioDt obtenerComentariosDt(int id_video) {
+		return new POJOComentarioDt(controlador.obtenerComentariosDt(id_video));
 	}
 
 	@Override

@@ -5,11 +5,10 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import = "logica.controladores.Fabrica" %>
-<%@page import = "logica.controladores.IControladorUsuario"%>
+<%@page import = "logica.webservices.WScontroladorUsuarioImplService"%>
+<%@page import = "logica.webservices.WScontroladorUsuario"%>
 <%
-    Fabrica f = Fabrica.getInstance();
-    IControladorUsuario user = f.getIControladorUsuario();
+	WScontroladorUsuario user = new WScontroladorUsuarioImplService().getWScontroladorUsuarioImplPort();
     int seguidor = Integer.parseInt(request.getParameter("seguidor"));
     int seguido = Integer.parseInt(request.getParameter("seguido"));
     String seguidor_nick = user.obtenerNickUsuario(seguidor);

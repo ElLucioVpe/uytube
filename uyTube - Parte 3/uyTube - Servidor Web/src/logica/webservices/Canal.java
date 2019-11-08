@@ -27,6 +27,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="seguidores" type="{http://webservices.logica/}usuario" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="userId" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="usuario" type="{http://webservices.logica/}usuario" minOccurs="0"/>
+ *         &lt;element name="videos" type="{http://webservices.logica/}video" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -44,7 +45,8 @@ import javax.xml.bind.annotation.XmlType;
     "privacidad",
     "seguidores",
     "userId",
-    "usuario"
+    "usuario",
+    "videos"
 })
 public class Canal {
 
@@ -58,6 +60,8 @@ public class Canal {
     protected List<Usuario> seguidores;
     protected Integer userId;
     protected Usuario usuario;
+    @XmlElement(nillable = true)
+    protected List<Video> videos;
 
     /**
      * Obtiene el valor de la propiedad categoria.
@@ -168,7 +172,7 @@ public class Canal {
      *     {@link Boolean }
      *     
      */
-    public Boolean getPrivacidad() {
+    public Boolean isPrivacidad() {
         return privacidad;
     }
 
@@ -259,6 +263,35 @@ public class Canal {
      */
     public void setUsuario(Usuario value) {
         this.usuario = value;
+    }
+
+    /**
+     * Gets the value of the videos property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the videos property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getVideos().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link Video }
+     * 
+     * 
+     */
+    public List<Video> getVideos() {
+        if (videos == null) {
+            videos = new ArrayList<Video>();
+        }
+        return this.videos;
     }
 
 }

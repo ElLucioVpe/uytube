@@ -27,22 +27,12 @@ public interface WScontroladorCategoria {
     /**
      * 
      * @return
-     *     returns logica.webservices.ArrayList
+     *     returns logica.webservices.PojoCategoriaDt
      */
     @WebMethod(operationName = "ListarCategorias")
     @WebResult(partName = "return")
     @Action(input = "http://webservices.logica/WScontroladorCategoria/ListarCategoriasRequest", output = "http://webservices.logica/WScontroladorCategoria/ListarCategoriasResponse")
-    public ArrayList listarCategorias();
-
-    /**
-     * 
-     * @param arg0
-     */
-    @WebMethod(operationName = "AltaCategoria")
-    @Action(input = "http://webservices.logica/WScontroladorCategoria/AltaCategoriaRequest", output = "http://webservices.logica/WScontroladorCategoria/AltaCategoriaResponse")
-    public void altaCategoria(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0);
+    public PojoCategoriaDt listarCategorias();
 
     /**
      * 
@@ -60,13 +50,10 @@ public interface WScontroladorCategoria {
     /**
      * 
      * @param arg0
-     * @return
-     *     returns logica.webservices.ArrayList
      */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://webservices.logica/WScontroladorCategoria/obtenerListasDtCategoriaRequest", output = "http://webservices.logica/WScontroladorCategoria/obtenerListasDtCategoriaResponse")
-    public ArrayList obtenerListasDtCategoria(
+    @WebMethod(operationName = "AltaCategoria")
+    @Action(input = "http://webservices.logica/WScontroladorCategoria/AltaCategoriaRequest", output = "http://webservices.logica/WScontroladorCategoria/AltaCategoriaResponse")
+    public void altaCategoria(
         @WebParam(name = "arg0", partName = "arg0")
         String arg0);
 
@@ -74,12 +61,25 @@ public interface WScontroladorCategoria {
      * 
      * @param arg0
      * @return
-     *     returns logica.webservices.ArrayList
+     *     returns logica.webservices.PojoListadrDt
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://webservices.logica/WScontroladorCategoria/obtenerListasDtCategoriaRequest", output = "http://webservices.logica/WScontroladorCategoria/obtenerListasDtCategoriaResponse")
+    public PojoListadrDt obtenerListasDtCategoria(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0);
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns logica.webservices.PojoVideoDt
      */
     @WebMethod
     @WebResult(partName = "return")
     @Action(input = "http://webservices.logica/WScontroladorCategoria/obtenerVideosDtCategoriaRequest", output = "http://webservices.logica/WScontroladorCategoria/obtenerVideosDtCategoriaResponse")
-    public ArrayList obtenerVideosDtCategoria(
+    public PojoVideoDt obtenerVideosDtCategoria(
         @WebParam(name = "arg0", partName = "arg0")
         String arg0);
 

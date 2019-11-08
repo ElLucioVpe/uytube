@@ -3,21 +3,20 @@
     Created on : hoy mismo
     Author     : Esteban
 --%>
-<%@page import="logica.controladores.IControladorUsuario"%>
-<%@page import="logica.controladores.Fabrica"%>
+<%@page import = "logica.webservices.WScontroladorUsuarioImplService"%>
+<%@page import = "logica.webservices.WScontroladorUsuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
-    Fabrica f = Fabrica.getInstance();
-    IControladorUsuario user = f.getIControladorUsuario();
+	WScontroladorUsuario user = new WScontroladorUsuarioImplService().getWScontroladorUsuarioImplPort();
     
 	//Doy de baja al usuario
 	if(request.getParameter("id") != null && request.getParameter("id") != "" && request.getParameter("id") != "null") {
 		int id_user = Integer.parseInt(request.getParameter("id"));
 		
 		if(!user.obtenerNickUsuario(id_user).isEmpty()){ 
-			user.BajaUsuario(id_user);
+			user.bajaUsuario(id_user);
 			
-			if(!user.ConsultarUsuario(id_user).getActivo()) { 
+			if(!user.consultarUsuario(id_user).getActivo()) { 
 				//Cierro sesion
 			    session.setAttribute("userid", null);
 			    session.setAttribute("user_dt", null);

@@ -6,6 +6,7 @@
 package logica.dt;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
 import logica.Valoracion;
 
@@ -13,7 +14,7 @@ import logica.Valoracion;
  *
  * @author pagol
  */
-@XmlRootElement
+@XmlType
 public class valoracionDt {
      private String user;
      private boolean like;

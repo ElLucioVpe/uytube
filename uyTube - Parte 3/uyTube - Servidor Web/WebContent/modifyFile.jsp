@@ -4,7 +4,7 @@
     Author     : pagol
 --%>
 
-<%@page import="logica.dt.UsuarioDt"%>
+<%@page import="logica.webservices.UsuarioDt"%>
 <%@page import="org.jboss.logging.Logger"%>
 <%@page import="java.text.ParseException"%>
 <%@page import="org.apache.commons.fileupload.FileItem"%>
@@ -16,14 +16,17 @@
 <%@page import="javax.servlet.annotation.MultipartConfig"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="logica.controladores.IControladorUsuario"%>
-<%@page import="logica.controladores.Fabrica"%>
+<%@page import = "logica.webservices.WScontroladorUsuarioImplService"%>
+<%@page import = "logica.webservices.WScontroladorUsuario"%>
 <%@page import="java.nio.file.Paths"%>
-<%@page import="java.io.InputStream"%>
 <%@page import="java.util.ResourceBundle"%>
 <%@page import="java.net.URL"%>
 <%@page import="java.net.URLClassLoader"%>
 <%@page import="java.util.Locale"%>
+
+<%@ page import = "javax.xml.datatype.XMLGregorianCalendar"%>
+<%@ page import = "javax.xml.datatype.DatatypeFactory"%>
+<%@ page import = "java.util.GregorianCalendar"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -33,9 +36,9 @@
         <title>Cuenta modificada!! - uyTube</title>
 
         <%
-   File file ;
-   int maxFileSize = 5000 * 1024;
-   int maxMemSize = 5000 * 1024;
+			   File file ;
+			   int maxFileSize = 5000 * 1024;
+			   int maxMemSize = 5000 * 1024;
    
    
                  //User sets
@@ -81,7 +84,7 @@
    ClassLoader loader = new URLClassLoader(urls);
    ResourceBundle bundle = ResourceBundle.getBundle("uytube_conf", Locale.getDefault(), loader);
    
-   String filePath = bundle.getString("data")+"//imagenes//";
+   String filePath = bundle.getString("images")+"//";
 
    // Verify the content type
    String contentType = request.getContentType();
@@ -119,77 +122,60 @@
          
          FileItem fP = (FileItem)iP.next();
          
-         String fileName="";
-         
+         String fileName=userUp+".jpg";
+         WScontroladorUsuario user = new WScontroladorUsuarioImplService().getWScontroladorUsuarioImplPort();
          if(fP.getName().isEmpty()){
              
          //out.println("No Image");
      
          }else{
-         
-         //fileName="";
-         fileName = (String)session.getAttribute("userx")+".jpg";
-         while ( i.hasNext () ) {
-             
-            FileItem fi = (FileItem)i.next();
-            if ( !fi.isFormField () ) {
-               // Get the uploaded file parameters
-               String fieldName = fi.getFieldName();
-               //String fileName = username;
-               boolean isInMemory = fi.isInMemory();
-               long sizeInBytes = fi.getSize();
-            
-               // Write the file
-               if( fileName.lastIndexOf("\\") >= 0 ) {
-                  file = new File( filePath + 
-                  fileName.substring( fileName.lastIndexOf("\\"))) ;
-               } else {
-                  file = new File( filePath + 
-                  fileName.substring(fileName.lastIndexOf("\\")+1)) ;
-               }
-               fi.write( file ) ;
-               //out.println("Uploaded Filename: " + filePath + fileName + "<br>");
-            }
-         }
-         
-        }
-         
-               
-                
-                 
-                 if(visibility.contains("privado")){
-                 visUp=true;
-                 }
-                 if (visibility.contains("publico")){
-                 visUp=false;
-                 }
 
-                 //Modificar User
-                 Fabrica f = Fabrica.getInstance();
-                 IControladorUsuario user = f.getIControladorUsuario();
-    
-                 user.ModificarUsuario(_id,pswdUp, nameUp, apellidoUp, fechaNacimiento,canalUp, catUp, descUp, visUp,fileName);                
+	         while ( i.hasNext () ) {
+	             
+	            FileItem fi = (FileItem)i.next();
+	            if ( !fi.isFormField () ) {
+	               
+	               byte[] fileBytes = fP.get();
+		           user.saveFile(fileBytes, fileName);   
+	            }
+	         }
+         }
+                 
+	         if(visibility.contains("privado")){
+	         	visUp=true;
+	         }
+	         if (visibility.contains("publico")){
+	            visUp=false;
+	         }
+
+             //Modificar User
+
+             GregorianCalendar gcdate = new GregorianCalendar();
+           	 gcdate.setTime(fechaNacimiento);
+			 XMLGregorianCalendar xmlFecha = DatatypeFactory.newInstance().newXMLGregorianCalendar(gcdate);
+         
+             user.modificarUsuario(_id,pswdUp, nameUp, apellidoUp, xmlFecha,canalUp, catUp, descUp, visUp,fileName);                
                  
            
-         
-         
-         /*
-         out.println(userUp);
-         out.println(pswdUp);
-         out.println(nameUp); 
-         out.println(apellidoUp); 
-         out.println(mailUp); 
-         
-         out.println(visUp);
-         out.println(visibility);
-         out.println((String)session.getAttribute("catx"));
-         
-         out.println(catUp);
-         out.println(descUp);
-         */
-         out.println("Usuario modificado con exito!");
-         out.println("</body>");
-         out.println("</html>");
+	         
+	         
+	         /*
+	         out.println(userUp);
+	         out.println(pswdUp);
+	         out.println(nameUp); 
+	         out.println(apellidoUp); 
+	         out.println(mailUp); 
+	         
+	         out.println(visUp);
+	         out.println(visibility);
+	         out.println((String)session.getAttribute("catx"));
+	         
+	         out.println(catUp);
+	         out.println(descUp);
+	         */
+	         out.println("Usuario modificado con exito!");
+	         out.println("</body>");
+	         out.println("</html>");
       } catch(Exception ex) {
          System.out.println(ex);
       }

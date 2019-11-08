@@ -5,19 +5,19 @@
  */
 package logica.dt;
 
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
-import logica.Valoracion;
 import logica.Video;
 
 /**
  *
  * @author antus
  */
-@XmlRootElement
+
+@XmlType
 public class VideoDt {
     private Integer id;
     private String codigo;
@@ -29,9 +29,11 @@ public class VideoDt {
     private String categoria;
     private Boolean privacidad;
     private int canal_user_id;
-    private Collection<Valoracion> valoraciones;
+    //private List<valoracionDt> valoraciones;
     private int likes;
     private int dislikes;
+    private String thumbnail;
+    private String embedded;
 
     public VideoDt() {
     }
@@ -49,12 +51,36 @@ public class VideoDt {
         this.descripcion = v.getDescripcion();
         this.fechaPublicacion = v.getFechaPublicacion();
         this.privacidad  = v.getPrivacidad();
-        this.valoraciones = v.getValoraciones();
+        //this.valoraciones = v.getValoraciones();
         this.canal_user_id = v.getIdUsuario();
         this.categoria = v.getCategoria();
         //por cosas de la vida asi se queda
         this.likes = v.getLikes();
         this.dislikes = v.getDislikes();
+        
+        String thumbnail = "";
+        if(this.url.length() > 17) {
+            if(this.url.contains("https://youtu.be/")) {
+            	String video_id = url.substring(17);
+                thumbnail = "https://img.youtube.com/vi/" + video_id + "/3.jpg";
+            } else if (this.url.contains("https://www.youtube.com/")) {
+            	String video_id = url.substring(32);
+            	thumbnail = "https://img.youtube.com/vi/" + video_id + "/3.jpg";
+            }
+        }
+        this.thumbnail = thumbnail;
+        
+        String embedded = "";
+    	String video_id = "";
+        if(this.url.length() > 17) {
+            if(this.url.contains("https://youtu.be/")) {
+                video_id = url.substring(17);
+            } else if (this.url.contains("https://www.youtube.com/")) {
+                video_id = url.substring(32);
+            }
+            embedded = "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/"+ video_id +"\" frameborder=\"0\" allow=\"autoplay; encrypted-media\" allowfullscreen></iframe>";
+        }
+        this.embedded = embedded;
     }
 
     public Integer getId() {
@@ -94,31 +120,11 @@ public class VideoDt {
     }
     
     public String getThumbnail() {
-        String _url = "";
-        if(this.url.length() > 17) {
-            if(this.url.contains("https://youtu.be/")) {
-            	String video_id = url.substring(17);
-                _url = "https://img.youtube.com/vi/" + video_id + "/3.jpg";
-            } else if (this.url.contains("https://www.youtube.com/")) {
-            	String video_id = url.substring(32);
-                _url = "https://img.youtube.com/vi/" + video_id + "/3.jpg";
-            }
-        }
-        return _url;
+        return thumbnail;
     }
     
     public String getEmbedded() {
-    	String _url = "";
-    	String video_id = "";
-        if(this.url.length() > 17) {
-            if(this.url.contains("https://youtu.be/")) {
-                video_id = url.substring(17);
-            } else if (this.url.contains("https://www.youtube.com/")) {
-                video_id = url.substring(32);
-            }
-            _url = "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/"+ video_id +"\" frameborder=\"0\" allow=\"autoplay; encrypted-media\" allowfullscreen></iframe>";
-        }
-        return _url;
+        return embedded;
     }
 
     public Boolean getPrivacidad() {
@@ -131,10 +137,6 @@ public class VideoDt {
 
     public int getDislikes() {
         return dislikes;
-    }
-    
-    public Collection<Valoracion> getValoraciones() {
-        return valoraciones;
     }
     
     /****************************************
@@ -178,6 +180,14 @@ public class VideoDt {
         categoria = cat;
     }
 
+    public void setThumbnail(String value) {
+        thumbnail = value;
+    }
+    
+    public void setEmbedded(String value) {
+        embedded = value;
+    }
+    
     public void setPrivacidad(Boolean estado) {
         privacidad = estado;
     }
@@ -189,10 +199,5 @@ public class VideoDt {
     public void setDislikes(int cant) {
         dislikes = cant;
     }
-
-    public void setValoraciones(Collection<Valoracion> vals) {
-        valoraciones = vals;
-    }
-    
     
 }

@@ -4,21 +4,31 @@
     Author     : Esteban
 --%>
 
-<%@page import="java.util.List"%>
-<%@page import="logica.dt.ComentarioDt"%>
-<%@page import="logica.controladores.IControladorVideo"%>
-<%@page import="logica.controladores.Fabrica"%>
+<%@page import="java.util.Locale"%>
+<%@page import="java.io.File"%>
+<%@page import="java.net.URL"%>
+<%@page import="java.net.URLClassLoader"%>
+<%@page import="java.util.ResourceBundle"%>
+<%@page import="java.util.List"%><%@page import="java.util.ArrayList"%>
+<%@page import="logica.webservices.ComentarioDt"%>
+<%@page import = "logica.webservices.WScontroladorVideoImplService"%>
+<%@page import = "logica.webservices.WScontroladorVideo"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
-    Fabrica f = Fabrica.getInstance();
-    IControladorVideo vid = f.getIControladorVideo();
+	WScontroladorVideo vid = new WScontroladorVideoImplService().getWScontroladorVideoImplPort();
     int video_id = -1;
     
     if(request.getParameter("id_v") != null){
-        String path = request.getContextPath();
+    	
+    	File properties = new File(System.getProperty("user.home")+"/.UyTube");
+		URL[] urls = {properties.toURI().toURL()};
+		ClassLoader loader = new URLClassLoader(urls);
+		ResourceBundle bundle = ResourceBundle.getBundle("uytube_conf", Locale.getDefault(), loader);
+    	
+        String path = bundle.getString("url_images");
         video_id = Integer.parseInt(request.getParameter("id_v"));
         String html = "";
-        List<ComentarioDt> comentarios = vid.obtenerComentariosDt(video_id);
+        List<ComentarioDt> comentarios = vid.obtenerComentariosDt(video_id).getLista();
         if(!comentarios.isEmpty()) {
             for(int i = 0; i < comentarios.size(); i++) {
                 html += comentariosRecursivo(comentarios.get(i), path);
@@ -49,7 +59,8 @@
             html+= "<button type=\"button\" class=\"btn btn-success\" onclick=\"comentarVideo("+c.getId()+")\">Comentar</button></div></div>";
             html+= "</div></div><div class=\"collapse\" id=\"respuestas"+c.getId()+"\"><ul class=\"media-list\"><hr/>";
 
-            List<ComentarioDt> hijos = c.getHijos();
+            List auxhijos = c.getHijos();
+            List<ComentarioDt> hijos = (List<ComentarioDt>) auxhijos;
             for(int i = 0; i < hijos.size(); i++) {
                 html += comentariosRecursivo(hijos.get(i), path);
             }

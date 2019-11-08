@@ -21,7 +21,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="activo" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
+ *         &lt;element name="activo" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
  *         &lt;element name="apellido" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="canal" type="{http://webservices.logica/}canal" minOccurs="0"/>
  *         &lt;element name="fechanac" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
@@ -32,6 +32,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="nombre" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="password" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="suscripciones" type="{http://webservices.logica/}canal" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="valoraciones" type="{http://webservices.logica/}valoracion" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -52,11 +53,12 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "nickname",
     "nombre",
     "password",
-    "suscripciones"
+    "suscripciones",
+    "valoraciones"
 })
 public class Usuario {
 
-    protected boolean activo;
+    protected Boolean activo;
     protected String apellido;
     protected Canal canal;
     @XmlSchemaType(name = "dateTime")
@@ -69,20 +71,30 @@ public class Usuario {
     protected String password;
     @XmlElement(nillable = true)
     protected List<Canal> suscripciones;
+    @XmlElement(nillable = true)
+    protected List<Valoracion> valoraciones;
 
     /**
      * Obtiene el valor de la propiedad activo.
      * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
      */
-    public boolean getActivo() {
+    public Boolean isActivo() {
         return activo;
     }
 
     /**
      * Define el valor de la propiedad activo.
      * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
      */
-    public void setActivo(boolean value) {
+    public void setActivo(Boolean value) {
         this.activo = value;
     }
 
@@ -329,6 +341,35 @@ public class Usuario {
             suscripciones = new ArrayList<Canal>();
         }
         return this.suscripciones;
+    }
+
+    /**
+     * Gets the value of the valoraciones property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the valoraciones property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getValoraciones().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link Valoracion }
+     * 
+     * 
+     */
+    public List<Valoracion> getValoraciones() {
+        if (valoraciones == null) {
+            valoraciones = new ArrayList<Valoracion>();
+        }
+        return this.valoraciones;
     }
 
 }

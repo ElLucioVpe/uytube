@@ -6,17 +6,16 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import = "org.json.JSONObject"%>
 <%@page import = "org.json.JSONArray"%>
-<%@page import = "logica.controladores.Fabrica" %>
-<%@page import = "logica.controladores.IControladorUsuario"%>
-<%@page import = "logica.dt.UsuarioDt" %>
+<%@page import = "logica.webservices.WScontroladorUsuarioImplService"%>
+<%@page import = "logica.webservices.WScontroladorUsuario"%>
+<%@page import = "logica.webservices.UsuarioDt" %>
 <%@page import = "java.util.List" %>
 <%@page import = "java.util.Date" %>
-<%@page import="logica.dt.CanalDt"%>
+<%@page import="logica.webservices.CanalDt"%>
         <%
-            Fabrica f = Fabrica.getInstance();
-            IControladorUsuario user = f.getIControladorUsuario();
+        	WScontroladorUsuario user = new WScontroladorUsuarioImplService().getWScontroladorUsuarioImplPort();
             int User_id = Integer.parseInt(request.getParameter("id"));
-            List<String> list = user.ListarSeguidores(User_id);
+            List<String> list = user.listarSeguidores(User_id).getLista();
             JSONObject json1 = null;
             JSONArray jarr = new JSONArray();
 

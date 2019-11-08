@@ -1,10 +1,10 @@
 package logica.dt;
 
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
 import logica.Categoria;
 
-@XmlRootElement
+@XmlType
 public class CategoriaDt {
      private String nombre;
 

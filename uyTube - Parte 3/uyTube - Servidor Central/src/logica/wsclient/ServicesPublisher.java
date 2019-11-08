@@ -27,11 +27,10 @@ public class ServicesPublisher{
 		Endpoint.publish("http://"+serviceIP+bundle.getString("serviceUsuario"), new WScontroladorUsuarioImpl());
 		Endpoint.publish("http://"+serviceIP+bundle.getString("serviceVideo"), new WScontroladorVideoImpl());
 		Endpoint.publish("http://"+serviceIP+bundle.getString("serviceCategoria"), new WScontroladorCategoriaImpl());
-		//Endpoint.publish("http://"+serviceIP+bundle.getString("serviceFiles"), new WSfilesImpl());
 		
 		System.out.println("Servicios publicados");
 		//ep.stop();
-
+		
     }
 	
 }

@@ -9,6 +9,10 @@ import logica.controladores.IControladorCategoria;
 import logica.dt.CategoriaDt;
 import logica.dt.ListaDeReproduccionDt;
 import logica.dt.VideoDt;
+import logica.webservices.pojos.POJOCategoriaDt;
+import logica.webservices.pojos.POJOListadrDt;
+import logica.webservices.pojos.POJOString;
+import logica.webservices.pojos.POJOVideoDt;
 
 @WebService(endpointInterface = "logica.webservices.WScontroladorCategoria")
 public class WScontroladorCategoriaImpl implements WScontroladorCategoria {
@@ -22,8 +26,8 @@ public class WScontroladorCategoriaImpl implements WScontroladorCategoria {
 	}
 
 	@Override
-	public ArrayList<CategoriaDt> ListarCategorias() {
-		return new ArrayList<>(controlador.ListarCategorias());
+	public POJOCategoriaDt ListarCategorias() {
+		return new POJOCategoriaDt(controlador.ListarCategorias());
 	}
 
 	@Override
@@ -42,13 +46,13 @@ public class WScontroladorCategoriaImpl implements WScontroladorCategoria {
 	}*/
 
 	@Override
-	public ArrayList<ListaDeReproduccionDt> obtenerListasDtCategoria(String nom) {
-		return new ArrayList<>(controlador.obtenerListasDtCategoria(nom));
+	public POJOListadrDt obtenerListasDtCategoria(String nom) {
+		return new POJOListadrDt(controlador.obtenerListasDtCategoria(nom));
 	}
 
 	@Override
-	public ArrayList<VideoDt> obtenerVideosDtCategoria(String nom) {
-		return new ArrayList<>(controlador.obtenerVideosDtCategoria(nom));
+	public POJOVideoDt obtenerVideosDtCategoria(String nom) {
+		return new POJOVideoDt(controlador.obtenerVideosDtCategoria(nom));
 	}
 
 }

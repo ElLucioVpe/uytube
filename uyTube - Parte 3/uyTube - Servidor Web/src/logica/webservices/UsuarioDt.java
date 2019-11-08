@@ -21,9 +21,9 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="activo" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
+ *         &lt;element name="activo" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
  *         &lt;element name="apellido" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="canal" type="{http://webservices.logica/}canal" minOccurs="0"/>
+ *         &lt;element name="canal" type="{http://webservices.logica/}canalDt" minOccurs="0"/>
  *         &lt;element name="fechanac" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="imagen" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
@@ -56,9 +56,9 @@ import javax.xml.datatype.XMLGregorianCalendar;
 })
 public class UsuarioDt {
 
-    protected boolean activo;
+    protected Boolean activo;
     protected String apellido;
-    protected Canal canal;
+    protected CanalDt canal;
     @XmlSchemaType(name = "dateTime")
     protected XMLGregorianCalendar fechanac;
     protected Integer id;
@@ -73,16 +73,24 @@ public class UsuarioDt {
     /**
      * Obtiene el valor de la propiedad activo.
      * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
      */
-    public boolean getActivo() {
+    public Boolean isActivo() {
         return activo;
     }
 
     /**
      * Define el valor de la propiedad activo.
      * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
      */
-    public void setActivo(boolean value) {
+    public void setActivo(Boolean value) {
         this.activo = value;
     }
 
@@ -115,10 +123,10 @@ public class UsuarioDt {
      * 
      * @return
      *     possible object is
-     *     {@link Canal }
+     *     {@link CanalDt }
      *     
      */
-    public Canal getCanal() {
+    public CanalDt getCanal() {
         return canal;
     }
 
@@ -127,10 +135,10 @@ public class UsuarioDt {
      * 
      * @param value
      *     allowed object is
-     *     {@link Canal }
+     *     {@link CanalDt }
      *     
      */
-    public void setCanal(Canal value) {
+    public void setCanal(CanalDt value) {
         this.canal = value;
     }
 

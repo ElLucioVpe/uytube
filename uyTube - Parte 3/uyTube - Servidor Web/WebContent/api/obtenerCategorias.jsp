@@ -4,18 +4,17 @@
     Author     : Esteban
 --%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import = "logica.controladores.Fabrica" %>
-<%@page import = "logica.controladores.IControladorCategoria"%>
-<%@page import = "logica.dt.CategoriaDt" %>
+<%@page import = "logica.webservices.WScontroladorCategoriaImplService"%>
+<%@page import = "logica.webservices.WScontroladorCategoria"%>
+<%@page import = "logica.webservices.CategoriaDt" %>
 <%@page import = "java.util.List" %>
 <%@page import = "org.json.JSONObject"%>
 <%@page import = "org.json.JSONArray"%>
 
 <%
-    Fabrica f = Fabrica.getInstance();
-    IControladorCategoria cat = f.getIControladorCategoria();
+	WScontroladorCategoria cat = new WScontroladorCategoriaImplService().getWScontroladorCategoriaImplPort();
     
-    List<CategoriaDt> l = cat.ListarCategorias(); //porque existe esto :\
+    List<CategoriaDt> l = cat.listarCategorias().getLista(); //porque existe esto :\
     
     JSONObject jsonCat = null;
     JSONArray categorias = new JSONArray();

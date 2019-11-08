@@ -5,8 +5,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import = "logica.controladores.Fabrica" %>
-<%@page import = "logica.controladores.IControladorUsuario"%>
+<%@page import = "logica.webservices.WScontroladorUsuarioImplService"%>
+<%@page import = "logica.webservices.WScontroladorUsuario"%>
 
 <!DOCTYPE html>
 <html>
@@ -17,18 +17,17 @@
         <script src="js/jquery.min.js"></script>
         <title>Iniciar sesion en uyTube</title>
             <%
-                Fabrica f = Fabrica.getInstance();
-                IControladorUsuario user = f.getIControladorUsuario();
+            	WScontroladorUsuario user = new WScontroladorUsuarioImplService().getWScontroladorUsuarioImplPort();
                 
                 Boolean formInput = false;
                 
                 
                 if (request.getParameter("user") != null) {
                     if (request.getParameter("password") != null) {
-                        Integer _id = user.LoginUsuario(request.getParameter("user"), request.getParameter("password"));
-                        if (_id != null) {
+                        Integer _id = user.loginUsuario(request.getParameter("user"), request.getParameter("password"));
+                        if (_id != -1) {
                             session.setAttribute("userid",_id);
-                            session.setAttribute("user_dt", user.ConsultarUsuario(_id));
+                            session.setAttribute("user_dt", user.consultarUsuario(_id));
                             String redirectURL = "index.jsp";
                             response.sendRedirect(redirectURL);
                         }

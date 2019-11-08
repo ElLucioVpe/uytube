@@ -5,14 +5,15 @@
 --%>
 
 <%@page import="java.util.List"%>
-<%@page import="logica.dt.VideoDt"%>
-<%@page import="logica.dt.CategoriaDt"%>
+<%@page import="logica.webservices.VideoDt"%>
+<%@page import="logica.webservices.CategoriaDt"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import = "logica.controladores.Fabrica" %>
-<%@page import = "logica.controladores.IControladorVideo"%>
-<%@page import = "logica.controladores.IControladorUsuario"%>
-<%@page import = "logica.controladores.IControladorCategoria"%>
+
+<%@page import = "logica.webservices.WScontroladorVideoImplService"%>
+<%@page import = "logica.webservices.WScontroladorVideo"%>
+<%@page import = "logica.webservices.WScontroladorCategoriaImplService"%>
+<%@page import = "logica.webservices.WScontroladorCategoria"%>
 
 
 <%@page contentType="text/html"%>
@@ -37,11 +38,9 @@
         <title>Alta Video</title>
          <%
              
-             
-                Fabrica f = Fabrica.getInstance();
-                IControladorVideo vid = f.getIControladorVideo();
-                IControladorUsuario usu = f.getIControladorUsuario();
-                IControladorCategoria cat = f.getIControladorCategoria();
+         		WScontroladorVideo vid = new WScontroladorVideoImplService().getWScontroladorVideoImplPort();
+  				//WScontroladorUsuario usu = new WScontroladorUsuarioImplService().getWScontroladorUsuarioImplPort();
+                WScontroladorCategoria cat = new WScontroladorCategoriaImplService().getWScontroladorCategoriaImplPort();
                 
                 session.setAttribute("errorAltaVideo", "");
                 boolean seCreo = false;
@@ -82,7 +81,7 @@
                 	VideoDt videoAntes = vid.obtenerVideoDt(nombre, _id);
                 	if(videoAntes != null) session.setAttribute("errorAltaVideo", "nombrevid");
                 	
-                    vid.AltaVideo(nombre, durat, url, descr, _id, categoria);
+                    vid.altaVideo(nombre, durat, url, descr, _id, categoria);
                     
                     VideoDt videoDespues = vid.obtenerVideoDt(nombre, _id);
                     if(videoAntes == null && videoDespues != null) seCreo = true;
@@ -152,7 +151,7 @@
                                     <select class="form-control" id="categoria" name="categoria">
                                         <%
                                        
-                                            List<CategoriaDt> catArray = cat.ListarCategorias();
+                                            List<CategoriaDt> catArray = cat.listarCategorias().getLista();
                                             
                                         %>
                                         

@@ -849,7 +849,7 @@ public class ControladorUsuario implements IControladorUsuario {
     //Para el servidor web
     @Override
     public Integer LoginUsuario(String _user, String _password) {
-        Integer userId = null;
+        Integer userId = -1;
         EntityManager emanager = emFactory.createEntityManager();
         try {
             emanager.getTransaction().begin();

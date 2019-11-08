@@ -1,11 +1,8 @@
 
 package logica.webservices;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -26,14 +23,15 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="descripcion" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="dislikes" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *         &lt;element name="duracion" type="{http://www.w3.org/2001/XMLSchema}float"/>
+ *         &lt;element name="embedded" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="fechaPublicacion" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="idCanal" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *         &lt;element name="likes" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *         &lt;element name="nombre" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="privacidad" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
+ *         &lt;element name="thumbnail" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="url" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="valoraciones" type="{http://webservices.logica/}valoracion" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -49,14 +47,15 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "descripcion",
     "dislikes",
     "duracion",
+    "embedded",
     "fechaPublicacion",
     "id",
     "idCanal",
     "likes",
     "nombre",
     "privacidad",
-    "url",
-    "valoraciones"
+    "thumbnail",
+    "url"
 })
 public class VideoDt {
 
@@ -65,6 +64,7 @@ public class VideoDt {
     protected String descripcion;
     protected int dislikes;
     protected float duracion;
+    protected String embedded;
     @XmlSchemaType(name = "dateTime")
     protected XMLGregorianCalendar fechaPublicacion;
     protected Integer id;
@@ -72,38 +72,9 @@ public class VideoDt {
     protected int likes;
     protected String nombre;
     protected Boolean privacidad;
+    protected String thumbnail;
     protected String url;
-    @XmlElement(nillable = true)
-    protected List<Valoracion> valoraciones;
 
-    
-    public String getThumbnail() {
-        String _url = "";
-        if(this.url.length() > 17) {
-            if(this.url.contains("https://youtu.be/")) {
-            	String video_id = url.substring(17);
-                _url = "https://img.youtube.com/vi/" + video_id + "/3.jpg";
-            } else if (this.url.contains("https://www.youtube.com/")) {
-            	String video_id = url.substring(32);
-                _url = "https://img.youtube.com/vi/" + video_id + "/3.jpg";
-            }
-        }
-        return _url;
-    }
-    
-    public String getEmbedded() {
-    	String _url = "";
-    	String video_id = "";
-        if(this.url.length() > 17) {
-            if(this.url.contains("https://youtu.be/")) {
-                video_id = url.substring(17);
-            } else if (this.url.contains("https://www.youtube.com/")) {
-                video_id = url.substring(32);
-            }
-            _url = "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/"+ video_id +"\" frameborder=\"0\" allow=\"autoplay; encrypted-media\" allowfullscreen></iframe>";
-        }
-        return _url;
-    }
     /**
      * Obtiene el valor de la propiedad categoria.
      * 
@@ -206,6 +177,30 @@ public class VideoDt {
      */
     public void setDuracion(float value) {
         this.duracion = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad embedded.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getEmbedded() {
+        return embedded;
+    }
+
+    /**
+     * Define el valor de la propiedad embedded.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setEmbedded(String value) {
+        this.embedded = value;
     }
 
     /**
@@ -320,7 +315,7 @@ public class VideoDt {
      *     {@link Boolean }
      *     
      */
-    public Boolean getPrivacidad() {
+    public Boolean isPrivacidad() {
         return privacidad;
     }
 
@@ -334,6 +329,30 @@ public class VideoDt {
      */
     public void setPrivacidad(Boolean value) {
         this.privacidad = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad thumbnail.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    /**
+     * Define el valor de la propiedad thumbnail.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setThumbnail(String value) {
+        this.thumbnail = value;
     }
 
     /**
@@ -358,35 +377,6 @@ public class VideoDt {
      */
     public void setUrl(String value) {
         this.url = value;
-    }
-
-    /**
-     * Gets the value of the valoraciones property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the valoraciones property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getValoraciones().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Valoracion }
-     * 
-     * 
-     */
-    public List<Valoracion> getValoraciones() {
-        if (valoraciones == null) {
-            valoraciones = new ArrayList<Valoracion>();
-        }
-        return this.valoraciones;
     }
 
 }

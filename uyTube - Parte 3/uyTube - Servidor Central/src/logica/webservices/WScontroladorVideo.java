@@ -1,6 +1,5 @@
 package logica.webservices;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 import javax.jws.WebMethod;
@@ -10,7 +9,9 @@ import javax.jws.soap.SOAPBinding.Style;
 
 import logica.dt.ComentarioDt;
 import logica.dt.VideoDt;
-import logica.dt.valoracionDt;
+import logica.webservices.pojos.POJOComentarioDt;
+import logica.webservices.pojos.POJOVideoDt;
+import logica.webservices.pojos.POJOvaloracionDt;
 
 @WebService
 @SOAPBinding(style = Style.RPC)
@@ -24,9 +25,9 @@ public interface WScontroladorVideo {
 	@WebMethod void ComentarVideo(int user_id, int video_id, long id_padre, String texto, Date fecha);
 	@WebMethod VideoDt obtenerVideoDt(String video, Integer user);
 	@WebMethod VideoDt obtenerVideoDtPorID(int id_video);
-	@WebMethod ArrayList<valoracionDt>  obtenerValoracionVideo(int id_video);
-	@WebMethod ArrayList<VideoDt> obtenerVideos();
-	@WebMethod ArrayList<ComentarioDt> obtenerComentariosDt(int id_video);
+	@WebMethod POJOvaloracionDt obtenerValoracionVideo(int id_video);
+	@WebMethod POJOVideoDt obtenerVideos();
+	@WebMethod POJOComentarioDt obtenerComentariosDt(int id_video);
 	@WebMethod VideoDt obtenerVideoDtPorCOD(String codigo);
 
 }

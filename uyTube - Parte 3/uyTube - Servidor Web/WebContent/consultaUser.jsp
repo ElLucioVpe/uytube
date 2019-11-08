@@ -4,17 +4,17 @@
     Author     : antus
 --%>
 <%@page import = "javax.persistence.*"%>
-<%@page import = "logica.controladores.Fabrica"%>
-<%@page import = "logica.controladores.IControladorUsuario"%>
-<%@page import = "logica.dt.UsuarioDt"%>
-<%@page import = "logica.dt.CanalDt"%>
+<%@page import = "logica.webservices.WScontroladorUsuarioImplService"%>
+<%@page import = "logica.webservices.WScontroladorUsuario"%>
+<%@page import = "logica.webservices.UsuarioDt"%>
+<%@page import = "logica.webservices.CanalDt"%>
+<%@page import = "java.util.ArrayList"%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!doctype html>
 
 <% 
-        Fabrica f = Fabrica.getInstance();
-        IControladorUsuario user = f.getIControladorUsuario();
+        WScontroladorUsuario user = new WScontroladorUsuarioImplService().getWScontroladorUsuarioImplPort();
         String path = request.getContextPath();
         
         String id_aux = "5";
@@ -25,21 +25,21 @@
 	        Boolean estaSuscripto = false; //inicializo
 	        int canalUser_id = Integer.parseInt(id_aux);
 	        session.setAttribute("canalUserid", canalUser_id);
-	        UsuarioDt u = user.ConsultarUsuario(canalUser_id);
+	        UsuarioDt u = user.consultarUsuario(canalUser_id);
 	        
-	        if(!u.getActivo()) response.sendRedirect(path+"/index.jsp");
+	        if(!u.isActivo()) response.sendRedirect(path+"/index.jsp");
 	        
 	        CanalDt canal = user.obtenerCanalDt(canalUser_id);
 	        Boolean estaSuscripto2 = false; 
 	        
-	        List<String> seguidores = user.ListarSeguidores(canalUser_id);
+	        List<String> seguidores = user.listarSeguidores(canalUser_id).getLista();
 	        int userid=-1;
-	       	if(session.getAttribute("userid") != null){ 
+	       	if(session.getAttribute("userid") != null) {
 	        	estaSuscripto2 = user.estaSuscripto((int)session.getAttribute("userid"), u.getId());
 	            userid =(int)session.getAttribute("userid");
 	        }
 	        boolean privacidad = false;
-	      	if(user.obtenerCanalDt(canalUser_id).getPrivacidad()) privacidad = true;
+	      	if(user.obtenerCanalDt(canalUser_id).isPrivacidad()) privacidad = true;
 %>
 <!-- Load JQuery -->
   <head>
@@ -101,7 +101,7 @@
                      	//console.log(usuarios[i].imagen);
                         var img = document.getElementById("imgU");
                         img.src = "img/user.png";
-                        if(usuarios[i].imagen !== "")img.src = "<%=path%>/images/"+usuarios[i].imagen; //aca va img.src = usuarios[i].imagen;
+                        if(usuarios[i].imagen !== "")img.src = "<%=images_url%>"+usuarios[i].imagen; //aca va img.src = usuarios[i].imagen;
                         console.log(img.src);
                         img.width = "100";
                         img.height = "100";

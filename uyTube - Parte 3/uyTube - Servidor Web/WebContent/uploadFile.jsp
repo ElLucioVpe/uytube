@@ -15,8 +15,6 @@
 <%@page import="javax.servlet.annotation.MultipartConfig"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="logica.controladores.IControladorUsuario"%>
-<%@page import="logica.controladores.Fabrica"%>
 <%@page import="java.nio.file.Paths"%>
 <%@page import="java.io.InputStream"%>
 <%@page import="java.util.ResourceBundle"%>
@@ -24,6 +22,11 @@
 <%@page import="java.net.URLClassLoader"%>
 <%@page import="java.util.Locale"%>
 
+<%@page import = "logica.webservices.WScontroladorUsuarioImplService"%>
+<%@page import = "logica.webservices.WScontroladorUsuario"%>
+<%@ page import = "javax.xml.datatype.XMLGregorianCalendar"%>
+<%@ page import = "javax.xml.datatype.DatatypeFactory"%>
+<%@ page import = "java.util.GregorianCalendar"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -85,36 +88,22 @@
          
          FileItem fP = (FileItem)iP.next();
          
-         String fileName="";
+         String fileName=(String)session.getAttribute("userx")+".jpg";
         
+         WScontroladorUsuario user = new WScontroladorUsuarioImplService().getWScontroladorUsuarioImplPort();
          if(fP.getName().isEmpty()){
              
          //out.println("No Image");
      
          }else{
-         while ( i.hasNext () ) {
-            FileItem fi = (FileItem)i.next();
-            if ( !fi.isFormField () ) {
-               // Get the uploaded file parameters
-               String fieldName = fi.getFieldName();
-               //String fileName = fi.getName();
-               fileName = (String)session.getAttribute("userx")+".jpg";
-               //String fileName = username;
-               boolean isInMemory = fi.isInMemory();
-               long sizeInBytes = fi.getSize();
-            
-               // Write the file
-               if( fileName.lastIndexOf("//") >= 0 ) {
-                  file = new File( filePath + 
-                  fileName.substring( fileName.lastIndexOf("//"))) ;
-               } else {
-                  file = new File( filePath + 
-                  fileName.substring(fileName.lastIndexOf("//")+1)) ;
-               }
-               fi.write( file ) ;
-               //out.println("Uploaded Filename: " + filePath + fileName + "<br>");
-            }
-         }
+	         while ( i.hasNext () ) {
+	            FileItem fi = (FileItem)i.next();
+	            if ( !fi.isFormField () ) {
+
+	                byte[] fileBytes = fP.get();
+	 	           	user.saveFile(fileBytes, fileName);  
+	            }
+	         }
          
          }
          
@@ -146,18 +135,21 @@
                  
                  
                  //Alta User
-                 Fabrica f = Fabrica.getInstance();
-                 IControladorUsuario user = f.getIControladorUsuario();
-              
+                 
+
                  SimpleDateFormat sdf= new SimpleDateFormat("dd/MM/yyyy");
                  java.util.Date fechaNacimiento = sdf.parse(fechaUp); 
                     
-                 user.AltaUsuario(userUp, pswdUp, nameUp,apellidoUp, mailUp, fechaNacimiento, fileName);  
+                 GregorianCalendar gcdate = new GregorianCalendar();
+               	 gcdate.setTime(fechaNacimiento);
+				 XMLGregorianCalendar xmlFecha = DatatypeFactory.newInstance().newXMLGregorianCalendar(gcdate);
+                 
+                 user.altaUsuario(userUp, pswdUp, nameUp,apellidoUp, mailUp, xmlFecha, fileName);  
                     
                  IdUsuarioCreate = user.obtenerIdUsuario(userUp);
                      
                  if(IdUsuarioCreate!=-1){
-                 	user.AltaCanal(canalUp, visUp, catUp, IdUsuarioCreate, descUp);
+                 	user.altaCanal(canalUp, visUp, catUp, IdUsuarioCreate, descUp);
                  }
                  
            

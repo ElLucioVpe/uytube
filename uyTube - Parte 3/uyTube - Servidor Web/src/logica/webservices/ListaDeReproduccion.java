@@ -128,7 +128,7 @@ public class ListaDeReproduccion {
      * Obtiene el valor de la propiedad privada.
      * 
      */
-    public boolean getPrivada() {
+    public boolean isPrivada() {
         return privada;
     }
 

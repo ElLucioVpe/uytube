@@ -5,13 +5,14 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import = "logica.controladores.Fabrica" %>
-<%@page import = "logica.controladores.IControladorUsuario"%>
-<%@page import="logica.controladores.IControladorCategoria"%>
+<%@page import = "logica.webservices.WScontroladorUsuarioImplService"%>
+<%@page import = "logica.webservices.WScontroladorUsuario"%>
+<%@page import = "logica.webservices.WScontroladorCategoriaImplService"%>
+<%@page import = "logica.webservices.WScontroladorCategoria"%>
 <%@page import="java.util.List"%>
-<%@page import="logica.dt.CategoriaDt"%>
-<%@page import="logica.dt.CanalDt"%>
-<%@page import="logica.dt.ListaDeReproduccionDt"%>
+<%@page import="logica.webservices.CategoriaDt"%>
+<%@page import="logica.webservices.CanalDt"%>
+<%@page import="logica.webservices.ListaDeReproduccionDt"%>
 
 <!DOCTYPE html>
 <html>
@@ -28,9 +29,8 @@
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
             
         <%
-            Fabrica f = Fabrica.getInstance();
-            IControladorUsuario user = f.getIControladorUsuario();
-            IControladorCategoria cat = f.getIControladorCategoria();
+        	WScontroladorUsuario user = new WScontroladorUsuarioImplService().getWScontroladorUsuarioImplPort();
+        	WScontroladorCategoria cat = new WScontroladorCategoriaImplService().getWScontroladorCategoriaImplPort();
             
             session.setAttribute("errorAltaLista", null);
             if(session.getAttribute("userid") != null && session.getAttribute("user_dt") != null) {
@@ -43,10 +43,10 @@
                             boolean privada = true;
                             if (request.getParameter("visibilidad").equals("publico")) privada = false;
                             CanalDt c = user.obtenerCanalDt(user_id);
-                            if(c.getPrivacidad() && !privada) session.setAttribute("errorAltaLista", "visibilidad");
+                            if(c.isPrivacidad() && !privada) session.setAttribute("errorAltaLista", "visibilidad");
                             else {
                                 if(request.getParameter("categoria") != null && request.getParameter("categoria") != "") {
-                                    user.AltaListaDeReproduccionParticular(request.getParameter("nombre"), (int)session.getAttribute("userid"), privada, request.getParameter("categoria"));
+                                    user.altaListaDeReproduccionParticular(request.getParameter("nombre"), (int)session.getAttribute("userid"), privada, request.getParameter("categoria"));
                                     //Testeo si se creo, osea si se mando alguna el user por que si aca fallo es que altero el url a posta
                                     ListaDeReproduccionDt creada = user.obtenerListaDt(user_id, request.getParameter("nombre"));
                                     if(creada == null) session.setAttribute("errorAltaLista", "tramposo");
@@ -102,7 +102,7 @@
                                     <div class="col-md-6">
                                         <select class="form-control" id="categoria" name="categoria">
                                             <option selected value="Ninguna"> Ninguna </option>
-                                            <%  List<CategoriaDt> catArray = cat.ListarCategorias();
+                                            <%  List<CategoriaDt> catArray = cat.listarCategorias().getLista();
                                                 for (CategoriaDt c : catArray) {%>
                                                 <option value="<%=c.getNombre()%>"><%=c.getNombre()%></option>
                                             <%}%>

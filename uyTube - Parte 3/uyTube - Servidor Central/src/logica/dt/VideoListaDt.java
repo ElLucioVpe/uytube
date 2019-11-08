@@ -5,7 +5,7 @@
  */
 package logica.dt;
 
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  *
@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * Al no necesitarlos me ahorre casi todo
  * esta hecho solo para listar en quitarVideoListaDR
  */
-@XmlRootElement
+@XmlType
 public class VideoListaDt {
     private int id;
     private String nombre;

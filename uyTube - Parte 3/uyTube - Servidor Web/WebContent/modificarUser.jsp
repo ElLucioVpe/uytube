@@ -5,12 +5,9 @@
 --%>
 
 <%@page import="java.text.DateFormat"%>
-<%@page import="logica.dt.CanalDt"%>
-<%@page import="logica.dt.UsuarioDt"%>
-<%@page import="logica.dt.CategoriaDt"%>
-<%@page import="logica.Categoria"%>
-<%@page import="logica.controladores.IControladorCategoria"%>
-<%@page import="logica.controladores.IControladorVideo"%>
+<%@page import="logica.webservices.CanalDt"%>
+<%@page import="logica.webservices.UsuarioDt"%>
+<%@page import="logica.webservices.CategoriaDt"%>
 <%@page import="javax.servlet.annotation.MultipartConfig"%>
 <%@page import="javax.servlet.annotation.WebServlet"%>
 <%@page import="java.io.InputStream"%>
@@ -22,8 +19,10 @@
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page contentType="text/html"%>
-<%@page import = "logica.controladores.Fabrica" %>
-<%@page import = "logica.controladores.IControladorUsuario"%>
+<%@page import = "logica.webservices.WScontroladorUsuarioImplService"%>
+<%@page import = "logica.webservices.WScontroladorUsuario"%>
+<%@page import = "logica.webservices.WScontroladorCategoriaImplService"%>
+<%@page import = "logica.webservices.WScontroladorCategoria"%>
 
 <%@ page import = "java.util.*, javax.servlet.*" %>
 <%@ page import = "javax.servlet.http.*" %>
@@ -37,14 +36,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-          
-          
-        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-        <script src="js/bootstrap.min.js"></script>
-        <script src="js/jquery.min.js"></script>
-        
           <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-            <!--  <link rel="stylesheet" href="/resources/demos/style.css">-->
             <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
             <%@include file="include/header.jsp" %>
             <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -60,13 +52,11 @@
             <%
                 
                 //Testing weas
-                
-                Fabrica f = Fabrica.getInstance();
-                IControladorUsuario user = f.getIControladorUsuario();
+                WScontroladorUsuario user = new WScontroladorUsuarioImplService().getWScontroladorUsuarioImplPort();
                 
                 int _id = (Integer)session.getAttribute("userid");
                 //int _id = 16;
-                UsuarioDt userx = user.ConsultarUsuario(_id);
+                UsuarioDt userx = user.consultarUsuario(_id);
                 
                 //Canal
                 CanalDt canalx = user.obtenerCanalDt(_id);
@@ -80,8 +70,9 @@
 
                   
                 DateFormat fecha= new SimpleDateFormat("dd/MM/yyyy");
-                String fechaNacimiento= fecha.format(userx.getFechanac());
-                UsuarioDt imm = user.ConsultarUsuario(_id);
+                
+                String fechaNacimiento= fecha.format(userx.getFechanac().toGregorianCalendar().getTime());
+                UsuarioDt imm = user.consultarUsuario(_id);
                 
                 String descripcion = "";
                 if(canalx.getDescripcion() != null) descripcion = canalx.getDescripcion();
@@ -179,13 +170,13 @@
                                         <label for="Visibilidad" class="col-md-4 col-form-label text-md-right">Visibilidad</label>
                                         <div class="col-md-6">
                                             <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="visibilidad" value="privado" <%if(canalx.getPrivacidad()){out.print("checked");} %> >
+                                            <input class="form-check-input" type="radio" name="visibilidad" value="privado" <%if(canalx.isPrivacidad()){out.print("checked");} %> >
                                             <label class="form-check-label" for="visibilidad1">
                                               Privado
                                             </label>
                                           </div>
                                           <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="visibilidad" value="publico" <%if(!canalx.getPrivacidad()){out.print("checked");} %> >
+                                            <input class="form-check-input" type="radio" name="visibilidad" value="publico" <%if(!canalx.isPrivacidad()){out.print("checked");} %> >
                                             <label class="form-check-label" for="visibilidad2">
                                               Publico
                                             </label>
@@ -200,8 +191,8 @@
 	                                    <select class="form-control" id="categoria" name="categoria">
 	                                        <%
 	                                          
-	                                            IControladorCategoria cat = f.getIControladorCategoria();
-	                                            List<CategoriaDt> catArray = cat.ListarCategorias();
+	                                        	WScontroladorCategoria cat = new WScontroladorCategoriaImplService().getWScontroladorCategoriaImplPort();
+	                                            List<CategoriaDt> catArray = cat.listarCategorias().getLista();
 	                                            
 	                                        %>
 	                                        

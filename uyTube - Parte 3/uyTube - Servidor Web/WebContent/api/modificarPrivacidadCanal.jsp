@@ -5,17 +5,15 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import = "logica.controladores.Fabrica" %>
-<%@page import = "logica.controladores.IControladorUsuario"%>
-<%@page import="logica.dt.UsuarioDt"%>
-<%@page import="logica.Canal"%>
+<%@page import = "logica.webservices.WScontroladorUsuarioImplService"%>
+<%@page import = "logica.webservices.WScontroladorUsuario"%>
+<%@page import="logica.webservices.UsuarioDt"%>
 <%@page import="java.text.DateFormat"%>
-<%@page import="logica.dt.CanalDt"%>
+<%@page import="logica.webservices.CanalDt"%>
 <%
-    Fabrica f = Fabrica.getInstance();
-    IControladorUsuario user = f.getIControladorUsuario();
+	WScontroladorUsuario user = new WScontroladorUsuarioImplService().getWScontroladorUsuarioImplPort();
     int id_canal = Integer.parseInt(request.getParameter("id"));
-   CanalDt c= user.obtenerCanalDt(id_canal);
-    UsuarioDt u=user.ConsultarUsuario(id_canal);
-    user.ModificarUsuario(u.getId(), u.getPassword(), u.getNombre(), u.getApellido(), u.getFechanac(), c.getNombre(), c.getCategoria(), c.getDescripcion(), !(c.getPrivacidad()), u.getImagen());
+   	CanalDt c= user.obtenerCanalDt(id_canal);
+    UsuarioDt u=user.consultarUsuario(id_canal);
+    user.modificarUsuario(u.getId(), u.getPassword(), u.getNombre(), u.getApellido(), u.getFechanac(), c.getNombre(), c.getCategoria(), c.getDescripcion(), !(c.getPrivacidad()), u.getImagen());
 %>

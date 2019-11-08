@@ -16,10 +16,10 @@ import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JInternalFrame;
-import logica.Canal;
 import logica.controladores.Fabrica;
 import logica.controladores.IControladorUsuario;
 import logica.controladores.IControladorVideo;
+import logica.dt.CanalDt;
 import logica.dt.UsuarioDt;
 import logica.dt.VideoDt;
 import javax.swing.GroupLayout.Alignment;
@@ -45,7 +45,7 @@ public class listarUsuarioEliminados extends javax.swing.JInternalFrame {
     List<String> seguidores;
     List<String> siguiendo;
     List<VideoDt> videos;
-    Canal canal;
+    CanalDt canal;
 
     public listarUsuarioEliminados(UyTubeFrame padre, String _usuario) {
         initComponents();
@@ -87,7 +87,7 @@ public class listarUsuarioEliminados extends javax.swing.JInternalFrame {
         if(canal.getPrivacidad()) privacidad = "Privado";
         lblPrivacidadCanal.setText(privacidad);
         String categoria = "Ninguna";
-        if(canal.getCategoria() != null) categoria = canal.getCategoria().getNombre();
+        if(canal.getCategoria() != null) categoria = canal.getCategoria();
         lblCategoriaCanal.setText(categoria);
         
         cargarListas();

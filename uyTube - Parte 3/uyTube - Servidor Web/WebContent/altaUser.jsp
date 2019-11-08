@@ -3,10 +3,8 @@
     Created on : Sep 28, 2019, 5:28:28 PM
     Author     : pagol
 --%>
-<%@page import="logica.dt.CategoriaDt"%>
-<%@page import="logica.Categoria"%>
-<%@page import="logica.controladores.IControladorCategoria"%>
-<%@page import="logica.controladores.IControladorVideo"%>
+<%@page import="logica.webservices.CategoriaDt"%>
+<%@page import="logica.webservices.Categoria"%>
 <%@page import="javax.servlet.annotation.MultipartConfig"%>
 <%@page import="javax.servlet.annotation.WebServlet"%>
 <%@page import="java.io.InputStream"%>
@@ -18,8 +16,9 @@
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page contentType="text/html"%>
-<%@page import = "logica.controladores.Fabrica" %>
-<%@page import = "logica.controladores.IControladorUsuario"%>
+
+<%@page import = "logica.webservices.WScontroladorCategoriaImplService"%>
+<%@page import = "logica.webservices.WScontroladorCategoria"%>
 
 <%@ page import = "java.util.*, javax.servlet.*" %>
 <%@ page import = "javax.servlet.http.*" %>
@@ -160,9 +159,8 @@
                                     <label for="exampleFormControlSelect1">Categoria del canal</label>
                                     <select class="form-control" id="categoria" name="categoria">
                                         <%
-                                            Fabrica f = Fabrica.getInstance();
-                                            IControladorCategoria cat = f.getIControladorCategoria();
-                                            List<CategoriaDt> catArray = cat.ListarCategorias();
+                                        	WScontroladorCategoria cat = new WScontroladorCategoriaImplService().getWScontroladorCategoriaImplPort();
+                                            List<CategoriaDt> catArray = cat.listarCategorias().getLista();
                                             
                                         %>
                                         

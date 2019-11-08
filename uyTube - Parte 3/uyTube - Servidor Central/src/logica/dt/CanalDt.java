@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
 import logica.Canal;
 import logica.Usuario;
@@ -20,7 +20,7 @@ import logica.Usuario;
  *
  * @author antus
  */
-@XmlRootElement
+@XmlType
 public class CanalDt {
     
     private Integer userId;

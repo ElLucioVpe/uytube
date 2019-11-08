@@ -24,13 +24,13 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="categoria" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="descripcion" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="fechaUV" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
- *         &lt;element name="listas" type="{http://webservices.logica/}listaDeReproduccion" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="listas" type="{http://webservices.logica/}listaDeReproduccionDt" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="nombre" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="privacidad" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
- *         &lt;element name="seguidores" type="{http://webservices.logica/}usuario" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="seguidores" type="{http://www.w3.org/2001/XMLSchema}string" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="userId" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="usuario" type="{http://webservices.logica/}usuario" minOccurs="0"/>
- *         &lt;element name="videos" type="{http://webservices.logica/}video" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="videos" type="{http://webservices.logica/}videoDt" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -59,15 +59,15 @@ public class CanalDt {
     @XmlSchemaType(name = "dateTime")
     protected XMLGregorianCalendar fechaUV;
     @XmlElement(nillable = true)
-    protected List<ListaDeReproduccion> listas;
+    protected List<ListaDeReproduccionDt> listas;
     protected String nombre;
     protected Boolean privacidad;
     @XmlElement(nillable = true)
-    protected List<Usuario> seguidores;
+    protected List<String> seguidores;
     protected Integer userId;
     protected Usuario usuario;
     @XmlElement(nillable = true)
-    protected List<Video> videos;
+    protected List<VideoDt> videos;
 
     /**
      * Obtiene el valor de la propiedad categoria.
@@ -159,13 +159,13 @@ public class CanalDt {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link ListaDeReproduccion }
+     * {@link ListaDeReproduccionDt }
      * 
      * 
      */
-    public List<ListaDeReproduccion> getListas() {
+    public List<ListaDeReproduccionDt> getListas() {
         if (listas == null) {
-            listas = new ArrayList<ListaDeReproduccion>();
+            listas = new ArrayList<ListaDeReproduccionDt>();
         }
         return this.listas;
     }
@@ -202,7 +202,7 @@ public class CanalDt {
      *     {@link Boolean }
      *     
      */
-    public Boolean getPrivacidad() {
+    public Boolean isPrivacidad() {
         return privacidad;
     }
 
@@ -236,13 +236,13 @@ public class CanalDt {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Usuario }
+     * {@link String }
      * 
      * 
      */
-    public List<Usuario> getSeguidores() {
+    public List<String> getSeguidores() {
         if (seguidores == null) {
-            seguidores = new ArrayList<Usuario>();
+            seguidores = new ArrayList<String>();
         }
         return this.seguidores;
     }
@@ -313,13 +313,13 @@ public class CanalDt {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Video }
+     * {@link VideoDt }
      * 
      * 
      */
-    public List<Video> getVideos() {
+    public List<VideoDt> getVideos() {
         if (videos == null) {
-            videos = new ArrayList<Video>();
+            videos = new ArrayList<VideoDt>();
         }
         return this.videos;
     }

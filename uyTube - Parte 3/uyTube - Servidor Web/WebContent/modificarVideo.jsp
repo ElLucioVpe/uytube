@@ -4,12 +4,12 @@
     Author     : Xavel
 --%>
 <%@page import="logica.Video"%>
-<%@page import="logica.dt.UsuarioDt"%>
-<%@page import="logica.Canal"%>
+<%@page import="logica.webservices.UsuarioDt"%>
+<%@page import="logica.webservices.Canal"%>
 <%@page import="java.text.DateFormat"%>
-<%@page import="logica.dt.CanalDt"%>
-<%@page import="logica.dt.VideoDt"%>
-<%@page import="logica.dt.CategoriaDt"%>
+<%@page import="logica.webservices.CanalDt"%>
+<%@page import="logica.webservices.VideoDt"%>
+<%@page import="logica.webservices.CategoriaDt"%>
 <%@page import="javax.servlet.annotation.MultipartConfig"%>
 <%@page import="javax.servlet.annotation.WebServlet"%>
 <%@page import="java.io.InputStream"%>
@@ -20,11 +20,16 @@
 <%@page import="java.nio.file.Paths"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import = "logica.controladores.Fabrica" %>
-<%@page import = "logica.controladores.IControladorVideo"%>
-<%@page import = "logica.controladores.IControladorUsuario"%>
-<%@page import = "logica.controladores.IControladorCategoria"%>
+<%@page import = "logica.webservices.WScontroladorUsuarioImplService"%>
+<%@page import = "logica.webservices.WScontroladorUsuario"%>
+<%@page import = "logica.webservices.WScontroladorVideoImplService"%>
+<%@page import = "logica.webservices.WScontroladorVideo"%>
+<%@page import = "logica.webservices.WScontroladorCategoriaImplService"%>
+<%@page import = "logica.webservices.WScontroladorCategoria"%>
 
+<%@ page import = "javax.xml.datatype.XMLGregorianCalendar"%>
+<%@ page import = "javax.xml.datatype.DatatypeFactory"%>
+<%@ page import = "java.util.GregorianCalendar"%>
 <%@ page import = "java.util.*, javax.servlet.*" %>
 <%@ page import = "javax.servlet.http.*" %>
 <%@ page import = "org.apache.commons.fileupload.*" %>
@@ -38,12 +43,8 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-        <script src="js/bootstrap.min.js"></script>
-        <script src="js/jquery.min.js"></script>
 
           <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-            <link rel="stylesheet" href="/resources/demos/style.css">
             <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
             <%@ include file="include/header.jsp" %>
             <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -61,10 +62,9 @@
                 session.setAttribute("errormodificarVideo","");
 
                 String entre = "0";
-                Fabrica f = Fabrica.getInstance();
-                IControladorUsuario user = f.getIControladorUsuario();
-                IControladorVideo vid = f.getIControladorVideo();
-                IControladorCategoria cat = f.getIControladorCategoria();
+                WScontroladorUsuario user = new WScontroladorUsuarioImplService().getWScontroladorUsuarioImplPort();
+            	WScontroladorCategoria cat = new WScontroladorCategoriaImplService().getWScontroladorCategoriaImplPort();
+            	WScontroladorVideo vid = new WScontroladorVideoImplService().getWScontroladorVideoImplPort();
 
 
                 int _id = -1;
@@ -86,7 +86,7 @@
                  String urlUp = vidx.getUrl();
                  String descripcionUp = vidx.getDescripcion();
                  String categoriaUp = vidx.getCategoria();
-                 boolean visUp = vidx.getPrivacidad();
+                 boolean visUp = vidx.isPrivacidad();
                  String visibility="AHRELOCO";
 
 
@@ -107,13 +107,13 @@
                  SimpleDateFormat sdf= new SimpleDateFormat("dd/MM/yyyy");
                  java.util.Date fechaSubida = null;
                  DateFormat fecha= new SimpleDateFormat("dd/MM/yyyy");
-                 String fechaUp= fecha.format(vidx.getFechaPublicacion());
+                 String fechaUp= fecha.format(vidx.getFechaPublicacion().toGregorianCalendar().getTime());
                  if(fechaUp.contains("-")){
                     fechaUp=fechaUp.replace("-", "/");
 
                  }
                  fechaSubida = sdf.parse(fechaUp);
-                 String fechasubidaog= sdf.format(vidx.getFechaPublicacion());
+                 String fechasubidaog= sdf.format(vidx.getFechaPublicacion().toGregorianCalendar().getTime());
 
 
                 //se fija si el user esta logged
@@ -171,14 +171,18 @@
 	                }
 	
 	
-	                 Boolean canalpriv = canalx.getPrivacidad();
+	                 Boolean canalpriv = canalx.isPrivacidad();
 	                    if(canalpriv= true && !visUp) {
 	                    session.setAttribute("errormodificarVideo","privacidad");
 	
 	                    }
 	
 	                  // vid.ModificarVideo(1, "locuritaeeeeea", "4.20", "asdads", "co�o", fechaSubida, true, "Carnaval");
-	                   vid.ModificarVideo(_id, nombreUp, durat, urlUp, descripcionUp, fechaSubida, visUp, categoriaUp);
+	                  	GregorianCalendar gcdate = new GregorianCalendar();
+	                  	gcdate.setTime(fechaSubida);
+						XMLGregorianCalendar xmlFecha = DatatypeFactory.newInstance().newXMLGregorianCalendar();
+	                  
+	                   vid.modificarVideo(_id, nombreUp, durat, urlUp, descripcionUp, xmlFecha, visUp, categoriaUp);
 	                   seModifico = true;
 	                }
                 } else session.setAttribute("errormodificarVideo", "nombre");
@@ -256,13 +260,13 @@
                                           <label for="Visibilidad" class="col-md-4 col-form-label text-md-right">Visibilidad</label>
                                           <div class="col-md-6">
                                             <div class="form-check">
-                                              <input class="form-check-input" type="radio" name="visibilidad" value="privado"<%if(vidx.getPrivacidad()){out.print("checked");}%> >
+                                              <input class="form-check-input" type="radio" name="visibilidad" value="privado"<%if(vidx.isPrivacidad()){out.print("checked");}%> >
                                               <label class="form-check-label" for="visibilidad1">
                                                 Privado
                                               </label>
                                             </div>
                                             <div class="form-check">
-                                              <input class="form-check-input" type="radio" name="visibilidad" value="publico"<%if(!vidx.getPrivacidad()){out.print("checked");}%> >
+                                              <input class="form-check-input" type="radio" name="visibilidad" value="publico"<%if(!vidx.isPrivacidad()){out.print("checked");}%> >
                                               <label class="form-check-label" for="visibilidad2">
                                                 Publico
                                               </label>
@@ -276,12 +280,7 @@
                                            <div class="col-md-6">
 	                                           <select class="form-control" id="categoria" name="categoria">
 	                                               <%
-	
-	                                                   List<CategoriaDt> catArray = cat.ListarCategorias();
-	
-	                                               %>
-	
-	                                               <%
+	                                                   List<CategoriaDt> catArray = cat.listarCategorias().getLista();
 	                                                   for (CategoriaDt c : catArray) {
 	                                               %>
 	                                                   <option value="<%out.print(c.getNombre());%>" <%if(vidx.getCategoria().equals(c.getNombre())){out.println("selected");}%>>

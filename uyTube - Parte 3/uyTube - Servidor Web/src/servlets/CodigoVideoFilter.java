@@ -1,8 +1,6 @@
 package servlets;
 
-
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -23,7 +21,7 @@ public class CodigoVideoFilter implements Filter {
 	        //
 	    }
 
-	    @Override
+	    @Override 
 	    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws ServletException, IOException {
 	        HttpServletRequest request = (HttpServletRequest) req;
 	        String requestURI = request.getRequestURI();
