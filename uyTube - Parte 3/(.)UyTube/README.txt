@@ -33,5 +33,7 @@ De modo que quede de la siguiente manera:
 	....
 </Host>	
 
+Antes de ejecutar la aplicación web deber ejecutar el servidor central para que los webservices queden publicados.
+
 Ahora deberia poder entrar al manager de tomcat (localhost:8080/manager/html) y ejecutar la aplicación 
 /Uytube.
