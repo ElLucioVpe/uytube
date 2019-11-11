@@ -27,16 +27,28 @@ public interface WScontroladorVideo {
 
     /**
      * 
+     * @param arg3
+     * @param arg2
+     * @param arg5
+     * @param arg4
+     * @param arg1
      * @param arg0
-     * @return
-     *     returns java.lang.String
      */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://webservices.logica/WScontroladorVideo/probandoRequest", output = "http://webservices.logica/WScontroladorVideo/probandoResponse")
-    public String probando(
+    @WebMethod(operationName = "AltaVideo")
+    @Action(input = "http://webservices.logica/WScontroladorVideo/AltaVideoRequest", output = "http://webservices.logica/WScontroladorVideo/AltaVideoResponse")
+    public void altaVideo(
         @WebParam(name = "arg0", partName = "arg0")
-        String arg0);
+        String arg0,
+        @WebParam(name = "arg1", partName = "arg1")
+        String arg1,
+        @WebParam(name = "arg2", partName = "arg2")
+        String arg2,
+        @WebParam(name = "arg3", partName = "arg3")
+        String arg3,
+        @WebParam(name = "arg4", partName = "arg4")
+        int arg4,
+        @WebParam(name = "arg5", partName = "arg5")
+        String arg5);
 
     /**
      * 
@@ -125,16 +137,6 @@ public interface WScontroladorVideo {
 
     /**
      * 
-     * @return
-     *     returns logica.webservices.PojoVideoDt
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://webservices.logica/WScontroladorVideo/obtenerVideosRequest", output = "http://webservices.logica/WScontroladorVideo/obtenerVideosResponse")
-    public PojoVideoDt obtenerVideos();
-
-    /**
-     * 
      * @param arg0
      * @return
      *     returns logica.webservices.VideoDt
@@ -158,6 +160,16 @@ public interface WScontroladorVideo {
     public PojOvaloracionDt obtenerValoracionVideo(
         @WebParam(name = "arg0", partName = "arg0")
         int arg0);
+
+    /**
+     * 
+     * @return
+     *     returns logica.webservices.PojoVideoDt
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://webservices.logica/WScontroladorVideo/obtenerVideosRequest", output = "http://webservices.logica/WScontroladorVideo/obtenerVideosResponse")
+    public PojoVideoDt obtenerVideos();
 
     /**
      * 
@@ -187,28 +199,32 @@ public interface WScontroladorVideo {
 
     /**
      * 
-     * @param arg3
-     * @param arg2
-     * @param arg5
-     * @param arg4
      * @param arg1
      * @param arg0
+     * @return
+     *     returns java.lang.String
      */
-    @WebMethod(operationName = "AltaVideo")
-    @Action(input = "http://webservices.logica/WScontroladorVideo/AltaVideoRequest", output = "http://webservices.logica/WScontroladorVideo/AltaVideoResponse")
-    public void altaVideo(
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://webservices.logica/WScontroladorVideo/dioValoracionRequest", output = "http://webservices.logica/WScontroladorVideo/dioValoracionResponse")
+    public String dioValoracion(
         @WebParam(name = "arg0", partName = "arg0")
-        String arg0,
+        int arg0,
         @WebParam(name = "arg1", partName = "arg1")
-        String arg1,
-        @WebParam(name = "arg2", partName = "arg2")
-        String arg2,
-        @WebParam(name = "arg3", partName = "arg3")
-        String arg3,
-        @WebParam(name = "arg4", partName = "arg4")
-        int arg4,
-        @WebParam(name = "arg5", partName = "arg5")
-        String arg5);
+        int arg1);
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns java.lang.String
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://webservices.logica/WScontroladorVideo/probandoRequest", output = "http://webservices.logica/WScontroladorVideo/probandoResponse")
+    public String probando(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0);
 
     /**
      * 

@@ -29,5 +29,6 @@ public interface WScontroladorVideo {
 	@WebMethod POJOVideoDt obtenerVideos();
 	@WebMethod POJOComentarioDt obtenerComentariosDt(int id_video);
 	@WebMethod VideoDt obtenerVideoDtPorCOD(String codigo);
+	@WebMethod String dioValoracion(int user, int video);
 
 }

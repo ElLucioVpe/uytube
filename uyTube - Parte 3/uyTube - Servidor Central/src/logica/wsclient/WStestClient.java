@@ -52,6 +52,7 @@ public class WStestClient {
         System.out.println("--userDTfechanac--"+user.getFechanac());
         System.out.println("--usernick--"+usernick);
         System.out.println("--login--"+wsusuario.LoginUsuario("hrubino", "Rufus123"));
+        System.out.println("--canal--"+canal.getNombre());
         
         //Pruebas WSvideo
         System.out.println(wsvideo.probando("webservice de video"));

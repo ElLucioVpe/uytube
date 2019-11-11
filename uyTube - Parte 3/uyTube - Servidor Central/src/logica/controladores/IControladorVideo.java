@@ -36,4 +36,5 @@ public interface IControladorVideo {
     
     //Parte 3
     public abstract VideoDt obtenerVideoDtPorCOD(String codigo);
+    public abstract String dioValoracion(int user, int video);
 }

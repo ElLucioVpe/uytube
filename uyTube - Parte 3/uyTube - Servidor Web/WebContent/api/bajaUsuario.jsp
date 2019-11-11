@@ -16,7 +16,7 @@
 		if(!user.obtenerNickUsuario(id_user).isEmpty()){ 
 			user.bajaUsuario(id_user);
 			
-			if(!user.consultarUsuario(id_user).getActivo()) { 
+			if(!user.consultarUsuario(id_user).isActivo()) { 
 				//Cierro sesion
 			    session.setAttribute("userid", null);
 			    session.setAttribute("user_dt", null);

@@ -291,7 +291,27 @@
                                                        },
                                                        error: function () { alert("Error en la suscripción");}
                                                    });
+                                                   recargarSubs();
+                                                   listarSeguidores();
                                                  }
+                                               }
+                                               
+                                               var estado = <%=estaSuscripto2%>;
+                                               var subs = <%=user.listarSeguidores(canalUser_id).getLista().size()%>;
+                                               function recargarSubs() {
+
+                                                   var boton = document.getElementById("btn-suscripcion");
+                                                   if(estado){
+                                                   	estado = false;
+                                                   	boton.innerHTML = "Suscribirse";
+                                                   	subs-=1;
+                                                   }
+                                                   else { 
+                                                   	estado = true;
+                                                   	boton.innerHTML = "Desuscribirse";
+                                                   	subs+=1;
+                                                   }
+                                                   document.getElementById("user-subs").innerHTML = subs + " seguidores";
                                                }
                                         </script>
 

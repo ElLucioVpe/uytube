@@ -44,7 +44,7 @@
         
         if(html != null){
             String imagen = "img/user.png";
-            if(c.getUsuarioDt().getImagen() != null) imagen = path+"/images/"+c.getUsuarioDt().getImagen();
+            if(c.getUsuarioDt().getImagen() != null) imagen = path+c.getUsuarioDt().getImagen();
             
             html+= "<li class=\"media\">";
             html+= "<img class=\"rounded-circle\" width=60 height=60 src=\""+imagen+"\">";

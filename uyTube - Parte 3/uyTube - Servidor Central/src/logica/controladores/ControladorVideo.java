@@ -10,8 +10,6 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
 import java.util.Random;
 
 import javax.persistence.EntityManager;
@@ -504,5 +502,29 @@ public class ControladorVideo implements IControladorVideo {
           emanager.getTransaction().commit();
           emanager.close();
           return vdt;
+      }
+      
+      @Override
+  	  public String dioValoracion(int user, int video) {
+    	  String retorno = "No";
+  		
+    	  EntityManager emanager = emFactory.createEntityManager();
+          try {
+        	  emanager.getTransaction().begin();
+        	  Valoracion val = emanager.find(Valoracion.class, new ValoracionPK(user, video));
+        	  if(val != null) {
+        		  if(val.getGustar()) retorno = "Like";
+        		  else retorno = "Dislike";
+        	  }
+        	  
+          } catch (Exception exc) {
+              Throwable _throwable = new Throwable();
+              StackTraceElement[] elements = _throwable.getStackTrace();
+              String invocador = elements[1].getFileName();
+              exceptionAux(invocador, exc);
+          }
+          emanager.getTransaction().commit();
+          emanager.close();
+    	  return retorno;
       }
 }

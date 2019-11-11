@@ -5,7 +5,6 @@
  */
 package logica.dt;
 
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 import logica.Valoracion;
@@ -20,6 +19,11 @@ public class valoracionDt {
      private boolean like;
      
     public valoracionDt() {     
+    }
+    
+    public valoracionDt(String user, boolean valoracion) {
+    	this.user = user;
+    	this.like = valoracion;
     }
     
     public valoracionDt(Valoracion v) {

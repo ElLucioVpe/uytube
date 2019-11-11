@@ -85,6 +85,20 @@
             
             Boolean estaSuscripto = false; //inicializo
             if(session.getAttribute("userid") != null) estaSuscripto = user.estaSuscripto((int)session.getAttribute("userid"), u.getId());
+            
+            //Veo si dio like o dislike
+            boolean puntuo = false;
+            boolean puntuacion = false;
+            if(session.getAttribute("userid") != null) {
+            	int userid = (int) session.getAttribute("userid");
+            	String valoro = video.dioValoracion(userid, video_id);
+            	if(valoro.equals("Like")) {
+            		puntuo = true;
+            		puntuacion = true;
+            	}
+            	if(valoro.equals("Dislike")) puntuo = true;
+            }
+            
         %>
         <%@ include file="include/header.jsp" %>
 
@@ -119,6 +133,7 @@
                         url: "<%=path%>/api/comentarVideo.jsp?id_u="+id_u+"&id_v="+id_v+"&id_p="+id_p+"&text="+text, 
                         success: function (result) {
                             alert(result);
+                            cargarComentarios();
                         },
                         error: function (xhr, ajaxOptions, thrownError) {
                             console.log(xhr.status);
@@ -189,7 +204,7 @@
                 <div class="col-sm-5">
                     <img id="user-pic" src="<%=imagenUser%>" height="30px" width="30px" alt="Profile de Usuario"/>
                     <span id="user-nick"><%=u.getNickname()%></span>
-                    <button class="btn btn-outline-dark" onclick="suscripcion(<%=u.getId()%>)">
+                    <button id="btn-suscripcion" class="btn btn-outline-dark" onclick="suscripcion(<%=u.getId()%>)">
                         <%if(!estaSuscripto){%>
                         Suscribirse
                         <%}else{%>
@@ -202,26 +217,46 @@
                       alert("Por favor, para realizar esta acción inicie sesion.");
                     }
                     function suscripcion(seguido) {
-                      var seguidor = '<%=session.getAttribute("userid")%>';
-                      if(seguidor === null) conectate();
-                      else{
-						$.ajax({
-                            url: "<%=path%>/api/suscripcion.jsp?seguidor="+seguidor+"&seguido="+seguido,
-                            success: function() {
-                                alert("Suscripción/Desuscripción exitosa");
-                            },
-                            error: function () { alert("Error en la suscripción");}
-                        });
-                      }
+						var seguidor = <%=session.getAttribute("userid")%>;
+                        
+                        if(seguidor === null) conectate();
+                        else{
+  						$.ajax({
+                              url: "<%=path%>/api/suscripcion.jsp?seguidor="+seguidor+"&seguido="+seguido,
+                              success: function() {
+                                  alert("Suscripción/Desuscripción exitosa");
+                              },
+                              error: function () { alert("Error en la suscripción");}
+                          });
+  						  recargarSubs();
+                        }
+                    }
+                    
+                    var estado = <%=estaSuscripto%>;
+                    var subs = <%=user.listarSeguidores(dt.getIdCanal()).getLista().size()%>;
+                    function recargarSubs() {
+
+                        var boton = document.getElementById("btn-suscripcion");
+                        if(estado){
+                        	estado = false;
+                        	boton.innerHTML = "Suscribirse";
+                        	subs-=1;
+                        }
+                        else { 
+                        	estado = true;
+                        	boton.innerHTML = "Desuscribirse";
+                        	subs+=1;
+                        }
+                        document.getElementById("user-subs").innerHTML = subs + " seguidores";
                     }
                     </script>
                 </div>
                 
                 <div class="col">
                     <button class="btn btn-outline-success my-2 my-sm-0" onclick="gustar(true)"><i class="fa fa-thumbs-up"></i>
-                    <span><b></b> <%=dt.getLikes()%></span></button>
+                    <span id="likes"><b></b> <%=dt.getLikes()%></span></button>
                     <button class="btn btn-outline-success my-2 my-sm-0" onclick="gustar(false)"><i class="fa fa-thumbs-down"></i>
-                    <span><b></b> <%=dt.getDislikes()%></span></button>
+                    <span id="dislikes"><b></b> <%=dt.getDislikes()%></span></button>
                     
                     <div class="btn-group">
 	                    <button class="btn btn-outline-secondary" type="button" id="listaDropdownbtn" data-toggle="dropdown" data-target="listas-menu" aria-haspopup="true" aria-expanded="false">
@@ -246,7 +281,7 @@
                     </div>
                     <script>
                         function gustar(g) {
-                            var user = '<%=session.getAttribute("userid")%>';
+                            var user = <%=session.getAttribute("userid")%>;
                             var video = '<%=video_id%>';
                             
                             if(user === null) conectate();
@@ -258,7 +293,35 @@
                                     },
                                     error: function () { alert("Error en la valoración del video");}
                                 });
+                                recargarValoraciones(g);
                             }
+                        }
+                        
+                        var likes = <%=dt.getLikes()%>;
+                     	var dislikes = <%=dt.getDislikes()%>;
+                     	var puntuo = <%=puntuo%>;
+                     	var puntuacion = <%=puntuacion%>;
+                        function recargarValoraciones(g) {
+                        	console.log(puntuo);
+							if(g) {
+								if(!puntuo) likes++;
+								if(puntuo && !puntuacion) {
+									likes++;
+									dislikes--;
+								}
+								puntuacion = true;
+							} else {
+								if(!puntuo) dislikes++;
+								if(puntuo && puntuacion) {
+									dislikes++;
+									likes--;
+								}
+								puntuacion = false;
+							}
+							puntuo = true;
+							
+                            document.getElementById("likes").innerHTML = likes
+                            document.getElementById("dislikes").innerHTML = dislikes;
                         }
                         
                         function copiarURL() {
@@ -281,7 +344,7 @@
                 <div class="col-sm-3">
                     <p id="video-cat"><b>Categoría:</b> <%=dt.getCategoria()%></p>
                     <p id="video-duracion"><b>Duración:</b> <%=dt.getDuracion()%> minutos</p>
-                    <p id="video-fecha"><b>Fecha:</b> <%=dt.getFechaPublicacion().toString()%></p>
+                    <p id="video-fecha"><b>Fecha:</b> <%=dt.getFechaPublicacion()%></p>
                 </div>
             </div>
             <div class="row">

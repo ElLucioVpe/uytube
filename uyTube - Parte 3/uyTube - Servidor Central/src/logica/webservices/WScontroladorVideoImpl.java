@@ -1,7 +1,7 @@
 package logica.webservices;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.jws.WebService;
 import logica.controladores.Fabrica;
@@ -10,7 +10,6 @@ import logica.dt.ComentarioDt;
 import logica.dt.VideoDt;
 import logica.dt.valoracionDt;
 import logica.webservices.pojos.POJOComentarioDt;
-import logica.webservices.pojos.POJOString;
 import logica.webservices.pojos.POJOVideoDt;
 import logica.webservices.pojos.POJOvaloracionDt;
 
@@ -83,6 +82,11 @@ public class WScontroladorVideoImpl implements WScontroladorVideo {
 	@Override
 	public VideoDt obtenerVideoDtPorCOD(String codigo) {
 		return controlador.obtenerVideoDtPorCOD(codigo);
+	}
+	
+	@Override
+	public String dioValoracion(int user, int video) {
+		return controlador.dioValoracion(user, video);
 	}
 
 }

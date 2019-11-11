@@ -15,5 +15,5 @@
     int id_canal = Integer.parseInt(request.getParameter("id"));
    	CanalDt c= user.obtenerCanalDt(id_canal);
     UsuarioDt u=user.consultarUsuario(id_canal);
-    user.modificarUsuario(u.getId(), u.getPassword(), u.getNombre(), u.getApellido(), u.getFechanac(), c.getNombre(), c.getCategoria(), c.getDescripcion(), !(c.getPrivacidad()), u.getImagen());
+    user.modificarUsuario(u.getId(), u.getPassword(), u.getNombre(), u.getApellido(), u.getFechanac(), c.getNombre(), c.getCategoria(), c.getDescripcion(), !(c.isPrivacidad()), u.getImagen());
 %>

@@ -3,18 +3,15 @@ package logica.webservices;
 import logica.dt.CanalDt;
 import logica.dt.ListaDeReproduccionDt;
 import logica.dt.UsuarioDt;
-import logica.dt.VideoDt;
 import logica.webservices.pojos.POJOListadrDt;
 import logica.webservices.pojos.POJOString;
 import logica.webservices.pojos.POJOUsuarioDt;
 import logica.webservices.pojos.POJOVideoDt;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 import javax.jws.WebService;
 import javax.jws.WebMethod;
-import javax.jws.WebResult;
 import javax.jws.soap.SOAPBinding;
 import javax.jws.soap.SOAPBinding.Style;
 
