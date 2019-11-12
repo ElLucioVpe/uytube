@@ -3,7 +3,6 @@
     Created on : Oct 2, 2019, 3:15:18 PM
     Author     : antus
 --%>
-<%@page import = "javax.persistence.*"%>
 <%@page import = "logica.webservices.WScontroladorUsuarioImplService"%>
 <%@page import = "logica.webservices.WScontroladorUsuario"%>
 <%@page import = "logica.webservices.UsuarioDt"%>

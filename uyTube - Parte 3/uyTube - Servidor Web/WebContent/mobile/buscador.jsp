@@ -16,11 +16,6 @@
     %>
     <head>
     	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	    <meta name="description" content="">
-	    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-	    <meta name="generator" content="Jekyll v3.8.5">
-	    
-	  
 	    
 		<%@ include file="include/navbar.jsp" %>
 		<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
@@ -140,7 +135,7 @@
                         if(text === null || text === "") videos.forEach(function(v){datos.push(v);});
                         else {
                             videos.forEach(function(v){
-                                if(v.nombre.includes(text)) datos.push(v);
+                                if(v.nombre.toUpperCase().includes(text.toUpperCase())) datos.push(v);
                             });
                         }
                     }
@@ -149,7 +144,7 @@
                         if(text === null || text === "") listas.forEach(function(l){datos.push(l);});
                         else {
                             listas.forEach(function(l){
-                                if(l.nombre.includes(text)) datos.push(l);
+                                if(l.nombre.toUpperCase().includes(text.toUpperCase())) datos.push(l);
                             });
                         }
                     }

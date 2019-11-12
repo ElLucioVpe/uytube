@@ -181,7 +181,7 @@
                         if(text === null || text === "") videos.forEach(function(v){datos.push(v);});
                         else {
                             videos.forEach(function(v){
-                                if(v.nombre.includes(text)) datos.push(v);
+                                if(v.nombre.toUpperCase().includes(text.toUpperCase())) datos.push(v);
                             });
                         }
                     }
@@ -190,7 +190,7 @@
                         if(text === null || text === "") listas.forEach(function(l){datos.push(l);});
                         else {
                             listas.forEach(function(l){
-                                if(l.nombre.includes(text)) datos.push(l);
+                                if(l.nombre.toUpperCase().includes(text.toUpperCase())) datos.push(l);
                             });
                         }
                     }
@@ -199,7 +199,7 @@
                         if(text === null || text === "") usuarios.forEach(function(u){datos.push(u);});
                         else {
                             usuarios.forEach(function(u){
-                                if(u.canal.nombre.includes(text)) datos.push(u);
+                                if(u.canal.nombre.toUpperCase().includes(text.toUpperCase())) datos.push(u);
                             });
                         }
                     }

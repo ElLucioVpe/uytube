@@ -108,7 +108,7 @@
 <!-- Redirecciono a movil -->
 <script type="text/javascript">
 	if (screen.width <= 699) {
-	     document.location = "/mobile/login.jsp";
+	     document.location = "<%=header_path%>/mobile/login.jsp";
 	}
 </script>
 <%@ include file="sidebar.jsp" %>

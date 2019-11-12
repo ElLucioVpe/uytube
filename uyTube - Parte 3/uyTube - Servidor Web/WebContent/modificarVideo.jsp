@@ -3,7 +3,7 @@
     Created on : 17 Oct 2019, 18:27:04
     Author     : Xavel
 --%>
-<%@page import="logica.Video"%>
+<%@page import="logica.webservices.Video"%>
 <%@page import="logica.webservices.UsuarioDt"%>
 <%@page import="logica.webservices.Canal"%>
 <%@page import="java.text.DateFormat"%>
