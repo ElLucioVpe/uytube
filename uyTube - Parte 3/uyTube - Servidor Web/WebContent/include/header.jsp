@@ -104,4 +104,11 @@
         </nav>
     </div>
 </header>
+
+<!-- Redirecciono a movil -->
+<script type="text/javascript">
+	if (screen.width <= 699) {
+	     document.location = "/mobile/login.jsp";
+	}
+</script>
 <%@ include file="sidebar.jsp" %>

@@ -8,6 +8,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="logica.webservices.CategoriaDt"%>
 <%@page import="logica.webservices.CanalDt"%>
+<%@page import="logica.webservices.UsuarioDt"%>
 <%@page import="logica.webservices.ListaDeReproduccionDt"%>
 <%@page import = "logica.webservices.WScontroladorUsuarioImplService"%>
 <%@page import = "logica.webservices.WScontroladorUsuario"%>
