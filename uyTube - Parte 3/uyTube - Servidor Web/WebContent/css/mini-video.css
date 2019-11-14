@@ -1,0 +1,38 @@
+.content-media--video {
+	position: relative;
+	bottom: 0;
+	top:auto;
+	right: 0;
+}
+
+.content-media--video iframe {
+	position: absolute;
+	bottom: 0;
+	top:auto;
+	right: 0;
+}
+
+#close-mini-video {
+	z-index: 9999;
+	position: absolute;
+	bottom: 0;
+	top:auto;
+	right: 0;
+	color: #7EA16B;
+}
+
+/** Use .sticky */
+#mini-video.is-sticky {
+  top: 140;
+  left: auto;
+}
+@media screen and (min-width: 1120px) {
+   #mini-video.is-sticky {
+      transform: translateX(-80%);
+   }
+}
+@media screen and (min-width: 1300px) {
+   #mini-video.is-sticky {
+      transform: translateX(-115%);
+   }
+}

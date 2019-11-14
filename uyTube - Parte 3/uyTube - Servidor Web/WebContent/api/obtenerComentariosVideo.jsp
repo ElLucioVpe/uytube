@@ -50,7 +50,7 @@
             html+= "<img class=\"rounded-circle\" width=60 height=60 src=\""+imagen+"\">";
             html+= "<div class=\"media-body\"> <div class=\"well well-lg\"";
             html+= "<h4>" + c.getUsuarioDt().getNickname() + "</h4>";
-            html+= "<ul class=\"media-date text-uppercase reviews list-inline\"><li>"+c.getFecha()+"</li></ul>";
+            html+= "<ul class=\"media-date text-uppercase reviews list-inline\"><li>"+c.getFecha().toGregorianCalendar().getTime().toInstant()+"</li></ul>";
             html+= "<p class=\"media-comment\"> " + c.getContenido() +" </p>";
             html+= "<button class=\"btn btn-success btn-circle text-uppercase\" data-toggle=\"collapse\" data-target=\"#responder"+c.getId()+"\" id=\"reply\"><span class=\"fas fa-reply\"></span> Responder</button>";
             html+= "<button class=\"btn btn-dark btn-circle text-uppercase\" style=\"margin-left:50px;\" data-toggle=\"collapse\" data-target=\"#respuestas"+c.getId()+"\"><span class=\"fas fa-comment\"></span>"+ c.getHijos().size()+" comentarios</button>";

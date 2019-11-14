@@ -77,7 +77,7 @@ public class VideoDt {
             } else if (this.url.contains("https://www.youtube.com/")) {
                 video_id = url.substring(32);
             }
-            embedded = "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/"+ video_id +"\" frameborder=\"0\" allow=\"autoplay; encrypted-media\" allowfullscreen></iframe>";
+            embedded = "https://www.youtube.com/embed/"+ video_id;
         }
         this.embedded = embedded;
     }

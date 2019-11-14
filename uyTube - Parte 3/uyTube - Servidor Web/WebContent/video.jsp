@@ -195,7 +195,7 @@
         </script>
         
         <div id="video-show">
-            <%=dt.getEmbedded()%>
+        	<iframe width="560" height="315" src="<%=dt.getEmbedded()%>" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
         </div>
         <div id="video-data">
             <h1 id="video-titulo"><%=dt.getNombre()%></h1>
@@ -344,7 +344,7 @@
                 <div class="col-sm-3">
                     <p id="video-cat"><b>Categoría:</b> <%=dt.getCategoria()%></p>
                     <p id="video-duracion"><b>Duración:</b> <%=dt.getDuracion()%> minutos</p>
-                    <p id="video-fecha"><b>Fecha:</b> <%=dt.getFechaPublicacion()%></p>
+                    <p id="video-fecha"><b>Fecha:</b> <%=dt.getFechaPublicacion().toGregorianCalendar().getTime()%></p>
                 </div>
             </div>
             <div class="row">

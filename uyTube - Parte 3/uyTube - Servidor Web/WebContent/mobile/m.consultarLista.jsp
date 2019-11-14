@@ -114,5 +114,6 @@
             </div>
         <%}%>
         </form>
+         <%@ include file="include/mini-video.jsp" %>
     </body>
 </html>

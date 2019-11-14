@@ -31,7 +31,7 @@
                 json1.put("nickname", (String)list.get(i).getNickname());
                 //json1.put("password", (String)list.get(i).getPassword());
                 json1.put("mail", (String)list.get(i).getMail());
-                json1.put("fechanac", list.get(i).getFechanac());
+                json1.put("fechanac", list.get(i).getFechanac().toGregorianCalendar().getTime());
                 if(list.get(i).getImagen() != null) json1.put("imagen", (String)list.get(i).getImagen());
                 else json1.put("imagen", "");
 
@@ -44,7 +44,7 @@
                 jsonC.put("descripcion", cdt.getDescripcion());
                 jsonC.put("privacidad", cdt.isPrivacidad());
                 jsonC.put("categoria", cdt.getCategoria());
-                if(cdt.getFechaUV() != null) json1.put("fechaPublicacion", cdt.getFechaUV());
+                if(cdt.getFechaUV() != null) json1.put("fechaPublicacion", cdt.getFechaUV().toGregorianCalendar().getTime());
                 else json1.put("fechaPublicacion", "1990-01-01"); //no tiene videos lo mando bien para el fondo
                 json1.put("canal", jsonC);
 

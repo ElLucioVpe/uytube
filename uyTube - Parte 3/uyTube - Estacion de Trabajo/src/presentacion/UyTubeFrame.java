@@ -511,7 +511,7 @@ public class UyTubeFrame extends javax.swing.JFrame {
 		JOptionPane.showMessageDialog(null,"Videos agregados a listas");
         SimpleDateFormat dateformat2 = new SimpleDateFormat("dd/M/yyyy HH:mm");
         try {
-            vid.ComentarVideo(15, 7, -1 ,"Fue un gran evento" , dateformat2.parse("05/12/17 14:35"));
+            vid.ComentarVideo(15, 7, -1 ,"Fue un gran evento" , dateformat2.parse("05/12/2017 14:35"));
             vid.ComentarVideo(1, 7, 1 ,"Para el próximo aniversario ofrezco vamo’ con los Momo" , dateformat2.parse("08/12/2017 01:47"));
             vid.ComentarVideo(4, 7, 2 ,"Yo ofrezco a la banda tb" , dateformat2.parse("10/12/2017 17:09"));
             vid.ComentarVideo(15, 6, -1 ,"Felicitaciones FING!!!" , dateformat2.parse("07/09/2017 04:56"));

@@ -74,5 +74,6 @@
         		<%-- Aca van todos los datos de videos y listas --%>
 			</ul>
         </div>
+         <%@ include file="include/mini-video.jsp" %>
     </body>
 </html>

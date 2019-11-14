@@ -33,7 +33,7 @@
                     json1.put("thumbnail", (String)list.get(i).getThumbnail());
                     json1.put("url", (String)list.get(i).getUrl());
                     json1.put("descripcion", (String)list.get(i).getDescripcion());
-                    json1.put("fechaPublicacion", list.get(i).getFechaPublicacion());
+                    json1.put("fechaPublicacion", list.get(i).getFechaPublicacion().toGregorianCalendar().getTime());
                     json1.put("privacidad", (Boolean)list.get(i).isPrivacidad());
                     json1.put("categoria", list.get(i).getCategoria());
                     json1.put("canal_user_id", (int)list.get(i).getIdCanal());
@@ -55,7 +55,7 @@
                 json1.put("thumbnail", (String)_video.getThumbnail());
                 json1.put("url", (String)_video.getUrl());
                 json1.put("descripcion", (String)_video.getDescripcion());
-                json1.put("fecha", _video.getFechaPublicacion());
+                json1.put("fecha", _video.getFechaPublicacion().toGregorianCalendar().getTime());
                 json1.put("privacidad", (Boolean)_video.isPrivacidad());
                 json1.put("canal_user_id", (int)_video.getIdCanal());
                 json1.put("user", _user.getNickname());

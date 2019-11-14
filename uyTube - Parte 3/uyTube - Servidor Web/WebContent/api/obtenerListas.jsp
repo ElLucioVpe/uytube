@@ -66,7 +66,7 @@
             json.put("categoria", ldt.getCategoria());
             json.put("user_id", ldt.getIdUsuario());
             json.put("user_nick", udt.getNickname());
-            if(ldt.getFechaUV() != null) json.put("fechaPublicacion", ldt.getFechaUV());
+            if(ldt.getFechaUV() != null) json.put("fechaPublicacion", ldt.getFechaUV().toGregorianCalendar().getTime());
             else json.put("fechaPublicacion", "1990-01-01"); //no tiene videos lo mando bien para el fondo
         } catch (Exception e) {
         }
