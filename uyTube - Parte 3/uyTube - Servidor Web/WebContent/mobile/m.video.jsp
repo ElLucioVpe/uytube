@@ -13,7 +13,7 @@
 <%@page import = "logica.webservices.WScontroladorUsuario"%>
 <%@page import = "logica.webservices.WScontroladorVideoImplService"%>
 <%@page import = "logica.webservices.WScontroladorVideo"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -28,10 +28,11 @@
         <link href="../css/fontawesome.min.css" rel="stylesheet">
         <script defer src="../js/solid.js"></script>
         <script defer src="../js/fontawesome.js"></script>
-        <%-- Popper --%>
+        <!-- Popper -->
         <script src="../js/popper.min.js"></script>
+
         
-        <title>uyTube - Transmite tÃº mismo</title>
+        <title>uyTube - Transmite tú mismo</title>
     </head>
     <body>
         <% 
@@ -41,20 +42,22 @@
             int video_id = -1;
             VideoDt dt = null;
             
+            String embedded = null;
             if(request.getParameter("id") != null) {
 	            video_id = Integer.parseInt(request.getParameter("id"));
 	            dt = video.obtenerVideoDtPorID(video_id);
 	            session.setAttribute("videoid", video_id);
-	            session.setAttribute("embedded", dt.getEmbedded());
+	            embedded = dt.getEmbedded();
             } else {
             	if(request.getParameter("cod") != null) {
             		dt = video.obtenerVideoDtPorCOD(request.getParameter("cod"));
             		video_id = dt.getId();
             		session.setAttribute("videoid", video_id);
-            		session.setAttribute("embedded", dt.getEmbedded());
+            		embedded = dt.getEmbedded();
             	}
             }
-
+            session.setAttribute("embedded", embedded);
+            session.setAttribute("embedded-time", null);
             //Evito crasheo
             if(dt == null || dt.getNombre() == null) {
             	video_id = 1;
@@ -99,11 +102,42 @@
         <%@ include file="include/navbar.jsp" %>
 
         <script>var video_id="<%=video_id%>";</script>
-        <script>
+        <script src="https://www.youtube.com/iframe_api"></script>
+	<script type="text/javascript">
+
+			var player;
+			function onYouTubeIframeAPIReady() {
+			  player = new YT.Player('player', {
+			    events: {
+			      'onReady': onPlayerReady,
+			      'onStateChange': onPlayerStateChange
+			    }
+			  });
+			}
+		
+			function onPlayerReady() {
+				//nada
+			}
+		
+			function onPlayerStateChange() {
+			  //console.log("cambio el estado");
+			}
+			
+			$(window).on('beforeunload', function() { 
+				var time = player.getCurrentTime();
+				console.log(time);
+				$.ajax({
+		            url: "<%=request.getContextPath()%>/api/embeddedVideo.jsp?emb="+'<%=embedded%>'+"&time="+time,
+		            success: function(){},
+		            error: function() { alert("Error inesperado al modificar el reproductor");}
+		        });
+			});
+	
             $(document).ready(function () {
                 cargarListas();
                 cargarComentarios();
             });
+            
             
             function cargarComentarios() {
                 $.ajax({
@@ -137,7 +171,7 @@
                         } 
                     });
                 } else {
-                    alert("Por favor inicie sesiÃ³n para comentar el video");
+                    alert("Por favor inicie sesión para comentar el video");
                 }
             } 
             
@@ -153,7 +187,7 @@
                             let html = "";
                             for (let i = 0; i < listas.length; i++) {
                                 var icono = "fas fa-list";
-                                if(listas[i].nombre === "Ver mas tarde" || listas[i].nombre === "Ver mÃ¡s tarde") icono = "fas fa-redo-alt";
+                                if(listas[i].nombre === "Ver mas tarde" || listas[i].nombre === "Ver más tarde") icono = "fas fa-redo-alt";
                                 if(listas[i].nombre === "Favoritos") icono = "fas fa-redo-alt";
                                 
                                 var funcion = "agregarVideoLista('"+listas[i].nombre+"');";
@@ -191,7 +225,7 @@
         </script>
         
 	   <div class="row" id="video-show">
-		   	<iframe width="560" height="315" src="<%=dt.getEmbedded()%>" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+		   	<iframe id="player" width="560" height="315" src="<%=dt.getEmbedded()%>?enablejsapi=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 	    </div>
         <div id="video-data">
             <h1 id="video-titulo"><%=dt.getNombre()%></h1>
@@ -210,7 +244,7 @@
                     <span id="user-subs"><%=seguidores.size()%> seguidores</span>
                     <script>
                     function conectate() {
-                      alert("Por favor, para realizar esta acciÃ³n inicie sesion.");
+                      alert("Por favor, para realizar esta acción inicie sesion.");
                     }
                     function suscripcion(seguido) {
 						var seguidor = <%=session.getAttribute("userid")%>;
@@ -220,9 +254,9 @@
   						$.ajax({
                               url: "<%=path%>/api/suscripcion.jsp?seguidor="+seguidor+"&seguido="+seguido,
                               success: function() {
-                                  alert("SuscripciÃ³n/DesuscripciÃ³n exitosa");
+                                  alert("Suscripción/Desuscripción exitosa");
                               },
-                              error: function () { alert("Error en la suscripciÃ³n");}
+                              error: function () { alert("Error en la suscripción");}
                           });
   						  recargarSubs();
                         }
@@ -260,7 +294,7 @@
 	                    </button>
 	                    <div id="listas-menu" class="dropdown-menu" aria-labelledby="listaDropdownbtn">
 	                        <%-- Aca van las listas --%>
-	                        <a class="dropdown-item" href="login.jsp">Inicie sesiÃ³n</a>
+	                        <a class="dropdown-item" href="login.jsp">Inicie sesión</a>
 	                    </div>
                     </div>
                     
@@ -285,9 +319,9 @@
                                 $.ajax({
                                     url: "<%=path%>/api/valoracion.jsp?user_id="+user+"&video_id="+video+"&gusta="+g,
                                     success: function() {
-                                        alert("ValoraciÃ³n exitosa");
+                                        alert("Valoración exitosa");
                                     },
-                                    error: function () { alert("Error en la valoraciÃ³n del video");}
+                                    error: function () { alert("Error en la valoración del video");}
                                 });
                                 recargarValoraciones(g);
                             }
@@ -334,12 +368,12 @@
             <hr>
             <div class="row">
                 <div class="col-sm-6">
-                    <h5> DescripciÃ³n</h5>
+                    <h5> Descripción</h5>
                     <p id="video-desc"><%=dt.getDescripcion()%></p>
                 </div>
                 <div class="col-sm-3">
-                    <p id="video-cat"><b>CategorÃ­a:</b> <%=dt.getCategoria()%></p>
-                    <p id="video-duracion"><b>DuraciÃ³n:</b> <%=dt.getDuracion()%> minutos</p>
+                    <p id="video-cat"><b>Categoría:</b> <%=dt.getCategoria()%></p>
+                    <p id="video-duracion"><b>Duración:</b> <%=dt.getDuracion()%> minutos</p>
                     <p id="video-fecha"><b>Fecha:</b> <%=dt.getFechaPublicacion().toGregorianCalendar().getTime()%></p>
                 </div>
             </div>
