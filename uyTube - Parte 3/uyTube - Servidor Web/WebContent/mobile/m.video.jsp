@@ -280,13 +280,31 @@
                         document.getElementById("user-subs").innerHTML = subs + " seguidores";
                     }
                     </script>
+                    
+                    <div class="checkbox checkbox-info checkbox-circle">
+                	<input id="chkInfo" name="valchk" type="checkbox" />
+                    <label for="valchk">
+                         Ver Valoraciones
+                     </label>
+                     </div>
+                
+                <script>
+                        ('#valchk').change(function() {
+                        ('#divvalchk').toggle();
+                        });
+                    </script>
+                    
                 </div>
                 
+                
+                
                 <div class="col">
+                	<div id="divvalchk" class="col">
                     <button class="btn btn-outline-success my-2 my-sm-0" onclick="gustar(true)"><i class="fa fa-thumbs-up"></i>
                     <span id="likes"><b></b> <%=dt.getLikes()%></span></button>
                     <button class="btn btn-outline-success my-2 my-sm-0" onclick="gustar(false)"><i class="fa fa-thumbs-down"></i>
                     <span id="dislikes"><b></b> <%=dt.getDislikes()%></span></button>
+                    </div>
                     
                     <div class="btn-group">
 	                    <button class="btn btn-outline-secondary" type="button" id="listaDropdownbtn" data-toggle="dropdown" data-target="listas-menu" aria-haspopup="true" aria-expanded="false">
@@ -365,6 +383,7 @@
                     
                 </div>
             </div>
+            
             <hr>
             <div class="row">
                 <div class="col-sm-6">
@@ -376,8 +395,25 @@
                     <p id="video-duracion"><b>Duración:</b> <%=dt.getDuracion()%> minutos</p>
                     <p id="video-fecha"><b>Fecha:</b> <%=dt.getFechaPublicacion().toGregorianCalendar().getTime()%></p>
                 </div>
+                
+                <div class="checkbox checkbox-info checkbox-circle">
+                	<input id="chkInfo" name="comchk" type="checkbox" />
+                    <label for="comchk">
+                         Ver Comentarios
+                     </label>
+                     </div>
+                
+                <script>
+                        ('#comchk').change(function() {
+                        ('#divcomchk').toggle();
+                        });
+                    </script>
+                
             </div>
-            <div class="row">
+            
+            
+            
+            <div id="divcomchk" class="row">
                 <div class="col">
                         <h5> Comentarios </h5>
                     <div class="form-group row">

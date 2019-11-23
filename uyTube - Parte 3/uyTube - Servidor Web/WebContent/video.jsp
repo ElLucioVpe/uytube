@@ -251,27 +251,14 @@
                     }
                     </script>
                 </div>
+                
                 	<div class="col">
-                	<div class="checkbox checkbox-info checkbox-circle">
-                	<input id="chkInfo" name="valchk" type="checkbox" unchecked />
-                    <label for="chkInfo">
-                         Valoraciones
-                     </label>
-                     </div>
-                    
-                    <div id="divvalchk" class="col">
+                
                     <button class="btn btn-outline-success my-2 my-sm-0" onclick="gustar(true)"><i class="fa fa-thumbs-up"></i>
                     <span id="likes"><b></b> <%=dt.getLikes()%></span></button>
                     <button class="btn btn-outline-success my-2 my-sm-0" onclick="gustar(false)"><i class="fa fa-thumbs-down"></i>
                     <span id="dislikes"><b></b> <%=dt.getDislikes()%></span></button>
-                    </div>
-                    
-                    <script>
-                        $('#valchk').change(function() {
-                        $('#divvalchk').toggle();
-                        });
-                    </script>
-                
+
                     
                     <div class="btn-group">
 	                    <button class="btn btn-outline-secondary" type="button" id="listaDropdownbtn" data-toggle="dropdown" data-target="listas-menu" aria-haspopup="true" aria-expanded="false">
@@ -365,39 +352,19 @@
             </div>
             <div class="row">
             	<div class="col">
-                    <div class="form-group row">
-                <div class="checkbox checkbox-info checkbox-circle">
-                	<input id="chkInfo" name="comchk" type="checkbox" unchecked />
-                    <label for="chkInfo">
-                         Comentarios
-                     </label>
-                 </div>
-                 
-                    <div id="divcomchk" class="form-group row">
+                   <div class="form-group row">
                         <div class="col-sm-6">
                             <textarea id="textArea-1" class="form-control" rows="2" placeholder="Agregue un comentario..." required></textarea>
                         </div>
                         <button type="button" class="btn btn-success" onclick="comentarVideo(-1)">Comentar</button>
                     </div>
                  
-                    <div id="divcomchk2" class="card">
+                    <div class="card">
                         <div id="comentarios" class="card-body">
                             <%-- Muchos comentarios --%>
                         </div>
                     </div>
                    </div>
-                       <script>
-                        $('#comchk').change(function() {
-                        $('#divcomchk').toggle();
-                        });
-                    </script>
-                    
-                       <script>
-                        $('#comchk').change(function() {
-                        $('#divcomchk2').toggle();
-                        });
-                    </script>
-                
             </div>
         </div>
         <%@ include file="include/footer.jsp" %>
