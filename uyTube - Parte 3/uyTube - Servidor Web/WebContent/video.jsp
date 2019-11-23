@@ -4,6 +4,7 @@
     Author     : Luciano
 --%>
 
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.List"%>
 <%@page import = "javax.persistence.*"%>
 <%@page import = "logica.webservices.VideoDt" %>
@@ -344,7 +345,7 @@
                 <div class="col-sm-3">
                     <p id="video-cat"><b>Categoría:</b> <%=dt.getCategoria()%></p>
                     <p id="video-duracion"><b>Duración:</b> <%=dt.getDuracion()%> minutos</p>
-                    <p id="video-fecha"><b>Fecha:</b> <%=dt.getFechaPublicacion().toGregorianCalendar().getTime()%></p>
+                    <p id="video-fecha"><b>Fecha:</b> <%=new SimpleDateFormat("yyyy-MM-dd").format(dt.getFechaPublicacion().toGregorianCalendar().getTime())%></p>
                 </div>
             </div>
             <div class="row">

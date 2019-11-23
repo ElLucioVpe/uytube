@@ -35,6 +35,10 @@
                 if(dt_propietario != null) if(!dt_propietario.isActivo()) response.sendRedirect(path+"/index.jsp");
             }
         }
+        
+        boolean eshistorial = false;
+        //asigno de alguna forma
+        
     %>
     <script>
         function modificar(id_propietario, nom_lista) {
@@ -146,6 +150,9 @@
                                         <button class="fas fa-times" onclick="quitarVideo('<%=lista.getIdUsuario()%>', '<%=lista.getNombre()%>', '<%=videos.get(i).getId()%>')"></button> 
                                         <%}%>
                                     </h5>
+                                    <%if(eshistorial) {%>
+	                            		<a><i class="fas fa-eye"></i>0 <i class="fas fa-clock"></i>01/01/1990</a>
+	                           		<%}%>
                                     <a><%=videos.get(i).getDescripcion()%></a>
                                 </div>
                             </div>
