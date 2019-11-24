@@ -12,7 +12,7 @@ import logica.webservices.*;
 
 public class ServicesPublisher{
 	
-	public static void main(String[] args) throws MalformedURLException {
+	public static void iniciar() throws MalformedURLException {
 		
 		//Obtengo datos del archivo .properties
 		File properties = new File(System.getProperty("user.home")+"/.UyTube");

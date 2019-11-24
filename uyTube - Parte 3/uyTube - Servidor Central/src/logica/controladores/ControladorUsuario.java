@@ -839,7 +839,7 @@ public class ControladorUsuario implements IControladorUsuario {
     }
     
     private void exceptionAux(String inv, Exception exc){
-        if(!inv.endsWith("_jsp.java") && !inv.endsWith("Test.java")){
+        if(!inv.startsWith("WS") && !inv.endsWith("_jsp.java") && !inv.endsWith("Test.java")){
             JOptionPane.showMessageDialog(null," Error: "+exc.getMessage());
         } else {
             System.out.println("Error: "+exc.getMessage());
