@@ -32,8 +32,10 @@
     
 	String images_url = bundle_header.getString("url_images");
     String header_path = request.getContextPath();System.out.println("header_path:"+header_path);
-    if(session.getAttribute("userid") != null) {
-         int sessionId = (int)session.getAttribute("userid");
+    
+	int sessionId = -1;
+	if(session.getAttribute("userid") != null) {
+         sessionId = (int)session.getAttribute("userid");
           UsuarioDt header_u = user_header.consultarUsuario(sessionId);
           
         header_user_nick = header_u.getNickname();
@@ -75,7 +77,11 @@
 			<div class="col">
 				<a class="dropdown-item" href="buscador.jsp?video=true&list=true">Buscar</a>
 				<a class="dropdown-item" href="mislistas.jsp">Mis listas</a>
-	    		<a class="dropdown-item" onclick="logout()">Cerrar Sesion</a>
+	    		<%if(sessionId != -1){%>
+				<a class="dropdown-item" onclick="logout()">Cerrar Sesion</a>
+			<%} else {%>
+				<a class="dropdown-item" href="login.jsp">Iniciar Sesion</a>
+			<%}%>
 			</div>
 		</div>
     </div>

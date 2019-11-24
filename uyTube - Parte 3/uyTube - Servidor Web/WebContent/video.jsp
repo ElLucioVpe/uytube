@@ -4,6 +4,7 @@
     Author     : Luciano
 --%>
 
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.List"%>
 <%@page import = "javax.persistence.*"%>
 <%@page import = "logica.webservices.VideoDt" %>
@@ -252,13 +253,11 @@
                     </script>
                 </div>
                 
-                	<div class="col">
-                
+                <div class="col">
                     <button class="btn btn-outline-success my-2 my-sm-0" onclick="gustar(true)"><i class="fa fa-thumbs-up"></i>
                     <span id="likes"><b></b> <%=dt.getLikes()%></span></button>
                     <button class="btn btn-outline-success my-2 my-sm-0" onclick="gustar(false)"><i class="fa fa-thumbs-down"></i>
                     <span id="dislikes"><b></b> <%=dt.getDislikes()%></span></button>
-
                     
                     <div class="btn-group">
 	                    <button class="btn btn-outline-secondary" type="button" id="listaDropdownbtn" data-toggle="dropdown" data-target="listas-menu" aria-haspopup="true" aria-expanded="false">
@@ -268,8 +267,7 @@
 	                        <%-- Aca van las listas --%>
 	                        <a class="dropdown-item" href="login.jsp">Inicie sesión</a>
 	                    </div>
-	                   </div>
-                    
+                    </div>
                     
                     <div class="btn-group">
 	                    <button class="btn btn-outline-secondary" type="button" id="shareDropdownbtn" data-toggle="dropdown" data-target="share-menu" aria-haspopup="true" aria-expanded="false">
@@ -347,24 +345,24 @@
                 <div class="col-sm-3">
                     <p id="video-cat"><b>Categoría:</b> <%=dt.getCategoria()%></p>
                     <p id="video-duracion"><b>Duración:</b> <%=dt.getDuracion()%> minutos</p>
-                    <p id="video-fecha"><b>Fecha:</b> <%=dt.getFechaPublicacion().toGregorianCalendar().getTime()%></p>
+                    <p id="video-fecha"><b>Fecha:</b> <%=new SimpleDateFormat("yyyy-MM-dd").format(dt.getFechaPublicacion().toGregorianCalendar().getTime())%></p>
                 </div>
             </div>
             <div class="row">
-            	<div class="col">
-                   <div class="form-group row">
+                <div class="col">
+                        <h5> Comentarios </h5>
+                    <div class="form-group row">
                         <div class="col-sm-6">
                             <textarea id="textArea-1" class="form-control" rows="2" placeholder="Agregue un comentario..." required></textarea>
                         </div>
                         <button type="button" class="btn btn-success" onclick="comentarVideo(-1)">Comentar</button>
                     </div>
-                 
                     <div class="card">
                         <div id="comentarios" class="card-body">
                             <%-- Muchos comentarios --%>
                         </div>
                     </div>
-                   </div>
+                </div>
             </div>
         </div>
         <%@ include file="include/footer.jsp" %>

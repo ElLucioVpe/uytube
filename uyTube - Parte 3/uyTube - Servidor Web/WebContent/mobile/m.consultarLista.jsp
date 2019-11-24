@@ -32,6 +32,11 @@
                 if(dt_propietario != null) if(!dt_propietario.isActivo()) response.sendRedirect(path+"/index.jsp");
             }
         }
+        
+        boolean eshistorial = false;
+        //Asigno de alguna forma
+        
+        
     %>
     <script>
         
@@ -105,9 +110,12 @@
                                         <%}%>
                                     </h6>
                                     <a class="text-muted"><%=user.obtenerNickUsuario(videos.get(i).getIdCanal())%></a>
-                                </div>
-                            </div>
-                                
+	                            <%if(eshistorial) {%>
+	                            	<a><i class="fas fa-eye"></i>0 <i class="fas fa-clock"></i>01/01/1990</a>
+	                            <%}%>
+                            		
+                            	</div>
+                            </div> 
                     <%	}%>
                     </div>
                 </div>

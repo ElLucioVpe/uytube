@@ -4,6 +4,7 @@
     Author     : Esteban
 --%>
 
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Locale"%>
 <%@page import="java.io.File"%>
 <%@page import="java.net.URL"%>
@@ -45,12 +46,14 @@
         if(html != null){
             String imagen = "img/user.png";
             if(c.getUsuarioDt().getImagen() != null) imagen = path+c.getUsuarioDt().getImagen();
-
+			
+            String fecha = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(c.getFecha().toGregorianCalendar().getTime());
+            
             html+= "<li class=\"media\">";
             html+= "<img class=\"rounded-circle\" width=40 height=40 src=\""+imagen+"\">";
             html+= "<div class=\"media-body\"> <div class=\"well well-lg\"";
             html+= "<h4>" + c.getUsuarioDt().getNickname() + "</h4>";
-            html+= "<ul class=\"media-date text-uppercase reviews list-inline\"><li>"+c.getFecha().toGregorianCalendar().getTime().toInstant()+"</li></ul>";
+            html+= "<ul class=\"media-date text-uppercase reviews list-inline\"><li>"+fecha+"</li></ul>";
             html+= "<p class=\"media-comment\"> " + c.getContenido() +" </p>";
             html+= "<button class=\"btn btn-success btn-circle text-uppercase\" data-toggle=\"collapse\" data-target=\"#responder"+c.getId()+"\" id=\"reply\"><span class=\"fas fa-reply\"></span></button>";
             html+= "<button class=\"btn btn-dark btn-circle text-uppercase\" data-toggle=\"collapse\" data-target=\"#respuestas"+c.getId()+"\"><span class=\"fas fa-comment\"></span>"+ c.getHijos().size()+"</button>";

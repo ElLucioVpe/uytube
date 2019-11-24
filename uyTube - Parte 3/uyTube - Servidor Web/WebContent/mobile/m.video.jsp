@@ -1,3 +1,4 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.List"%>
 <%@page import = "javax.persistence.*"%>
 <%@page import = "logica.webservices.VideoDt" %>
@@ -13,7 +14,7 @@
 <%@page import = "logica.webservices.WScontroladorUsuario"%>
 <%@page import = "logica.webservices.WScontroladorVideoImplService"%>
 <%@page import = "logica.webservices.WScontroladorVideo"%>
-<%@page contentType="text/html"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -32,7 +33,7 @@
         <script src="../js/popper.min.js"></script>
 
         
-        <title>uyTube - Transmite tú mismo</title>
+        <title>uyTube - Transmite tÃº mismo</title>
     </head>
     <body>
         <% 
@@ -103,7 +104,7 @@
 
         <script>var video_id="<%=video_id%>";</script>
         <script src="https://www.youtube.com/iframe_api"></script>
-	<script type="text/javascript">
+		<script type="text/javascript">
 
 			var player;
 			function onYouTubeIframeAPIReady() {
@@ -171,7 +172,7 @@
                         } 
                     });
                 } else {
-                    alert("Por favor inicie sesión para comentar el video");
+                    alert("Por favor inicie sesiÃ³n para comentar el video");
                 }
             } 
             
@@ -187,7 +188,7 @@
                             let html = "";
                             for (let i = 0; i < listas.length; i++) {
                                 var icono = "fas fa-list";
-                                if(listas[i].nombre === "Ver mas tarde" || listas[i].nombre === "Ver más tarde") icono = "fas fa-redo-alt";
+                                if(listas[i].nombre === "Ver mas tarde" || listas[i].nombre === "Ver mÃ¡s tarde") icono = "fas fa-redo-alt";
                                 if(listas[i].nombre === "Favoritos") icono = "fas fa-redo-alt";
                                 
                                 var funcion = "agregarVideoLista('"+listas[i].nombre+"');";
@@ -231,7 +232,7 @@
             <h1 id="video-titulo"><%=dt.getNombre()%></h1>
             
             <div class="row">
-                <div class="col-sm-5">
+                <div class="col">
                     <img id="user-pic" src="<%=imagenUser%>" height="30px" width="30px" alt="Profile de Usuario"/>
                     <span id="user-nick"><%=u.getNickname()%></span>
                     <button id="btn-suscripcion" class="btn btn-outline-dark" onclick="suscripcion(<%=u.getId()%>)">
@@ -244,7 +245,7 @@
                     <span id="user-subs"><%=seguidores.size()%> seguidores</span>
                     <script>
                     function conectate() {
-                      alert("Por favor, para realizar esta acción inicie sesion.");
+                      alert("Por favor, para realizar esta acciÃ³n inicie sesion.");
                     }
                     function suscripcion(seguido) {
 						var seguidor = <%=session.getAttribute("userid")%>;
@@ -254,9 +255,9 @@
   						$.ajax({
                               url: "<%=path%>/api/suscripcion.jsp?seguidor="+seguidor+"&seguido="+seguido,
                               success: function() {
-                                  alert("Suscripción/Desuscripción exitosa");
+                                  alert("SuscripciÃ³n/DesuscripciÃ³n exitosa");
                               },
-                              error: function () { alert("Error en la suscripción");}
+                              error: function () { alert("Error en la suscripciÃ³n");}
                           });
   						  recargarSubs();
                         }
@@ -281,37 +282,15 @@
                     }
                     </script>
                     
-                    <div class="checkbox checkbox-info checkbox-circle">
-                	<input id="chkInfo" name="valchk" type="checkbox" />
-                    <label for="valchk">
-                         Ver Valoraciones
-                     </label>
-                     </div>
-                
-                <script type="text/javascript">
-
-								$(function () {
-       									 $("#chkInfo").click(function () {
-          											 if ($(this).is(":checked")) {
-           									   			  $("#divvalchk").show();
-												            } else {
-												                $("#divvalchk").hide();
-												            }
-												        });
-												    });
-												    </script>
-                    
                 </div>
+            </div>
                 
-                
-                
+          	<div class="row">
                 <div class="col">
-                	<div id="divvalchk" class="col">
                     <button class="btn btn-outline-success my-2 my-sm-0" onclick="gustar(true)"><i class="fa fa-thumbs-up"></i>
                     <span id="likes"><b></b> <%=dt.getLikes()%></span></button>
                     <button class="btn btn-outline-success my-2 my-sm-0" onclick="gustar(false)"><i class="fa fa-thumbs-down"></i>
                     <span id="dislikes"><b></b> <%=dt.getDislikes()%></span></button>
-                    </div>
                     
                     <div class="btn-group">
 	                    <button class="btn btn-outline-secondary" type="button" id="listaDropdownbtn" data-toggle="dropdown" data-target="listas-menu" aria-haspopup="true" aria-expanded="false">
@@ -319,7 +298,7 @@
 	                    </button>
 	                    <div id="listas-menu" class="dropdown-menu" aria-labelledby="listaDropdownbtn">
 	                        <%-- Aca van las listas --%>
-	                        <a class="dropdown-item" href="login.jsp">Inicie sesión</a>
+	                        <a class="dropdown-item" href="login.jsp">Inicie sesiÃ³n</a>
 	                    </div>
                     </div>
                     
@@ -344,9 +323,9 @@
                                 $.ajax({
                                     url: "<%=path%>/api/valoracion.jsp?user_id="+user+"&video_id="+video+"&gusta="+g,
                                     success: function() {
-                                        alert("Valoración exitosa");
+                                        alert("ValoraciÃ³n exitosa");
                                     },
-                                    error: function () { alert("Error en la valoración del video");}
+                                    error: function () { alert("Error en la valoraciÃ³n del video");}
                                 });
                                 recargarValoraciones(g);
                             }
@@ -394,41 +373,32 @@
             <hr>
             <div class="row">
                 <div class="col-sm-6">
-                    <h5> Descripción</h5>
+                    <h5> DescripciÃ³n</h5>
                     <p id="video-desc"><%=dt.getDescripcion()%></p>
                 </div>
                 <div class="col-sm-3">
-                    <p id="video-cat"><b>Categoría:</b> <%=dt.getCategoria()%></p>
-                    <p id="video-duracion"><b>Duración:</b> <%=dt.getDuracion()%> minutos</p>
-                    <p id="video-fecha"><b>Fecha:</b> <%=dt.getFechaPublicacion().toGregorianCalendar().getTime()%></p>
-                </div>
-                
-                <div class="checkbox checkbox-info checkbox-circle">
-                	<input id="chkInfo2" name="comchk" type="checkbox" />
-                    <label for="comchk">
-                         Ver Comentarios
-                     </label>
-                     </div>
-                
-                <script type="text/javascript">
-
-								$(function () {
-       									 $("#chkInfo2").click(function () {
-          											 if ($(this).is(":checked")) {
-           									   			  $("#divcomchk").show();
-												            } else {
-												                $("#divcomchk").hide();
-												            }
-												        });
-												    });
-												    </script>
+                    <p id="video-cat"><b>CategorÃ­a:</b> <%=dt.getCategoria()%></p>
+                    <p id="video-duracion"><b>DuraciÃ³n:</b> <%=dt.getDuracion()%> minutos</p>
+                    <p id="video-fecha"><b>Fecha:</b> <%=new SimpleDateFormat("yyyy-MM-dd").format(dt.getFechaPublicacion().toGregorianCalendar().getTime())%></p>
+                </div>    
             </div>
             
+            <div class="row" style="margin: 0 auto; background: #7EA16B;">
+	            <h5 style="margin: 0 auto;" onclick="muestroCom()">Ver Comentarios</h5>
+	            
+	            <script>
+	            	function muestroCom() {
+	            		var com = document.getElementById("divcom");
+	            		if (com.style.display === "none") {
+	            			com.style.display = "block";
+	            		} else {
+	            			com.style.display = "none";
+	            		}
+	            	}
+	            </script>
+            </div>
             
-            
-            <div id="divcomchk" class="row">
-                <div class="col">
-                        <h5> Comentarios </h5>
+                <div id="divcom" class="col" style="display: none;">
                     <div class="form-group row">
                         <div class="col-sm-6">
                             <textarea id="textArea-1" class="form-control" rows="2" placeholder="Agregue un comentario..." required></textarea>
@@ -436,12 +406,11 @@
                         <button type="button" class="btn btn-success" onclick="comentarVideo(-1)">Comentar</button>
                     </div>
                     <div class="card">
-                        <div id="comentarios" class="card-body">
+                        <div id="comentarios" class="card-body" style="overflow: scroll;">
                             <%-- Muchos comentarios --%>
                         </div>
                     </div>
                 </div>
-            </div>
         </div>
     </body>
 </html>

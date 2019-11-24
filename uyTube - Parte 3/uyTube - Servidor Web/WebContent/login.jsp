@@ -4,6 +4,7 @@
     Author     : Luciano
 --%>
 
+<%@page import="logica.webservices.UsuarioDt"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import = "logica.webservices.WScontroladorUsuarioImplService"%>
 <%@page import = "logica.webservices.WScontroladorUsuario"%>
@@ -17,10 +18,32 @@
         <script src="js/jquery.min.js"></script>
         <title>Iniciar sesion en uyTube</title>
             <%
-            	WScontroladorUsuario user = new WScontroladorUsuarioImplService().getWScontroladorUsuarioImplPort();
+                WScontroladorUsuario user = new WScontroladorUsuarioImplService().getWScontroladorUsuarioImplPort();
                 
                 Boolean formInput = false;
-                
+                UsuarioDt userRec = null;
+                //Get Cookies
+				boolean foundCookie = false;
+
+                Cookie[] cookies = request.getCookies();
+				int pos = 0;
+               	if(cookies!=null){
+
+			        for(int i = 0; i < cookies.length; i++)
+			        { 
+			           	Cookie cC = cookies[i];
+						if (cC.getName().equals("userid")) {
+						    String userIdStr= cC.getValue();
+						    foundCookie = true;
+					   	    pos = i;			
+		
+						    int numId = Integer.parseInt(userIdStr);
+						    userRec = user.consultarUsuario(numId);
+		
+						}
+			        }
+	                
+				}
                 
                 if (request.getParameter("user") != null) {
                     if (request.getParameter("password") != null) {
@@ -28,6 +51,18 @@
                         if (_id != -1) {
                             session.setAttribute("userid",_id);
                             session.setAttribute("user_dt", user.consultarUsuario(_id));
+                           
+						    if(request.getParameter("recuerdame") != null) {
+							   if(request.getParameter("recuerdame").equals("on")){
+					               	String cadenaId = String.valueOf(_id);
+					                Cookie c = new Cookie("userid", cadenaId);
+					                
+									if(foundCookie) cookies[pos].setMaxAge(0); 
+									
+									c.setMaxAge(24*60*60);
+					            	response.addCookie(c);
+					            }
+						    }
                             String redirectURL = "index.jsp";
                             response.sendRedirect(redirectURL);
                         }
@@ -42,7 +77,7 @@
             <div class="cotainer">
                 <div class="row justify-content-center">
                     <div class="col-md-8">
-                        <h1>uyTube - Inicio de sesión</h1>
+                        <h1>Inicio de sesión</h1>
                     </div>
                 </div>
                 <div class="row justify-content-center">
@@ -54,16 +89,23 @@
                                     <div class="form-group row">
                                         <label for="user" class="col-md-4 col-form-label text-md-right">Usuario</label>
                                         <div class="col-md-6">
-                                            <input type="text" id="user" class="form-control" name="user" required autofocus>
+                                            <input type="text" id="user" class="form-control" name="user" <%if(foundCookie){%>value=<%=userRec.getNickname()%><%}%> required autofocus>
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
                                         <label for="password" class="col-md-4 col-form-label text-md-right">Contraseña</label>
                                         <div class="col-md-6">
-                                            <input type="password" id="password" class="form-control" name="password" required>
+                                            <input type="password" id="password" class="form-control" name="password" <%if(foundCookie){%>value=<%=userRec.getPassword()%><%}%> required>
                                         </div>
                                     </div>
+
+					 				<div class="form-group row">
+					 					<label class="col-md-4 text-md-right">Recuerdame
+					 						<input type="checkbox" id="recuerdame" name="recuerdame">
+                                        	<span class="checkmark"></span>
+					 					</label>
+					 				</div>
 
                                     <div class="col-md-6 offset-md-4">
                                         <button type="submit" class="btn btn-primary">
