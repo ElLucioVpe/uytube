@@ -30,7 +30,10 @@ public interface IControladorUsuario {
     public abstract void ModificarListaDeReproduccion(int usuario, String lista, String nuevaCat, boolean nuevaPri);
     public abstract void AgregarVideoListaDeReproduccion(int usuarioVideo, int usuarioLista, String video, String lista);
     public abstract void QuitarVideoListaDeReproduccion(int usuarioLista, String lista, int video);
-    
+    public abstract void AltaListaHistorial(String nombre ,String idVideo, String idUser, String fecha, int cantVisitas);
+    public abstract void agregarVideoListaHisotrial(String idVideo, String idUsuario, int cant,String fecha);
+     public abstract void actualizarVisitaListahistorial(String idVideo, String idUsuario);
+     public abstract ListaHistorialDt obtenerListaHistorial(String idUsuario);
     //SeguirUsuario
     public abstract void seguirUsuario(String seguidor, String seguido); ////
     public abstract void dejarDeSeguirUsuario(String seguidor, String seguido); ////
