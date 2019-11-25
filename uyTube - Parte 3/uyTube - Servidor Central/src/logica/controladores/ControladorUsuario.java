@@ -658,7 +658,7 @@ public class ControladorUsuario implements IControladorUsuario {
             
             TypedQuery<Usuario> query = emanager.createNamedQuery("Usuario.findByNickname", Usuario.class).setParameter("nickname", nick);
             //if (q.getResultList().isEmpty()) throw new Exception("El usuario no existe");
-            if (!query.getResultList().isEmpty()){ 
+            if (!query.getResultList().isEmpty()) {
                 Usuario usr = query.getSingleResult();
                 id_user = usr.getId();
             }
@@ -1279,6 +1279,11 @@ public class ControladorUsuario implements IControladorUsuario {
         	
         	for(int i = 0; i < comentarios.size(); i++) {
         		emanager.remove(comentarios.get(i));
+        	}
+        	
+        	List<Video> videos = new ArrayList<>(cnl.getVideos());
+        	for(int i = 0; i < videos.size(); i++) {
+        		emanager.createQuery("DROP v FROM Visita v where v.videoId = :videoid", Visita.class).setParameter("videoid", videos.get(i).getId());
         	}
         	
         	usr.setActivo(false);
