@@ -665,10 +665,7 @@ public class ControladorUsuario implements IControladorUsuario {
             
             if (id_user == -1) throw new Exception("El usuario no existe");//puto catch
         } catch (Exception exc) {
-            Throwable _throwable = new Throwable();
-            StackTraceElement[] elements = _throwable.getStackTrace();
-            String invocador = elements[1].getFileName();
-            exceptionAux(invocador, exc);
+            System.out.println(exc);
         }
         emanager.getTransaction().commit();
         emanager.close();
