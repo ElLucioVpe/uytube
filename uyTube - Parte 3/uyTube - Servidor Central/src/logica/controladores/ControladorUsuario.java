@@ -471,8 +471,11 @@ public class ControladorUsuario implements IControladorUsuario {
             if(vis == null) { 
             	vis = new Visita(idUsuario, idVideo, new Date(), 0, vid, propietario.getUsuario());
             	emanager.persist(vis);
-            	historial.agregarVideo(vid);
-            	historial.agregarVisita(vis);
+            	
+            	if(!historial.getVideos().contains(vid)) { 
+            		historial.agregarVideo(vid);
+            		historial.agregarVisita(vis);
+            	}
             }
             
             vis.actualizarVisita();
@@ -1283,7 +1286,11 @@ public class ControladorUsuario implements IControladorUsuario {
         	
         	List<Video> videos = new ArrayList<>(cnl.getVideos());
         	for(int i = 0; i < videos.size(); i++) {
-        		emanager.createQuery("DROP v FROM Visita v where v.videoId = :videoid", Visita.class).setParameter("videoid", videos.get(i).getId());
+        		List<Visita> visitas = emanager.createQuery("SELECT v FROM Visita v where v.videoId = :videoid", Visita.class).setParameter("videoid", videos.get(i).getId()).getResultList();
+        		for(int j = 0; j < visitas.size(); j++) {
+        			emanager.remove(visitas.get(j));
+        			
+        		}
         	}
         	
         	usr.setActivo(false);
