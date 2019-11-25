@@ -43,64 +43,74 @@
           <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   
           <script>
-                $( function() {
-                 $( "#datepicker" ).datepicker();
-                } );
+            $( function() {
+             $( "#datepicker" ).datepicker();
+            } );
 
-                $( document ).ready(function() {
-                    /*$('#user').on('input',function(e){
-                        console.log($('#user').val());
-                        verificarUser($('#user').val());
-                    });*/
-                    $( '#user' ).keyup(function() {
-                        console.log($('#user').val());
-                        verificarUser($('#user').val());
-                    });
-                });
+            $( document ).ready(function() {
+            var escribiendo;
+            var intervaloFinEscritura = 1000;
+            var $input = $('#user');
 
-                function verificarUser(user) {
-                    var userExiste = false;
-                    if(user !== "" && user !== null) {
-                        $.ajax({
-                        url:"http://localhost:8080/UyTube/api/obtenerUsuarios.jsp",
-                        success:function(response){   
-                            let usuarios = jQuery.parseJSON(response);
-                            console.log(usuarios);
-                            for(i = 0; i < usuarios.length; i++) {
-                                if(usuarios[i].nickname === user) {
-                                    userExiste = true;
-                                }
+            $input.on('keyup', function () {
+                clearTimeout(escribiendo);
+                escribiendo = setTimeout(terminoDeEscribir, intervaloFinEscritura);
+            });
+            
+            $input.on('keydown', function () {
+                clearTimeout(escribiendo);
+            });
+
+            });
+
+            function terminoDeEscribir () {
+                console.log($('#user').val());
+                verificarUser($('#user').val());
+            }
+
+            function verificarUser(user) {
+                var userExiste = false;
+                if(user !== "" && user !== null) {
+                    $.ajax({
+                    url:"http://localhost:8080/UyTube/api/obtenerUsuarios.jsp",
+                    success:function(response){   
+                        let usuarios = jQuery.parseJSON(response);
+                        console.log(usuarios);
+                        for(i = 0; i < usuarios.length; i++) {
+                            if(usuarios[i].nickname === user) {
+                                userExiste = true;
                             }
-                            if(userExiste) {
-                                $('#user').removeClass("is-valid");
-                                $('#user').addClass("is-invalid");
-                                $('#user-validacion').removeClass("valid-feedback");
-                                $('#user-validacion').addClass("invalid-feedback");
-                                $('#user-validacion').html("<span>"+user+" ya existe. Por favor, elige otro.</span>");
-                            } else {
-                                $('#user').removeClass("is-invalid");
-                                $('#user').addClass("is-valid");
-                                $('#user-validacion').removeClass("invalid-feedback");
-                                $('#user-validacion').addClass("valid-feedback");
-                                $('#user-validacion').html("<span>"+user+" está disponible.</span>");
-                            }
-                            console.log("resultado :"+userExiste);
-                        },
-                        error: function (xhr, ajaxOptions, thrownError) {
-                        console.log(xhr.status);
-                        console.log(thrownError);
                         }
-                        });
-                    } else {
-                        console.log("user vacio");
-                        $('#user').removeClass("is-invalid");
-                        $('#user').removeClass("is-valid");
-                        $('#user-validacion').removeClass("valid-feedback");
-                        $('#user-validacion').removeClass("invalid-feedback");
-                        $('#user-validacion').html("");
+                        if(userExiste) {
+                            $('#user').removeClass("is-valid");
+                            $('#user').addClass("is-invalid");
+                            $('#user-validacion').removeClass("valid-feedback");
+                            $('#user-validacion').addClass("invalid-feedback");
+                            $('#user-validacion').html("<span>"+user+" ya existe. Por favor, elige otro.</span>");
+                        } else {
+                            $('#user').removeClass("is-invalid");
+                            $('#user').addClass("is-valid");
+                            $('#user-validacion').removeClass("invalid-feedback");
+                            $('#user-validacion').addClass("valid-feedback");
+                            $('#user-validacion').html("<span>"+user+" estï¿½ disponible.</span>");
+                        }
+                        console.log("resultado :"+userExiste);
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(thrownError);
                     }
+                    });
+                } else {
+                    console.log("user vacio");
+                    $('#user').removeClass("is-invalid");
+                    $('#user').removeClass("is-valid");
+                    $('#user-validacion').removeClass("valid-feedback");
+                    $('#user-validacion').removeClass("invalid-feedback");
+                    $('#user-validacion').html("");
                 }
-            </script>
+            }
+        </script>
         <title>Crear usuario</title>
     </head>
     <body>
@@ -128,14 +138,14 @@
                                     </div>
 
                                     <div class="form-group row">
-                                        <label for="password" class="col-md-4 col-form-label text-md-right">Contraseña</label>
+                                        <label for="password" class="col-md-4 col-form-label text-md-right">Contraseï¿½a</label>
                                         <div class="col-md-6">
                                             <input type="password" id="password" class="form-control" name="password" required>
                                         </div>
                                     </div>
                                     
                                       <div class="form-group row">
-                                        <label for="password" class="col-md-4 col-form-label text-md-right">Confirmacion de Contraseña</label>
+                                        <label for="password" class="col-md-4 col-form-label text-md-right">Confirmacion de Contraseï¿½a</label>
                                         <div class="col-md-6">
                                             <input type="password" id="password2" class="form-control" name="password2" required>
                                         </div>
@@ -186,7 +196,7 @@
                                         
                                         
                                     <div class="form-group row">
-                                        <label for="desc" class="col-md-4 col-form-label text-md-right">Descripción</label>
+                                        <label for="desc" class="col-md-4 col-form-label text-md-right">Descripciï¿½n</label>
                                         <div class="col-md-6">
                                             <textarea class="form-control" id="desc" name="desc" rows="3" placeholder="Descripcion del canal"></textarea>
                                         </div>
