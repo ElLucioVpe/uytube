@@ -31,7 +31,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
         <script src="js/bootstrap.min.js"></script>
         <script src="js/jquery.min.js"></script>
@@ -46,6 +46,60 @@
                 $( function() {
                  $( "#datepicker" ).datepicker();
                 } );
+
+                $( document ).ready(function() {
+                    /*$('#user').on('input',function(e){
+                        console.log($('#user').val());
+                        verificarUser($('#user').val());
+                    });*/
+                    $( '#user' ).keyup(function() {
+                        console.log($('#user').val());
+                        verificarUser($('#user').val());
+                    });
+                });
+
+                function verificarUser(user) {
+                    var userExiste = false;
+                    if(user !== "" && user !== null) {
+                        $.ajax({
+                        url:"http://localhost:8080/UyTube/api/obtenerUsuarios.jsp",
+                        success:function(response){   
+                            let usuarios = jQuery.parseJSON(response);
+                            console.log(usuarios);
+                            for(i = 0; i < usuarios.length; i++) {
+                                if(usuarios[i].nickname === user) {
+                                    userExiste = true;
+                                }
+                            }
+                            if(userExiste) {
+                                $('#user').removeClass("is-valid");
+                                $('#user').addClass("is-invalid");
+                                $('#user-validacion').removeClass("valid-feedback");
+                                $('#user-validacion').addClass("invalid-feedback");
+                                $('#user-validacion').html("<span>"+user+" ya existe. Por favor, elige otro.</span>");
+                            } else {
+                                $('#user').removeClass("is-invalid");
+                                $('#user').addClass("is-valid");
+                                $('#user-validacion').removeClass("invalid-feedback");
+                                $('#user-validacion').addClass("valid-feedback");
+                                $('#user-validacion').html("<span>"+user+" está disponible.</span>");
+                            }
+                            console.log("resultado :"+userExiste);
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                        console.log(xhr.status);
+                        console.log(thrownError);
+                        }
+                        });
+                    } else {
+                        console.log("user vacio");
+                        $('#user').removeClass("is-invalid");
+                        $('#user').removeClass("is-valid");
+                        $('#user-validacion').removeClass("valid-feedback");
+                        $('#user-validacion').removeClass("invalid-feedback");
+                        $('#user-validacion').html("");
+                    }
+                }
             </script>
         <title>Crear usuario</title>
     </head>
@@ -68,6 +122,8 @@
                                         <label for="user" class="col-md-4 col-form-label text-md-right">Usuario</label>
                                         <div class="col-md-6">
                                             <input type="text" id="user" class="form-control" name="user" required autofocus>
+                                            <div id="user-validacion">
+                                            </div> 
                                         </div>
                                     </div>
 
