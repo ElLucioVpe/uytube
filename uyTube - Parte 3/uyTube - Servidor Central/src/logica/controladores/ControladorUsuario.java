@@ -20,13 +20,17 @@ import logica.Categoria;
 import logica.Comentario;
 import logica.ListaDeReproduccion;
 import logica.ListaDeReproduccion_PorDefecto;
+import logica.ListaHistorial;
 import logica.Usuario;
 import logica.Valoracion;
 import logica.Video;
+import logica.Visita;
 import logica.dt.CanalDt;
 import logica.dt.ListaDeReproduccionDt;
+import logica.dt.ListaHistorialDt;
 import logica.dt.UsuarioDt;
 import logica.dt.VideoDt;
+import logica.dt.VisitaDt;
 
 /**
  *
@@ -438,6 +442,126 @@ public class ControladorUsuario implements IControladorUsuario {
     	emanager.getTransaction().commit();
         emanager.close();
     }
+    @Override
+    public void AltaListaHistorial(String nombre ,String idVideo, String idUser, String fecha, int cantVisitas){
+    EntityManager emanager = emFactory.createEntityManager();
+    	try {
+
+            emanager.getTransaction().begin();
+
+            Canal propietario = emanager.find(Canal.class, idUser);
+            Video vid = emanager.find(Video.class, idVideo);
+            
+            if(propietario == null) throw new Exception("El usuario ingresado no existe");
+            if(vid == null) throw new Exception("El video ingresado no existe");
+            Visita vis = new Visita(propietario.getUsuario().getId(),vid.getId(), fecha, cantVisitas, vid,propietario.getUsuario());
+            ListaHistorial lista = new ListaHistorial(propietario.getUsuario(),vis);
+            emanager.persist(lista);
+          //  propietario.addLista(lista);
+            
+        }catch (Exception exc) {
+            Throwable _throwable = new Throwable();
+            StackTraceElement[] elements = _throwable.getStackTrace();
+            String invocador = elements[1].getFileName();
+            exceptionAux(invocador, exc);
+        }
+    	emanager.getTransaction().commit();
+        emanager.close();
+    }
+    @Override
+    public void agregarVideoListaHisotrial(String idVideo, String idUsuario, int cant,String fecha)
+    {
+           EntityManager emanager = emFactory.createEntityManager();
+    	try {            emanager.getTransaction().begin();     
+
+          Video vid = emanager.find(Video.class, idVideo);
+          if(vid == null) throw new Exception("El video ingresado no existe");
+           Canal propietario = emanager.find(Canal.class, idUsuario);
+           if(propietario == null) throw new Exception("El usuario ingresado no existe");
+           Visita vis = new Visita(propietario.getUsuario().getId(),vid.getId(), fecha, cant, vid,propietario.getUsuario());
+           ListaHistorial list = emanager.find(ListaHistorial.class, idUsuario);
+           list.agregarVisita(vis);
+           emanager.persist(list);
+           
+        }catch (Exception exc) {
+            Throwable _throwable = new Throwable();
+            StackTraceElement[] elements = _throwable.getStackTrace();
+            String invocador = elements[1].getFileName();
+            exceptionAux(invocador, exc);
+        }
+    	emanager.getTransaction().commit();
+        emanager.close();
+    }
+    @Override
+    public void actualizarVisitaListahistorial(String idVideo, String idUsuario){
+      EntityManager emanager = emFactory.createEntityManager();
+    	try {            emanager.getTransaction().begin();     
+
+            Video vid = emanager.find(Video.class, idVideo);
+          if(vid == null) throw new Exception("El video ingresado no existe");
+           Canal propietario = emanager.find(Canal.class, idUsuario);
+           if(propietario == null) throw new Exception("El usuario ingresado no existe");
+           //            List users = emanager.createQuery("SELECT c FROM Canal c").getResultList();
+           //(emanager.createNamedQuery("Usuario.findByNickname", Usuario.class).setParameter("nickname", nick).getResultList()
+
+          Visita vis = emanager.createNamedQuery("Visita.findVisita", Visita.class).setParameter("userId", idUsuario).setParameter("videoId", idVideo).getSingleResult();
+            if(vis == null){
+                 vis = new Visita(Integer.parseInt(idUsuario),Integer.parseInt(idVideo), "",0, vid, propietario.getUsuario());
+           } 
+           ListaHistorial historial = emanager.createQuery("SELECT l FROM ListaHistorial WHERE l.userId : = idusuario", ListaHistorial.class).setParameter("idusuario", idUsuario).getSingleResult();
+           //esto tira error       
+           if(historial == null) {
+           historial = new ListaHistorial(propietario.getUsuario(), vis);
+           }
+                  
+           vis.actualizarVisita();
+           emanager.persist(vis);//no se si hace falta pero bueno ahi lo dejo
+           emanager.persist(historial);
+           
+        }catch (Exception exc) {
+            Throwable _throwable = new Throwable();
+            StackTraceElement[] elements = _throwable.getStackTrace();
+            String invocador = elements[1].getFileName();
+            exceptionAux(invocador, exc);
+        }
+    	emanager.getTransaction().commit();
+        emanager.close();
+    }
+    @Override 
+    public ListaHistorialDt obtenerListaHistorial(String idUsuario){
+               //List<ListaHistorialDt> historial = new ArrayList<>();
+                ListaHistorialDt historial = new ListaHistorialDt();
+               List<VisitaDt> visitas = new ArrayList<>();
+
+        EntityManager emanager = emFactory.createEntityManager();
+    	try {
+                            emanager.getTransaction().begin();     
+
+             Canal propietario = emanager.find(Canal.class, idUsuario);
+           if(propietario == null) throw new Exception("El usuario ingresado no existe");
+                
+                List<Visita> vis = emanager.createQuery("SELECT v FROM Visita WHERE l.userId : = idusuario ORDER BY l.cantidad", Visita.class).setParameter("idusuario", idUsuario).getResultList();
+                          ListaHistorial listaH = emanager.createQuery("SELECT l FROM ListaHistorial WHERE l.userId : = idusuario", ListaHistorial.class).setParameter("idusuario", idUsuario).getSingleResult();
+  
+                if(vis == null) throw new Exception("El usuario no tiene Visitas");    
+            Iterator<Visita> iter = vis.iterator();
+            while(iter.hasNext()) {
+                Visita visi = (Visita) iter.next();
+                visitas.add(new VisitaDt(Integer.parseInt(idUsuario),visi.getVideoId(),visi.getFecha(), visi.getCantidad()));
+            
+            }
+            historial = new ListaHistorialDt(propietario.getUsuario(),visitas,listaH.getId());
+            
+        }catch (Exception exc) {
+            Throwable _throwable = new Throwable();
+            StackTraceElement[] elements = _throwable.getStackTrace();
+            String invocador = elements[1].getFileName();
+            exceptionAux(invocador, exc);
+        }
+    	emanager.getTransaction().commit();
+        emanager.close();    
+        return historial;
+    } 
 
     @Override
     public void seguirUsuario(String seguidor, String seguido){
