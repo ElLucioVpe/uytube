@@ -62,7 +62,7 @@
                     var userExiste = false;
                     if(user !== "" && user !== null) {
                         $.ajax({
-                        url:"http://localhost:8080/UyTube/api/obtenerUsuarios.jsp",
+                        url:"<%=request.getContextPath()%>/api/obtenerUsuarios.jsp",
                         success:function(response){   
                             let usuarios = jQuery.parseJSON(response);
                             console.log(usuarios);
@@ -82,7 +82,7 @@
                                 $('#user').addClass("is-valid");
                                 $('#user-validacion').removeClass("invalid-feedback");
                                 $('#user-validacion').addClass("valid-feedback");
-                                $('#user-validacion').html("<span>"+user+" está disponible.</span>");
+                                $('#user-validacion').html("<span>"+user+" estï¿½ disponible.</span>");
                             }
                             console.log("resultado :"+userExiste);
                         },
@@ -128,14 +128,14 @@
                                     </div>
 
                                     <div class="form-group row">
-                                        <label for="password" class="col-md-4 col-form-label text-md-right">Contraseña</label>
+                                        <label for="password" class="col-md-4 col-form-label text-md-right">Contraseï¿½a</label>
                                         <div class="col-md-6">
                                             <input type="password" id="password" class="form-control" name="password" required>
                                         </div>
                                     </div>
                                     
                                       <div class="form-group row">
-                                        <label for="password" class="col-md-4 col-form-label text-md-right">Confirmacion de Contraseña</label>
+                                        <label for="password" class="col-md-4 col-form-label text-md-right">Confirmacion de Contraseï¿½a</label>
                                         <div class="col-md-6">
                                             <input type="password" id="password2" class="form-control" name="password2" required>
                                         </div>
@@ -186,7 +186,7 @@
                                         
                                         
                                     <div class="form-group row">
-                                        <label for="desc" class="col-md-4 col-form-label text-md-right">Descripción</label>
+                                        <label for="desc" class="col-md-4 col-form-label text-md-right">Descripciï¿½n</label>
                                         <div class="col-md-6">
                                             <textarea class="form-control" id="desc" name="desc" rows="3" placeholder="Descripcion del canal"></textarea>
                                         </div>
