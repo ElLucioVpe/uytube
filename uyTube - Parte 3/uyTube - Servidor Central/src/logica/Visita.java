@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "VISITA")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Visita.findVisita", query = "SELECT v FROM Visita v WHERE v.userId = :userId AND  v.videoId = :videoId"),
+    @NamedQuery(name = "Visita.findVisita", query = "SELECT v FROM Visita v WHERE v.userId = :userId AND v.videoId = :videoId"),
 })
 //public class Canal  {
 public class Visita implements Serializable{
@@ -54,6 +54,9 @@ public class Visita implements Serializable{
      @JoinColumn(name = "USER_ID", referencedColumnName = "ID", insertable = false, updatable = false)
     @ManyToOne(optional = false)    
     private Usuario usuario;
+    
+    public Visita() {
+    } 
     
     public Visita(Integer userId, Integer videoId) {
          this.userId = userId;
@@ -86,7 +89,7 @@ public class Visita implements Serializable{
     
     
     public void actualizarVisita() {
-	   this.cantidad = this.cantidad++;
+	   this.cantidad++;
 	   this.fecha = new Date();
     }
     

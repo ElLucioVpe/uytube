@@ -15,7 +15,7 @@
 <%@page import="java.nio.file.Paths"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page contentType="text/html"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%@page import = "logica.webservices.WScontroladorCategoriaImplService"%>
 <%@page import = "logica.webservices.WScontroladorCategoria"%>
@@ -49,7 +49,7 @@
 
             $( document ).ready(function() {
             var escribiendo;
-            var intervaloFinEscritura = 1000;
+            var intervaloFinEscritura = 500;
             var $input = $('#user');
 
             $input.on('keyup', function () {
@@ -64,7 +64,7 @@
             });
 
             function terminoDeEscribir () {
-                console.log($('#user').val());
+                //console.log($('#user').val());
                 verificarUser($('#user').val());
             }
 
@@ -72,10 +72,10 @@
                 var userExiste = false;
                 if(user !== "" && user !== null) {
                     $.ajax({
-                    url:"http://localhost:8080/UyTube/api/obtenerUsuarios.jsp",
+                    url:"<%=request.getContextPath()%>/api/obtenerUsuarios.jsp",
                     success:function(response){   
                         let usuarios = jQuery.parseJSON(response);
-                        console.log(usuarios);
+                        //console.log(usuarios);
                         for(i = 0; i < usuarios.length; i++) {
                             if(usuarios[i].nickname === user) {
                                 userExiste = true;
@@ -92,9 +92,9 @@
                             $('#user').addClass("is-valid");
                             $('#user-validacion').removeClass("invalid-feedback");
                             $('#user-validacion').addClass("valid-feedback");
-                            $('#user-validacion').html("<span>"+user+" est� disponible.</span>");
+                            $('#user-validacion').html("<span>"+user+" está disponible.</span>");
                         }
-                        console.log("resultado :"+userExiste);
+                        //console.log("resultado :"+userExiste);
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
                     console.log(xhr.status);
@@ -138,14 +138,14 @@
                                     </div>
 
                                     <div class="form-group row">
-                                        <label for="password" class="col-md-4 col-form-label text-md-right">Contrase�a</label>
+                                        <label for="password" class="col-md-4 col-form-label text-md-right">Contraseña</label>
                                         <div class="col-md-6">
                                             <input type="password" id="password" class="form-control" name="password" required>
                                         </div>
                                     </div>
                                     
                                       <div class="form-group row">
-                                        <label for="password" class="col-md-4 col-form-label text-md-right">Confirmacion de Contrase�a</label>
+                                        <label for="password" class="col-md-4 col-form-label text-md-right">Confirmacion de Contraseña</label>
                                         <div class="col-md-6">
                                             <input type="password" id="password2" class="form-control" name="password2" required>
                                         </div>
@@ -196,7 +196,7 @@
                                         
                                         
                                     <div class="form-group row">
-                                        <label for="desc" class="col-md-4 col-form-label text-md-right">Descripci�n</label>
+                                        <label for="desc" class="col-md-4 col-form-label text-md-right">Descripción</label>
                                         <div class="col-md-6">
                                             <textarea class="form-control" id="desc" name="desc" rows="3" placeholder="Descripcion del canal"></textarea>
                                         </div>

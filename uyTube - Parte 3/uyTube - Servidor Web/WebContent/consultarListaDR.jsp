@@ -35,6 +35,8 @@
             if(request.getParameter("nom") != null && request.getParameter("nom") != "") {
                 if(session.getAttribute("userid") != null) if(user_id == (int)session.getAttribute("userid")) propietario = true;
                 lista = user.obtenerListaDt(user_id, request.getParameter("nom"));
+                if(lista instanceof ListaHistorialDt) propietario = false; //oculto modificacion
+                
                 //Evito consultas a datos de un usuario inactivo
                 UsuarioDt dt_propietario = user.consultarUsuario(user_id);
                 if(dt_propietario != null) if(!dt_propietario.isActivo()) response.sendRedirect(path+"/index.jsp");
@@ -102,7 +104,7 @@
                         <hr />
                         <label><b>Visibilidad: &nbsp </b> <%if(lista.isPrivada()){%> Privada<%} else {%> Pública <%}%></label>
                         <hr />
-                        <label><b>Propietario: &nbsp </b> <a href="consultarUser.jsp?id=<%=lista.getIdUsuario()%>"><%=user.obtenerNickUsuario(lista.getIdUsuario())%></a></label>
+                        <label><b>Propietario: &nbsp </b> <a href="consultaUser.jsp?id=<%=lista.getIdUsuario()%>"><%=user.obtenerNickUsuario(lista.getIdUsuario())%></a></label>
                         <%if(propietario) {%>
                         <hr /><label><b>Modificar &nbsp</b> <button class="fas fa-edit"  data-toggle="collapse" data-target="#modificarCollapse" aria-expanded="false" aria-controls="modificarCollapse"></button></label> 
                             
@@ -136,6 +138,7 @@
                     <div class="card-body">
                                         <%
 	                    if(lista instanceof ListaHistorialDt) {
+
 	                    	ListaHistorialDt historial = (ListaHistorialDt) lista;
 	                    	List<VisitaDt> visitas = historial.getVisitas();
 	                    	
@@ -153,14 +156,14 @@
                                     <%}%>
                                 </a>
                                 <div class="media-body">
-                                    <h6 class="media-heading"><a href="m.video.jsp?id=<%=videoaux.getId()%>" style="color: black"><%=videoaux.getNombre()%></a>
+                                    <h6 class="media-heading"><a href="video.jsp?id=<%=videoaux.getId()%>" style="color: black"><%=videoaux.getNombre()%></a>
                                         <%if(propietario) {%> 
                                         <button class="fas fa-times" onclick="quitarVideo('<%=lista.getIdUsuario()%>', '<%=lista.getNombre()%>', '<%=videoaux.getId()%>')"></button> 
                                         <%}%>
                                     </h6>
 	                            	<a>
 	                            		<i class="fas fa-eye"></i><%=visitas.get(i).getCantidad()%> 
-	                            		<i class="fas fa-clock"></i><%=new SimpleDateFormat("yyyy-MM-dd").format(visitas.get(i).getFecha().toGregorianCalendar().getTime())%>
+	                            		<i class="fas fa-clock"></i><%=new SimpleDateFormat("yyyy-MM-dd HH:mm").format(visitas.get(i).getFecha().toGregorianCalendar().getTime())%>
 	                            	</a>
 	                            	<a><%=videoaux.getDescripcion()%></a>
                             	</div>

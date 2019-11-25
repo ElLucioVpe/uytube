@@ -23,7 +23,7 @@ public class ListaHistorialDt extends ListaDeReproduccionDt{
 
         super(id, "Historial", "Automatica", true, "Ninguna", u.getId(), fechaUV);
         this.userId = u.getId();
-        visitas.sort((v1, v2) -> v1.getCantidad().compareTo(v2.getCantidad())); //Ordeno
+        visitas.sort((v1, v2) -> v2.getCantidad().compareTo(v1.getCantidad())); //Ordeno
         this.visitas = visitas;
     }
     

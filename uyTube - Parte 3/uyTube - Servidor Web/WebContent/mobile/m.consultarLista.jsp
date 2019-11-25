@@ -33,6 +33,8 @@
             if(request.getParameter("nom") != null && request.getParameter("nom") != "") {
                 if(session.getAttribute("userid") != null) if(user_id == (int)session.getAttribute("userid")) propietario = true;
                 lista = user.obtenerListaDt(user_id, request.getParameter("nom"));
+                if(lista instanceof ListaHistorialDt) propietario = false; //oculto modificacion
+                
                 //Evito consultas a datos de un usuario inactivo
                 UsuarioDt dt_propietario = user.consultarUsuario(user_id);
                 if(dt_propietario != null) if(!dt_propietario.isActivo()) response.sendRedirect(path+"/index.jsp");
@@ -95,6 +97,7 @@
                     <div class="card-body">
                     <%
 	                    if(lista instanceof ListaHistorialDt) {
+	                    	
 	                    	ListaHistorialDt historial = (ListaHistorialDt) lista;
 	                    	List<VisitaDt> visitas = historial.getVisitas();
 	                    	
@@ -120,7 +123,7 @@
                                     <a class="text-muted"><%=user.obtenerNickUsuario(videoaux.getIdCanal())%></a>
 	                            	<a>
 	                            		<i class="fas fa-eye"></i><%=visitas.get(i).getCantidad()%> 
-	                            		<i class="fas fa-clock"></i><%=new SimpleDateFormat("yyyy-MM-dd").format(visitas.get(i).getFecha().toGregorianCalendar().getTime())%>
+	                            		<i class="fas fa-clock"></i><%=new SimpleDateFormat("yyyy-MM-dd HH:mm").format(visitas.get(i).getFecha().toGregorianCalendar().getTime())%>
 	                            	</a>
                             	</div>
                             </div> 

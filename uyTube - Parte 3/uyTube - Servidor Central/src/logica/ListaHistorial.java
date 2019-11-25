@@ -30,6 +30,10 @@ public class ListaHistorial extends ListaDeReproduccion {
 	@OneToMany(cascade = CascadeType.ALL)
     private Collection<Visita> visitas;
 
+	public ListaHistorial() {
+		
+	}
+	
 	public ListaHistorial(Usuario u) {
 		super("Historial", u, true);
         this.visitas = new ArrayList<Visita>();

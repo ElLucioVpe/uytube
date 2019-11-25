@@ -122,6 +122,8 @@ public class ControladorUsuario implements IControladorUsuario {
             //Creacion de lista historial
             ListaHistorial historial = new ListaHistorial(user);
             emanager.persist(historial);
+            cnl.addLista(historial);
+            emanager.merge(cnl);
             //
             
         } catch (Exception exc) {
@@ -455,21 +457,25 @@ public class ControladorUsuario implements IControladorUsuario {
 
             Video vid = emanager.find(Video.class, idVideo);
             if(vid == null) throw new Exception("El video ingresado no existe");
+
             Canal propietario = emanager.find(Canal.class, idUsuario);
             if(propietario == null) throw new Exception("El usuario ingresado no existe");
             
-            ListaHistorial historial = emanager.createQuery("SELECT l from ListaHistorial WHERE ID_PROPIETARIO = :user", ListaHistorial.class).setParameter(":user", idUsuario).getSingleResult();
+            ListaHistorial historial = (ListaHistorial) emanager.createQuery("SELECT l from ListaDeReproduccion l WHERE DTYPE = 'ListaHistorial' AND ID_PROPIETARIO = :user", ListaDeReproduccion.class).setParameter("user", idUsuario).getSingleResult();
             if(historial == null) throw new Exception("La lista historial no existe");
-            
-            Visita vis = emanager.createNamedQuery("Visita.findVisita", Visita.class).setParameter("userId", idUsuario).setParameter("videoId", idVideo).getSingleResult();
+
+            TypedQuery<Visita> query = emanager.createNamedQuery("Visita.findVisita", Visita.class).setParameter("userId", idUsuario).setParameter("videoId", idVideo);
+            Visita vis = null;
+            if(!query.getResultList().isEmpty()) vis = query.getSingleResult();
+            System.out.println(vis);
             if(vis == null) { 
             	vis = new Visita(idUsuario, idVideo, new Date(), 0, vid, propietario.getUsuario());
             	emanager.persist(vis);
             	historial.agregarVideo(vid);
+            	historial.agregarVisita(vis);
             }
             
             vis.actualizarVisita();
-            historial.agregarVisita(vis);
            	emanager.merge(vis);
            	emanager.merge(historial);
            
@@ -496,8 +502,8 @@ public class ControladorUsuario implements IControladorUsuario {
             Canal propietario = emanager.find(Canal.class, idUsuario);
             if(propietario == null) throw new Exception("El usuario ingresado no existe");
                 
-            List<Visita> vis = emanager.createQuery("SELECT v FROM Visita WHERE l.userId : = idusuario ORDER BY l.cantidad", Visita.class).setParameter("idusuario", idUsuario).getResultList();
-            ListaHistorial listaH = emanager.createQuery("SELECT l FROM ListaHistorial WHERE l.userId : = idusuario", ListaHistorial.class).setParameter("idusuario", idUsuario).getSingleResult();
+            List<Visita> vis = emanager.createQuery("SELECT v FROM Visita v WHERE v.userId = :idusuario ORDER BY CANTIDAD", Visita.class).setParameter("idusuario", idUsuario).getResultList();
+            ListaHistorial listaH = emanager.createQuery("SELECT l from ListaHistorial l WHERE ID_PROPIETARIO = :idusuario", ListaHistorial.class).setParameter("idusuario", idUsuario).getSingleResult();
             if(vis == null) throw new Exception("El usuario no tiene Visitas");    
             
             Iterator<Visita> iter = vis.iterator();
@@ -510,7 +516,6 @@ public class ControladorUsuario implements IControladorUsuario {
             if(listaH.getCategoria() != null) cat = listaH.getCategoria().getNombre();
             
             historial = new ListaHistorialDt(listaH.getId(), propietario.getUsuario(), listaH.getNombre(), cat, visitas, fechaUltimoVideo(listaH.getVideos()));
-            
         }catch (Exception exc) {
             System.out.println(exc);
         }
