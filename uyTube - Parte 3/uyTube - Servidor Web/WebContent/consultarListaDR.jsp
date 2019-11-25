@@ -148,7 +148,7 @@
 	                 			videoaux = vid.obtenerVideoDtPorID(visitas.get(i).getVideoId());
 	                 		%>
                     	<div class="media">
-                                <a href="m.video.jsp?id=<%=videoaux.getId()%>" class="pull-left mr-2">
+                                <a href="video.jsp?id=<%=videoaux.getId()%>" class="pull-left mr-2">
                                     <%if(videoaux.getThumbnail() != "") {%> 
                                         <img src="<%=videoaux.getThumbnail()%>" class="img-thumbnail" alt="Thumbnail">
                                     <%} else {%> 
