@@ -25,7 +25,6 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="css/video.css">
         <script src="js/bootstrap.min.js"></script>
@@ -60,7 +59,12 @@
             		session.setAttribute("videoid", video_id);
             	}
             }
-
+	
+            //Agrego Visita
+            if(session.getAttribute("userid") != null) {
+            	if(dt != null) user.actualizarVisitaListahistorial(video_id, (int) session.getAttribute("userid"));
+            }
+            
             //Evito crasheo
             if(dt == null || dt.getNombre() == null) {
             	video_id = 1;
@@ -87,7 +91,7 @@
             
             Boolean estaSuscripto = false; //inicializo
             if(session.getAttribute("userid") != null) estaSuscripto = user.estaSuscripto((int)session.getAttribute("userid"), u.getId());
-            
+
             //Veo si dio like o dislike
             boolean puntuo = false;
             boolean puntuacion = false;

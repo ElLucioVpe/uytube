@@ -96,19 +96,19 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link PojoUsuarioDt }
+     * 
+     */
+    public PojoUsuarioDt createPojoUsuarioDt() {
+        return new PojoUsuarioDt();
+    }
+
+    /**
      * Create an instance of {@link CanalDt }
      * 
      */
     public CanalDt createCanalDt() {
         return new CanalDt();
-    }
-
-    /**
-     * Create an instance of {@link ComentarioDt }
-     * 
-     */
-    public ComentarioDt createComentarioDt() {
-        return new ComentarioDt();
     }
 
     /**
@@ -120,27 +120,27 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ValoracionDt }
+     * Create an instance of {@link PojoListadrDt }
      * 
      */
-    public ValoracionDt createValoracionDt() {
-        return new ValoracionDt();
+    public PojoListadrDt createPojoListadrDt() {
+        return new PojoListadrDt();
     }
 
     /**
-     * Create an instance of {@link PojoComentarioDt }
+     * Create an instance of {@link PojoString }
      * 
      */
-    public PojoComentarioDt createPojoComentarioDt() {
-        return new PojoComentarioDt();
+    public PojoString createPojoString() {
+        return new PojoString();
     }
 
     /**
-     * Create an instance of {@link PojOvaloracionDt }
+     * Create an instance of {@link VisitaDt }
      * 
      */
-    public PojOvaloracionDt createPojOvaloracionDt() {
-        return new PojOvaloracionDt();
+    public VisitaDt createVisitaDt() {
+        return new VisitaDt();
     }
 
     /**
@@ -165,6 +165,14 @@ public class ObjectFactory {
      */
     public UsuarioDt createUsuarioDt() {
         return new UsuarioDt();
+    }
+
+    /**
+     * Create an instance of {@link ListaHistorialDt }
+     * 
+     */
+    public ListaHistorialDt createListaHistorialDt() {
+        return new ListaHistorialDt();
     }
 
     /**

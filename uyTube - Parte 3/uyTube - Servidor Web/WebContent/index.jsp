@@ -12,7 +12,6 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="js/bootstrap.min.js"></script>
         <script src="js/jquery.min.js"></script>
 
@@ -25,22 +24,19 @@
     </head>
     <body>
         <%@ include file="include/header.jsp" %>
-		<div class="container">
-			<div class="table-responsive">
-		        <table class="table" id="tblVideos">
-		          <thead>
-		            <tr>
-		              <th class="thumbnail"></th>
-		              <th class="titulo" scope="col">Título</th>
-		              <th class="descripcion">Descripcion</th>
-		              <th class="canal">Canal</th>
-		            </tr>
-		          </thead>
-		          <tbody>
-		          </tbody>
-		        </table>
-	        </div>
-        </div>
+        <table class="table" id="tblVideos">
+          <thead>
+            <tr>
+              <th class="thumbnail"></th>
+              <th class="titulo" scope="col">Título</th>
+              <th class="descripcion">Descripcion</th>
+              <th class="canal">Canal</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+        
         <%@ include file="include/footer.jsp" %>
         
             <script>

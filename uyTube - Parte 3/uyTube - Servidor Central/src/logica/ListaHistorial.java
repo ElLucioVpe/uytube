@@ -5,13 +5,10 @@
  */
 package logica;
 
-import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -26,26 +23,26 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class ListaHistorial extends ListaDeReproduccion {
     
-    @OneToMany(cascade = CascadeType.ALL)
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@OneToMany(cascade = CascadeType.ALL)
     private Collection<Visita> visitas;
 
-    public ListaHistorial(Usuario u, Collection<Visita> visitas) {
-        super("Historial", u, true);
-        this.visitas = visitas;
-    }
-    public ListaHistorial(Usuario u, Visita visitas) {
-        super("Historial", u, true);
-        this.visitas.add(visitas);
-    }
+	public ListaHistorial(Usuario u) {
+		super("Historial", u, true);
+        this.visitas = new ArrayList<Visita>();
+	}
     
     public void agregarVisita(Visita v){
         this.visitas.add(v);
     }
-    public void actualizar(Integer id_video, Integer id_usuario){
-        
-    }
     
-   
+    /*public void actualizar(Integer id_video, Integer id_usuario){
+        
+    }*/
+    
     public Collection<Visita> getVisitas() {
         return visitas;
     }

@@ -14,6 +14,7 @@ import javax.jws.WebService;
 
 import logica.dt.CanalDt;
 import logica.dt.ListaDeReproduccionDt;
+import logica.dt.ListaHistorialDt;
 import logica.dt.UsuarioDt;
 import logica.webservices.pojos.POJOListadrDt;
 import logica.webservices.pojos.POJOString;
@@ -73,6 +74,14 @@ public class WScontroladorUsuarioImpl implements WScontroladorUsuario {
     @Override
     public void QuitarVideoListaDeReproduccion(int usuarioLista, String lista, int video) {
     	controlador.QuitarVideoListaDeReproduccion(usuarioLista, lista, video);
+    }
+    @Override
+    public void actualizarVisitaListahistorial(int idVideo, int idUsuario) {
+    	controlador.actualizarVisitaListahistorial(idVideo, idUsuario);
+    }
+    @Override
+    public ListaHistorialDt obtenerListaHistorial(int idUsuario) {
+    	return controlador.obtenerListaHistorial(idUsuario);
     }
     @Override
     public void seguirUsuario(String seguidor, String seguido) {

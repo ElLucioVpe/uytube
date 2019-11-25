@@ -5,6 +5,8 @@
  */
 package logica.dt;
 
+import java.util.Date;
+
 import logica.Video;
 
 /**
@@ -15,14 +17,14 @@ public class VisitaDt {
     
     Integer userId;
     Integer videoId;
-    String fecha;
+    Date fecha;
     Integer cantidad;
     Video vid;
     
         public VisitaDt() {
 
     }
-        public VisitaDt(Integer userId, Integer videoId, String fecha, Integer cantidad) {
+        public VisitaDt(Integer userId, Integer videoId, Date fecha, Integer cantidad) {
         this.userId = userId;
         this.videoId = videoId;
         this.fecha = fecha;
@@ -45,11 +47,11 @@ public class VisitaDt {
         this.videoId = videoId;
     }
     
-     public String getFecha() {
+     public Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(String fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
     

@@ -8,6 +8,8 @@ package logica;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -42,7 +44,7 @@ public class Visita implements Serializable{
     private Integer videoId;
      
     @Column(name = "FECHA")
-    private String fecha;
+    private Date fecha;
     @Column(name = "CANTIDAD")
     private Integer cantidad;
     
@@ -58,13 +60,13 @@ public class Visita implements Serializable{
         this.videoId = videoId;
     }
     
-    public Visita(Integer userId, Integer videoId, String fecha, Integer cantidad, Video vid, Usuario u) {
+    public Visita(Integer userId, Integer videoId, Date fecha, Integer cantidad, Video vid, Usuario user) {
         this.userId = userId;
         this.videoId = videoId;
         this.fecha = fecha;
         this.cantidad = cantidad;
         this.video = vid;
-        this.usuario = u;
+        this.usuario = user;
     }
     
    // @JoinColumn(name = "USER_ID", referencedColumnName = "ID", insertable = false, updatable = false)
@@ -84,10 +86,8 @@ public class Visita implements Serializable{
     
     
     public void actualizarVisita() {
-   this.cantidad = this.cantidad++;               
-   DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
-   LocalDateTime now = LocalDateTime.now(); 
-   this.fecha = dtf.format(now);
+	   this.cantidad = this.cantidad++;
+	   this.fecha = new Date();
     }
     
     
@@ -107,11 +107,11 @@ public class Visita implements Serializable{
         this.videoId = videoId;
     }
 
-    public String getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(String fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 

@@ -2,6 +2,7 @@ package logica.webservices;
 
 import logica.dt.CanalDt;
 import logica.dt.ListaDeReproduccionDt;
+import logica.dt.ListaHistorialDt;
 import logica.dt.UsuarioDt;
 import logica.webservices.pojos.POJOListadrDt;
 import logica.webservices.pojos.POJOString;
@@ -34,7 +35,9 @@ public interface WScontroladorUsuario {
     @WebMethod void ModificarListaDeReproduccion(int usuario, String lista, String nuevaCat, boolean nuevaPri);
     @WebMethod void AgregarVideoListaDeReproduccion(int usuarioVideo, int usuarioLista, String video, String lista);
     @WebMethod void QuitarVideoListaDeReproduccion(int usuarioLista, String lista, int video);
-    @WebMethod void seguirUsuario(String seguidor, String seguido); 
+    @WebMethod void actualizarVisitaListahistorial(int idVideo, int idUsuario);
+    @WebMethod ListaHistorialDt obtenerListaHistorial(int idUsuario);
+    @WebMethod void seguirUsuario(String seguidor, String seguido);
     @WebMethod void dejarDeSeguirUsuario(String seguidor, String seguido); 
     @WebMethod POJOVideoDt listarVideosDeUsuario(String usernick);
     @WebMethod int obtenerIdUsuario(String nick);

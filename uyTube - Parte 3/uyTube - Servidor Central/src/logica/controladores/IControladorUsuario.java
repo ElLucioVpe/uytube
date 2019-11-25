@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 import logica.dt.CanalDt;
 import logica.dt.ListaDeReproduccionDt;
+import logica.dt.ListaHistorialDt;
 import logica.dt.UsuarioDt;
 import logica.dt.VideoDt;
 
@@ -30,10 +31,8 @@ public interface IControladorUsuario {
     public abstract void ModificarListaDeReproduccion(int usuario, String lista, String nuevaCat, boolean nuevaPri);
     public abstract void AgregarVideoListaDeReproduccion(int usuarioVideo, int usuarioLista, String video, String lista);
     public abstract void QuitarVideoListaDeReproduccion(int usuarioLista, String lista, int video);
-    public abstract void AltaListaHistorial(String nombre ,String idVideo, String idUser, String fecha, int cantVisitas);
-    public abstract void agregarVideoListaHisotrial(String idVideo, String idUsuario, int cant,String fecha);
-     public abstract void actualizarVisitaListahistorial(String idVideo, String idUsuario);
-     public abstract ListaHistorialDt obtenerListaHistorial(String idUsuario);
+    public abstract void actualizarVisitaListahistorial(int idVideo, int idUsuario);
+    public abstract ListaHistorialDt obtenerListaHistorial(int idUsuario);
     //SeguirUsuario
     public abstract void seguirUsuario(String seguidor, String seguido); ////
     public abstract void dejarDeSeguirUsuario(String seguidor, String seguido); ////

@@ -18,12 +18,13 @@ public class ListaHistorialDt extends ListaDeReproduccionDt{
     private Integer userId;
     private List<VisitaDt> visitas;
             
-    public ListaHistorialDt(Usuario u, List<VisitaDt> visitas,int id) {
-            //public ListaDeReproduccionDt(int id, String nombre, String tipo, boolean privada, String categoria, int usuario, Date fechaUV) {
+    public ListaHistorialDt(Integer id, Usuario u, String nombre, String categoria, List<VisitaDt> visitas, Date fechaUV) {
+        //public ListaDeReproduccionDt(int id, String nombre, String tipo, boolean privada, String categoria, int usuario, Date fechaUV) {
 
-        super(id,"Historial","particular",true,"Historial",id,null);
+        super(id, "Historial", "Automatica", true, "Ninguna", u.getId(), fechaUV);
         this.userId = u.getId();
-        this.visitas=visitas;
+        visitas.sort((v1, v2) -> v1.getCantidad().compareTo(v2.getCantidad())); //Ordeno
+        this.visitas = visitas;
     }
     
     public ListaHistorialDt() {
@@ -34,8 +35,8 @@ public class ListaHistorialDt extends ListaDeReproduccionDt{
         return userId;
     }
 
-    public void setUserId(Integer u) {
-        this.userId = u;
+    public void setUserId(Integer uid) {
+        this.userId = uid;
     }
     
      public List<VisitaDt> getVisitas() {

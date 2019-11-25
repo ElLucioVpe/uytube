@@ -59,6 +59,12 @@
             }
             session.setAttribute("embedded", embedded);
             session.setAttribute("embedded-time", null);
+            
+          	//Agrego Visita
+            if(session.getAttribute("userid") != null) {
+            	if(dt != null) user.actualizarVisitaListahistorial(video_id, (int) session.getAttribute("userid"));
+            }
+            
             //Evito crasheo
             if(dt == null || dt.getNombre() == null) {
             	video_id = 1;

@@ -106,6 +106,7 @@ public class ControladorUsuario implements IControladorUsuario {
             user.setCanal(cnl);
             emanager.persist(cnl);
             emanager.merge(user);
+            
             //Creacion de listas de reproduccion por defecto existentes
             List<ListaDeReproduccion_PorDefecto> listasD = emanager.createQuery("select l from ListaDeReproduccion_PorDefecto l", ListaDeReproduccion_PorDefecto.class).getResultList();
             if (!listasD.isEmpty()) {
@@ -118,6 +119,9 @@ public class ControladorUsuario implements IControladorUsuario {
                 }
                 emanager.merge(cnl);
             }
+            //Creacion de lista historial
+            ListaHistorial historial = new ListaHistorial(user);
+            emanager.persist(historial);
             //
             
         } catch (Exception exc) {
@@ -442,46 +446,32 @@ public class ControladorUsuario implements IControladorUsuario {
     	emanager.getTransaction().commit();
         emanager.close();
     }
+
     @Override
-    public void AltaListaHistorial(String nombre ,String idVideo, String idUser, String fecha, int cantVisitas){
-    EntityManager emanager = emFactory.createEntityManager();
-    	try {
+    public void actualizarVisitaListahistorial(int idVideo, int idUsuario){
+    	EntityManager emanager = emFactory.createEntityManager();
+    	try {            
+    		emanager.getTransaction().begin();     
 
-            emanager.getTransaction().begin();
-
-            Canal propietario = emanager.find(Canal.class, idUser);
             Video vid = emanager.find(Video.class, idVideo);
-            
-            if(propietario == null) throw new Exception("El usuario ingresado no existe");
             if(vid == null) throw new Exception("El video ingresado no existe");
-            Visita vis = new Visita(propietario.getUsuario().getId(),vid.getId(), fecha, cantVisitas, vid,propietario.getUsuario());
-            ListaHistorial lista = new ListaHistorial(propietario.getUsuario(),vis);
-            emanager.persist(lista);
-          //  propietario.addLista(lista);
+            Canal propietario = emanager.find(Canal.class, idUsuario);
+            if(propietario == null) throw new Exception("El usuario ingresado no existe");
             
-        }catch (Exception exc) {
-            Throwable _throwable = new Throwable();
-            StackTraceElement[] elements = _throwable.getStackTrace();
-            String invocador = elements[1].getFileName();
-            exceptionAux(invocador, exc);
-        }
-    	emanager.getTransaction().commit();
-        emanager.close();
-    }
-    @Override
-    public void agregarVideoListaHisotrial(String idVideo, String idUsuario, int cant,String fecha)
-    {
-           EntityManager emanager = emFactory.createEntityManager();
-    	try {            emanager.getTransaction().begin();     
-
-          Video vid = emanager.find(Video.class, idVideo);
-          if(vid == null) throw new Exception("El video ingresado no existe");
-           Canal propietario = emanager.find(Canal.class, idUsuario);
-           if(propietario == null) throw new Exception("El usuario ingresado no existe");
-           Visita vis = new Visita(propietario.getUsuario().getId(),vid.getId(), fecha, cant, vid,propietario.getUsuario());
-           ListaHistorial list = emanager.find(ListaHistorial.class, idUsuario);
-           list.agregarVisita(vis);
-           emanager.persist(list);
+            ListaHistorial historial = emanager.createQuery("SELECT l from ListaHistorial WHERE ID_PROPIETARIO = :user", ListaHistorial.class).setParameter(":user", idUsuario).getSingleResult();
+            if(historial == null) throw new Exception("La lista historial no existe");
+            
+            Visita vis = emanager.createNamedQuery("Visita.findVisita", Visita.class).setParameter("userId", idUsuario).setParameter("videoId", idVideo).getSingleResult();
+            if(vis == null) { 
+            	vis = new Visita(idUsuario, idVideo, new Date(), 0, vid, propietario.getUsuario());
+            	emanager.persist(vis);
+            	historial.agregarVideo(vid);
+            }
+            
+            vis.actualizarVisita();
+            historial.agregarVisita(vis);
+           	emanager.merge(vis);
+           	emanager.merge(historial);
            
         }catch (Exception exc) {
             Throwable _throwable = new Throwable();
@@ -492,71 +482,37 @@ public class ControladorUsuario implements IControladorUsuario {
     	emanager.getTransaction().commit();
         emanager.close();
     }
-    @Override
-    public void actualizarVisitaListahistorial(String idVideo, String idUsuario){
-      EntityManager emanager = emFactory.createEntityManager();
-    	try {            emanager.getTransaction().begin();     
-
-            Video vid = emanager.find(Video.class, idVideo);
-          if(vid == null) throw new Exception("El video ingresado no existe");
-           Canal propietario = emanager.find(Canal.class, idUsuario);
-           if(propietario == null) throw new Exception("El usuario ingresado no existe");
-           //            List users = emanager.createQuery("SELECT c FROM Canal c").getResultList();
-           //(emanager.createNamedQuery("Usuario.findByNickname", Usuario.class).setParameter("nickname", nick).getResultList()
-
-          Visita vis = emanager.createNamedQuery("Visita.findVisita", Visita.class).setParameter("userId", idUsuario).setParameter("videoId", idVideo).getSingleResult();
-            if(vis == null){
-                 vis = new Visita(Integer.parseInt(idUsuario),Integer.parseInt(idVideo), "",0, vid, propietario.getUsuario());
-           } 
-           ListaHistorial historial = emanager.createQuery("SELECT l FROM ListaHistorial WHERE l.userId : = idusuario", ListaHistorial.class).setParameter("idusuario", idUsuario).getSingleResult();
-           //esto tira error       
-           if(historial == null) {
-           historial = new ListaHistorial(propietario.getUsuario(), vis);
-           }
-                  
-           vis.actualizarVisita();
-           emanager.persist(vis);//no se si hace falta pero bueno ahi lo dejo
-           emanager.persist(historial);
-           
-        }catch (Exception exc) {
-            Throwable _throwable = new Throwable();
-            StackTraceElement[] elements = _throwable.getStackTrace();
-            String invocador = elements[1].getFileName();
-            exceptionAux(invocador, exc);
-        }
-    	emanager.getTransaction().commit();
-        emanager.close();
-    }
+    
     @Override 
-    public ListaHistorialDt obtenerListaHistorial(String idUsuario){
-               //List<ListaHistorialDt> historial = new ArrayList<>();
-                ListaHistorialDt historial = new ListaHistorialDt();
-               List<VisitaDt> visitas = new ArrayList<>();
+    public ListaHistorialDt obtenerListaHistorial(int idUsuario){
+    	//List<ListaHistorialDt> historial = new ArrayList<>();
+    	ListaHistorialDt historial = new ListaHistorialDt();
+    	List<VisitaDt> visitas = new ArrayList<>();
 
         EntityManager emanager = emFactory.createEntityManager();
     	try {
-                            emanager.getTransaction().begin();     
+        	emanager.getTransaction().begin();     
 
-             Canal propietario = emanager.find(Canal.class, idUsuario);
-           if(propietario == null) throw new Exception("El usuario ingresado no existe");
+            Canal propietario = emanager.find(Canal.class, idUsuario);
+            if(propietario == null) throw new Exception("El usuario ingresado no existe");
                 
-                List<Visita> vis = emanager.createQuery("SELECT v FROM Visita WHERE l.userId : = idusuario ORDER BY l.cantidad", Visita.class).setParameter("idusuario", idUsuario).getResultList();
-                          ListaHistorial listaH = emanager.createQuery("SELECT l FROM ListaHistorial WHERE l.userId : = idusuario", ListaHistorial.class).setParameter("idusuario", idUsuario).getSingleResult();
-  
-                if(vis == null) throw new Exception("El usuario no tiene Visitas");    
+            List<Visita> vis = emanager.createQuery("SELECT v FROM Visita WHERE l.userId : = idusuario ORDER BY l.cantidad", Visita.class).setParameter("idusuario", idUsuario).getResultList();
+            ListaHistorial listaH = emanager.createQuery("SELECT l FROM ListaHistorial WHERE l.userId : = idusuario", ListaHistorial.class).setParameter("idusuario", idUsuario).getSingleResult();
+            if(vis == null) throw new Exception("El usuario no tiene Visitas");    
+            
             Iterator<Visita> iter = vis.iterator();
             while(iter.hasNext()) {
                 Visita visi = (Visita) iter.next();
-                visitas.add(new VisitaDt(Integer.parseInt(idUsuario),visi.getVideoId(),visi.getFecha(), visi.getCantidad()));
+                visitas.add(new VisitaDt(idUsuario, visi.getVideoId(), visi.getFecha(), visi.getCantidad()));
             
             }
-            historial = new ListaHistorialDt(propietario.getUsuario(),visitas,listaH.getId());
+            String cat = "Ninguna";
+            if(listaH.getCategoria() != null) cat = listaH.getCategoria().getNombre();
+            
+            historial = new ListaHistorialDt(listaH.getId(), propietario.getUsuario(), listaH.getNombre(), cat, visitas, fechaUltimoVideo(listaH.getVideos()));
             
         }catch (Exception exc) {
-            Throwable _throwable = new Throwable();
-            StackTraceElement[] elements = _throwable.getStackTrace();
-            String invocador = elements[1].getFileName();
-            exceptionAux(invocador, exc);
+            System.out.println(exc);
         }
     	emanager.getTransaction().commit();
         emanager.close();    
@@ -904,24 +860,28 @@ public class ControladorUsuario implements IControladorUsuario {
             ListaDeReproduccion lst = cnl.getLista(lista);
             if(lst == null) throw new Exception("El usuario no tiene ninguna lista con ese nombre");
             
-            //Reviso su tipo
-            String tipo = "Particular";
-            if(emanager.find(ListaDeReproduccion_PorDefecto.class, lista) != null) tipo = "Por Defecto";
-            //Reviso su categoria
-            String categoria = "Ninguna";
-            if(lst.getCategoria() != null) categoria = lst.getCategoria().getNombre();
-            //Reviso fecha del ultimo video
-            Date _date = fechaUltimoVideo(lst.getVideos());
-            //Creo el datatype
-            ldt = new ListaDeReproduccionDt(
-                lst.getId(), 
-                lst.getNombre(), 
-                tipo, 
-                lst.getPrivada(), 
-                categoria,
-                id,
-                _date
-            );
+            if(lst instanceof ListaHistorial) {
+            	ldt = this.obtenerListaHistorial(lst.getUsuario().getId());
+            } else {
+	            //Reviso su tipo
+	            String tipo = "Particular";
+	            if(emanager.find(ListaDeReproduccion_PorDefecto.class, lista) != null) tipo = "Por Defecto";
+	            //Reviso su categoria
+	            String categoria = "Ninguna";
+	            if(lst.getCategoria() != null) categoria = lst.getCategoria().getNombre();
+	            //Reviso fecha del ultimo video
+	            Date _date = fechaUltimoVideo(lst.getVideos());
+	            //Creo el datatype
+	            ldt = new ListaDeReproduccionDt(
+	                lst.getId(), 
+	                lst.getNombre(), 
+	                tipo, 
+	                lst.getPrivada(), 
+	                categoria,
+	                id,
+	                _date
+	            );
+            }
         } catch (Exception exc) {
             Throwable _throwable = new Throwable();
             StackTraceElement[] elements = _throwable.getStackTrace();
@@ -1037,24 +997,28 @@ public class ControladorUsuario implements IControladorUsuario {
                 Iterator<ListaDeReproduccion> iter = listas.iterator();
                 while (iter.hasNext()) {
                     ListaDeReproduccion lst = iter.next();
-                    //Reviso su tipo
-                    String tipo = "Particular";
-                    if(emanager.find(ListaDeReproduccion_PorDefecto.class, lst.getNombre()) != null) tipo = "Por Defecto";
-                    //Reviso su categoria
-                    String categoria = "Ninguna";
-                    if(lst.getCategoria() != null) categoria = lst.getCategoria().getNombre();
-                    //Reviso fecha del ultimo video
-                    Date _date = fechaUltimoVideo(lst.getVideos());
-                    //Creo el datatype
-                    list.add(new ListaDeReproduccionDt(
-                        lst.getId(), 
-                        lst.getNombre(), 
-                        tipo, 
-                        lst.getPrivada(), 
-                        categoria,
-                        id_user,
-                        _date
-                    ));
+                    if(lst instanceof ListaHistorial) {
+                    	list.add(this.obtenerListaHistorial(lst.getUsuario().getId()));
+                    } else {
+	                    //Reviso su tipo
+	                    String tipo = "Particular";
+	                    if(emanager.find(ListaDeReproduccion_PorDefecto.class, lst.getNombre()) != null) tipo = "Por Defecto";
+	                    //Reviso su categoria
+	                    String categoria = "Ninguna";
+	                    if(lst.getCategoria() != null) categoria = lst.getCategoria().getNombre();
+	                    //Reviso fecha del ultimo video
+	                    Date _date = fechaUltimoVideo(lst.getVideos());
+	                    //Creo el datatype
+	                    list.add(new ListaDeReproduccionDt(
+	                        lst.getId(), 
+	                        lst.getNombre(), 
+	                        tipo, 
+	                        lst.getPrivada(), 
+	                        categoria,
+	                        id_user,
+	                        _date
+	                    ));
+                    }
                 }
                 
        } catch (Exception exc) {
@@ -1081,24 +1045,28 @@ public class ControladorUsuario implements IControladorUsuario {
                 while (iter.hasNext()) {
                     ListaDeReproduccion lst = iter.next();
                     if(lst.getUsuario().getActivo()) {
-	                    //Reviso su tipo
-	                    String tipo = "Particular";
-	                    if(emanager.find(ListaDeReproduccion_PorDefecto.class, lst.getNombre()) != null) tipo = "Por Defecto";
-	                    //Reviso su categoria
-	                    String categoria = "Ninguna";
-	                    if(lst.getCategoria() != null) categoria = lst.getCategoria().getNombre();
-	                    //Reviso fecha del ultimo video
-	                    Date _date = fechaUltimoVideo(lst.getVideos());
-	                    //Creo el datatype
-	                    list.add(new ListaDeReproduccionDt(
-	                        lst.getId(), 
-	                        lst.getNombre(), 
-	                        tipo, 
-	                        lst.getPrivada(), 
-	                        categoria,
-	                        lst.getUsuario().getId(),
-	                        _date
-	                    ));
+                    	if(lst instanceof ListaHistorial) {
+                        	list.add(this.obtenerListaHistorial(lst.getUsuario().getId()));
+                        } else {
+		                    //Reviso su tipo
+		                    String tipo = "Particular";
+		                    if(emanager.find(ListaDeReproduccion_PorDefecto.class, lst.getNombre()) != null) tipo = "Por Defecto";
+		                    //Reviso su categoria
+		                    String categoria = "Ninguna";
+		                    if(lst.getCategoria() != null) categoria = lst.getCategoria().getNombre();
+		                    //Reviso fecha del ultimo video
+		                    Date _date = fechaUltimoVideo(lst.getVideos());
+		                    //Creo el datatype
+		                    list.add(new ListaDeReproduccionDt(
+		                        lst.getId(), 
+		                        lst.getNombre(), 
+		                        tipo, 
+		                        lst.getPrivada(), 
+		                        categoria,
+		                        lst.getUsuario().getId(),
+		                        _date
+		                    ));
+                        }
                     }
                 }
 	       } catch (Exception exc) {
@@ -1123,24 +1091,28 @@ public class ControladorUsuario implements IControladorUsuario {
             ListaDeReproduccion lst = emanager.find(ListaDeReproduccion.class, id_lista);
             if(lst == null) throw new Exception("La lista no existe");
             
-            //Reviso su tipo
-            String tipo = "Particular";
-            if(emanager.find(ListaDeReproduccion_PorDefecto.class, lst.getNombre()) != null) tipo = "Por Defecto";
-            //Reviso su categoria
-            String categoria = "Ninguna";
-            if(lst.getCategoria() != null) categoria = lst.getCategoria().getNombre();
-            //Reviso fecha del ultimo video
-            Date _date = fechaUltimoVideo(lst.getVideos());
-            //Creo el datatype
-            ldt = new ListaDeReproduccionDt(
-                lst.getId(), 
-                lst.getNombre(), 
-                tipo, 
-                lst.getPrivada(), 
-                categoria,
-                id_lista,
-                _date
-            );
+            if(lst instanceof ListaHistorial) {
+            	ldt = this.obtenerListaHistorial(lst.getUsuario().getId());
+            } else {
+	            //Reviso su categoria
+	            String categoria = "Ninguna";
+	            if(lst.getCategoria() != null) categoria = lst.getCategoria().getNombre();
+	            //Reviso fecha del ultimo video
+	            Date _date = fechaUltimoVideo(lst.getVideos());
+	            //Reviso su tipo
+	            String tipo = "Particular";
+	            if(emanager.find(ListaDeReproduccion_PorDefecto.class, lst.getNombre()) != null) tipo = "Por Defecto";
+	            //Creo el datatype
+	            ldt = new ListaDeReproduccionDt(
+	                lst.getId(), 
+	                lst.getNombre(), 
+	                tipo, 
+	                lst.getPrivada(), 
+	                categoria,
+	                id_lista,
+	                _date
+	            );
+            }
             
         } catch (Exception exc) {
             Throwable _throwable = new Throwable();

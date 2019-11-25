@@ -4,6 +4,11 @@
     Author     : Esteban
 --%>
 
+<%@page import="logica.webservices.VisitaDt"%>
+<%@page import="logica.webservices.ListaHistorialDt"%>
+<%@page import="logica.webservices.WScontroladorVideoImplService"%>
+<%@page import="logica.webservices.WScontroladorVideo"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="logica.webservices.VideoDt"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="logica.webservices.CategoriaDt"%>
@@ -35,10 +40,6 @@
                 if(dt_propietario != null) if(!dt_propietario.isActivo()) response.sendRedirect(path+"/index.jsp");
             }
         }
-        
-        boolean eshistorial = false;
-        //asigno de alguna forma
-        
     %>
     <script>
         function modificar(id_propietario, nom_lista) {
@@ -76,7 +77,6 @@
     
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
         <script src="js/bootstrap.min.js"></script>
         <script src="js/jquery.min.js"></script>
@@ -134,7 +134,41 @@
             <div id="columnaVideos" class="col-md-8">
                 <div class="card">
                     <div class="card-body">
-                    <%
+                                        <%
+	                    if(lista instanceof ListaHistorialDt) {
+	                    	ListaHistorialDt historial = (ListaHistorialDt) lista;
+	                    	List<VisitaDt> visitas = historial.getVisitas();
+	                    	
+	                    	WScontroladorVideo vid = new WScontroladorVideoImplService().getWScontroladorVideoImplPort();
+	                    	VideoDt videoaux = null;
+	                 		for(int i=0; i < visitas.size(); i++) {
+	                 			videoaux = vid.obtenerVideoDtPorID(visitas.get(i).getVideoId());
+	                 		%>
+                    	<div class="media">
+                                <a href="m.video.jsp?id=<%=videoaux.getId()%>" class="pull-left mr-2">
+                                    <%if(videoaux.getThumbnail() != "") {%> 
+                                        <img src="<%=videoaux.getThumbnail()%>" class="img-thumbnail" alt="Thumbnail">
+                                    <%} else {%> 
+                                        <img src="../img/no-thumbnail.jpg" width=120 height=90 class="img-thumbnail" alt="Thumbnail">   
+                                    <%}%>
+                                </a>
+                                <div class="media-body">
+                                    <h6 class="media-heading"><a href="m.video.jsp?id=<%=videoaux.getId()%>" style="color: black"><%=videoaux.getNombre()%></a>
+                                        <%if(propietario) {%> 
+                                        <button class="fas fa-times" onclick="quitarVideo('<%=lista.getIdUsuario()%>', '<%=lista.getNombre()%>', '<%=videoaux.getId()%>')"></button> 
+                                        <%}%>
+                                    </h6>
+	                            	<a>
+	                            		<i class="fas fa-eye"></i><%=visitas.get(i).getCantidad()%> 
+	                            		<i class="fas fa-clock"></i><%=new SimpleDateFormat("yyyy-MM-dd").format(visitas.get(i).getFecha().toGregorianCalendar().getTime())%>
+	                            	</a>
+	                            	<a><%=videoaux.getDescripcion()%></a>
+                            	</div>
+                            </div> 
+                    	
+                    	
+                      <%}} else {
+                    	  
                         List<VideoDt> videos = user.obtenerVideosLista(user_id, request.getParameter("nom")).getLista();
                         for(int i=0; i < videos.size(); i++) {%>
                             <div class="media">
@@ -151,14 +185,11 @@
                                         <button class="fas fa-times" onclick="quitarVideo('<%=lista.getIdUsuario()%>', '<%=lista.getNombre()%>', '<%=videos.get(i).getId()%>')"></button> 
                                         <%}%>
                                     </h5>
-                                    <%if(eshistorial) {%>
-	                            		<a><i class="fas fa-eye"></i>0 <i class="fas fa-clock"></i>01/01/1990</a>
-	                           		<%}%>
                                     <a><%=videos.get(i).getDescripcion()%></a>
                                 </div>
                             </div>
                                 
-                    <%  }%>
+                    <%  }}%>
                     </div>
                 </div>
             </div>
